@@ -17,9 +17,9 @@
 
 Pulsa en las imagenes para acceder a mis zonas de trabajo
 
-<span style="margin: 0 20px;">[![github](./assets/github.png)](https://github.com/Chiefbark/TFG)</span>
-<span style="margin: 0 20px;">[![figma](./assets/figma.png)](https://www.figma.com/file/QYLYZSbAeCGLE2cEa1kam3/designs)</span>
-<span style="margin: 0 20px;">[![trello](./assets/trello.png)](https://trello.com/b/umjDqcx3/tfg)</span>
+<span style="margin: 0 20px;">[![github](./assets/README/github.png)](https://github.com/Chiefbark/TFG)</span>
+<span style="margin: 0 20px;">[![figma](./assets/README/figma.png)](https://www.figma.com/file/QYLYZSbAeCGLE2cEa1kam3/designs)</span>
+<span style="margin: 0 20px;">[![trello](./assets/README/trello.png)](https://trello.com/b/umjDqcx3/tfg)</span>
 
 <br>
 
@@ -54,10 +54,10 @@ La aplicación estará disponible en la `Play Store`, al menos al inicio. Poster
 
 |                                                  |                                                                                                                                                |
 | ------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------- |
-| ![database_remote](./assets/database_remote.png) | **Base de datos remota** <br> Disponer de una base de datos remota te permitirá disponer de tus datos desde cualquier dispositivo              |
-| ![statistics](./assets/statistics.png)           | **Estadísticas** <br> Las estadísticas te permitirán ver en qué asignaturas tienes más faltas ó cuales son los días que más faltas entre otros |
-| ![ux_ui](./assets/ux_ui.png)                     | **Diseño intuitivo** <br> Una aplicación secilla y facil de usar, para que puedas acceder a todo mucho más rápido                              |
-| ![free](./assets/free.png)                       | **Gratis** <br> Aplicación totalmente gratuita y sin anuncios!                                                                                 |
+| ![database_remote](./assets/README/database_remote.png) | **Base de datos remota** <br> Disponer de una base de datos remota te permitirá disponer de tus datos desde cualquier dispositivo              |
+| ![statistics](./assets/README/statistics.png)           | **Estadísticas** <br> Las estadísticas te permitirán ver en qué asignaturas tienes más faltas ó cuales son los días que más faltas entre otros |
+| ![ux_ui](./assets/README/ux_ui.png)                     | **Diseño intuitivo** <br> Una aplicación secilla y facil de usar, para que puedas acceder a todo mucho más rápido                              |
+| ![free](./assets/README/free.png)                       | **Gratis** <br> Aplicación totalmente gratuita y sin anuncios!                                                                                 |
 
 <div style="page-break-after: always;"></div>
 
@@ -95,12 +95,12 @@ El objetivo de esta aplicación es facilitar al alumno el poder administrar sus 
 
 |            	|   |   |
 |-----------	|-  |:-:|
-| Plataforma de desarrollo  | Visual Studio Code  | <img src="./assets/vscode.png" alt="vscode" style="height: 32px;"> |
-| Tecnología de desarrollo  | React Native        | <img src="./assets/react_native.png" alt="react_native" style="height: 32px;"> |
-| Base de datos remota      | Firebase            | <img src="./assets/firebase.png" alt="firebase" style="height: 32px;"> |
-| Control de versiones      | Github              | <img src="./assets/github.png" alt="github" style="height: 32px;"> |
-| Gestión de proyecto       | Trello              | <img src="./assets/trello.png" alt="trello" style="height: 32px;"> |
-| Deseño de layouts         | Figma               | <img src="./assets/figma.png" alt="figma" style="height: 32px;">  |
+| Plataforma de desarrollo  | Visual Studio Code  | <img src="./assets/README/vscode.png" alt="vscode" style="height: 32px;"> |
+| Tecnología de desarrollo  | React Native        | <img src="./assets/README/react_native.png" alt="react_native" style="height: 32px;"> |
+| Base de datos remota      | Firebase            | <img src="./assets/README/firebase.png" alt="firebase" style="height: 32px;"> |
+| Control de versiones      | Github              | <img src="./assets/README/github.png" alt="github" style="height: 32px;"> |
+| Gestión de proyecto       | Trello              | <img src="./assets/README/trello.png" alt="trello" style="height: 32px;"> |
+| Deseño de layouts         | Figma               | <img src="./assets/README/figma.png" alt="figma" style="height: 32px;">  |
 
 <div style="page-break-after: always;"></div>
 
