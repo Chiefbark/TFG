@@ -1,9 +1,9 @@
 # PROPUESTA
 
-| Propuesta 	|   |
+| Documento 	|   |
 |-----------	|-  |
-| Fecha     	| 20/03/2020  |
-| Versión   	| 0.0.2 |
+| Fecha     	| 18/04/2020  |
+| Versión   	| 0.0.3 |
 | Autor     	| Jorge Chércoles Moreno  |
 
 <br>
