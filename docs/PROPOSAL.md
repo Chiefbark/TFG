@@ -1,4 +1,4 @@
-# TFG
+# PROPUESTA
 
 | Propuesta 	|   |
 |-----------	|-  |
@@ -24,7 +24,7 @@ Pulsa en las imagenes para acceder a mis zonas de trabajo
 <br>
 
 **Tabla de contenidos**
-- [TFG](#tfg)
+- [PROPUESTA](#propuesta)
   - [INTRODUCCION](#introduccion)
   - [DESCRIPCION](#descripcion)
   - [OBJETIVOS](#objetivos)
