@@ -159,10 +159,10 @@ Este diagrama indica tanto las referencias entre las entidades que vimos en el [
 Los colores serán 16 y serán fijos:
 |	|	|	|	|	|	|	|	|
 |:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|
-|	<div style="width: 16px; height: 16px; background-color: #080808"></div>	|	#080808	|	<div style="width: 16px; height: 16px; background-color: #808080"></div>	|	#808080	|<div style="width: 16px; height: 16px; background-color: #FF6F6F"></div>	|	#FF6F6F	|<div style="width: 16px; height: 16px; background-color: #800000"></div>	|	#800000	|
-|	<div style="width: 16px; height: 16px; background-color: #FF0000"></div>	|	#FF0000	|	<div style="width: 16px; height: 16px; background-color: #808000"></div>	|	#808000	|<div style="width: 16px; height: 16px; background-color: #FF8A00"></div>	|	#FF8A00	|<div style="width: 16px; height: 16px; background-color: #008000"></div>	|	#008000	|
-|	<div style="width: 16px; height: 16px; background-color: #00FF00"></div>	|	#00FF00	|	<div style="width: 16px; height: 16px; background-color: #008080"></div>	|	#008080	|<div style="width: 16px; height: 16px; background-color: #00FFFF"></div>	|	#00FFFF	|<div style="width: 16px; height: 16px; background-color: #000080"></div>	|	#000080	|
-|	<div style="width: 16px; height: 16px; background-color: #0000FF"></div>	|	#0000FF	|	<div style="width: 16px; height: 16px; background-color: #800080"></div>	|	#800080	|<div style="width: 16px; height: 16px; background-color: #FF00FF"></div>	|	#FF00FF	|<div style="width: 16px; height: 16px; background-color: #8844Ff"></div>	|	#8844Ff	|
+|	![#080808](https://placehold.it/15/080808/?text=+)	|	#080808	|	![#808080](https://placehold.it/15/808080/?text=+)	|	#808080	|	![#FF6F6F](https://placehold.it/15/FF6F6F/?text=+)	|	#FF6F6F	|	![#800000](https://placehold.it/15/800000/?text=+)	|	#800000	|
+|	![#FF0000](https://placehold.it/15/FF0000/?text=+)	|	#FF0000	|	![#808000](https://placehold.it/15/808000/?text=+)	|	#808000	|	![#FF8A00](https://placehold.it/15/FF8A00/?text=+)	|	#FF8A00	|	![#008000](https://placehold.it/15/008000/?text=+)	|	#008000	|
+|	![#00FF00](https://placehold.it/15/00FF00/?text=+)	|	#00FF00	|	![#008080](https://placehold.it/15/008080/?text=+)	|	#008080	|	![#00FFFF](https://placehold.it/15/00FFFF/?text=+)	|	#00FFFF	|	![#000080](https://placehold.it/15/000080/?text=+)	|	#000080	|
+|	![#0000FF](https://placehold.it/15/0000FF/?text=+)	|	#0000FF	|	![#800080](https://placehold.it/15/800080/?text=+)	|	#800080	|	![#FF00FF](https://placehold.it/15/FF00FF/?text=+)	|	#FF00FF	|	![#8844FF](https://placehold.it/15/8844FF/?text=+)	|	#8844FF	|
 
 **Teacher**
 
