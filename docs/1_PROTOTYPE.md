@@ -515,7 +515,7 @@ Los campos del formulario están especificados en [*schedule* - diagrama de clas
 **Vacaciones/eventos y exámenes**
 
 |	![Dialog_Help_1](assets/1_PROTOTYPE/view_profile/Dialog_Help_1.png)	|	![Dialog_Help_2](assets/1_PROTOTYPE/view_profile/Dialog_Help_2.png)	|	![Screen_Profile_New_Holiday](assets/1_PROTOTYPE/view_profile/Screen_Profile_New_Holiday.png)	|	![Screen_Profile_New_Exam](assets/1_PROTOTYPE/view_profile/Screen_Profile_New_Exam.png)	|
-|:-:|:-:|:-:|:-:|:-:|
+|:-:|:-:|:-:|:-:|
 |	5	|	6	|	7	|	8	|
 
 Pulsando sobre el botón `ayuda` se mostrará un diálogo (**imagen 5 y 6**) donde vendrá una breve explicación de qué significa cada sección.
