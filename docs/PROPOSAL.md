@@ -35,14 +35,14 @@ Pulsa en las imagenes para acceder a mis zonas de trabajo
 
 **Tabla de contenidos**
 - [PROPUESTA](#propuesta)
-  - [INTRODUCCION](#introduccion)
-  - [DESCRIPCION](#descripcion)
-  - [OBJETIVOS](#objetivos)
-  - [REQUISITOS](#requisitos)
-  - [TECNOLOGIAS](#tecnologias)
-  - [PLANIFICACION](#planificacion)
-  - [PRESUPUESTO](#presupuesto)
-  - [CONTRIBUIDORES](#contribuidores)
+	- [INTRODUCCION](#introduccion)
+	- [DESCRIPCION](#descripcion)
+	- [OBJETIVOS](#objetivos)
+	- [REQUISITOS](#requisitos)
+	- [TECNOLOGIAS](#tecnologias)
+	- [PLANIFICACION](#planificacion)
+	- [PRESUPUESTO](#presupuesto)
+	- [CONTRIBUIDORES](#contribuidores)
 
 <div style="page-break-after: always;"></div>
 
