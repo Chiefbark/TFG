@@ -368,7 +368,6 @@ La aplicación utiliza la api [push notification tool de Expo](https://expo.io/n
 
 ```
 const token = await Notifications.getExpoPushTokenAsync();
-console.log(token);
 fetch('https://exp.host/--/api/v2/push/send', {
 	method: 'POST',
 	headers: {
