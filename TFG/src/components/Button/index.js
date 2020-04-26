@@ -17,13 +17,7 @@ export default class Button extends React.Component {
 		/**	Background color of the button    */
 		backgroundColor: PropTypes.string,
 		/**	Text color of the button    */
-		textColor: PropTypes.string,
-		/**
-		 * Sets style directly on Button component
-		 *
-		 * ***backgroundColor*** property has preference
-		 */
-		style: PropTypes.object
+		textColor: PropTypes.string
 	}
 	
 	constructor(props) {
