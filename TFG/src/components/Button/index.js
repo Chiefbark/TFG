@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {Text, TouchableOpacity, StyleSheet} from 'react-native';
 
 /**
- * Simple button component.
+ * Displays a button with TouchableOpacity effect.
  *
  * @version 0.0.1
  * @author [Chiefbark](https://github.com/Chiefbark)
@@ -17,21 +17,26 @@ export default class Button extends React.Component {
 		/**	Background color of the button    */
 		backgroundColor: PropTypes.string,
 		/**	Text color of the button    */
-		textColor: PropTypes.string
+		textColor: PropTypes.string,
+		/**
+		 * Sets style directly on Button component
+		 *
+		 * ***backgroundColor*** property has preference
+		 */
+		style: PropTypes.object
 	}
 	
 	constructor(props) {
 		super(props);
-		this.state = {...this.props};
 	}
 	
 	render() {
 		return (
 			<TouchableOpacity
-				style={[styles.button, {backgroundColor: this.state.backgroundColor}]}
-				onPress={() => this.state.onClick ? this.state.onClick() : undefined}
+				style={[styles.button, this.props.style, {backgroundColor: this.props.backgroundColor}]}
+				onPress={() => this.props.onClick ? this.props.onClick() : undefined}
 			>
-				<Text style={[styles.text, {color: this.state.textColor}]}>{this.state.label || 'button'}</Text>
+				<Text style={[styles.text, {color: this.props.textColor}]}>{this.props.label || 'button'}</Text>
 			</TouchableOpacity>
 		);
 	}
