@@ -33,7 +33,7 @@ function StatisticsStackNavigator() {
 			headerTintColor: colors.secondary,
 			headerStyle: {backgroundColor: colors.primary}
 		}}>
-			<Stack.Screen name={'Statistics'} component={Statistics} options={{title: i18n.get('statistics').title}}/>
+			<Stack.Screen name={'Statistics'} component={Statistics}/>
 		</Stack.Navigator>
 	);
 }
@@ -44,7 +44,7 @@ function AbsencesStackNavigator() {
 			headerTintColor: colors.secondary,
 			headerStyle: {backgroundColor: colors.primary}
 		}}>
-			<Stack.Screen name={'Absences'} component={Absences} options={{title: i18n.get('absences').title}}/>
+			<Stack.Screen name={'Absences'} component={Absences}/>
 		</Stack.Navigator>
 	);
 }
@@ -55,7 +55,7 @@ function ProfileStackNavigator() {
 			headerTintColor: colors.secondary,
 			headerStyle: {backgroundColor: colors.primary}
 		}}>
-			<Stack.Screen name={'Profile'} component={Profile} options={{title: i18n.get('profile').title}}/>
+			<Stack.Screen name={'Profile'} component={Profile}/>
 		</Stack.Navigator>
 	);
 }
@@ -66,7 +66,7 @@ function SettingsStackNavigator() {
 			headerTintColor: colors.secondary,
 			headerStyle: {backgroundColor: colors.primary}
 		}}>
-			<Stack.Screen name={'Settings'} component={Settings} options={{title: i18n.get('settings').title}}/>
+			<Stack.Screen name={'Settings'} component={Settings}/>
 		</Stack.Navigator>
 	);
 }
