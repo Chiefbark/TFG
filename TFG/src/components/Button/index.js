@@ -11,7 +11,7 @@ import {Text, TouchableOpacity, StyleSheet} from 'react-native';
 export default class Button extends React.Component {
 	static propTypes = {
 		/**	Button label    */
-		label: PropTypes.string,
+		label: PropTypes.string.isRequired,
 		/**	Gets called when the user clicks on the button    */
 		onClick: PropTypes.func,
 		/**	Background color of the button    */
