@@ -17,12 +17,7 @@ export default class Button extends React.Component {
 		/**	Size of the icon    */
 		size: PropTypes.oneOf(['small', 'normal', 'large', 'extraLarge']),
 		/**	Gets called when the user clicks on the icon    */
-		onClick: PropTypes.func,
-		/**	Sets style directly on Icon component
-		 *
-		 * The icon itself won't be affected by these styles. Use size instead
-		 */
-		style: PropTypes.object
+		onClick: PropTypes.func
 	}
 	
 	constructor(props) {
