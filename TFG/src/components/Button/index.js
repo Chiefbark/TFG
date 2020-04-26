@@ -36,7 +36,7 @@ export default class Button extends React.Component {
 				style={[styles.button, this.props.style, {backgroundColor: this.props.backgroundColor}]}
 				onPress={() => this.props.onClick ? this.props.onClick() : undefined}
 			>
-				<Text style={[styles.text, {color: this.props.textColor}]}>{this.props.label || 'button'}</Text>
+				<Text style={[styles.text, {color: this.props.textColor}]}>{this.props.label}</Text>
 			</TouchableOpacity>
 		);
 	}
