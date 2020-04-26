@@ -9,16 +9,6 @@ import {Text, TouchableOpacity, StyleSheet} from 'react-native';
  * @author [Chiefbark](https://github.com/Chiefbark)
  */
 export default class Button extends React.Component {
-	static propTypes = {
-		/**	Button label    */
-		label: PropTypes.string.isRequired,
-		/**	Gets called when the user clicks on the button    */
-		onClick: PropTypes.func,
-		/**	Background color of the button    */
-		backgroundColor: PropTypes.string,
-		/**	Text color of the button    */
-		textColor: PropTypes.string
-	}
 	
 	constructor(props) {
 		super(props);
@@ -45,4 +35,14 @@ const styles = StyleSheet.create({
 	}
 })
 
+Button.propTypes = {
+	/**	Button label    */
+	label: PropTypes.string.isRequired,
+	/**	Gets called when the user clicks on the button    */
+	onClick: PropTypes.func,
+	/**	Background color of the button    */
+	backgroundColor: PropTypes.string,
+	/**	Text color of the button    */
+	textColor: PropTypes.string
+}
 
