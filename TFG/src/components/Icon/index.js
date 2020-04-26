@@ -28,7 +28,7 @@ export default class Button extends React.Component {
 		let size = this.props.size === 'small' ? 16 : this.props.size === 'large' ? 32 : this.props.size === 'extraLarge' ? 40 : 24;
 		return (
 			<TouchableOpacity
-				style={[{width: size, height: size}, this.props.style]}
+				style={[{width: size, height: size, alignItems: 'center', justifyContent: 'center'}, this.props.style]}
 				onPress={() => this.props.onClick ? this.props.onClick() : undefined}
 			>
 				<Image source={this.props.source}
