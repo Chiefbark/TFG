@@ -1,0 +1,15 @@
+TFG/node_modules/**/*
+TFG/.expo/*
+TFG/npm-debug.*
+*.jks
+*.p8
+*.p12
+*.key
+*.mobileprovision
+*.orig.*
+TFG/web-build/
+TFG/web-report/
+./.idea/
+
+# macOS
+.DS_Store
