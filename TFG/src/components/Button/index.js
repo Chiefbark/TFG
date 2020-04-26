@@ -19,6 +19,7 @@ export default class Button extends React.Component {
 			<TouchableOpacity
 				style={[styles.button, this.props.style, {backgroundColor: this.props.backgroundColor}]}
 				onPress={() => this.props.onClick ? this.props.onClick() : undefined}
+				onLongPress={() => this.props.onLongClick ? this.props.onLongClick() : undefined}
 			>
 				<Text style={[styles.text, {color: this.props.textColor}]}>{this.props.label}</Text>
 			</TouchableOpacity>
@@ -40,6 +41,8 @@ Button.propTypes = {
 	label: PropTypes.string.isRequired,
 	/**	Gets called when the user clicks on the button    */
 	onClick: PropTypes.func,
+	/**	Gets called when the user clicks and hold on the button    */
+	onLongClick: PropTypes.func,
 	/**	Background color of the button    */
 	backgroundColor: PropTypes.string,
 	/**	Text color of the button    */

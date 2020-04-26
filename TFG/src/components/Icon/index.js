@@ -22,6 +22,7 @@ export default class Icon extends React.Component {
 					style={[{width: size, height: size, alignItems: 'center', justifyContent: 'center'},
 						this.props.floating && styles.fab, this.props.style]}
 					onPress={() => this.props.onClick ? this.props.onClick() : undefined}
+					onLongPress={() => this.props.onLongClick ? this.props.onLongClick() : undefined}
 				>
 					<Image source={this.props.source}
 						   style={{width: size, height: size, resizeMode: 'contain', tintColor: this.props.iconColor}}/>
@@ -47,6 +48,8 @@ Icon.propTypes = {
 	size: PropTypes.oneOf(['small', 'normal', 'large', 'extraLarge']),
 	/**	Gets called when the user clicks on the icon    */
 	onClick: PropTypes.func,
+	/**	Gets called when the user clicks and hold on the icon    */
+	onLongClick: PropTypes.func,
 	/**	Specifies if the Icon is floating or not    */
 	floating: PropTypes.bool,
 	/**	Specifies if the Icon is shown or not    */
