@@ -9,7 +9,7 @@ TFG/npm-debug.*
 *.orig.*
 TFG/web-build/
 TFG/web-report/
-./.idea/
+.idea/*
 
 # macOS
 .DS_Store
