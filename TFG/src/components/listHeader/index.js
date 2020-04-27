@@ -31,6 +31,6 @@ ListHeader.propTypes = {
 	label: PropTypes.string.isRequired,
 	/**	Text color of the ListHeader    */
 	textColor: PropTypes.string,
-	/**	Right*/
+	/**	Element to be displayed in the right side	*/
 	rightItem: PropTypes.func
 }
