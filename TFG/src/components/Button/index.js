@@ -10,10 +10,6 @@ import {Text, TouchableOpacity, StyleSheet} from 'react-native';
  */
 export default class Button extends React.Component {
 	
-	constructor(props) {
-		super(props);
-	}
-	
 	render() {
 		return (
 			<TouchableOpacity

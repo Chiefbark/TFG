@@ -10,10 +10,6 @@ import {Image, TouchableOpacity, StyleSheet} from 'react-native';
  */
 export default class Icon extends React.Component {
 	
-	constructor(props) {
-		super(props);
-	}
-	
 	render() {
 		let size = this.props.size === 'small' ? 16 : this.props.size === 'large' ? 32 : this.props.size === 'extraLarge' ? 40 : 24;
 		return (<Fragment>
