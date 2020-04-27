@@ -4,7 +4,7 @@ import {colors} from "../../styles";
 
 export default class CalendarDay extends React.Component {
 	
-	getHolidayStyles(selection) {
+	getSelectionStyles(selection) {
 		let styles_selection = undefined;
 		if (selection) {
 			styles_selection = {...styles.selection};
@@ -26,7 +26,7 @@ export default class CalendarDay extends React.Component {
 		return (
 			<TouchableOpacity onPress={() => this.props.onClick ? this.props.onClick(date) : undefined}
 							  onLongPress={() => this.props.onLongClick ? this.props.onLongClick(date) : undefined}
-							  style={[styles.dayContainer, this.getHolidayStyles(marking.selection)]}>
+							  style={[styles.dayContainer, this.getSelectionStyles(marking.selection)]}>
 				<Text
 					style={[styles.text, {color: this.getTextColor(date, state, marking)}]}>
 					{date.day}
