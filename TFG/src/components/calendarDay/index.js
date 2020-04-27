@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import {colors} from "../../styles";
 
@@ -14,8 +15,8 @@ export default class CalendarDay extends React.Component {
 		return styles_selection;
 	}
 	
-	getTextColor(date, state, marking) {
-		if (marking && marking.exams) return marking.exams[0].textColor;
+	getTextColor(date, state, single) {
+		if (single) return single.textColor;
 		if (state === 'disabled') return colors.textMuted;
 		if (state === 'today') return colors.primary
 		else return colors.text;
@@ -28,16 +29,16 @@ export default class CalendarDay extends React.Component {
 							  onLongPress={() => this.props.onLongClick ? this.props.onLongClick(date) : undefined}
 							  style={[styles.dayContainer, this.getSelectionStyles(marking.selection)]}>
 				<Text
-					style={[styles.text, {color: this.getTextColor(date, state, marking)}]}>
+					style={[styles.text, {color: this.getTextColor(date, state, marking.single)}]}>
 					{date.day}
 				</Text>
-				{marking.exams &&
-				<View style={[styles.exam, {backgroundColor: marking.exams[0].color}]}/>}
-				<View style={styles.absenceContainer}>
-					{marking.absences?.map((element, index) =>
+				{marking.single &&
+				<View style={[styles.exam, {backgroundColor: marking.single.color}]}/>}
+				<View style={styles.multiContainer}>
+					{marking.multi?.map((element, index) =>
 						index < 4 &&
 						<View key={index}
-							  style={[styles.absence, {backgroundColor: element.color}]}/>)}
+							  style={[styles.multi, {backgroundColor: element.color}]}/>)}
 				</View>
 			</TouchableOpacity>
 		)
@@ -64,11 +65,24 @@ const styles = StyleSheet.create({
 		position: 'absolute', top: 5, right: 5, bottom: 5, left: 5,
 		borderWidth: 6, borderRadius: 1000
 	},
-	absenceContainer: {
+	multiContainer: {
 		position: 'absolute', right: 4, bottom: 8, left: 4, flexDirection: 'row', justifyContent: 'center'
 	},
-	absence: {
+	multi: {
 		width: 5, height: 5, borderRadius: 2,
 		marginTop: 1, marginLeft: 1, marginRight: 1
 	}
 });
+
+CalendarDay.propTypes = {
+	/**	Date of the day (date param of dayComponent function)    */
+	date: PropTypes.object.isRequired,
+	/**	State of the day (state param of dayComponent function)    */
+	state: PropTypes.oneOf(['disabled', '', 'today']).isRequired,
+	/**	Marking of the dat (marking param of dayComponent function)    */
+	marking: PropTypes.oneOfType([PropTypes.array, PropTypes.object]).isRequired,
+	/**	Gets called when the user clicks on the day    */
+	onClick: PropTypes.func,
+	/**	Gets called when the user clicks and hold on the day    */
+	onLongClick: PropTypes.func
+}

@@ -9,8 +9,7 @@ import CalendarDay from "../../components/calendarDay";
 
 const markedDates = {
 	"2020-04-15": {
-		exams: [{color: "black", textColor: "white"}, {color: "red", textColor: "white"},
-			{color: "blue", textColor: "white"}, {color: "green", textColor: "white"}],
+		single: {color: "black", textColor: "white"},
 	},
 	"2020-04-22": {
 		selection: {
@@ -18,7 +17,7 @@ const markedDates = {
 			isStart: true,
 			textColor: "white"
 		},
-		absences: [
+		multi: [
 			{color: 'green'},
 			{color: 'blue'},
 			{color: 'yellow'},
