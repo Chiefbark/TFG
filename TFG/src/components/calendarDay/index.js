@@ -15,15 +15,10 @@ export default class CalendarDay extends React.Component {
 	}
 	
 	getTextColor(date, state, marking) {
-		let today = new Date(), tomorrow = new Date();
-		today.setHours(0, 0, 0, 0);
-		tomorrow.setHours(0, 0, 0, 0);
-		tomorrow.setDate(tomorrow.getDate() + 1);
-		if (state === 'disabled')
-			return colors.textMuted;
-		if (marking && marking.exams)
-			return marking.exams[0].textColor;
-		return date.timestamp >= today.getTime() && date.timestamp < tomorrow.getTime() ? colors.primary : colors.text;
+		if (marking && marking.exams) return marking.exams[0].textColor;
+		if (state === 'disabled') return colors.textMuted;
+		if (state === 'today') return colors.primary
+		else return colors.text;
 	}
 	
 	render() {
