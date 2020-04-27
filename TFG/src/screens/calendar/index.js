@@ -13,9 +13,9 @@ const markedDates = {
 			{color: "blue", textColor: "white"}, {color: "green", textColor: "white"}],
 	},
 	"2020-04-22": {
-		holiday: {
+		selection: {
 			color: "pink",
-			startingDay: true,
+			isStart: true,
 			textColor: "white"
 		},
 		absences: [
@@ -26,14 +26,14 @@ const markedDates = {
 			{color: 'purple'},
 		]
 	}, "2020-04-23": {
-		holiday: {
+		selection: {
 			color: "pink",
 			textColor: "white"
 		},
 	}, "2020-04-24": {
-		holiday: {
+		selection: {
 			color: "pink",
-			endingDay: true,
+			isEnd: true,
 			textColor: "white"
 		},
 	}
