@@ -4,14 +4,14 @@ import {colors} from "../../styles";
 
 export default class CalendarDay extends React.Component {
 	
-	getHolidayStyles(holiday) {
-		let styles_holiday = undefined;
-		if (holiday) {
-			styles_holiday = {...styles.holiday};
-			styles_holiday = holiday.startingDay ? {...styles_holiday, ...styles.holidayStart} : styles_holiday;
-			styles_holiday = holiday.endingDay ? {...styles_holiday, ...styles.holidayEnd} : styles_holiday;
+	getHolidayStyles(selection) {
+		let styles_selection = undefined;
+		if (selection) {
+			styles_selection = {...styles.selection};
+			styles_selection = selection.isStart ? {...styles_selection, ...styles.selectionStart} : styles_selection;
+			styles_selection = selection.isEnd ? {...styles_selection, ...styles.selectionEnd} : styles_selection;
 		}
-		return styles_holiday;
+		return styles_selection;
 	}
 	
 	getTextColor(date, state, marking) {
@@ -26,7 +26,7 @@ export default class CalendarDay extends React.Component {
 		return (
 			<TouchableOpacity onPress={() => this.props.onClick ? this.props.onClick(date) : undefined}
 							  onLongPress={() => this.props.onLongClick ? this.props.onLongClick(date) : undefined}
-							  style={[styles.dayContainer, this.getHolidayStyles(marking.holiday)]}>
+							  style={[styles.dayContainer, this.getHolidayStyles(marking.selection)]}>
 				<Text
 					style={[styles.text, {color: this.getTextColor(date, state, marking)}]}>
 					{date.day}
@@ -51,13 +51,13 @@ const styles = StyleSheet.create({
 	text: {
 		zIndex: 10, textAlign: 'center'
 	},
-	holiday: {
+	selection: {
 		backgroundColor: colors.primaryLight
 	},
-	holidayStart: {
+	selectionStart: {
 		borderTopLeftRadius: 1000, borderBottomLeftRadius: 1000
 	},
-	holidayEnd: {
+	selectionEnd: {
 		borderTopRightRadius: 1000, borderBottomRightRadius: 1000
 	},
 	exam: {
