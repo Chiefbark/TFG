@@ -1,23 +1,23 @@
 import React from 'react';
-import {View} from 'react-native';
+import {View, Text, StyleSheet} from 'react-native';
 import {LocaleConfig, Calendar} from 'react-native-calendars';
 import * as i18n from '../../i18n';
-import {colors} from "../../styles";
-import Icon from "../../components/icon";
-import CommonStack from "../commons/stack";
-import CalendarDay from "../../components/calendarDay";
-import Dialog from "../../components/dialog";
-import Button from "../../components/button";
+import {colors} from '../../styles';
+import Icon from '../../components/icon';
+import CommonStack from '../commons/stack';
+import CalendarDay from '../../components/calendarDay';
+import Dialog from '../../components/dialog';
+import Button from '../../components/button';
 
 const markedDates = {
-	"2020-04-15": {
-		single: {color: "black", textColor: "white"},
+	'2020-04-15': {
+		single: {color: 'black', textColor: 'white'},
 	},
-	"2020-04-22": {
+	'2020-04-22': {
 		selection: {
-			color: "pink",
+			color: 'pink',
 			isStart: true,
-			textColor: "white"
+			textColor: 'white'
 		},
 		multi: [
 			{color: 'green'},
@@ -26,16 +26,16 @@ const markedDates = {
 			{color: 'red'},
 			{color: 'purple'},
 		]
-	}, "2020-04-23": {
+	}, '2020-04-23': {
 		selection: {
-			color: "pink",
-			textColor: "white"
+			color: 'pink',
+			textColor: 'white'
 		},
-	}, "2020-04-24": {
+	}, '2020-04-24': {
 		selection: {
-			color: "pink",
+			color: 'pink',
 			isEnd: true,
-			textColor: "white"
+			textColor: 'white'
 		},
 	}
 };
@@ -70,7 +70,7 @@ export default class CalendarScreen extends CommonStack {
 	}
 	
 	render() {
-		return <View>
+		return <View style={styles.container}>
 			<Calendar key={this.state.locale}
 					  markedDates={markedDates}
 					  current={new Date()}
@@ -81,7 +81,7 @@ export default class CalendarScreen extends CommonStack {
 					  onPressArrowLeft={substractMonth => substractMonth()}
 					  onPressArrowRight={addMonth => addMonth()}
 					  theme={{
-						  arrowColor: colors.text,
+						  arrowColor: colors.black,
 						  'stylesheet.calendar.main': {
 							  week: {
 								  marginTop: 1, marginBottom: 1,
@@ -95,6 +95,7 @@ export default class CalendarScreen extends CommonStack {
 						  );
 					  }}
 			/>
+			<View style={styles.helpTextContainer}><Text style={styles.helpText}>{i18n.get('calendar.helpText')}</Text></View>
 			<Dialog title={i18n.get('commons.helpDialog.title')}
 					buttons={() =>
 						<Button label={i18n.get('commons.helpDialog.actions.0')}
@@ -105,3 +106,17 @@ export default class CalendarScreen extends CommonStack {
 		</View>;
 	}
 }
+
+const styles = StyleSheet.create({
+	container: {
+		flex: 1, flexDirection: 'column'
+	},
+	helpTextContainer: {
+		flex: 1, alignItems: 'center', justifyContent: 'center',
+		marginHorizontal: 50
+	},
+	helpText: {
+		textAlign: 'center',
+		color: colors.grey
+	}
+})
