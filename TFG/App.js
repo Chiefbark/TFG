@@ -19,7 +19,7 @@ const Stack = createStackNavigator();
 function CalendarStackNavigator() {
 	return (
 		<Stack.Navigator screenOptions={{
-			headerTintColor: colors.secondary,
+			headerTintColor: colors.white,
 			headerStyle: {backgroundColor: colors.primary}
 		}}>
 			<Stack.Screen name={'Calendar'} component={Calendar}/>
@@ -30,7 +30,7 @@ function CalendarStackNavigator() {
 function StatisticsStackNavigator() {
 	return (
 		<Stack.Navigator screenOptions={{
-			headerTintColor: colors.secondary,
+			headerTintColor: colors.white,
 			headerStyle: {backgroundColor: colors.primary}
 		}}>
 			<Stack.Screen name={'Statistics'} component={Statistics}/>
@@ -41,7 +41,7 @@ function StatisticsStackNavigator() {
 function AbsencesStackNavigator() {
 	return (
 		<Stack.Navigator screenOptions={{
-			headerTintColor: colors.secondary,
+			headerTintColor: colors.white,
 			headerStyle: {backgroundColor: colors.primary}
 		}}>
 			<Stack.Screen name={'Absences'} component={Absences}/>
@@ -52,7 +52,7 @@ function AbsencesStackNavigator() {
 function ProfileStackNavigator() {
 	return (
 		<Stack.Navigator screenOptions={{
-			headerTintColor: colors.secondary,
+			headerTintColor: colors.white,
 			headerStyle: {backgroundColor: colors.primary}
 		}}>
 			<Stack.Screen name={'Profile'} component={Profile}/>
@@ -63,7 +63,7 @@ function ProfileStackNavigator() {
 function SettingsStackNavigator() {
 	return (
 		<Stack.Navigator screenOptions={{
-			headerTintColor: colors.secondary,
+			headerTintColor: colors.white,
 			headerStyle: {backgroundColor: colors.primary}
 		}}>
 			<Stack.Screen name={'Settings'} component={Settings}/>
@@ -99,35 +99,35 @@ export default class App extends React.Component {
 						{
 							tabBarLabel: i18n.get('calendar').title,
 							tabBarIcon: () => <Icon source={require('./assets/icons/icon_calendar.png')}
-													iconColor={colors.secondary}/>
+													iconColor={colors.white}/>
 						}
 					}/>
 					<Tab.Screen name={'Statistics'} component={StatisticsStackNavigator} options={
 						{
 							tabBarLabel: i18n.get('statistics').title,
 							tabBarIcon: () => <Icon source={require('./assets/icons/icon_stats.png')}
-													iconColor={colors.secondary}/>
+													iconColor={colors.white}/>
 						}
 					}/>
 					<Tab.Screen name={'Absences'} component={AbsencesStackNavigator} options={
 						{
 							tabBarLabel: i18n.get('absences').title,
 							tabBarIcon: () => <Icon source={require('./assets/icons/icon_list.png')}
-													iconColor={colors.secondary}/>
+													iconColor={colors.white}/>
 						}
 					}/>
 					<Tab.Screen name={'Profile'} component={ProfileStackNavigator} options={
 						{
 							tabBarLabel: i18n.get('profile').title,
 							tabBarIcon: () => <Icon source={require('./assets/icons/icon_profile.png')}
-													iconColor={colors.secondary}/>
+													iconColor={colors.white}/>
 						}
 					}/>
 					<Tab.Screen name={'Settings'} component={SettingsStackNavigator} options={
 						{
 							tabBarLabel: i18n.get('settings').title,
 							tabBarIcon: () => <Icon source={require('./assets/icons/icon_settings.png')}
-													iconColor={colors.secondary}/>
+													iconColor={colors.white}/>
 						}
 					}/>
 				</Tab.Navigator>
