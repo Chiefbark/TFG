@@ -17,7 +17,7 @@ export default class CalendarDay extends React.Component {
 	
 	getTextColor(date, state, single) {
 		if (single) return single.textColor;
-		if (state === 'disabled') return colors.muted;
+		if (state === 'disabled') return colors.lightGrey;
 		if (state === 'today') return colors.primary
 		else return colors.black;
 	}
