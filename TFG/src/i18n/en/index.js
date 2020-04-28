@@ -1,5 +1,6 @@
 export const calendar = {
-	title: 'Calendar'
+	title: 'Calendar',
+	helpText: 'Click on a day in the calendar to see more details!'
 }
 export const statistics = {
 	title: 'Statistics'
