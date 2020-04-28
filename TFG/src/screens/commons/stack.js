@@ -15,7 +15,7 @@ export default class CommonStack extends React.Component {
 	
 	_onLocaleChange(locale) {
 		this.setState({locale: locale});
-		this.props.navigation.setOptions({title: i18n.get(this.state.key).title});
+		this.props.navigation.setOptions({title: i18n.get(`${this.state.key}.title`)});
 	}
 	
 	componentDidMount() {

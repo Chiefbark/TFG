@@ -40,7 +40,7 @@ const markedDates = {
 	}
 };
 
-LocaleConfig.locales[i18n.locale] = i18n.get('commons').calendarLocales;
+LocaleConfig.locales[i18n.locale] = i18n.get('commons.calendarLocales');
 LocaleConfig.defaultLocale = i18n.locale;
 
 export default class CalendarScreen extends CommonStack {
@@ -55,7 +55,7 @@ export default class CalendarScreen extends CommonStack {
 	_onLocaleChange(locale) {
 		super._onLocaleChange(locale);
 		if (!LocaleConfig.locales[locale])
-			LocaleConfig.locales[locale] = i18n.get('commons').calendarLocales;
+			LocaleConfig.locales[locale] = i18n.get('commons.calendarLocales');
 		LocaleConfig.defaultLocale = i18n.locale;
 	}
 	
@@ -95,9 +95,9 @@ export default class CalendarScreen extends CommonStack {
 						  );
 					  }}
 			/>
-			<Dialog title={i18n.get('commons').helpDialog.title}
+			<Dialog title={i18n.get('commons.helpDialog.title')}
 					buttons={() =>
-						<Button label={i18n.get('commons').helpDialog.actions[0]}
+						<Button label={i18n.get('commons.helpDialog.actions.0')}
 								backgroundColor={colors.primary} textColor={colors.white}
 								onClick={() => this.setState({help: false})}/>
 					}

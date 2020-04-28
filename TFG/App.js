@@ -97,35 +97,35 @@ export default class App extends React.Component {
 					barStyle={{backgroundColor: colors.primary, paddingVertical: 2.5}}>
 					<Tab.Screen name={'Calendar'} component={CalendarStackNavigator} options={
 						{
-							tabBarLabel: i18n.get('calendar').title,
+							tabBarLabel: i18n.get('calendar.title'),
 							tabBarIcon: () => <Icon source={require('./assets/icons/icon_calendar.png')}
 													iconColor={colors.white}/>
 						}
 					}/>
 					<Tab.Screen name={'Statistics'} component={StatisticsStackNavigator} options={
 						{
-							tabBarLabel: i18n.get('statistics').title,
+							tabBarLabel: i18n.get('statistics.title'),
 							tabBarIcon: () => <Icon source={require('./assets/icons/icon_stats.png')}
 													iconColor={colors.white}/>
 						}
 					}/>
 					<Tab.Screen name={'Absences'} component={AbsencesStackNavigator} options={
 						{
-							tabBarLabel: i18n.get('absences').title,
+							tabBarLabel: i18n.get('absences.title'),
 							tabBarIcon: () => <Icon source={require('./assets/icons/icon_list.png')}
 													iconColor={colors.white}/>
 						}
 					}/>
 					<Tab.Screen name={'Profile'} component={ProfileStackNavigator} options={
 						{
-							tabBarLabel: i18n.get('profile').title,
+							tabBarLabel: i18n.get('profile.title'),
 							tabBarIcon: () => <Icon source={require('./assets/icons/icon_profile.png')}
 													iconColor={colors.white}/>
 						}
 					}/>
 					<Tab.Screen name={'Settings'} component={SettingsStackNavigator} options={
 						{
-							tabBarLabel: i18n.get('settings').title,
+							tabBarLabel: i18n.get('settings.title'),
 							tabBarIcon: () => <Icon source={require('./assets/icons/icon_settings.png')}
 													iconColor={colors.white}/>
 						}
