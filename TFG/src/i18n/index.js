@@ -20,11 +20,23 @@ export function removeListener(listener) {
 		listeners.splice(index, 1);
 }
 
-export function get(key) {
+export function get(keys) {
+	let value;
 	switch (locale) {
 		case 'es':
-			return ES[key];
+			value = ES;
+			break;
 		default:
-			return EN[key];
+			value = EN;
 	}
+	return find(value, ...keys.split('.'));
+}
+
+function find(value, ...keys) {
+	if(keys.length === 1)
+		return value[keys[0]]
+	
+	value = value[keys[0]]
+	keys.shift()
+	return value ? find(value, ...keys) : undefined;
 }
