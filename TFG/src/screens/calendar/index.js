@@ -6,6 +6,8 @@ import {colors} from "../../styles";
 import Icon from "../../components/icon";
 import CommonStack from "../commons/stack";
 import CalendarDay from "../../components/calendarDay";
+import Dialog from "../../components/dialog";
+import Button from "../../components/button";
 
 const markedDates = {
 	"2020-04-15": {
@@ -38,21 +40,22 @@ const markedDates = {
 	}
 };
 
-LocaleConfig.locales[i18n.locale] = i18n.get('calendar').calendarLocales;
+LocaleConfig.locales[i18n.locale] = i18n.get('commons').calendarLocales;
 LocaleConfig.defaultLocale = i18n.locale;
 
 export default class CalendarScreen extends CommonStack {
 	constructor(props) {
 		super(props);
 		this.state = {
-			key: 'calendar'
+			key: 'calendar',
+			help: false
 		}
 	}
 	
 	_onLocaleChange(locale) {
 		super._onLocaleChange(locale);
 		if (!LocaleConfig.locales[locale])
-			LocaleConfig.locales[locale] = i18n.get('calendar').calendarLocales;
+			LocaleConfig.locales[locale] = i18n.get('commons').calendarLocales;
 		LocaleConfig.defaultLocale = i18n.locale;
 	}
 	
@@ -60,8 +63,9 @@ export default class CalendarScreen extends CommonStack {
 		super.componentDidMount();
 		this.props.navigation.setOptions({
 			headerRight: () =>
-				<Icon source={require('../../../assets/icons/icon_help.png')} iconColor={colors.secondary}
-					  style={{marginRight: 16}}/>
+				<Icon source={require('../../../assets/icons/icon_help.png')} iconColor={colors.white}
+					  style={{marginRight: 16}}
+					  onClick={() => this.setState({help: true})}/>
 		});
 	}
 	
@@ -91,6 +95,13 @@ export default class CalendarScreen extends CommonStack {
 						  );
 					  }}
 			/>
+			<Dialog title={i18n.get('commons').helpDialog.title}
+					buttons={() =>
+						<Button label={i18n.get('commons').helpDialog.actions[0]}
+								backgroundColor={colors.primary} textColor={colors.white}
+								onClick={() => this.setState({help: false})}/>
+					}
+					visible={this.state.help}/>
 		</View>;
 	}
 }
