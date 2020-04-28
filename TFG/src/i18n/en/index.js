@@ -25,5 +25,9 @@ export const commons = {
 	helpDialog: {
 		title: 'Need help?',
 		actions: ['Ok']
+	},
+	calendarPickerDialog: {
+		title: 'Pick a date',
+		actions: ['Cancel', 'Select']
 	}
 }
