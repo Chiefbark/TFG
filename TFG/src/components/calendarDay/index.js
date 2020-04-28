@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {StyleSheet, Text, TouchableOpacity, View} from "react-native";
-import {colors} from "../../styles";
+import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {colors} from '../../styles';
 
 export default class CalendarDay extends React.Component {
 	
