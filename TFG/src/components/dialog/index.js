@@ -29,7 +29,7 @@ export default class Dialog extends React.Component {
 				<View style={styles.container}>
 					<View style={styles.dialog}>
 						<Text style={styles.title}>{this.props.title}</Text>
-						<ScrollView style={[{width: '100%'}, this.state.height ? height : this.state.height]}
+						<ScrollView style={[{width: '100%'}, this.state.height && {height: this.state.height}]}
 									keyboardDismissMode={'on-drag'}>
 							<View onLayout={(event) => {
 								this.setState({height: event.nativeEvent.layout.height});
