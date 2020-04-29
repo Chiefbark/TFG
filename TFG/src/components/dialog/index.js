@@ -3,12 +3,6 @@ import PropTypes from 'prop-types';
 import {View, Text, ScrollView, Modal, StyleSheet} from 'react-native';
 import {colors} from '../../styles';
 
-/**
- * Displays a Dialog with a title, action buttons and whichever content you want
- *
- * @version 0.0.1
- * @author [Chiefbark](https://github.com/Chiefbark)
- */
 export default class Dialog extends React.Component {
 	
 	constructor(props) {
@@ -71,12 +65,8 @@ const styles = StyleSheet.create({
 });
 
 Dialog.propTypes = {
-	/**	Title of the Dialog    */
 	title: PropTypes.string.isRequired,
-	/**	Elements to be displayed as a button option of the Dialog    */
 	buttons: PropTypes.func.isRequired,
-	/**	Specifies if the Dialog is shown or not    */
 	visible: PropTypes.bool.isRequired,
-	/**	Content to be displayed inside the Dialog    */
 	content: PropTypes.func
 }

@@ -146,17 +146,9 @@ export default class CalendarPicker extends React.Component {
 }
 
 CalendarPicker.propTypes = {
-	/**	Gets called when the user clicks on the submit button
-	 * @param startDate	initial selected date
-	 * @param endDate	final selected date
-	 */
 	onSubmit: PropTypes.func.isRequired,
-	/**	Gets called when the user clicks on the cancel button    */
 	onCancel: PropTypes.func.isRequired,
-	/**	Specifies if the CalendarPicker allows multiple selection or not    */
 	multiple: PropTypes.bool,
-	/**	Initial selected date    */
 	startDate: PropTypes.string,
-	/**	Final selected date    */
 	endDate: PropTypes.string,
 }

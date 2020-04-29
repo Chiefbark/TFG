@@ -27,10 +27,7 @@ const styles = StyleSheet.create({
 });
 
 ListHeader.propTypes = {
-	/**	ListHeader label    */
 	label: PropTypes.string.isRequired,
-	/**	Text color of the ListHeader    */
 	textColor: PropTypes.string,
-	/**	Element to be displayed in the right side	*/
 	rightItem: PropTypes.func
 }

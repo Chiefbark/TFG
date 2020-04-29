@@ -2,12 +2,6 @@ import React, {Fragment} from 'react';
 import PropTypes from 'prop-types';
 import {Image, TouchableOpacity, StyleSheet} from 'react-native';
 
-/**
- * Displays a TouchableOpacity button with an icon inside.
- *
- * @version 0.0.1
- * @author [Chiefbark](https://github.com/Chiefbark)
- */
 export default class Icon extends React.Component {
 	
 	render() {
@@ -36,26 +30,13 @@ const styles = StyleSheet.create({
 })
 
 Icon.propTypes = {
-	/**	Path of the icon file    */
 	source: PropTypes.number.isRequired,
-	/**	Icon color    */
 	iconColor: PropTypes.string,
-	/**	Size of the icon    */
 	size: PropTypes.oneOf(['small', 'normal', 'large', 'extraLarge']),
-	/**	Gets called when the user clicks on the icon    */
 	onClick: PropTypes.func,
-	/**	Gets called when the user clicks and hold on the icon    */
 	onLongClick: PropTypes.func,
-	/**	Specifies if the Icon is floating or not    */
 	floating: PropTypes.bool,
-	/**	Specifies if the Icon is shown or not    */
 	visible: PropTypes.bool
-}
-
-Icon.defaultProps = {
-	size: 'normal',
-	floating: false,
-	visible: true
 }
 
 

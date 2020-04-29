@@ -75,18 +75,9 @@ const styles = StyleSheet.create({
 });
 
 CalendarDay.propTypes = {
-	/**	Date of the day (date param of dayComponent function)    */
 	date: PropTypes.object.isRequired,
-	/**	State of the day (state param of dayComponent function)    */
 	state: PropTypes.oneOf(['disabled', '', 'today']).isRequired,
-	/**	Marking of the dat (marking param of dayComponent function)    */
 	marking: PropTypes.oneOfType([PropTypes.array, PropTypes.object]).isRequired,
-	/**	Gets called when the user clicks on the day
-	 * @param day	The day object selected
-	 */
 	onClick: PropTypes.func,
-	/**	Gets called when the user clicks and hold on the day
-	 * @param day	The day object selected
-	 */
 	onLongClick: PropTypes.func
 }
