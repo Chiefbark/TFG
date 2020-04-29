@@ -38,5 +38,7 @@ Icon.propTypes = {
 	floating: PropTypes.bool,
 	visible: PropTypes.bool
 }
-
+Icon.defaultProps = {
+	visible: true
+}
 
