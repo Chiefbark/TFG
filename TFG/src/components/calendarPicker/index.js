@@ -8,8 +8,7 @@ import {Calendar} from 'react-native-calendars';
 import CalendarDay from '../calendarDay';
 
 const selection = {
-	color: colors.primaryLight,
-	textColor: colors.white
+	color: colors.primaryLight
 }
 
 const getDateFromString = (dateString) => {
