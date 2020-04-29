@@ -12,7 +12,9 @@ export const profile = {
 	title: 'Perfil'
 }
 export const settings = {
-	title: 'Ajustes'
+	title: 'Ajustes',
+	headers: ['Perfil', 'Idioma', 'Notificaciones', 'Información del calendario'],
+	actions: ['cambiar...', 'cambiar...']
 }
 
 export const commons = {
@@ -29,5 +31,10 @@ export const commons = {
 	calendarPickerDialog: {
 		title: 'Selecciona una fecha',
 		actions: ['Cancelar', 'Aplicar']
-	}
+	},
+	languageDialog: {
+		title: 'Selecciona un idioma',
+		actions: ['Aceptar']
+	},
+	languages: ['Español', 'Inglés']
 }
