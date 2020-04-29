@@ -81,8 +81,12 @@ CalendarDay.propTypes = {
 	state: PropTypes.oneOf(['disabled', '', 'today']).isRequired,
 	/**	Marking of the dat (marking param of dayComponent function)    */
 	marking: PropTypes.oneOfType([PropTypes.array, PropTypes.object]).isRequired,
-	/**	Gets called when the user clicks on the day    */
+	/**	Gets called when the user clicks on the day
+	 * @param day	The day object selected
+	 */
 	onClick: PropTypes.func,
-	/**	Gets called when the user clicks and hold on the day    */
+	/**	Gets called when the user clicks and hold on the day
+	 * @param day	The day object selected
+	 */
 	onLongClick: PropTypes.func
 }
