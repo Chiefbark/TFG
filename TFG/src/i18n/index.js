@@ -32,8 +32,18 @@ export function get(keys) {
 	return find(value, ...keys.split('.'));
 }
 
+export function getSelectedLang() {
+	switch (locale) {
+		case 'es':
+			return 0;
+			break;
+		default:
+			return 1;
+	}
+}
+
 function find(value, ...keys) {
-	if(keys.length === 1)
+	if (keys.length === 1)
 		return value[keys[0]]
 	
 	value = value[keys[0]]
