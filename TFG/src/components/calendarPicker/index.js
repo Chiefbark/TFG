@@ -100,7 +100,6 @@ export default class CalendarPicker extends React.Component {
 			<Dialog title={i18n.get('commons.calendarPickerDialog.title')}
 					content={() =>
 						<Calendar markedDates={this.state.markedDates}
-								  current={new Date()}
 								  minDate={'2020-01-01'}
 								  maxDate={'2021-01-01'}
 								  monthFormat={'yyyy MMMM'}
