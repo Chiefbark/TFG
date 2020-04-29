@@ -18,11 +18,11 @@ export default class ListHeader extends React.Component {
 
 const styles = StyleSheet.create({
 	container: {
-		flexDirection: 'row', alignItems: 'center', backgroundColor: colors.accent,
-		paddingHorizontal: 8, paddingVertical: 10
+		flexDirection: 'row', alignItems: 'center', backgroundColor: colors.grey,
+		paddingHorizontal: 16, paddingVertical: 10
 	},
 	label: {
-		flex: 1, fontWeight: 'bold', color: colors.secondary, marginRight: 8
+		flex: 1, fontWeight: 'bold', fontSize: 16, color: colors.white, marginRight: 8
 	}
 });
 
