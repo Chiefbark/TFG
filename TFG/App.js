@@ -77,8 +77,8 @@ export default class App extends React.Component {
 		super(props);
 		this.state = {
 			locale: undefined
-		},
-			i18n.locale().then(lang => this.state = {locale: lang});
+		};
+		i18n.locale().then(locale => this.state = {locale: locale});
 	}
 	
 	shouldComponentUpdate(nextProps, nextState, nextContext) {
