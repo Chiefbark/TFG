@@ -76,8 +76,9 @@ export default class App extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			locale: i18n.locale
-		}
+			locale: undefined
+		},
+			i18n.locale().then(lang => this.state = {locale: lang});
 	}
 	
 	shouldComponentUpdate(nextProps, nextState, nextContext) {
@@ -93,6 +94,7 @@ export default class App extends React.Component {
 	render() {
 		return (
 			<NavigationContainer>
+				{this.state.locale &&
 				<Tab.Navigator
 					barStyle={{backgroundColor: colors.primary, paddingVertical: 2.5}}>
 					<Tab.Screen name={'Calendar'} component={CalendarStackNavigator} options={
@@ -131,6 +133,7 @@ export default class App extends React.Component {
 						}
 					}/>
 				</Tab.Navigator>
+				}
 			</NavigationContainer>
 		);
 	}
