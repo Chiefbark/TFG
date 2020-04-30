@@ -1,6 +1,6 @@
 import React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
-import {LocaleConfig, Calendar} from 'react-native-calendars';
+import {Calendar} from 'react-native-calendars';
 import * as i18n from '../../i18n';
 import {colors} from '../../styles';
 import Icon from '../../components/icon';
@@ -40,9 +40,6 @@ const markedDates = {
 	}
 };
 
-LocaleConfig.locales[i18n.locale] = i18n.get('commons.calendarLocales');
-LocaleConfig.defaultLocale = i18n.locale;
-
 export default class CalendarScreen extends CommonStack {
 	constructor(props) {
 		super(props);
@@ -50,13 +47,6 @@ export default class CalendarScreen extends CommonStack {
 			key: 'calendar',
 			help: false
 		}
-	}
-	
-	_onLocaleChange(locale) {
-		super._onLocaleChange(locale);
-		if (!LocaleConfig.locales[locale])
-			LocaleConfig.locales[locale] = i18n.get('commons.calendarLocales');
-		LocaleConfig.defaultLocale = i18n.locale;
 	}
 	
 	componentDidMount() {
