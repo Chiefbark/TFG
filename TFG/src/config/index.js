@@ -17,7 +17,6 @@ export const config = async () => {
 				return result;
 			});
 	}
-	console.log(currConfig);
 	return currConfig;
 }
 let listeners = [];
