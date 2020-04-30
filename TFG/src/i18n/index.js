@@ -8,13 +8,12 @@ let currLocale = undefined;
 export const locale = async () => {
 	if (!currLocale) {
 		await AsyncStorage.getItem('@locale')
-			.then(async result => {
+			.then(result => {
 				if (!result) {
 					let deviceLanguage = getDeviceLanguage();
-					AsyncStorage.setItem('@locale', deviceLanguage);
-					await setLocale(deviceLanguage);
+					setLocale(deviceLanguage);
 				} else
-					await setLocale(result);
+					setLocale(result);
 				return result;
 			});
 	}
