@@ -5,7 +5,8 @@ export default class CommonStack extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			locale: i18n.locale
+			locale: i18n.locale(),
+			randKey: 0
 		}
 	}
 	
@@ -14,7 +15,7 @@ export default class CommonStack extends React.Component {
 	}
 	
 	_onLocaleChange(locale) {
-		this.setState({locale: locale});
+		this.setState({locale: locale, randKey: (this.state.randKey + 1)});
 		this.props.navigation.setOptions({title: i18n.get(`${this.state.key}.title`)});
 	}
 	
