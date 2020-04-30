@@ -20,6 +20,10 @@
     "assetBundlePatterns": [
       "**/*"
     ],
+    "android": {
+      "package": "com.chiefbark.tfg",
+      "versionCode": 0
+    },
     "ios": {
       "supportsTablet": true
     }
