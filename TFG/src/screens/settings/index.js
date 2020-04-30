@@ -1,6 +1,7 @@
 import React, {Fragment} from 'react';
 import {View, Text, ScrollView} from 'react-native';
 import * as i18n from '../../i18n';
+import * as config from '../../config';
 import CommonStack from "../commons/stack";
 
 import Button from '../../components/button';
@@ -15,13 +16,16 @@ export default class SettingsScreen extends CommonStack {
 		super(props);
 		this.state = {
 			key: 'settings',
-			languageDialog: false
+			languageDialog: false,
+			config: undefined
 		}
+		config.config().then(config => this.setState({config: config}));
 	}
 	
 	render() {
 		return (
 			<Fragment>
+				{this.state.config &&
 				<ScrollView style={{flex: 1}}>
 					<ListHeader label={i18n.get('settings.headers.0')}/>
 					{/*	CONFIG ABOUT LANGUAGE	*/}
@@ -42,8 +46,13 @@ export default class SettingsScreen extends CommonStack {
 							  titleStyles={{fontWeight: 'normal'}}
 							  rightItem={() =>
 								  <Switch
-									  initialValue={false}
-									  onChange={() => console.log(i18n.get(`settings.items.0`), 'changed value')}
+									  initialValue={this.state.config.notifications[0]}
+									  onChange={(value) => {
+										  let newConfig = this.state.config;
+										  newConfig.notifications[0] = value;
+										  this.setState({config: newConfig});
+										  config.setConfig(newConfig);
+									  }}
 									  style={{marginRight: 8}}
 								  />
 							  }
@@ -53,8 +62,13 @@ export default class SettingsScreen extends CommonStack {
 							  titleStyles={{fontWeight: 'normal'}}
 							  rightItem={() =>
 								  <Switch
-									  initialValue={true}
-									  onChange={() => console.log(i18n.get(`settings.items.1`), 'changed value')}
+									  initialValue={this.state.config.notifications[1]}
+									  onChange={(value) => {
+										  let newConfig = this.state.config;
+										  newConfig.notifications[1] = value;
+										  this.setState({config: newConfig});
+										  config.setConfig(newConfig);
+									  }}
 									  style={{marginRight: 8}}
 								  />
 							  }
@@ -66,8 +80,13 @@ export default class SettingsScreen extends CommonStack {
 							  titleStyles={{fontWeight: 'normal'}}
 							  rightItem={() =>
 								  <Switch
-									  initialValue={true}
-									  onChange={() => console.log(i18n.get(`settings.items.2`), 'changed value')}
+									  initialValue={this.state.config.calendar[0]}
+									  onChange={(value) => {
+										  let newConfig = this.state.config;
+										  newConfig.calendar[0] = value;
+										  this.setState({config: newConfig});
+										  config.setConfig(newConfig);
+									  }}
 									  style={{marginRight: 8}}
 								  />
 							  }
@@ -77,8 +96,13 @@ export default class SettingsScreen extends CommonStack {
 							  titleStyles={{fontWeight: 'normal'}}
 							  rightItem={() =>
 								  <Switch
-									  initialValue={true}
-									  onChange={() => console.log(i18n.get(`settings.items.3`), 'changed value')}
+									  initialValue={this.state.config.calendar[1]}
+									  onChange={(value) => {
+										  let newConfig = this.state.config;
+										  newConfig.calendar[1] = value;
+										  this.setState({config: newConfig});
+										  config.setConfig(newConfig);
+									  }}
 									  style={{marginRight: 8}}
 								  />
 							  }
@@ -88,14 +112,20 @@ export default class SettingsScreen extends CommonStack {
 							  titleStyles={{fontWeight: 'normal'}}
 							  rightItem={() =>
 								  <Switch
-									  initialValue={true}
-									  onChange={() => console.log(i18n.get(`settings.items.4`), 'changed value')}
+									  initialValue={this.state.config.calendar[2]}
+									  onChange={(value) => {
+										  let newConfig = this.state.config;
+										  newConfig.calendar[2] = value;
+										  this.setState({config: newConfig});
+										  config.setConfig(newConfig);
+									  }}
 									  style={{marginRight: 8}}
 								  />
 							  }
 							  feedback={false}
 							  style={{paddingVertical: 8}}/>
 				</ScrollView>
+				}
 				{/*	LANGUAGE DIALOG	*/}
 				<Dialog title={i18n.get('commons.languageDialog.title')}
 						content={() =>
