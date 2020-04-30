@@ -14,6 +14,7 @@ export const profile = {
 export const settings = {
 	title: 'Ajustes',
 	headers: ['Perfil', 'Idioma', 'Notificaciones', 'Información del calendario'],
+	items: ['Exámen próximo', 'Límite de faltas', 'Mostrar faltas', 'Mostrar vacaciones', 'Mostrar exámenes'],
 	actions: ['cambiar...', 'cambiar...']
 }
 
