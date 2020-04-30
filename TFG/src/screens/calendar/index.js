@@ -2,6 +2,7 @@ import React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 import {Calendar} from 'react-native-calendars';
 import * as i18n from '../../i18n';
+import * as config from '../../config';
 import {colors} from '../../styles';
 import Icon from '../../components/icon';
 import CommonStack from '../commons/stack';
@@ -45,8 +46,17 @@ export default class CalendarScreen extends CommonStack {
 		super(props);
 		this.state = {
 			key: 'calendar',
-			help: false
+			config: undefined,
+			help: false,
+			randKey: 0
 		}
+		config.config().then(config => {
+			this.setState({config: config})
+		});
+	}
+	
+	_onConfigChange(config) {
+		this.setState({config: config, randKey: (this.state.randKey + 1)});
 	}
 	
 	componentDidMount() {
@@ -57,11 +67,17 @@ export default class CalendarScreen extends CommonStack {
 					  style={{marginRight: 16}}
 					  onClick={() => this.setState({help: true})}/>
 		});
+		config.addListener(this._onConfigChange.bind(this));
+	}
+	
+	componentWillUnmount() {
+		super.componentWillUnmount();
+		config.removeListener(this._onConfigChange);
 	}
 	
 	render() {
 		return <View style={styles.container}>
-			<Calendar key={this.state.locale}
+			<Calendar key={this.state.randKey}
 					  markedDates={markedDates}
 					  current={new Date()}
 					  minDate={'2020-01-01'}
@@ -80,9 +96,13 @@ export default class CalendarScreen extends CommonStack {
 						  }
 					  }}
 					  dayComponent={({date, state, marking}) => {
-						  return (
-							  <CalendarDay date={date} state={state} marking={marking}/>
-						  );
+						  let newMarking = {...marking};
+						  if (this.state.config) {
+							  if (!this.state.config.calendar[0]) newMarking.multi = undefined;
+							  if (!this.state.config.calendar[1]) newMarking.selection = undefined;
+							  if (!this.state.config.calendar[2]) newMarking.single = undefined;
+						  }
+						  return <CalendarDay date={date} state={state} marking={newMarking}/>;
 					  }}
 			/>
 			<View style={styles.helpTextContainer}><Text style={styles.helpText}>{i18n.get('calendar.helpText')}</Text></View>
