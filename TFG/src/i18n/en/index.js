@@ -36,5 +36,8 @@ export const commons = {
 		title: 'Select your language',
 		actions: ['Ok']
 	},
-	languages: ['Spanish', 'English']
+	languages: [
+		{name: 'Spanish', iso: 'es'},
+		{name: 'English', iso: 'en'}
+	]
 }
