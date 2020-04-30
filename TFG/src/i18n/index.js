@@ -1,12 +1,36 @@
+import {AsyncStorage, NativeModules, Platform} from 'react-native';
 import * as EN from './en';
 import * as ES from './es';
+import {LocaleConfig} from "react-native-calendars";
 
-export let locale = 'es';
+let currLocale = undefined;
+
+export const locale = async () => {
+	if (!currLocale) {
+		await AsyncStorage.getItem('@locale')
+			.then(async result => {
+				if (!result) {
+					let deviceLanguage = getDeviceLanguage();
+					AsyncStorage.setItem('@locale', deviceLanguage);
+					await setLocale(deviceLanguage);
+				} else
+					await setLocale(result);
+				return result;
+			});
+	}
+	return currLocale;
+};
 let listeners = [];
 
 export function setLocale(lang) {
-	locale = lang;
-	listeners.forEach((element) => element(locale));
+	currLocale = lang;
+	AsyncStorage.setItem('@locale', lang);
+	
+	if (!LocaleConfig.locales[currLocale])
+		LocaleConfig.locales[currLocale] = get('commons.calendarLocales');
+	LocaleConfig.defaultLocale = currLocale;
+	
+	listeners.forEach((element) => element(currLocale));
 }
 
 export function addListener(listener) {
@@ -22,7 +46,7 @@ export function removeListener(listener) {
 
 export function get(keys) {
 	let value;
-	switch (locale) {
+	switch (currLocale) {
 		case 'es':
 			value = ES;
 			break;
@@ -33,7 +57,7 @@ export function get(keys) {
 }
 
 export function getSelectedLang() {
-	switch (locale) {
+	switch (currLocale) {
 		case 'es':
 			return 0;
 			break;
@@ -49,4 +73,13 @@ function find(value, ...keys) {
 	value = value[keys[0]]
 	keys.shift()
 	return value ? find(value, ...keys) : undefined;
+}
+
+function getDeviceLanguage() {
+	const deviceLanguage =
+		Platform.OS === 'ios'
+			? NativeModules.SettingsManager.settings.AppleLocale || NativeModules.SettingsManager.settings.AppleLanguages[0] // iOS 13
+			: NativeModules.I18nManager.localeIdentifier;
+	
+	return /^es_/.test(deviceLanguage) ? 'es' : 'en';
 }
