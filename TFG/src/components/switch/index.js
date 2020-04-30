@@ -19,7 +19,7 @@ export default class CustomSwitch extends React.Component {
 				thumbColor={this.state.enabled ? colors.primary : colors.grey}
 				onValueChange={(value) => {
 					this.setState({enabled: value});
-					this.props.onChange ? this.props.onChange() : undefined;
+					this.props.onChange ? this.props.onChange(value) : undefined;
 				}}
 				value={this.state.enabled}
 				style={this.props.style}
