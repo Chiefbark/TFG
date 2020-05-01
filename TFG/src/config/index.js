@@ -4,7 +4,8 @@ let defaultConfig = {
 	notifications: [true, true],
 	calendar: [true, true, true]
 }
-let currConfig = undefined;
+export let currConfig = undefined;
+export let lastModified = undefined;
 
 export const config = async () => {
 	if (!currConfig) {
@@ -23,6 +24,7 @@ let listeners = [];
 
 export function setConfig(config) {
 	currConfig = config;
+	lastModified = new Date().getTime();
 	AsyncStorage.setItem('@config', JSON.stringify(config));
 	
 	listeners.forEach((element) => element(currConfig));
