@@ -62,7 +62,7 @@ export default class SettingsScreen extends React.Component {
 							  rightItem={() =>
 								  <Switch
 									  initialValue={this.state._config.notifications[0]}
-									  onChange={(value) => {
+									  onChange={async (value) => {
 										  let newConfig = this.state._config;
 										  newConfig.notifications[0] = value;
 										  config.setConfig(newConfig);
@@ -77,7 +77,7 @@ export default class SettingsScreen extends React.Component {
 							  rightItem={() =>
 								  <Switch
 									  initialValue={this.state._config.notifications[1]}
-									  onChange={(value) => {
+									  onChange={async (value) => {
 										  let newConfig = this.state._config;
 										  newConfig.notifications[1] = value;
 										  config.setConfig(newConfig);
@@ -94,7 +94,7 @@ export default class SettingsScreen extends React.Component {
 							  rightItem={() =>
 								  <Switch
 									  initialValue={this.state._config.calendar[0]}
-									  onChange={(value) => {
+									  onChange={async (value) => {
 										  let newConfig = this.state._config;
 										  newConfig.calendar[0] = value;
 										  config.setConfig(newConfig);
@@ -109,7 +109,7 @@ export default class SettingsScreen extends React.Component {
 							  rightItem={() =>
 								  <Switch
 									  initialValue={this.state._config.calendar[1]}
-									  onChange={(value) => {
+									  onChange={async (value) => {
 										  let newConfig = this.state._config;
 										  newConfig.calendar[1] = value;
 										  config.setConfig(newConfig);
@@ -124,7 +124,7 @@ export default class SettingsScreen extends React.Component {
 							  rightItem={() =>
 								  <Switch
 									  initialValue={this.state._config.calendar[2]}
-									  onChange={(value) => {
+									  onChange={async (value) => {
 										  let newConfig = this.state._config;
 										  newConfig.calendar[2] = value;
 										  config.setConfig(newConfig);
