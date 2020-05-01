@@ -1,20 +1,20 @@
 import React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
-import {Calendar} from 'react-native-calendars';
 import * as i18n from '../../i18n';
 import * as config from '../../config';
+
 import {colors} from '../../styles';
-import Icon from '../../components/icon';
-import CommonStack from '../commons/stack';
+import Button from '../../components/button';
+import {Calendar} from 'react-native-calendars';
 import CalendarDay from '../../components/calendarDay';
 import Dialog from '../../components/dialog';
-import Button from '../../components/button';
+import Icon from '../../components/icon';
 
 const markedDates = {
-	'2020-04-15': {
+	'2020-05-15': {
 		single: {color: 'black', textColor: 'white'},
 	},
-	'2020-04-22': {
+	'2020-05-22': {
 		selection: {
 			color: 'pink',
 			isStart: true,
@@ -27,12 +27,12 @@ const markedDates = {
 			{color: 'red'},
 			{color: 'purple'},
 		]
-	}, '2020-04-23': {
+	}, '2020-05-23': {
 		selection: {
 			color: 'pink',
 			textColor: 'white'
 		},
-	}, '2020-04-24': {
+	}, '2020-05-24': {
 		selection: {
 			color: 'pink',
 			isEnd: true,
@@ -41,43 +41,39 @@ const markedDates = {
 	}
 };
 
-export default class CalendarScreen extends CommonStack {
+export default class CalendarScreen extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
 			key: 'calendar',
-			config: undefined,
 			help: false,
-			randKey: 0
+			_config: config.currConfig,
+			_lastModified: undefined
 		}
-		config.config().then(config => {
-			this.setState({config: config})
-		});
 	}
 	
-	_onConfigChange(config) {
-		this.setState({config: config, randKey: (this.state.randKey + 1)});
+	_shouldComponentUpdate() {
+		let currDate = new Date().getTime();
+		if (i18n.lastModified < currDate || config.lastModified < currDate) {
+			this.setState({_config: config.currConfig, _lastModified: currDate});
+			this.props.navigation.setOptions({
+				title: i18n.get(`${this.state.key}.title`),
+				headerRight: () =>
+					<Icon source={require('../../../assets/icons/icon_help.png')} iconColor={colors.white}
+						  style={{marginRight: 16}}
+						  onClick={() => this.setState({help: true})}/>
+			});
+		}
 	}
 	
 	componentDidMount() {
-		super.componentDidMount();
-		this.props.navigation.setOptions({
-			headerRight: () =>
-				<Icon source={require('../../../assets/icons/icon_help.png')} iconColor={colors.white}
-					  style={{marginRight: 16}}
-					  onClick={() => this.setState({help: true})}/>
-		});
-		config.addListener(this._onConfigChange.bind(this));
-	}
-	
-	componentWillUnmount() {
-		super.componentWillUnmount();
-		config.removeListener(this._onConfigChange);
+		this.props.navigation.addListener('focus', this._shouldComponentUpdate.bind(this));
+		this._shouldComponentUpdate();
 	}
 	
 	render() {
 		return <View style={styles.container}>
-			<Calendar key={this.state.randKey}
+			<Calendar key={this.state._lastModified}
 					  markedDates={markedDates}
 					  current={new Date()}
 					  minDate={'2020-01-01'}
@@ -97,11 +93,10 @@ export default class CalendarScreen extends CommonStack {
 					  }}
 					  dayComponent={({date, state, marking}) => {
 						  let newMarking = {...marking};
-						  if (this.state.config) {
-							  if (!this.state.config.calendar[0]) newMarking.multi = undefined;
-							  if (!this.state.config.calendar[1]) newMarking.selection = undefined;
-							  if (!this.state.config.calendar[2]) newMarking.single = undefined;
-						  }
+						  if (!this.state._config.calendar[0]) newMarking.multi = undefined;
+						  if (!this.state._config.calendar[1]) newMarking.selection = undefined;
+						  if (!this.state._config.calendar[2]) newMarking.single = undefined;
+				
 						  return <CalendarDay date={date} state={state} marking={newMarking}/>;
 					  }}
 			/>
