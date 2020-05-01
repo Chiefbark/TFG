@@ -3,6 +3,7 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {createMaterialBottomTabNavigator} from '@react-navigation/material-bottom-tabs';
 import * as i18n from './src/i18n';
+import * as config from './src/config';
 
 import {colors} from './src/styles';
 import Icon from './src/components/icon';
@@ -12,6 +13,7 @@ import Statistics from './src/screens/statistics';
 import Absences from './src/screens/absences';
 import Profile from './src/screens/profile';
 import Settings from './src/screens/settings';
+import {locale as i18nLocale} from "./src/i18n";
 
 const Tab = createMaterialBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -76,9 +78,11 @@ export default class App extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			locale: undefined
+			_locale: undefined,
+			_config: undefined
 		};
-		i18n.locale().then(locale => this.state = {locale: locale});
+		i18n.locale().then(locale => this.setState({_locale: locale}));
+		config.config().then(config => this.setState({_config: config}));
 	}
 	
 	shouldComponentUpdate(nextProps, nextState, nextContext) {
@@ -87,14 +91,14 @@ export default class App extends React.Component {
 	
 	componentDidMount() {
 		i18n.addListener((locale) => {
-			this.setState({locale: locale});
+			this.setState({_locale: locale});
 		});
 	}
 	
 	render() {
 		return (
 			<NavigationContainer>
-				{this.state.locale &&
+				{this.state._locale && this.state._config &&
 				<Tab.Navigator
 					barStyle={{backgroundColor: colors.primary, paddingVertical: 2.5}}>
 					<Tab.Screen name={'Calendar'} component={CalendarStackNavigator} options={
