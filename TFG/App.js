@@ -80,12 +80,11 @@ export default class App extends React.Component {
 			_locale: undefined,
 			_config: undefined
 		};
-		i18n.locale().then(locale => this.setState({_locale: locale}));
-		config.config().then(config => this.setState({_config: config}));
 	}
 	
-	shouldComponentUpdate(nextProps, nextState, nextContext) {
-		return this.state !== nextState;
+	componentDidMount() {
+		i18n.locale().then(locale => this.setState({_locale: locale}));
+		config.config().then(config => this.setState({_config: config}));
 	}
 	
 	render() {
