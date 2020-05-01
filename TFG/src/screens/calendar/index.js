@@ -45,8 +45,7 @@ export default class CalendarScreen extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			key: 'calendar',
-			help: false,
+			dialogHelp: false,
 			_config: config.currConfig,
 			_lastModified: undefined
 		}
@@ -57,11 +56,11 @@ export default class CalendarScreen extends React.Component {
 		if (i18n.lastModified < currDate || config.lastModified < currDate) {
 			this.setState({_config: config.currConfig, _lastModified: currDate});
 			this.props.navigation.setOptions({
-				title: i18n.get(`${this.state.key}.title`),
+				title: i18n.get(`calendar.title`),
 				headerRight: () =>
 					<Icon source={require('../../../assets/icons/icon_help.png')} iconColor={colors.white}
 						  style={{marginRight: 16}}
-						  onClick={() => this.setState({help: true})}/>
+						  onClick={() => this.setState({dialogHelp: true})}/>
 			});
 		}
 	}
@@ -105,9 +104,9 @@ export default class CalendarScreen extends React.Component {
 					buttons={() =>
 						<Button label={i18n.get('commons.helpDialog.actions.0')}
 								backgroundColor={colors.primary} textColor={colors.white}
-								onClick={() => this.setState({help: false})}/>
+								onClick={() => this.setState({dialogHelp: false})}/>
 					}
-					visible={this.state.help}/>
+					visible={this.state.dialogHelp}/>
 		</View>;
 	}
 }
