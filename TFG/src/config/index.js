@@ -1,12 +1,21 @@
 import {AsyncStorage} from 'react-native';
 
-const defaultConfig = {
-	notifications: [true, true],
-	calendar: [true, true, true]
-}
+const defaultConfig = {notifications: [true, true], calendar: [true, true, true]}
 
 export let currConfig = undefined;
 export let lastModified = undefined;
+
+let listeners = [];
+
+export function addListener(listener) {
+	listeners.push(listener);
+}
+
+export function removeListener(listener) {
+	let index = listeners.indexOf(listener);
+	if (index > -1)
+		listeners.splice(index, 1);
+}
 
 export const config = async () => {
 	if (!currConfig) {
@@ -21,12 +30,11 @@ export const config = async () => {
 	}
 	return currConfig;
 }
-let listeners = [];
 
 export function setConfig(config) {
 	currConfig = config;
 	lastModified = new Date().getTime();
 	AsyncStorage.setItem('@config', JSON.stringify(config));
 	
-	listeners.forEach((element) => element(currConfig));
+	listeners.forEach((element) => element());
 }

@@ -6,6 +6,18 @@ import {LocaleConfig} from "react-native-calendars";
 export let currLocale = undefined;
 export let lastModified = undefined;
 
+let listeners = [];
+
+export function addListener(listener) {
+	listeners.push(listener);
+}
+
+export function removeListener(listener) {
+	let index = listeners.indexOf(listener);
+	if (index > -1)
+		listeners.splice(index, 1);
+}
+
 export const locale = async () => {
 	if (!currLocale) {
 		await AsyncStorage.getItem('@locale')
@@ -17,7 +29,6 @@ export const locale = async () => {
 	}
 	return currLocale;
 };
-let listeners = [];
 
 export function setLocale(lang) {
 	currLocale = lang;
@@ -28,7 +39,7 @@ export function setLocale(lang) {
 		LocaleConfig.locales[currLocale] = get('commons.calendarLocales');
 	LocaleConfig.defaultLocale = currLocale;
 	
-	listeners.forEach((element) => element(currLocale));
+	listeners.forEach((element) => element());
 }
 
 export function get(keys) {
