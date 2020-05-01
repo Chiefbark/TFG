@@ -13,7 +13,6 @@ import Statistics from './src/screens/statistics';
 import Absences from './src/screens/absences';
 import Profile from './src/screens/profile';
 import Settings from './src/screens/settings';
-import {locale as i18nLocale} from "./src/i18n";
 
 const Tab = createMaterialBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -87,12 +86,6 @@ export default class App extends React.Component {
 	
 	shouldComponentUpdate(nextProps, nextState, nextContext) {
 		return this.state !== nextState;
-	}
-	
-	componentDidMount() {
-		i18n.addListener((locale) => {
-			this.setState({_locale: locale});
-		});
 	}
 	
 	render() {
