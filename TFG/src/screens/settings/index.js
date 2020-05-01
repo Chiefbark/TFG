@@ -1,25 +1,36 @@
 import React, {Fragment} from 'react';
-import {View, Text, ScrollView} from 'react-native';
+import {ScrollView} from 'react-native';
 import * as i18n from '../../i18n';
 import * as config from '../../config';
-import CommonStack from "../commons/stack";
 
+import {colors} from "../../styles";
 import Button from '../../components/button';
+import Dialog from "../../components/dialog";
 import ListHeader from "../../components/listHeader";
 import ListItem from "../../components/listItem";
-import {colors} from "../../styles";
-import Dialog from "../../components/dialog";
 import Switch from '../../components/switch';
 
-export default class SettingsScreen extends CommonStack {
+export default class SettingsScreen extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			key: 'settings',
 			languageDialog: false,
-			config: undefined
+			_config: config.currConfig,
+			_lastModified: undefined
 		}
-		config.config().then(config => this.setState({config: config}));
+	}
+	
+	_shouldComponentUpdate() {
+		let currDate = new Date().getTime();
+		if (i18n.lastModified < currDate || config.lastModified < currDate) {
+			this.setState({_config: config.currConfig, _lastModified: currDate});
+			this.props.navigation.setOptions({title: i18n.get(`settings.title`)});
+		}
+	}
+	
+	componentDidMount() {
+		this.props.navigation.addListener('focus', this._shouldComponentUpdate.bind(this));
+		this._shouldComponentUpdate();
 	}
 	
 	render() {
@@ -50,7 +61,6 @@ export default class SettingsScreen extends CommonStack {
 									  onChange={(value) => {
 										  let newConfig = this.state.config;
 										  newConfig.notifications[0] = value;
-										  this.setState({config: newConfig});
 										  config.setConfig(newConfig);
 									  }}
 									  style={{marginRight: 8}}
@@ -66,7 +76,6 @@ export default class SettingsScreen extends CommonStack {
 									  onChange={(value) => {
 										  let newConfig = this.state.config;
 										  newConfig.notifications[1] = value;
-										  this.setState({config: newConfig});
 										  config.setConfig(newConfig);
 									  }}
 									  style={{marginRight: 8}}
@@ -84,7 +93,6 @@ export default class SettingsScreen extends CommonStack {
 									  onChange={(value) => {
 										  let newConfig = this.state.config;
 										  newConfig.calendar[0] = value;
-										  this.setState({config: newConfig});
 										  config.setConfig(newConfig);
 									  }}
 									  style={{marginRight: 8}}
@@ -100,7 +108,6 @@ export default class SettingsScreen extends CommonStack {
 									  onChange={(value) => {
 										  let newConfig = this.state.config;
 										  newConfig.calendar[1] = value;
-										  this.setState({config: newConfig});
 										  config.setConfig(newConfig);
 									  }}
 									  style={{marginRight: 8}}
@@ -116,7 +123,6 @@ export default class SettingsScreen extends CommonStack {
 									  onChange={(value) => {
 										  let newConfig = this.state.config;
 										  newConfig.calendar[2] = value;
-										  this.setState({config: newConfig});
 										  config.setConfig(newConfig);
 									  }}
 									  style={{marginRight: 8}}
