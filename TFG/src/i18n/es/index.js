@@ -38,6 +38,11 @@ export const commons = {
 		title: 'Selecciona un idioma',
 		actions: ['Aceptar']
 	},
+	teacherForm: {
+		title: 'Profesor',
+		placeholders: ['nombre del profesor...'],
+		actions: ['Cancelar', 'Guardar']
+	},
 	languages: [
 		{name: 'Español', iso: 'es'},
 		{name: 'Inglés', iso: 'en'}
