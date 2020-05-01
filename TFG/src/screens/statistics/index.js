@@ -16,6 +16,7 @@ export default class StatisticsScreen extends React.Component {
 			this.setState({_lastModified: currDate});
 			this.props.navigation.setOptions({title: i18n.get(`statistics.title`)});
 		}
+		this.props.navigation.dangerouslyGetParent().setOptions({tabBarLabel: i18n.get('statistics.title')});
 	}
 	
 	componentDidMount() {

@@ -62,6 +62,7 @@ export default class CalendarScreen extends React.Component {
 						  style={{marginRight: 16}}
 						  onClick={() => this.setState({dialogHelp: true})}/>
 			});
+			this.props.navigation.dangerouslyGetParent().setOptions({tabBarLabel: i18n.get('calendar.title')});
 		}
 	}
 	

@@ -26,6 +26,7 @@ export default class SettingsScreen extends React.Component {
 			this.setState({_config: config.currConfig, _lastModified: currDate});
 			this.props.navigation.setOptions({title: i18n.get(`settings.title`)});
 		}
+		this.props.navigation.dangerouslyGetParent().setOptions({tabBarLabel: i18n.get('settings.title')});
 	}
 	
 	componentDidMount() {
@@ -36,7 +37,7 @@ export default class SettingsScreen extends React.Component {
 	render() {
 		return (
 			<Fragment>
-				{this.state.config &&
+				{this.state._config &&
 				<ScrollView style={{flex: 1}}>
 					<ListHeader label={i18n.get('settings.headers.0')}/>
 					{/*	CONFIG ABOUT LANGUAGE	*/}
@@ -57,9 +58,9 @@ export default class SettingsScreen extends React.Component {
 							  titleStyles={{fontWeight: 'normal'}}
 							  rightItem={() =>
 								  <Switch
-									  initialValue={this.state.config.notifications[0]}
+									  initialValue={this.state._config.notifications[0]}
 									  onChange={(value) => {
-										  let newConfig = this.state.config;
+										  let newConfig = this.state._config;
 										  newConfig.notifications[0] = value;
 										  config.setConfig(newConfig);
 									  }}
@@ -72,9 +73,9 @@ export default class SettingsScreen extends React.Component {
 							  titleStyles={{fontWeight: 'normal'}}
 							  rightItem={() =>
 								  <Switch
-									  initialValue={this.state.config.notifications[1]}
+									  initialValue={this.state._config.notifications[1]}
 									  onChange={(value) => {
-										  let newConfig = this.state.config;
+										  let newConfig = this.state._config;
 										  newConfig.notifications[1] = value;
 										  config.setConfig(newConfig);
 									  }}
@@ -89,9 +90,9 @@ export default class SettingsScreen extends React.Component {
 							  titleStyles={{fontWeight: 'normal'}}
 							  rightItem={() =>
 								  <Switch
-									  initialValue={this.state.config.calendar[0]}
+									  initialValue={this.state._config.calendar[0]}
 									  onChange={(value) => {
-										  let newConfig = this.state.config;
+										  let newConfig = this.state._config;
 										  newConfig.calendar[0] = value;
 										  config.setConfig(newConfig);
 									  }}
@@ -104,9 +105,9 @@ export default class SettingsScreen extends React.Component {
 							  titleStyles={{fontWeight: 'normal'}}
 							  rightItem={() =>
 								  <Switch
-									  initialValue={this.state.config.calendar[1]}
+									  initialValue={this.state._config.calendar[1]}
 									  onChange={(value) => {
-										  let newConfig = this.state.config;
+										  let newConfig = this.state._config;
 										  newConfig.calendar[1] = value;
 										  config.setConfig(newConfig);
 									  }}
@@ -119,9 +120,9 @@ export default class SettingsScreen extends React.Component {
 							  titleStyles={{fontWeight: 'normal'}}
 							  rightItem={() =>
 								  <Switch
-									  initialValue={this.state.config.calendar[2]}
+									  initialValue={this.state._config.calendar[2]}
 									  onChange={(value) => {
-										  let newConfig = this.state.config;
+										  let newConfig = this.state._config;
 										  newConfig.calendar[2] = value;
 										  config.setConfig(newConfig);
 									  }}
@@ -142,6 +143,7 @@ export default class SettingsScreen extends React.Component {
 												  onClick={() => {
 													  this.setState({languageDialog: false});
 													  i18n.setLocale(element.iso);
+													  this._shouldComponentUpdate();
 												  }}
 										/>
 									)}
