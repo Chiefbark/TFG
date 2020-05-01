@@ -9,7 +9,8 @@ export const absences = {
 	title: 'Absences'
 }
 export const profile = {
-	title: 'Profile'
+	title: 'Profile',
+	screens: [{title: 'Information'}, {title: 'Subjects'}, {title: 'Teachers'}]
 }
 export const settings = {
 	title: 'Settings',
