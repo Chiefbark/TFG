@@ -29,14 +29,3 @@ export function setConfig(config) {
 	
 	listeners.forEach((element) => element(currConfig));
 }
-
-export function addListener(listener) {
-	listeners.push(listener);
-	listener();
-}
-
-export function removeListener(listener) {
-	let index = listeners.indexOf(listener);
-	if (index > -1)
-		listeners.splice(index, 1);
-}
