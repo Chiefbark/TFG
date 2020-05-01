@@ -6,9 +6,6 @@ export default class AbsencesScreen extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			calendarPicker: false,
-			startDate: '2020-04-20',
-			endDate: '2020-04-22',
 			_lastModified: undefined
 		}
 	}
