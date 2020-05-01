@@ -31,17 +31,6 @@ export function setLocale(lang) {
 	listeners.forEach((element) => element(currLocale));
 }
 
-export function addListener(listener) {
-	listeners.push(listener);
-	listener();
-}
-
-export function removeListener(listener) {
-	let index = listeners.indexOf(listener);
-	if (index > -1)
-		listeners.splice(index, 1);
-}
-
 export function get(keys) {
 	let value;
 	switch (currLocale) {
