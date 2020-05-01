@@ -46,29 +46,33 @@ export default class CalendarScreen extends React.Component {
 		super(props);
 		this.state = {
 			dialogHelp: false,
+			_locale: i18n.currLocale,
 			_config: config.currConfig,
 			_lastModified: undefined
 		}
 	}
 	
-	_shouldComponentUpdate() {
-		let currDate = new Date().getTime();
-		if (i18n.lastModified < currDate || config.lastModified < currDate) {
-			this.setState({_config: config.currConfig, _lastModified: currDate});
-			this.props.navigation.setOptions({
-				title: i18n.get(`calendar.title`),
-				headerRight: () =>
-					<Icon source={require('../../../assets/icons/icon_help.png')} iconColor={colors.white}
-						  style={{marginRight: 16}}
-						  onClick={() => this.setState({dialogHelp: true})}/>
-			});
-			this.props.navigation.dangerouslyGetParent().setOptions({tabBarLabel: i18n.get('calendar.title')});
-		}
+	_updateComponent() {
+		this.setState({_locale: i18n.currLocale, _config: config.currConfig, _lastModified: new Date().getTime()});
+		this.props.navigation.setOptions({
+			title: i18n.get(`calendar.title`),
+			headerRight: () =>
+				<Icon source={require('../../../assets/icons/icon_help.png')} iconColor={colors.white}
+					  style={{marginRight: 16}}
+					  onClick={() => this.setState({dialogHelp: true})}/>
+		});
+		this.props.navigation.dangerouslyGetParent().setOptions({tabBarLabel: i18n.get('calendar.title')});
 	}
 	
 	componentDidMount() {
-		this.props.navigation.addListener('focus', this._shouldComponentUpdate.bind(this));
-		this._shouldComponentUpdate();
+		i18n.addListener(this._updateComponent.bind(this));
+		config.addListener(this._updateComponent.bind(this));
+		this._updateComponent();
+	}
+	
+	componentWillUnmount() {
+		i18n.removeListener(this._updateComponent.bind(this));
+		config.removeListener(this._updateComponent.bind(this));
 	}
 	
 	render() {
