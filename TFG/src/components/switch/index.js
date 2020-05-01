@@ -18,8 +18,7 @@ export default class CustomSwitch extends React.Component {
 				ios_backgroundColor={colors.lightGrey}
 				thumbColor={this.state.enabled ? colors.primary : colors.grey}
 				onValueChange={(value) => {
-					this.setState({enabled: value});
-					this.props.onChange ? this.props.onChange(value) : undefined;
+					this.setState({enabled: value}, () => this.props.onChange ? this.props.onChange(value) : undefined);
 				}}
 				value={this.state.enabled}
 				style={this.props.style}
