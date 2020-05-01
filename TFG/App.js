@@ -1,4 +1,5 @@
-import React from 'react';
+import React, {Fragment} from 'react';
+import {View, ActivityIndicator} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {createMaterialBottomTabNavigator} from '@react-navigation/material-bottom-tabs';
@@ -59,32 +60,33 @@ function ProfileStackNavigator() {
 	return (
 		<Stack.Navigator screenOptions={{
 			headerTintColor: colors.white,
-			headerStyle: {backgroundColor: colors.primary}
+			headerStyle: {backgroundColor: colors.primary, elevation: 0, shadowOpacity: 0, shadowOffset: {height: 0,}, shadowRadius: 0},
+			headerMode: 'screen'
 		}}>
 			<Stack.Screen name={'Profile'} component={ProfileTopTabNavigators}/>
 		</Stack.Navigator>
 	);
 }
 
-// tabBar={() => {
-// 	return <Icon source={require('./assets/icons/icon_info.png')} iconColor={colors.white}/>
-// }}
 function ProfileTopTabNavigators() {
 	return (
 		<TopTab.Navigator
 			initialRouteName={'Information'}
 			tabBarOptions={{
-				activeTintColor: '#e91e63',
-				labelStyle: {fontSize: 12},
-				style: {backgroundColor: 'powderblue'},
+				showIcon: true, showLabel: false,
+				indicatorStyle: {backgroundColor: 'white'},
+				style: {backgroundColor: colors.primary},
 			}}
 		>
-			<TopTab.Screen name={'Information'} component={Information}
-						   options={{tabBarLabel: 'Home'}}/>
-			<TopTab.Screen name={'Subjects'} component={Subjects}
-						   options={{tabBarLabel: 'Updates'}}/>
-			<TopTab.Screen name={'Teachers'} component={Teachers}
-						   options={{tabBarLabel: 'Profile'}}/>
+			<TopTab.Screen name={'Information'} component={Information} options={
+				{tabBarIcon: () => <Icon source={require('./assets/icons/icon_info.png')} iconColor={colors.white}/>}
+			}/>
+			<TopTab.Screen name={'Subjects'} component={Subjects} options={
+				{tabBarIcon: () => <Icon source={require('./assets/icons/icon_book.png')} iconColor={colors.white}/>}
+			}/>
+			<TopTab.Screen name={'Teachers'} component={Teachers} options={
+				{tabBarIcon: () => <Icon source={require('./assets/icons/icon_person.png')} iconColor={colors.white}/>}
+			}/>
 		</TopTab.Navigator>
 	)
 }
@@ -101,132 +103,61 @@ function SettingsStackNavigator() {
 }
 
 export default class App extends React.Component {
-
+	
 	constructor(props) {
 		super(props);
-		this.state = {
-			_locale: undefined,
-			_config: undefined
-		};
-	}
-
-	componentDidMount() {
+		this.state = {_locale: undefined, _config: undefined};
 		i18n.locale().then(locale => this.setState({_locale: locale}));
 		config.config().then(config => this.setState({_config: config}));
 	}
-
+	
 	render() {
-		return (
-			<NavigationContainer>
-				{this.state._locale && this.state._config &&
-				<BottomTab.Navigator
-					barStyle={{backgroundColor: colors.primary, paddingVertical: 2.5}}>
-					<BottomTab.Screen name={'Calendar'} component={CalendarStackNavigator} options={
-						{
-							tabBarLabel: i18n.get('calendar.title'),
-							tabBarIcon: () => <Icon source={require('./assets/icons/icon_calendar.png')}
-													iconColor={colors.white}/>
-						}
-					}/>
-					<BottomTab.Screen name={'Statistics'} component={StatisticsStackNavigator} options={
-						{
-							tabBarLabel: i18n.get('statistics.title'),
-							tabBarIcon: () => <Icon source={require('./assets/icons/icon_stats.png')}
-													iconColor={colors.white}/>
-						}
-					}/>
-					<BottomTab.Screen name={'Absences'} component={AbsencesStackNavigator} options={
-						{
-							tabBarLabel: i18n.get('absences.title'),
-							tabBarIcon: () => <Icon source={require('./assets/icons/icon_list.png')}
-													iconColor={colors.white}/>
-						}
-					}/>
-					<BottomTab.Screen name={'Profile'} component={ProfileStackNavigator} options={
-						{
-							tabBarLabel: i18n.get('profile.title'),
-							tabBarIcon: () => <Icon source={require('./assets/icons/icon_profile.png')}
-													iconColor={colors.white}/>
-						}
-					}/>
-					<BottomTab.Screen name={'Settings'} component={SettingsStackNavigator} options={
-						{
-							tabBarLabel: i18n.get('settings.title'),
-							tabBarIcon: () => <Icon source={require('./assets/icons/icon_settings.png')}
-													iconColor={colors.white}/>
-						}
-					}/>
-				</BottomTab.Navigator>
+		return (<Fragment>
+				{this.state._locale && this.state._config ?
+					<NavigationContainer>
+						<BottomTab.Navigator barStyle={{backgroundColor: colors.primary, paddingVertical: 2.5}}>
+							<BottomTab.Screen name={'Calendar'} component={CalendarStackNavigator} options={
+								{
+									tabBarLabel: i18n.get('calendar.title'),
+									tabBarIcon: () => <Icon source={require('./assets/icons/icon_calendar.png')}
+															iconColor={colors.white}/>
+								}
+							}/>
+							<BottomTab.Screen name={'Statistics'} component={StatisticsStackNavigator} options={
+								{
+									tabBarLabel: i18n.get('statistics.title'),
+									tabBarIcon: () => <Icon source={require('./assets/icons/icon_stats.png')}
+															iconColor={colors.white}/>
+								}
+							}/>
+							<BottomTab.Screen name={'Absences'} component={AbsencesStackNavigator} options={
+								{
+									tabBarLabel: i18n.get('absences.title'),
+									tabBarIcon: () => <Icon source={require('./assets/icons/icon_list.png')}
+															iconColor={colors.white}/>
+								}
+							}/>
+							<BottomTab.Screen name={'Profile'} component={ProfileStackNavigator} options={
+								{
+									tabBarLabel: i18n.get('profile.title'),
+									tabBarIcon: () => <Icon source={require('./assets/icons/icon_profile.png')}
+															iconColor={colors.white}/>
+								}
+							}/>
+							<BottomTab.Screen name={'Settings'} component={SettingsStackNavigator} options={
+								{
+									tabBarLabel: i18n.get('settings.title'),
+									tabBarIcon: () => <Icon source={require('./assets/icons/icon_settings.png')}
+															iconColor={colors.white}/>
+								}
+							}/>
+						</BottomTab.Navigator>
+					</NavigationContainer>
+					: <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+						<ActivityIndicator size={'large'} color={colors.primary}/>
+					</View>
 				}
-			</NavigationContainer>
+			</Fragment>
 		);
 	}
 }
-//
-// import * as React from 'react';
-// import { Text, View } from 'react-native';
-// import { NavigationContainer } from '@react-navigation/native';
-// import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-//
-// function FeedScreen() {
-// 	return (
-// 		<View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-// 			<Text>Feed!</Text>
-// 		</View>
-// 	);
-// }
-//
-// function NotificationsScreen() {
-// 	return (
-// 		<View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-// 			<Text>Notifications!</Text>
-// 		</View>
-// 	);
-// }
-//
-// function ProfileScreen() {
-// 	return (
-// 		<View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-// 			<Text>Profile!</Text>
-// 		</View>
-// 	);
-// }
-//
-// const Tab = createMaterialTopTabNavigator();
-//
-// function MyTabs() {
-// 	return (
-// 		<Tab.Navigator
-// 			initialRouteName="Feed"
-// 			tabBarOptions={{
-// 				activeTintColor: '#e91e63',
-// 				labelStyle: { fontSize: 12 },
-// 				style: { backgroundColor: 'powderblue' },
-// 			}}
-// 		>
-// 			<Tab.Screen
-// 				name="Feed"
-// 				component={FeedScreen}
-// 				options={{ tabBarLabel: 'Home' }}
-// 			/>
-// 			<Tab.Screen
-// 				name="Notifications"
-// 				component={NotificationsScreen}
-// 				options={{ tabBarLabel: 'Updates' }}
-// 			/>
-// 			<Tab.Screen
-// 				name="Profile"
-// 				component={ProfileScreen}
-// 				options={{ tabBarLabel: 'Profile' }}
-// 			/>
-// 		</Tab.Navigator>
-// 	);
-// }
-// export default function App() {
-// 	return (
-// 		<NavigationContainer>
-// 			<MyTabs />
-// 		</NavigationContainer>
-// 	);
-// }
-//
