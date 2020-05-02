@@ -52,7 +52,8 @@ export const commons = {
 	teacherForm: {
 		title: 'Teacher',
 		placeholders: ['teacher\'s name...'],
-		actions: ['Cancel', 'Save']
+		actions: ['Cancel', 'Save'],
+		toast: 'Please fill all the fields'
 	},
 	languages: [
 		{name: 'Spanish', iso: 'es'},
