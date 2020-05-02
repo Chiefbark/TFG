@@ -2,6 +2,8 @@ import React, {Fragment} from 'react';
 import PropTypes from 'prop-types';
 import {TextInput} from 'react-native';
 import * as i18n from '../../../i18n';
+import * as firebase from '../../../firebase';
+
 import Dialog from '../../dialog';
 import Button from '../../button';
 import {colors} from '../../../styles';
@@ -11,7 +13,8 @@ export default class TeacherForm extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			text: this.props.teacher?.name ?? undefined
+			key: this.props.teacher?.key ?? undefined,
+			text: this.props.teacher?.obj.name ?? undefined
 		}
 	}
 	
@@ -34,7 +37,8 @@ export default class TeacherForm extends React.Component {
 							<Button label={i18n.get('commons.teacherForm.actions.1')}
 									backgroundColor={colors.primary} textColor={colors.white}
 									onClick={() => {
-										this.props.onSubmit({name: this.state.text});
+										let obj = {key: this.state.key, name: this.state.text};
+										this.props.onSubmit(obj);
 									}}/>
 						</Fragment>
 					} visible={true}/>
@@ -46,6 +50,9 @@ TeacherForm.propTypes = {
 	onSubmit: PropTypes.func.isRequired,
 	onCancel: PropTypes.func.isRequired,
 	teacher: PropTypes.shape({
-		name: PropTypes.string.isRequired
+		key: PropTypes.string.isRequired,
+		obj: PropTypes.shape({
+			name: PropTypes.string.isRequired
+		}).isRequired
 	})
 }
