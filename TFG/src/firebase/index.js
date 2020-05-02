@@ -1,11 +1,13 @@
-import firebase from "firebase";
-import {AsyncStorage} from "react-native";
+import firebase from 'firebase';
+import {AsyncStorage} from 'react-native';
 
 const firebaseConfig = {
 	apiKey: "apiKey",
 	authDomain: "authDomain",
 	databaseURL: "databaseURL"
 };
+
+export let currFirebaseKey = undefined;
 
 if (!firebase.apps.length)
 	firebase.initializeApp(firebaseConfig);
@@ -16,14 +18,16 @@ export function getDatabase() {
 	return db;
 }
 
-export async function getUserKey() {
-	let key = undefined;
-	await AsyncStorage.getItem('@userKey', (error, result) => {
-		if (!error) key = result; else console.log(error);
-	});
-	if (!key) {
-		key = db.ref('users/').push({createdAt: new Date().getTime()}).getKey();
-		AsyncStorage.setItem('@userKey', key, (error) => console.log(error));
+export const firebaseKey = async () => {
+	if (!currFirebaseKey) {
+		await AsyncStorage.getItem('@firebaseKey')
+			.then(result => {
+				if (!result) currFirebaseKey = db.ref('users/').push({createdAt: new Date().getTime()}).getKey();
+				else
+					currFirebaseKey = result;
+				AsyncStorage.setItem('@firebaseKey', currFirebaseKey, (error) => console.log(error));
+				return result;
+			});
 	}
-	return key;
+	return currFirebaseKey;
 }
