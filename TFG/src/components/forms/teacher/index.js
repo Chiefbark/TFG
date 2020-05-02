@@ -25,7 +25,7 @@ export default class TeacherForm extends React.Component {
 			placeholderTextColor: colors.red,
 			borderBottomColor: colors.red
 		});
-		Toast.showWithGravity(i18n.get('commons.teacherForm.toast'), Toast.LONG, Toast.TOP);
+		Toast.showWithGravity(i18n.get('commons.form.toast'), Toast.LONG, Toast.TOP);
 		setTimeout(() => {
 			ref.setNativeProps({
 				placeholderTextColor: colors.lightGrey,
@@ -47,12 +47,12 @@ export default class TeacherForm extends React.Component {
 					}
 					buttons={() =>
 						<Fragment>
-							<Button label={i18n.get('commons.teacherForm.actions.0')}
+							<Button label={i18n.get('commons.form.actions.0')}
 									onClick={() => {
 										this.props.onCancel();
 									}}
 							/>
-							<Button label={i18n.get('commons.teacherForm.actions.1')}
+							<Button label={i18n.get('commons.form.actions.1')}
 									backgroundColor={colors.primary} textColor={colors.white}
 									onClick={() => {
 										if (!this.state.name || this.state.name === '')
