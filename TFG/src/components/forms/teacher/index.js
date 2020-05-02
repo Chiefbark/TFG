@@ -54,7 +54,7 @@ export default class TeacherForm extends React.Component {
 							<Button label={i18n.get('commons.teacherForm.actions.1')}
 									backgroundColor={colors.primary} textColor={colors.white}
 									onClick={() => {
-										if (!this.state.text || this.state.text === '')
+										if (!this.state.name || this.state.name === '')
 											this._showError(this._name);
 										else {
 											let obj = {name: this.state.name};
