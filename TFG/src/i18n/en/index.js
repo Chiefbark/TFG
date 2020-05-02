@@ -24,6 +24,7 @@ export const profile = {
 		{
 			title: 'Teachers',
 			emptyList: 'You still don\'t have any teachers!\n\nAdd some teachers by clicking the button +',
+			subtitle: 'subjects',
 			confirmDialog: {
 				title: 'Are you sure?',
 				description: 'The subjects associated to the teacher(s) won\'t be removed',

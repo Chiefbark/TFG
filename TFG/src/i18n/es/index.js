@@ -24,6 +24,7 @@ export const profile = {
 		{
 			title: 'Profesores',
 			emptyList: 'No tienes ningún profesor añadido!\n\nAñade algunos profesores pulsando sobre el botón +',
+			subtitle: 'asignaturas',
 			confirmDialog: {
 				title: 'Estás seguro?',
 				description: 'Las asigntaruas de el/los profesor(es) no serán eliminadas',
