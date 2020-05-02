@@ -15,7 +15,8 @@ export default class TeacherForm extends React.Component {
 		super(props);
 		this.state = {
 			key: this.props.teacher?.key ?? undefined,
-			name: this.props.teacher?.obj.name ?? undefined
+			name: this.props.teacher?.obj.name ?? undefined,
+			nSubjects: this.props.teacher?.obj.nSubjects ?? 0
 		}
 	}
 	
@@ -57,7 +58,7 @@ export default class TeacherForm extends React.Component {
 										if (!this.state.name || this.state.name === '')
 											this._showError(this._name);
 										else {
-											let obj = {name: this.state.name};
+											let obj = {name: this.state.name, nSubjects: this.state.nSubjects};
 											this.props.onSubmit();
 											if (!this.state.key)
 												firebase.getDatabase().ref(`users/${firebase.currFirebaseKey}/teachers`).push(obj);
@@ -77,7 +78,8 @@ TeacherForm.propTypes = {
 	teacher: PropTypes.shape({
 		key: PropTypes.string.isRequired,
 		obj: PropTypes.shape({
-			name: PropTypes.string.isRequired
+			name: PropTypes.string.isRequired,
+			nSubjects: PropTypes.string
 		}).isRequired
 	})
 }
