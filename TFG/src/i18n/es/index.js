@@ -12,11 +12,20 @@ export const profile = {
 	title: 'Perfil',
 	screens: [
 		{title: 'Información'},
-		{title: 'Asignaturas'},
+		{
+			title: 'Asignaturas',
+			emptyList: 'No tienes ninguna asignatura añadida!\n\nAñade algunas asignaturas pulsando sobre el botón +',
+			confirmDialog: {
+				title: 'Are you sure?',
+				description: 'Todas las faltas de asistencia de la(s) asignatura(s) serán eliminadas también',
+				actions: ['Cancelar', 'Eliminar']
+			}
+		},
 		{
 			title: 'Profesores',
+			emptyList: 'No tienes ningún profesor añadido!\n\nAñade algunos profesores pulsando sobre el botón +',
 			confirmDialog: {
-				title: 'Eliminar profesor',
+				title: 'Estás seguro?',
 				description: 'Las asigntaruas de el/los profesor(es) no serán eliminadas',
 				actions: ['Cancelar', 'Eliminar']
 			}
@@ -38,7 +47,7 @@ export const commons = {
 		dayNamesShort: ['Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab']
 	},
 	helpDialog: {
-		title: '¿Necesitas ayuda?',
+		title: 'Necesitas ayuda?',
 		actions: ['Aceptar']
 	},
 	calendarPickerDialog: {

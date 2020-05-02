@@ -12,12 +12,21 @@ export const profile = {
 	title: 'Profile',
 	screens: [
 		{title: 'Information'},
-		{title: 'Subjects'},
+		{
+			title: 'Subjects',
+			emptyList: 'You still don\'t have any subjects!\n\nAdd some subjects by clicking the button +',
+			confirmDialog: {
+				title: 'Are you sure?',
+				description: 'All the absences associated to the subject(s) will be removed as well',
+				actions: ['Cancel', 'Remove']
+			}
+		},
 		{
 			title: 'Teachers',
+			emptyList: 'You still don\'t have any teachers!\n\nAdd some teachers by clicking the button +',
 			confirmDialog: {
-				title: 'Remove teacher',
-				description: 'The subjects associated to the teacher(s) are not removed',
+				title: 'Are you sure?',
+				description: 'The subjects associated to the teacher(s) won\'t be removed',
 				actions: ['Cancel', 'Remove']
 			}
 		}
