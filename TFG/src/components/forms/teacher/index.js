@@ -21,7 +21,7 @@ export default class TeacherForm extends React.Component {
 					content={() =>
 						<TextInput placeholder={i18n.get('commons.teacherForm.placeholders.0')}
 								   onChangeText={(value) => this.setState({text: value})}
-								   value={this.state.text}
+								   value={this.state.text} autoCapitalize={'words'}
 								   style={{borderBottomWidth: 1, borderBottomColor: colors.lightGrey}}/>
 					}
 					buttons={() =>
