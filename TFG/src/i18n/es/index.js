@@ -59,11 +59,17 @@ export const commons = {
 		title: 'Selecciona un idioma',
 		actions: ['Aceptar']
 	},
+	form: {
+		toast: 'Por favor rellena todos los campos',
+		actions: ['Cancelar', 'Guardar']
+	},
 	teacherForm: {
 		title: 'Profesor',
 		placeholders: ['nombre del profesor...'],
-		actions: ['Cancelar', 'Guardar'],
-		toast: 'Por favor rellena todos los campos'
+	},
+	subjectForm: {
+		title: 'Asignatura',
+		placeholders: ['nombre de la asignatura...']
 	},
 	languages: [
 		{name: 'Español', iso: 'es'},
