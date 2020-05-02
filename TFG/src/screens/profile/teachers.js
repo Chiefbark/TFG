@@ -121,7 +121,7 @@ export default class TeachersScreen extends React.Component {
 					  onClick={() => {
 						  let value = Object.entries(this.state.selected);
 						  let obj = {key: value[0][0], obj: value[0][1]};
-						  this.setState({teacher: obj, dialogTeacher: true});
+						  this.setState({teacher: obj, dialogTeacher: true, selected: {}}, () => this._showOptions());
 					  }}
 				/>
 				}
@@ -129,13 +129,7 @@ export default class TeachersScreen extends React.Component {
 				{this.state.dialogTeacher &&
 				<TeacherForm
 					teacher={this.state.teacher}
-					onSubmit={(teacher) => {
-						let key = teacher.key;
-						delete teacher.key;
-						if (!key)
-							firebase.getDatabase().ref(`users/${firebase.currFirebaseKey}/teachers`).push(teacher);
-						else
-							firebase.getDatabase().ref(`users/${firebase.currFirebaseKey}/teachers/${key}`).set(teacher);
+					onSubmit={() => {
 						this.setState({dialogTeacher: false});
 					}}
 					onCancel={() => this.setState({dialogTeacher: false})}/>
