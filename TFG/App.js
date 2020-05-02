@@ -14,7 +14,6 @@ import Icon from './src/components/icon';
 import Calendar from './src/screens/calendar';
 import Statistics from './src/screens/statistics';
 import Absences from './src/screens/absences';
-import Profile from './src/screens/profile';
 import Information from './src/screens/profile/information';
 import Subjects from './src/screens/profile/subjects';
 import Teachers from './src/screens/profile/teachers';
