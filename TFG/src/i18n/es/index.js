@@ -10,7 +10,18 @@ export const absences = {
 }
 export const profile = {
 	title: 'Perfil',
-	screens: [{title: 'Información'}, {title: 'Asignaturas'}, {title: 'Profesores'}]
+	screens: [
+		{title: 'Información'},
+		{title: 'Asignaturas'},
+		{
+			title: 'Profesores',
+			confirmDialog: {
+				title: 'Eliminar profesor',
+				description: 'Las asigntaruas de el/los profesor(es) no serán eliminadas',
+				actions: ['Cancelar', 'Eliminar']
+			}
+		}
+	]
 }
 export const settings = {
 	title: 'Ajustes',

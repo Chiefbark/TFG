@@ -10,7 +10,18 @@ export const absences = {
 }
 export const profile = {
 	title: 'Profile',
-	screens: [{title: 'Information'}, {title: 'Subjects'}, {title: 'Teachers'}]
+	screens: [
+		{title: 'Information'},
+		{title: 'Subjects'},
+		{
+			title: 'Teachers',
+			confirmDialog: {
+				title: 'Remove teacher',
+				description: 'The subjects associated to the teacher(s) are not removed',
+				actions: ['Cancel', 'Remove']
+			}
+		}
+	]
 }
 export const settings = {
 	title: 'Settings',
