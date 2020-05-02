@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import {TextInput} from 'react-native';
 import * as i18n from '../../../i18n';
 import * as firebase from '../../../firebase';
+import Toast from 'react-native-simple-toast';
 
 import Dialog from '../../dialog';
 import Button from '../../button';
@@ -18,11 +19,27 @@ export default class TeacherForm extends React.Component {
 		}
 	}
 	
+	_showError(ref) {
+		ref.setNativeProps({
+			placeholderTextColor: colors.red,
+			borderBottomColor: colors.red
+		});
+		Toast.showWithGravity(i18n.get('commons.teacherForm.toast'), Toast.LONG, Toast.TOP);
+		setTimeout(() => {
+			ref.setNativeProps({
+				placeholderTextColor: colors.lightGrey,
+				borderBottomColor: colors.grey
+			});
+		}, 3500);
+	}
+	
 	render() {
 		return (
 			<Dialog title={i18n.get('commons.teacherForm.title')}
 					content={() =>
-						<TextInput placeholder={i18n.get('commons.teacherForm.placeholders.0')}
+						<TextInput ref={ref => this._name = ref}
+								   placeholder={i18n.get('commons.teacherForm.placeholders.0')}
+								   placeholderTextColor={colors.lightGrey}
 								   onChangeText={(value) => this.setState({name: value})}
 								   value={this.state.name} autoCapitalize={'words'}
 								   style={{borderBottomWidth: 1, borderBottomColor: colors.lightGrey}}/>
@@ -37,12 +54,16 @@ export default class TeacherForm extends React.Component {
 							<Button label={i18n.get('commons.teacherForm.actions.1')}
 									backgroundColor={colors.primary} textColor={colors.white}
 									onClick={() => {
-										let obj = {name: this.state.name};
-										this.props.onSubmit();
-										if (!this.state.key)
-											firebase.getDatabase().ref(`users/${firebase.currFirebaseKey}/teachers`).push(obj);
-										else
-											firebase.getDatabase().ref(`users/${firebase.currFirebaseKey}/teachers/${this.state.key}`).set(obj);
+										if (!this.state.text || this.state.text === '')
+											this._showError(this._name);
+										else {
+											let obj = {name: this.state.name};
+											this.props.onSubmit();
+											if (!this.state.key)
+												firebase.getDatabase().ref(`users/${firebase.currFirebaseKey}/teachers`).push(obj);
+											else
+												firebase.getDatabase().ref(`users/${firebase.currFirebaseKey}/teachers/${this.state.key}`).set(obj);
+										}
 									}}/>
 						</Fragment>
 					} visible={true}/>
