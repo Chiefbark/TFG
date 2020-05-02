@@ -87,7 +87,7 @@ export default class TeachersScreen extends React.Component {
 								  <Text style={{textAlign: 'center'}}>{i18n.get('profile.screens.2.emptyList')}</Text>
 							  </View>
 						  }
-						  ItemSeparatorComponent={() => <View style={{flex: 1, backgroundColor: colors.lightGrey, height: 1}}/>}
+						  ItemSeparatorComponent={() => <View style={{flex: 1, backgroundColor: colors.primaryDark, height: 1}}/>}
 						  renderItem={({item}) =>
 							  <ListItem key={item[0]} title={item[1].name} subtitle={`${item[1].nSubjects} ${i18n.get('profile.screens.2.subtitle')}`}
 										onLongClick={() => {
