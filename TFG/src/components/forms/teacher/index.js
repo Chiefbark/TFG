@@ -14,7 +14,7 @@ export default class TeacherForm extends React.Component {
 		super(props);
 		this.state = {
 			key: this.props.teacher?.key ?? undefined,
-			text: this.props.teacher?.obj.name ?? undefined
+			name: this.props.teacher?.obj.name ?? undefined
 		}
 	}
 	
@@ -23,8 +23,8 @@ export default class TeacherForm extends React.Component {
 			<Dialog title={i18n.get('commons.teacherForm.title')}
 					content={() =>
 						<TextInput placeholder={i18n.get('commons.teacherForm.placeholders.0')}
-								   onChangeText={(value) => this.setState({text: value})}
-								   value={this.state.text} autoCapitalize={'words'}
+								   onChangeText={(value) => this.setState({name: value})}
+								   value={this.state.name} autoCapitalize={'words'}
 								   style={{borderBottomWidth: 1, borderBottomColor: colors.lightGrey}}/>
 					}
 					buttons={() =>
@@ -37,8 +37,12 @@ export default class TeacherForm extends React.Component {
 							<Button label={i18n.get('commons.teacherForm.actions.1')}
 									backgroundColor={colors.primary} textColor={colors.white}
 									onClick={() => {
-										let obj = {key: this.state.key, name: this.state.text};
-										this.props.onSubmit(obj);
+										let obj = {name: this.state.name};
+										this.props.onSubmit();
+										if (!this.state.key)
+											firebase.getDatabase().ref(`users/${firebase.currFirebaseKey}/teachers`).push(obj);
+										else
+											firebase.getDatabase().ref(`users/${firebase.currFirebaseKey}/teachers/${this.state.key}`).set(obj);
 									}}/>
 						</Fragment>
 					} visible={true}/>
