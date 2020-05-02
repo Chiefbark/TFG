@@ -6,6 +6,7 @@ import {createMaterialBottomTabNavigator} from '@react-navigation/material-botto
 import {createMaterialTopTabNavigator} from "@react-navigation/material-top-tabs";
 import * as i18n from './src/i18n';
 import * as config from './src/config';
+import * as firebase from './src/firebase';
 
 import {colors} from './src/styles';
 import Icon from './src/components/icon';
@@ -106,14 +107,15 @@ export default class App extends React.Component {
 	
 	constructor(props) {
 		super(props);
-		this.state = {_locale: undefined, _config: undefined};
+		this.state = {_locale: undefined, _config: undefined, _firebaseKey: undefined};
 		i18n.locale().then(locale => this.setState({_locale: locale}));
 		config.config().then(config => this.setState({_config: config}));
+		firebase.firebaseKey().then(firebaseKey => this.setState({_firebaseKey: firebaseKey}));
 	}
 	
 	render() {
 		return (<Fragment>
-				{this.state._locale && this.state._config ?
+				{this.state._locale && this.state._config && this.state._firebaseKey ?
 					<NavigationContainer>
 						<BottomTab.Navigator barStyle={{backgroundColor: colors.primary, paddingVertical: 2.5}}>
 							<BottomTab.Screen name={'Calendar'} component={CalendarStackNavigator} options={
