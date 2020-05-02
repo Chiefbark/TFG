@@ -87,7 +87,7 @@ export default class TeachersScreen extends React.Component {
 						  }
 						  ItemSeparatorComponent={() => <View style={{flex: 1, backgroundColor: colors.lightGrey, height: 1}}/>}
 						  renderItem={({item}) =>
-							  <ListItem key={item[0]} title={item[1].name} subtitle={'profeee'}
+							  <ListItem key={item[0]} title={item[1].name} subtitle={`${item[1].nSubjects} ${i18n.get('profile.screens.2.subtitle')}`}
 										onLongClick={() => {
 											let elements = this.state.selected;
 											elements[item[0]] = item[1];
@@ -96,6 +96,9 @@ export default class TeachersScreen extends React.Component {
 										onClick={() => {
 											let elements = this.state.selected;
 											if (elements[item[0]]) delete elements[item[0]];
+											else if (Object.entries(this.state.selected).length > 0)
+												elements[item[0]] = item[1];
+						
 											this.setState({selected: elements}, () => this._showOptions());
 										}}
 										style={this.state.selected[item[0]] && {backgroundColor: colors.primaryLight}}
