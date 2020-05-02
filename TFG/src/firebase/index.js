@@ -25,7 +25,7 @@ export const firebaseKey = async () => {
 				if (!result) currFirebaseKey = db.ref('users/').push({createdAt: new Date().getTime()}).getKey();
 				else
 					currFirebaseKey = result;
-				AsyncStorage.setItem('@firebaseKey', currFirebaseKey, (error) => console.log(error));
+				AsyncStorage.setItem('@firebaseKey', currFirebaseKey);
 				return result;
 			});
 	}
