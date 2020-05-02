@@ -77,8 +77,16 @@ export default class TeachersScreen extends React.Component {
 				<FlatList style={{flex: 1}}
 						  data={this.state.teachers}
 						  keyExtractor={(item) => item[0]}
-						  ListEmptyComponent={<Text>No hay naaa</Text>}
-						  renderItem={({item, index}) =>
+						  ListEmptyComponent={() =>
+							  <View style={{
+								  flex: 1, alignItems: 'center', justifyContent: 'center',
+								  paddingVertical: 50, paddingHorizontal: 30
+							  }}>
+								  <Text style={{textAlign: 'center'}}>{i18n.get('profile.screens.2.emptyList')}</Text>
+							  </View>
+						  }
+						  ItemSeparatorComponent={() => <View style={{flex: 1, backgroundColor: colors.lightGrey, height: 1}}/>}
+						  renderItem={({item}) =>
 							  <ListItem key={item[0]} title={item[1].name} subtitle={'profeee'}
 										onLongClick={() => {
 											let elements = this.state.selected;
@@ -90,12 +98,7 @@ export default class TeachersScreen extends React.Component {
 											if (elements[item[0]]) delete elements[item[0]];
 											this.setState({selected: elements}, () => this._showOptions());
 										}}
-										style={
-											this.state.selected[item[0]] ?
-												{backgroundColor: colors.primaryLight} :
-												index % 2 === 0 ?
-													{backgroundColor: colors.whiteSmoke}
-													: undefined}
+										style={this.state.selected[item[0]] && {backgroundColor: colors.primaryLight}}
 							  />
 						  }
 				/>
