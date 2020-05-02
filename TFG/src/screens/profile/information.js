@@ -15,6 +15,8 @@ export default class InformationScreen extends React.Component {
 	_updateComponent() {
 		if (this.state._active)
 			this.setState({_locale: i18n.currLocale, _lastModified: new Date().getTime()});
+		this.props.navigation.dangerouslyGetParent().setOptions({title: i18n.get('profile.screens.0.title')});
+		this.props.navigation.dangerouslyGetParent().dangerouslyGetParent().setOptions({tabBarLabel: i18n.get('profile.title')});
 	}
 	
 	_onFocusComponent() {
