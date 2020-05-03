@@ -20,30 +20,21 @@ export default class TeacherForm extends React.Component {
 		}
 	}
 	
-	_showError(ref) {
-		ref.setNativeProps({
-			placeholderTextColor: colors.red,
-			borderBottomColor: colors.red
-		});
+	_showError(props) {
+		this.setState({...props});
 		Toast.showWithGravity(i18n.get('commons.form.toast'), Toast.LONG, Toast.TOP);
-		setTimeout(() => {
-			ref.setNativeProps({
-				placeholderTextColor: colors.lightGrey,
-				borderBottomColor: colors.grey
-			});
-		}, 3500);
+		setTimeout(() => this.setState({errorName: false, errorTeacher: false}), 3500);
 	}
 	
 	render() {
 		return (
 			<Dialog title={i18n.get('commons.teacherForm.title')}
 					content={() =>
-						<TextInput ref={ref => this._name = ref}
-								   placeholder={i18n.get('commons.teacherForm.placeholders.0')}
-								   placeholderTextColor={colors.lightGrey}
+						<TextInput placeholder={i18n.get('commons.teacherForm.placeholders.0')}
+								   placeholderTextColor={this.state.errorName ? colors.red : colors.lightGrey}
 								   onChangeText={(value) => this.setState({name: value})}
 								   value={this.state.name} autoCapitalize={'words'}
-								   style={{borderBottomWidth: 1, borderBottomColor: colors.lightGrey}}/>
+								   style={{borderBottomWidth: 1, borderBottomColor: this.state.errorName ? colors.red : colors.lightGrey}}/>
 					}
 					buttons={() =>
 						<Fragment>
@@ -55,8 +46,9 @@ export default class TeacherForm extends React.Component {
 							<Button label={i18n.get('commons.form.actions.1')}
 									backgroundColor={colors.primary} textColor={colors.white}
 									onClick={() => {
-										if (!this.state.name || this.state.name === '')
-											this._showError(this._name);
+										let obj = {};
+										if (!this.state.name || this.state.name === '') obj.errorName = true;
+										if (Object.entries(obj).length > 0) this._showError(obj);
 										else {
 											let obj = {name: this.state.name, nSubjects: this.state.nSubjects};
 											this.props.onSubmit();
