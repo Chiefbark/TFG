@@ -24,14 +24,12 @@ export default class TeachersScreen extends React.Component {
 	}
 	
 	_updateComponent() {
-		if (this.state._active)
-			this.setState({_locale: i18n.currLocale, _lastModified: new Date().getTime()});
+		this.setState({_locale: i18n.currLocale, _lastModified: new Date().getTime()});
 		this.props.navigation.dangerouslyGetParent().setOptions({title: i18n.get('profile.screens.2.title')});
 		this.props.navigation.dangerouslyGetParent().dangerouslyGetParent().setOptions({tabBarLabel: i18n.get('profile.title')});
 	}
 	
 	_onFocusComponent() {
-		this.setState({_active: true});
 		this.props.navigation.dangerouslyGetParent().setOptions({title: i18n.get('profile.screens.2.title')});
 		this.props.navigation.dangerouslyGetParent().dangerouslyGetParent().setOptions({tabBarLabel: i18n.get('profile.title')});
 	}
@@ -40,7 +38,7 @@ export default class TeachersScreen extends React.Component {
 		i18n.addListener(this._updateComponent.bind(this));
 		this.props.navigation.addListener('focus', () => this._onFocusComponent());
 		this.props.navigation.addListener('blur', () => {
-			this.setState({selected: {}, _active: false});
+			this.setState({selected: {}});
 			this.props.navigation.dangerouslyGetParent().setOptions({
 				headerRight: () => undefined
 			});
@@ -89,7 +87,8 @@ export default class TeachersScreen extends React.Component {
 						  }
 						  ItemSeparatorComponent={() => <View style={{flex: 1, backgroundColor: colors.primaryDark, height: 1}}/>}
 						  renderItem={({item}) =>
-							  <ListItem key={item[0]} title={item[1].name} subtitle={`${item[1].nSubjects} ${i18n.get('profile.screens.2.subtitle')}`}
+							  <ListItem key={item[0]} title={item[1].name}
+										subtitle={`${item[1].nSubjects} ${i18n.get('profile.screens.2.subtitle')}`}
 										onLongClick={() => {
 											let elements = this.state.selected;
 											elements[item[0]] = item[1];
