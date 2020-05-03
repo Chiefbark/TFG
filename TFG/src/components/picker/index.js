@@ -60,7 +60,7 @@ CustomPicker.propTypes = {
 			PropTypes.object.isRequired
 		]))
 	).isRequired,
-	value: PropTypes.string.isRequired,
+	value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
 	onValueChange: PropTypes.func.isRequired,
 	placeholder: PropTypes.string.isRequired,
 	error: PropTypes.bool
