@@ -75,7 +75,8 @@ export const commons = {
 			'añadir nuevo profesor...',
 			'Notificarme cuando me acerque al ',
 			' de ausencias',
-			'Este color será el que aparezca en el calendario (exámenes/ausencias)'
+			'Este color será el que aparezca en el calendario (exámenes/ausencias)',
+			'Los colores con una x ya están en uso, aunque puedes volver a usarlos'
 		]
 	},
 	languages: [
