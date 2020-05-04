@@ -69,7 +69,14 @@ export const commons = {
 	},
 	subjectForm: {
 		title: 'Asignatura',
-		placeholders: ['nombre de la asignatura...']
+		placeholders: [
+			'nombre de la asignatura...',
+			'profesor...',
+			'añadir nuevo profesor...',
+			'Notificarme cuando me acerque al ',
+			' de ausencias',
+			'Este color será el que aparezca en el calendario (exámenes/ausencias)'
+		]
 	},
 	languages: [
 		{name: 'Español', iso: 'es'},

@@ -69,7 +69,14 @@ export const commons = {
 	},
 	subjectForm: {
 		title: 'Subject',
-		placeholders: ['subject\'s name...']
+		placeholders: [
+			'subject\'s name...',
+			'teacher...',
+			'add new teacher...',
+			'Notify me when i get close to ',
+			' of absences',
+			'This will be the color shown in the calendar (exams/absences)'
+		]
 	},
 	languages: [
 		{name: 'Spanish', iso: 'es'},
