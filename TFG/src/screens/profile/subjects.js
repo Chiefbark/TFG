@@ -8,6 +8,7 @@ import SubjectForm from "../../components/forms/subject";
 import ListItem from "../../components/listItem";
 import Dialog from "../../components/dialog";
 import Button from "../../components/button";
+import TeacherForm from "../../components/forms/teacher";
 
 export default class SubjectsScreen extends React.Component {
 	constructor(props) {
@@ -15,6 +16,7 @@ export default class SubjectsScreen extends React.Component {
 		this.state = {
 			selected: {},
 			subjects: undefined,
+			teachers: undefined,
 			dialogSubject: false,
 			dialogConfirm: false,
 			_locale: i18n.currLocale,
@@ -46,6 +48,10 @@ export default class SubjectsScreen extends React.Component {
 		firebase.getDatabase().ref(`users/${firebase.currFirebaseKey}/subjects`).on('value', snapshot => {
 			let data = snapshot.val() || {};
 			this.setState({subjects: Object.entries(data)});
+		});
+		firebase.getDatabase().ref(`users/${firebase.currFirebaseKey}/teachers`).on('value', snapshot => {
+			let data = snapshot.val() || {};
+			this.setState({teachers: Object.entries(data)});
 		});
 	}
 	
@@ -87,6 +93,7 @@ export default class SubjectsScreen extends React.Component {
 						  ItemSeparatorComponent={() => <View style={{flex: 1, backgroundColor: colors.lightGrey, height: 1}}/>}
 						  renderItem={({item}) =>
 							  <ListItem key={item[0]} title={item[1].name}
+										subtitle={this.state.teachers?.filter(e => e[0] === item[1].id_teacher)[0][1].name}
 										onLongClick={() => {
 											let elements = this.state.selected;
 											elements[item[0]] = item[1];
@@ -100,6 +107,10 @@ export default class SubjectsScreen extends React.Component {
 						
 											this.setState({selected: elements}, () => this._showOptions());
 										}}
+										rightItem={() =>
+											<Button label={''} backgroundColor={item[1].color}
+													style={{width: 15, height: 15, paddingVertical: 0, paddingHorizontal: 0, marginRight: 16}}
+											/>}
 										style={this.state.selected[item[0]] && {backgroundColor: colors.primaryLight}}
 							  />
 						  }
@@ -133,12 +144,10 @@ export default class SubjectsScreen extends React.Component {
 				{/*	DIALOG SUBJECT	*/}
 				{this.state.dialogSubject &&
 				<SubjectForm
-					subject={this.state.subject}
-					onSubmit={() => {
-						this.setState({dialogSubject: false});
-					}}
-					onCancel={() => this.setState({dialogSubject: false})}/>
-				}
+					subject={this.state.subject} teachers={this.state.teachers} subjectColors={this.state.subjects.map(e => e[1].color)}
+					onSubmit={() => this.setState({subject: undefined, dialogSubject: false})}
+					onCancel={() => this.setState({subject: undefined, dialogSubject: false})}
+				/>}
 				{/*	DIALOG CONFIRM	*/}
 				<Dialog title={i18n.get('profile.screens.1.confirmDialog.title')}
 						content={() => <Text>{i18n.get('profile.screens.1.confirmDialog.description')}</Text>}
