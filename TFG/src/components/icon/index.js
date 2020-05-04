@@ -71,7 +71,7 @@ Icon.propTypes = {
 	/**
 	 * Specifies if the icon is floating or not
 	 *
-	 * `Bool`
+	 * `Bool` -- `default false`
 	 */
 	floating: PropTypes.bool,
 	/**
@@ -90,6 +90,7 @@ Icon.propTypes = {
 	onLongClick: PropTypes.func
 }
 Icon.defaultProps = {
+	floating: false,
 	visible: true
 }
 
