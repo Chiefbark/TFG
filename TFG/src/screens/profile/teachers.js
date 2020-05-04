@@ -136,11 +136,9 @@ export default class TeachersScreen extends React.Component {
 				{this.state.dialogTeacher &&
 				<TeacherForm
 					teacher={this.state.teacher}
-					onSubmit={() => {
-						this.setState({dialogTeacher: false});
-					}}
-					onCancel={() => this.setState({dialogTeacher: false})}/>
-				}
+					onSubmit={() => this.setState({teacher: undefined, dialogTeacher: false})}
+					onCancel={() => this.setState({teacher: undefined, dialogTeacher: false})}
+				/>}
 				{/*	DIALOG CONFIRM	*/}
 				<Dialog title={i18n.get('profile.screens.2.confirmDialog.title')}
 						content={() => <Text>{i18n.get('profile.screens.2.confirmDialog.description')}</Text>}
