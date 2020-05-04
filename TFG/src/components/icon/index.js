@@ -2,10 +2,16 @@ import React, {Fragment} from 'react';
 import PropTypes from 'prop-types';
 import {Image, TouchableOpacity, StyleSheet} from 'react-native';
 
+/**
+ * This component adds a touchable opacity icon with an image to the screen
+ *
+ * @author Chiefbark
+ * @version 0.0.1
+ */
 export default class Icon extends React.Component {
 	
 	render() {
-		let size = this.props.size === 'small' ? 16 : this.props.size === 'large' ? 32 : this.props.size === 'extraLarge' ? 40 : 24;
+		const size = this.props.size === 'small' ? 16 : this.props.size === 'large' ? 32 : 24;
 		return (<Fragment>
 				{this.props.visible &&
 				<TouchableOpacity
@@ -30,13 +36,58 @@ const styles = StyleSheet.create({
 })
 
 Icon.propTypes = {
-	source: PropTypes.number.isRequired,
+	/**
+	 * Source image of the icon, either a remote URL or a local file resource
+	 *
+	 * `ImageSourcePropType`
+	 */
+	source: PropTypes.oneOfType([
+		PropTypes.shape({
+			uri: PropTypes.string,
+			headers: PropTypes.objectOf(PropTypes.string)
+		}),
+		PropTypes.number,
+		PropTypes.arrayOf(
+			PropTypes.shape({
+				uri: PropTypes.string,
+				width: PropTypes.number,
+				height: PropTypes.number,
+				headers: PropTypes.objectOf(PropTypes.string)
+			})
+		)
+	]).isRequired,
+	/**
+	 * Color of the image
+	 *
+	 * `String`
+	 */
 	iconColor: PropTypes.string,
-	size: PropTypes.oneOf(['small', 'normal', 'large', 'extraLarge']),
-	onClick: PropTypes.func,
-	onLongClick: PropTypes.func,
+	/**
+	 * Size of the icon
+	 *
+	 * `small, normal, large`
+	 */
+	size: PropTypes.oneOf(['small', 'normal', 'large']),
+	/**
+	 * Specifies if the icon is floating or not
+	 *
+	 * `Bool`
+	 */
 	floating: PropTypes.bool,
-	visible: PropTypes.bool
+	/**
+	 * Specifies if the icon is visible or not
+	 *
+	 * `Bool` -- `default true`
+	 */
+	visible: PropTypes.bool,
+	/**
+	 * Callback triggered when the user press the icon
+	 */
+	onClick: PropTypes.func,
+	/**
+	 * Callback triggered when the user holds the icon
+	 */
+	onLongClick: PropTypes.func
 }
 Icon.defaultProps = {
 	visible: true
