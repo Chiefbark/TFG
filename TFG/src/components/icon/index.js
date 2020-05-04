@@ -65,7 +65,7 @@ Icon.propTypes = {
 	/**
 	 * Size of the icon
 	 *
-	 * `small, normal, large`
+	 * `small, normal, large` -- `default normal`
 	 */
 	size: PropTypes.oneOf(['small', 'normal', 'large']),
 	/**
@@ -90,6 +90,7 @@ Icon.propTypes = {
 	onLongClick: PropTypes.func
 }
 Icon.defaultProps = {
+	size: 'normal',
 	floating: false,
 	visible: true
 }
