@@ -25,6 +25,7 @@ export default class CustomPicker extends React.Component {
 					]}
 					useNativeAndroidPickerStyle={false}
 					placeholder={{}}
+					disabled={this.props.disabled}
 					Icon={() =>
 						<Image source={require('../../../assets/icons/icon_drop_down.png')}
 							   style={{top: 12, width: 24, height: 24, tintColor: this.props.error ? colors.red : colors.black}}
