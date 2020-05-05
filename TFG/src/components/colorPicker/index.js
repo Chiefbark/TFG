@@ -80,7 +80,7 @@ ColorPicker.propTypes = {
 	 * Callback triggered when the color is changed
 	 *
 	 * This callback receives a param
-	 * - `value : string` -- The new value of the picker
+	 * - `value : String` -- The new value of the picker
 	 */
 	onValueChange: PropTypes.func
 }
