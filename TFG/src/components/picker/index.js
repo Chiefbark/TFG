@@ -6,6 +6,12 @@ import Picker from "react-native-picker-select";
 
 import {colors} from "../../styles";
 
+/**
+ * This component allows the user to choose one between multiple options
+ *
+ * @author Chiefbark
+ * @version 0.0.1
+ */
 export default class CustomPicker extends React.Component {
 	constructor(props) {
 		super(props);
@@ -23,13 +29,12 @@ export default class CustomPicker extends React.Component {
 						if (this.props.onValueChange)
 							this.props.onValueChange(itemValue);
 					}}
-					items={[
-						{
-							label: this.props.placeholder, value: 0,
-							color: this.props.error ? colors.red : colors.lightGrey
-						},
+					items={[{
+						label: this.props.placeholder || 'Select an item...', value: undefined,
+						color: this.props.error ? colors.red : colors.lightGrey
+					},
 						...this.props.data.map(element => {
-							return {label: element.label, value: element.value};
+							return {label: element.label, value: element.value, color: element.color || colors.black};
 						})
 					]}
 					useNativeAndroidPickerStyle={false}
@@ -64,16 +69,51 @@ export default class CustomPicker extends React.Component {
 }
 
 CustomPicker.propTypes = {
+	/**
+	 * Data to display in the picker
+	 *
+	 * `Array : {label => String, value => String, color => String}`
+	 * - `label` : text displayed of the element
+	 * - `value` : value of the element
+	 * - `color` : text color of the element in the selection dialog
+	 */
 	data: PropTypes.arrayOf(PropTypes.shape(
 		{
 			label: PropTypes.string.isRequired,
-			value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired
+			value: PropTypes.string.isRequired,
+			color: PropTypes.string
 		}
 	)).isRequired,
-	initialValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-	placeholder: PropTypes.string.isRequired,
+	/**
+	 * Initial value of the picker
+	 *
+	 * `String`
+	 */
+	initialValue: PropTypes.string,
+	/**
+	 * Placeholder to show in the picker
+	 *
+	 * `String` -- `default 'Select an item...'`
+	 */
+	placeholder: PropTypes.string,
+	/**
+	 * Specifies if the picker has to show an error or not
+	 *
+	 * `Bool`
+	 */
 	error: PropTypes.bool,
+	/**
+	 * Specifies if the picker is enabled or not
+	 *
+	 * `Bool`
+	 */
 	disabled: PropTypes.bool,
+	/**
+	 * Callback triggered when the picked value is changed
+	 *
+	 * This callback receives a param
+	 * - `value : String` -- The new value of the picker
+	 */
 	onValueChange: PropTypes.func
 }
 
