@@ -49,10 +49,13 @@ export default class SubjectForm extends React.Component {
 										   }}/>
 								<View style={{flex: 1, flexDirection: 'row', alignItems: 'center'}}>
 									<View style={{flex: 1}}>
-										<Picker data={this.props.teachers} value={this.state.id_teacher}
+										<Picker initialValue={this.state.id_teacher}
+												data={this.props.teachers?.map(e => {
+													return {label: e[1].name, value: e[0]};
+												}) ?? []}
 												placeholder={i18n.get('commons.subjectForm.placeholders.1')}
 												error={this.state.errorTeacher} disabled={this.state._nameFocused}
-												onValueChange={itemValue => this.setState({id_teacher: itemValue})}
+												onValueChange={value => this.setState({id_teacher: value})}
 												style={{flex: 1}}
 										/>
 									</View>
