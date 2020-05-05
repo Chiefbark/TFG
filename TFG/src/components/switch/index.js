@@ -14,7 +14,7 @@ export default class CustomSwitch extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			enabled: this.props.initialValue
+			value: this.props.initialValue
 		}
 	}
 	
@@ -23,9 +23,11 @@ export default class CustomSwitch extends React.Component {
 			<Switch
 				trackColor={{false: colors.lightGrey, true: colors.primaryLight}}
 				ios_backgroundColor={colors.lightGrey}
-				thumbColor={this.state.enabled ? colors.primary : colors.grey}
+				thumbColor={this.state.value ? colors.primary : colors.grey}
 				onValueChange={(value) => {
-					this.setState({enabled: value}, () => this.props.onChange ? this.props.onChange(value) : undefined);
+					this.setState({value: value});
+					if (this.props.onChange)
+						this.props.onChange(value);
 				}}
 				value={this.state.enabled}
 				style={this.props.style}
