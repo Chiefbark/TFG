@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
+
 import {colors} from "../../styles";
 
 export default class ListItem extends React.Component {
@@ -40,12 +41,41 @@ const styles = StyleSheet.create({
 })
 
 ListItem.propTypes = {
+	/**
+	 * Defines the title of the component
+	 *
+	 * `String`
+	 */
 	title: PropTypes.string.isRequired,
+	/**
+	 * Applies styles to the title of the component
+	 *
+	 * ``
+	 */
 	titleStyles: PropTypes.object,
+	/**
+	 * Defines the subtitle of the component
+	 *
+	 * `String`
+	 */
 	subtitle: PropTypes.string,
+	/**
+	 * Renders a component to the right of the component
+	 */
 	rightItem: PropTypes.func,
+	/**
+	 * Specifies if the component has a feedback when touch or not
+	 *
+	 * `Bool` -- `default true`
+	 */
 	feedback: PropTypes.bool,
+	/**
+	 * Callback triggered when the user press the component
+	 */
 	onClick: PropTypes.func,
+	/**
+	 * Callback triggered when the user holds the component
+	 */
 	onLongClick: PropTypes.func
 }
 
