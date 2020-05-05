@@ -117,10 +117,20 @@ export default class SubjectForm extends React.Component {
 													id_teacher: this.state.id_teacher
 												};
 												this.props.onSubmit();
+												if (this.props.subject)
+													firebase.getDatabase().ref(`users/${firebase.currFirebaseKey}/teachers/${this.props.subject.obj.id_teacher}`)
+														.once('value', snapshot => {
+															snapshot.ref.update({nSubjects: snapshot.val().nSubjects - 1});
+														});
 												if (!this.state.key)
 													firebase.getDatabase().ref(`users/${firebase.currFirebaseKey}/subjects`).push(obj);
 												else
 													firebase.getDatabase().ref(`users/${firebase.currFirebaseKey}/subjects/${this.state.key}`).set(obj);
+												
+												firebase.getDatabase().ref(`users/${firebase.currFirebaseKey}/teachers/${this.state.id_teacher}`)
+													.once('value', snapshot => {
+														snapshot.ref.update({nSubjects: snapshot.val().nSubjects + 1});
+													});
 											}
 										}}/>
 							</Fragment>
