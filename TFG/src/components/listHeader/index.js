@@ -2,7 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {View, Text, StyleSheet} from 'react-native';
 import {colors} from "../../styles";
-
+/**
+ * This component adds an intractable element to the screen, ideal for headers of lists
+ *
+ * @author Chiefbark
+ * @version 0.0.1
+ */
 export default class ListHeader extends React.Component {
 	
 	render() {
@@ -27,7 +32,16 @@ const styles = StyleSheet.create({
 });
 
 ListHeader.propTypes = {
+	/**
+	 * Label of the component
+	 */
 	label: PropTypes.string.isRequired,
+	/**
+	 * Text color of the label
+	 */
 	textColor: PropTypes.string,
+	/**
+	 * Renders a component to the right of the component
+	 */
 	rightItem: PropTypes.func
 }

@@ -4,6 +4,12 @@ import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
 
 import {colors} from "../../styles";
 
+/**
+ * This component adds an intractable element to the screen, ideal for elements of lists
+ *
+ * @author Chiefbark
+ * @version 0.0.1
+ */
 export default class ListItem extends React.Component {
 	
 	render() {
@@ -42,19 +48,19 @@ const styles = StyleSheet.create({
 
 ListItem.propTypes = {
 	/**
-	 * Defines the title of the component
+	 * Title of the component
 	 *
 	 * `String`
 	 */
 	title: PropTypes.string.isRequired,
 	/**
-	 * Applies styles to the title of the component
+	 * Styles of the title of the component
 	 *
 	 * ``
 	 */
 	titleStyles: PropTypes.object,
 	/**
-	 * Defines the subtitle of the component
+	 * Subtitle of the component
 	 *
 	 * `String`
 	 */
