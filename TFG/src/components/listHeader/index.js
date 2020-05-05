@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {View, Text, StyleSheet} from 'react-native';
+
 import {colors} from "../../styles";
 /**
  * This component adds an intractable element to the screen, ideal for headers of lists
