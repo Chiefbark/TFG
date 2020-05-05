@@ -1,27 +1,36 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {colors} from "../../styles";
 import {Image} from "react-native";
+
 import Picker from "react-native-picker-select";
+
+import {colors} from "../../styles";
 
 export default class CustomPicker extends React.Component {
 	constructor(props) {
 		super(props);
+		
+		this.state = {
+			value: this.props.initialValue
+		}
 	}
 	
 	render() {
 		return (
-			<Picker value={this.props.value}
-					onValueChange={(itemValue) => this.props.onValueChange ? this.props.onValueChange(itemValue) : undefined}
+			<Picker value={this.state.value}
+					onValueChange={(itemValue) => {
+						this.setState({value: itemValue});
+						if (this.props.onValueChange)
+							this.props.onValueChange(itemValue);
+					}}
 					items={[
 						{
-							label: this.props.placeholder,
-							value: 0,
+							label: this.props.placeholder, value: 0,
 							color: this.props.error ? colors.red : colors.lightGrey
 						},
-						...this.props.data?.map(element => {
-							return {label: element[1].name, value: element[0]};
-						}) ?? [{label: '', value: 0}]
+						...this.props.data.map(element => {
+							return {label: element.label, value: element.value};
+						})
 					]}
 					useNativeAndroidPickerStyle={false}
 					placeholder={{}}
@@ -55,14 +64,16 @@ export default class CustomPicker extends React.Component {
 }
 
 CustomPicker.propTypes = {
-	data: PropTypes.arrayOf(PropTypes.arrayOf(
-		PropTypes.oneOfType([
-			PropTypes.string.isRequired,
-			PropTypes.object.isRequired
-		]))
-	).isRequired,
-	value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
-	onValueChange: PropTypes.func.isRequired,
+	data: PropTypes.arrayOf(PropTypes.shape(
+		{
+			label: PropTypes.string.isRequired,
+			value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired
+		}
+	)).isRequired,
+	initialValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 	placeholder: PropTypes.string.isRequired,
-	error: PropTypes.bool
+	error: PropTypes.bool,
+	disabled: PropTypes.bool,
+	onValueChange: PropTypes.func
 }
+
