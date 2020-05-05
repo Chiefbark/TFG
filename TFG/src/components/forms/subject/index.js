@@ -10,7 +10,7 @@ import Picker from '../../picker';
 import {colors, subjectColors} from '../../../styles';
 import Icon from "../../icon";
 import TeacherForm from "../teacher";
-import ColorPalette from '../../colorPicker';
+import ColorPicker from '../../colorPicker';
 
 export default class SubjectForm extends React.Component {
 	
@@ -79,10 +79,10 @@ export default class SubjectForm extends React.Component {
 								<Text style={{textAlign: 'center', color: colors.grey}}>
 									{i18n.get('commons.subjectForm.placeholders.5')}
 								</Text>
-								<ColorPalette
+								<ColorPicker
 									data={subjectColors}
-									disabled={this.props.subjectColors}
-									value={this.state.color}
+									marked={this.props.subjectColors}
+									initialValue={this.state.color}
 									onValueChange={(value) => this.setState({color: value})}
 									style={{borderBottomWidth: 1, borderColor: this.state.errorColor ? colors.red : colors.transparent}}
 								/>
