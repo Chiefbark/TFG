@@ -69,7 +69,7 @@ ColorPicker.propTypes = {
 	 *
 	 * `Array : String`
 	 */
-	marked: PropTypes.array(PropTypes.string),
+	marked: PropTypes.arrayOf(PropTypes.string),
 	/**
 	 * The color selected by default
 	 *
