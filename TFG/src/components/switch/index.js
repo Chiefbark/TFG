@@ -1,8 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {Switch} from 'react-native';
+
 import {colors} from "../../styles";
 
+/**
+ * This component allows the user to change the state of a button
+ *
+ * @author Chiefbark
+ * @version 0.0.1
+ */
 export default class CustomSwitch extends React.Component {
 	constructor(props) {
 		super(props);
@@ -28,6 +35,20 @@ export default class CustomSwitch extends React.Component {
 }
 
 CustomSwitch.propTypes = {
+	/**
+	 * The state selected by default
+	 *
+	 * `Bool` -- `default false`
+	 */
 	initialValue: PropTypes.bool,
+	/**
+	 * Callback triggered when the state is changed
+	 *
+	 * This callback receives a param
+	 * - `value : Bool` -- The new value of the switch
+	 */
 	onChange: PropTypes.func
+}
+CustomSwitch.defaultProps = {
+	initialValue: false
 }
