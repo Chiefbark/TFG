@@ -15,6 +15,7 @@ export const profile = {
 		{
 			title: 'Subjects',
 			emptyList: 'You still don\'t have any subjects!\n\nAdd some subjects by clicking the button +',
+			emptySubtitle: 'Unassigned teacher',
 			confirmDialog: {
 				title: 'Are you sure?',
 				description: 'All the absences associated to the subject(s) will be removed as well',

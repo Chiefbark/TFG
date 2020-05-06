@@ -15,6 +15,7 @@ export const profile = {
 		{
 			title: 'Asignaturas',
 			emptyList: 'No tienes ninguna asignatura añadida!\n\nAñade algunas asignaturas pulsando sobre el botón +',
+			emptySubtitle: 'Profesor no asignado',
 			confirmDialog: {
 				title: 'Are you sure?',
 				description: 'Todas las faltas de asistencia de la(s) asignatura(s) serán eliminadas también',
