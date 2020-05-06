@@ -1,8 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {View, Text, ScrollView, Modal, StyleSheet} from 'react-native';
+
 import {colors} from '../../styles';
 
+/**
+ * This component adds a customizable modal dialog
+ *
+ * @author Chiefbark
+ * @version 0.0.1
+ */
 export default class Dialog extends React.Component {
 	
 	constructor(props) {
@@ -65,8 +72,28 @@ const styles = StyleSheet.create({
 });
 
 Dialog.propTypes = {
+	/**
+	 * Title of the dialog
+	 *
+	 * `String`
+	 */
 	title: PropTypes.string.isRequired,
+	/**
+	 * Renders a component at the bottom of the component
+	 */
 	buttons: PropTypes.func.isRequired,
-	visible: PropTypes.bool.isRequired,
-	content: PropTypes.func
+	/**
+	 * Renders a component in the middle of the component
+	 */
+	content: PropTypes.func,
+	/**
+	 * Specifies if the component is visible or not
+	 *
+	 * `Bool` -- `default true`
+	 */
+	visible: PropTypes.bool
+}
+
+Dialog.defaultProps = {
+	visible: false
 }
