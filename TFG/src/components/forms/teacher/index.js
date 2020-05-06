@@ -45,17 +45,19 @@ export default class TeacherForm extends React.Component {
 							/>
 							<Button label={i18n.get('commons.form.actions.1')}
 									backgroundColor={colors.primary} textColor={colors.white}
-									onClick={() => {
+									onClick={async () => {
 										let obj = {};
 										if (!this.state.name || this.state.name === '') obj.errorName = true;
 										if (Object.entries(obj).length > 0) this._showError(obj);
 										else {
 											let obj = {name: this.state.name, nSubjects: this.state.nSubjects};
-											this.props.onSubmit();
+											let newKey = this.state.key;
 											if (!this.state.key)
-												firebase.getDatabase().ref(`users/${firebase.currFirebaseKey}/teachers`).push(obj);
+												newKey = await firebase.getDatabase().ref(`users/${firebase.currFirebaseKey}/teachers`).push(obj).getKey();
 											else
-												firebase.getDatabase().ref(`users/${firebase.currFirebaseKey}/teachers/${this.state.key}`).set(obj);
+												firebase.getDatabase().ref(`users/${firebase.currFirebaseKey}/teachers/${this.state.key}`).set(obj).then();
+							
+											this.props.onSubmit(newKey);
 										}
 									}}/>
 						</Fragment>
@@ -71,7 +73,7 @@ TeacherForm.propTypes = {
 		key: PropTypes.string.isRequired,
 		obj: PropTypes.shape({
 			name: PropTypes.string.isRequired,
-			nSubjects: PropTypes.string
+			nSubjects: PropTypes.number
 		}).isRequired
 	})
 }
