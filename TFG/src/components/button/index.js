@@ -13,6 +13,7 @@ export default class Button extends React.Component {
 	render() {
 		return (
 			<TouchableOpacity
+				disabled={this.props.disabled}
 				style={[styles.button, this.props.style, {backgroundColor: this.props.backgroundColor}]}
 				onPress={() => this.props.onClick ? this.props.onClick() : undefined}
 				onLongPress={() => this.props.onLongClick ? this.props.onLongClick() : undefined}
@@ -52,6 +53,12 @@ Button.propTypes = {
 	 */
 	textColor: PropTypes.string,
 	/**
+	 * Specifies if the button is disabled or not
+	 *
+	 * `Bool` -- `default false`
+	 */
+	disabled: PropTypes.bool,
+	/**
 	 * Callback triggered when the user press the button
 	 */
 	onClick: PropTypes.func,
@@ -61,3 +68,6 @@ Button.propTypes = {
 	onLongClick: PropTypes.func
 }
 
+Button.defaultProps = {
+	disabled: false
+}

@@ -15,6 +15,7 @@ export default class Icon extends React.Component {
 		return (<Fragment>
 				{this.props.visible &&
 				<TouchableOpacity
+					disabled={this.props.disabled}
 					style={[{width: size, height: size, alignItems: 'center', justifyContent: 'center'},
 						this.props.floating && styles.fab, this.props.style]}
 					onPress={() => this.props.onClick ? this.props.onClick() : undefined}
@@ -81,6 +82,12 @@ Icon.propTypes = {
 	 */
 	visible: PropTypes.bool,
 	/**
+	 * Specifies if the icon is disabled or not
+	 *
+	 * `Bool` -- `default false`
+	 */
+	disabled: PropTypes.bool,
+	/**
 	 * Callback triggered when the user press the icon
 	 */
 	onClick: PropTypes.func,
@@ -92,6 +99,7 @@ Icon.propTypes = {
 Icon.defaultProps = {
 	size: 'normal',
 	floating: false,
-	visible: true
+	visible: true,
+	disabled: false
 }
 
