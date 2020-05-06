@@ -1,8 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+
 import {colors} from '../../styles';
 
+/**
+ * This component adds a customizable modal dialog
+ *
+ * @author Chiefbark
+ * @version 0.0.1
+ */
 export default class CalendarDay extends React.Component {
 	
 	getSelectionStyles(selection) {
@@ -33,7 +40,7 @@ export default class CalendarDay extends React.Component {
 					{date.day}
 				</Text>
 				{marking.single &&
-				<View style={[styles.exam, {backgroundColor: marking.single.color}]}/>}
+				<View style={[styles.single, {backgroundColor: marking.single.color}]}/>}
 				<View style={styles.multiContainer}>
 					{marking.multi?.map((element, index) =>
 						index < 4 &&
@@ -61,7 +68,7 @@ const styles = StyleSheet.create({
 	selectionEnd: {
 		borderTopRightRadius: 1000, borderBottomRightRadius: 1000
 	},
-	exam: {
+	single: {
 		position: 'absolute', top: 5, right: 5, bottom: 5, left: 5,
 		borderWidth: 6, borderRadius: 1000
 	},
@@ -75,9 +82,77 @@ const styles = StyleSheet.create({
 });
 
 CalendarDay.propTypes = {
-	date: PropTypes.object.isRequired,
-	state: PropTypes.oneOf(['disabled', '', 'today']).isRequired,
-	marking: PropTypes.oneOfType([PropTypes.array, PropTypes.object]).isRequired,
+	/**
+	 * Date object of the calendar
+	 *
+	 * `object : {day: Number, month: Number, year: Number, timestamp: Number, dateString: String}`
+	 * - `day` : day of the date (required)
+	 * - `month` : month of the date (required)
+	 * - `year` : year of the date (required)
+	 * - `timestamp` : time in millis of the date (required)
+	 * - `dateString` : string format (yyyy-MM-dd) of the date (required)
+	 */
+	date: PropTypes.shape({
+		day: PropTypes.number.isRequired,
+		month: PropTypes.number.isRequired,
+		year: PropTypes.number.isRequired,
+		timestamp: PropTypes.number.isRequired,
+		dateString: PropTypes.string.isRequired
+	}).isRequired,
+	/**
+	 * Date state of the calendar
+	 *
+	 * `String : ['disabled', '', 'today']` -- `default ''`
+	 */
+	state: PropTypes.oneOf(['disabled', '', 'today']),
+	/**
+	 * Marking of the date
+	 *
+	 * `Object : {single: Object, multi: Array[Object], selection: Object}` -- `default {}`
+	 *
+	 * `single`
+	 * - `color : String` : background color of the day (required)
+	 * - `textColor : String` : text color of the day (required)
+	 *
+	 * `multi`
+	 * - `color : String` : background color of the dot (required)
+	 *
+	 * `selection`
+	 * - `color : String` : background color of the day (required)
+	 * - `isStart : Bool` :  if the day is the start of the selection (optional)
+	 * - `isEnd : Bool` :  if the day is the end of the selection (optional)
+	 */
+	marking: PropTypes.shape({
+			single: PropTypes.shape({
+				color: PropTypes.string.isRequired,
+				textColor: PropTypes.string.isRequired
+			}),
+			multi: PropTypes.arrayOf(PropTypes.shape({
+				color: PropTypes.string.isRequired
+			})),
+			selection: PropTypes.shape({
+				color: PropTypes.string.isRequired,
+				isStart: PropTypes.bool,
+				isEnd: PropTypes.bool
+			})
+		}),
+	/**
+	 * Callback triggered when the user press the component
+	 *
+	 * This callback receives a param
+	 * - `value : date` -- The date object of the component
+	 */
 	onClick: PropTypes.func,
+	/**
+	 * Callback triggered when the user holds the component
+	 *
+	 * This callback receives a param
+	 * - `value : date` -- The date object of the component
+	 */
 	onLongClick: PropTypes.func
+}
+
+CalendarDay.defaultProps = {
+	state: '',
+	marking: {}
 }
