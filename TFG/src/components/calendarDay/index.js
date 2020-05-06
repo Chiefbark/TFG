@@ -5,10 +5,10 @@ import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {colors} from '../../styles';
 
 /**
- * This component adds a customizable modal dialog
- *
- * @author Chiefbark
+ * This component is a helper to the React Native Calendars component. Removes the restriction of just one type of mark
+ * @author {@link https://github.com/Chiefbark|Chiefbark}
  * @version 0.0.1
+ * @see {@link https://www.npmjs.com/package/react-native-calendars|React Native Calendars}
  */
 export default class CalendarDay extends React.Component {
 	
