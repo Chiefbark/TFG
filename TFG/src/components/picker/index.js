@@ -73,9 +73,9 @@ CustomPicker.propTypes = {
 	 * Data to display in the picker
 	 *
 	 * `Array : {label => String, value => String, color => String}`
-	 * - `label` : text displayed of the element
-	 * - `value` : value of the element
-	 * - `color` : text color of the element in the selection dialog
+	 * - `label` : text displayed of the element (required)
+	 * - `value` : value of the element (required)
+	 * - `color` : text color of the element in the selection dialog (optional)
 	 */
 	data: PropTypes.arrayOf(PropTypes.shape(
 		{
@@ -99,13 +99,13 @@ CustomPicker.propTypes = {
 	/**
 	 * Specifies if the picker has to show an error or not
 	 *
-	 * `Bool`
+	 * `Bool` -- `default false`
 	 */
 	error: PropTypes.bool,
 	/**
 	 * Specifies if the picker is enabled or not
 	 *
-	 * `Bool`
+	 * `Bool` -- `default false`
 	 */
 	disabled: PropTypes.bool,
 	/**
@@ -117,3 +117,7 @@ CustomPicker.propTypes = {
 	onValueChange: PropTypes.func
 }
 
+CustomPicker.defaultProps = {
+	error: false,
+	disabled: false
+}

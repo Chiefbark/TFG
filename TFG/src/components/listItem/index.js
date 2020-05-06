@@ -56,7 +56,7 @@ ListItem.propTypes = {
 	/**
 	 * Styles of the title of the component
 	 *
-	 * ``
+	 * `View.style`
 	 */
 	titleStyles: PropTypes.object,
 	/**

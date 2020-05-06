@@ -65,7 +65,7 @@ Icon.propTypes = {
 	/**
 	 * Size of the icon
 	 *
-	 * `small, normal, large` -- `default normal`
+	 * `String : [small, normal, large]` -- `default normal`
 	 */
 	size: PropTypes.oneOf(['small', 'normal', 'large']),
 	/**
