@@ -5,7 +5,7 @@ import {Text, TouchableOpacity, StyleSheet} from 'react-native';
 /**
  * This component adds a touchable opacity button to the screen
  *
- * @author Chiefbark
+ * @author {@link https://github.com/Chiefbark|Chiefbark}
  * @version 0.0.1
  */
 export default class Button extends React.Component {

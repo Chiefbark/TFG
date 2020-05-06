@@ -6,7 +6,7 @@ import {colors} from "../../styles";
 /**
  * This component adds an intractable element to the screen, ideal for headers of lists
  *
- * @author Chiefbark
+ * @author {@link https://github.com/Chiefbark|Chiefbark}
  * @version 0.0.1
  */
 export default class ListHeader extends React.Component {

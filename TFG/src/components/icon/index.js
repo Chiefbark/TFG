@@ -5,7 +5,7 @@ import {Image, TouchableOpacity, StyleSheet} from 'react-native';
 /**
  * This component adds a touchable opacity icon with an image to the screen
  *
- * @author Chiefbark
+ * @author {@link https://github.com/Chiefbark|Chiefbark}
  * @version 0.0.1
  */
 export default class Icon extends React.Component {
