@@ -89,7 +89,7 @@ Dialog.propTypes = {
 	/**
 	 * Specifies if the component is visible or not
 	 *
-	 * `Bool` -- `default true`
+	 * `Bool` -- `default false`
 	 */
 	visible: PropTypes.bool
 }
