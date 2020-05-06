@@ -29,7 +29,7 @@ export default class CustomSwitch extends React.Component {
 					if (this.props.onChange)
 						this.props.onChange(value);
 				}}
-				value={this.state.enabled}
+				value={this.state.value}
 				style={this.props.style}
 			/>
 		)
