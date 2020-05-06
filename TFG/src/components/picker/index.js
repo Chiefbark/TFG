@@ -7,10 +7,11 @@ import Picker from "react-native-picker-select";
 import {colors} from "../../styles";
 
 /**
- * This component allows the user to choose one between multiple options
+ * This component adds a controller layer to the component React Native Picker Select
  *
- * @author Chiefbark
+ * @author {@link https://github.com/Chiefbark|Chiefbark}
  * @version 0.0.1
+ * @see {@link https://www.npmjs.com/package/react-native-picker-select|React Native Picker Select}
  */
 export default class CustomPicker extends React.Component {
 	constructor(props) {
