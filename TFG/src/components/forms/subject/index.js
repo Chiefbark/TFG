@@ -21,7 +21,7 @@ export default class SubjectForm extends React.Component {
 			name: this.props.subject?.obj.name ?? undefined,
 			percentage: this.props.subject?.obj.percentage ?? 15,
 			color: this.props.subject?.obj.color ?? undefined,
-			id_teacher: this.props.subject?.obj.id_teacher ?? 0
+			id_teacher: this.props.subject?.obj.id_teacher ?? undefined
 		}
 	}
 	
@@ -29,6 +29,13 @@ export default class SubjectForm extends React.Component {
 		this.setState({...props});
 		Toast.showWithGravity(i18n.get('commons.form.toast'), Toast.LONG, Toast.TOP);
 		setTimeout(() => this.setState({errorName: false, errorTeacher: false, errorColor: false}), 3500);
+	}
+	
+	componentDidMount() {
+		firebase.getDatabase().ref(`users/${firebase.currFirebaseKey}/teachers`).on('value', snapshot => {
+			let data = snapshot.val() || {};
+			this.setState({teachers: Object.entries(data)});
+		});
 	}
 	
 	render() {
@@ -50,7 +57,7 @@ export default class SubjectForm extends React.Component {
 								<View style={{flex: 1, flexDirection: 'row', alignItems: 'center'}}>
 									<View style={{flex: 1}}>
 										<Picker initialValue={this.state.id_teacher}
-												data={this.props.teachers?.map(e => {
+												data={this.state.teachers?.map(e => {
 													return {label: e[1].name, value: e[0]};
 												}) ?? []}
 												placeholder={i18n.get('commons.subjectForm.placeholders.1')}
@@ -103,7 +110,7 @@ export default class SubjectForm extends React.Component {
 								/>
 								<Button label={i18n.get('commons.form.actions.1')}
 										backgroundColor={colors.primary} textColor={colors.white}
-										onClick={() => {
+										onClick={async () => {
 											let obj = {};
 											if (!this.state.name || this.state.name === '') obj.errorName = true;
 											if (!this.state.id_teacher || this.state.id_teacher === 0) obj.errorTeacher = true;
@@ -116,27 +123,31 @@ export default class SubjectForm extends React.Component {
 													color: this.state.color,
 													id_teacher: this.state.id_teacher
 												};
-												this.props.onSubmit();
-												if (this.props.subject)
+								
+												let newKey = this.state.key;
+												if (!this.state.key)
+													newKey = await firebase.getDatabase().ref(`users/${firebase.currFirebaseKey}/subjects`).push(obj).getKey();
+												else
+													await firebase.getDatabase().ref(`users/${firebase.currFirebaseKey}/subjects/${this.state.key}`).set(obj);
+								
+												this.props.onSubmit(newKey);
+								
+												if (this.props.subject && this.props.subject.obj.id_teacher)
 													firebase.getDatabase().ref(`users/${firebase.currFirebaseKey}/teachers/${this.props.subject.obj.id_teacher}`)
 														.once('value', snapshot => {
 															snapshot.ref.update({nSubjects: snapshot.val().nSubjects - 1});
-														});
-												if (!this.state.key)
-													firebase.getDatabase().ref(`users/${firebase.currFirebaseKey}/subjects`).push(obj);
-												else
-													firebase.getDatabase().ref(`users/${firebase.currFirebaseKey}/subjects/${this.state.key}`).set(obj);
-												
+														}).then();
+								
 												firebase.getDatabase().ref(`users/${firebase.currFirebaseKey}/teachers/${this.state.id_teacher}`)
 													.once('value', snapshot => {
 														snapshot.ref.update({nSubjects: snapshot.val().nSubjects + 1});
-													});
+													}).then();
 											}
 										}}/>
 							</Fragment>
 						} visible={!this.state.dialogTeacher}/>
 				{this.state.dialogTeacher &&
-				<TeacherForm onSubmit={() => this.setState({dialogTeacher: false})}
+				<TeacherForm onSubmit={(value) => this.setState({dialogTeacher: false, id_teacher: value})}
 							 onCancel={() => this.setState({dialogTeacher: false})}/>
 				}
 			</Fragment>
@@ -153,8 +164,7 @@ SubjectForm.propTypes = {
 			name: PropTypes.string.isRequired,
 			percentage: PropTypes.number.isRequired,
 			color: PropTypes.string.isRequired,
-			id_teacher: PropTypes.string.isRequired
+			id_teacher: PropTypes.string
 		}).isRequired
-	}),
-	teachers: PropTypes.array
+	})
 }
