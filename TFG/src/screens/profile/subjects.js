@@ -51,7 +51,11 @@ export default class SubjectsScreen extends React.Component {
 		});
 		firebase.getDatabase().ref(`users/${firebase.currFirebaseKey}/teachers`).on('value', snapshot => {
 			let data = snapshot.val() || {};
-			this.setState({teachers: Object.entries(data)});
+			this.setState({teachers: Object.entries(data)}, () =>
+				this.state.subjects.forEach(subject => {
+					if (!this.state.teachers.find(teacher => teacher[0] === subject[1].id_teacher))
+						firebase.getDatabase().ref(`users/${firebase.currFirebaseKey}/subjects/${subject[0]}`).child('id_teacher').remove();
+				}));
 		});
 	}
 	
@@ -90,30 +94,41 @@ export default class SubjectsScreen extends React.Component {
 								  <Text style={{textAlign: 'center'}}>{i18n.get('profile.screens.1.emptyList')}</Text>
 							  </View>
 						  }
-						  ItemSeparatorComponent={() => <View style={{flex: 1, backgroundColor: colors.lightGrey, height: 1}}/>}
-						  renderItem={({item}) =>
-							  <ListItem key={item[0]} title={item[1].name}
-										subtitle={this.state.teachers?.filter(e => e[0] === item[1].id_teacher)[0][1].name}
-										onLongClick={() => {
-											let elements = this.state.selected;
-											elements[item[0]] = item[1];
-											this.setState({selected: elements}, () => this._showOptions());
-										}}
-										onClick={() => {
-											let elements = this.state.selected;
-											if (elements[item[0]]) delete elements[item[0]];
-											else if (Object.entries(this.state.selected).length > 0)
+						  ItemSeparatorComponent={() => <View style={{flex: 1, backgroundColor: colors.primaryDark, height: 1}}/>}
+						  ListFooterComponent={() => <View style={{paddingVertical: 25}}/>}
+						  renderItem={({item}) => {
+							  let filtered = this.state.teachers?.filter(e => e[0] === item[1].id_teacher) ?? undefined;
+							  let subtitle = filtered && filtered.length > 0 ? filtered[0][1].name : i18n.get('profile.screens.1.emptySubtitle');
+							  return (
+								  <ListItem key={item[0]} title={item[1].name}
+											subtitle={subtitle}
+											onLongClick={() => {
+												let elements = this.state.selected;
 												elements[item[0]] = item[1];
-						
-											this.setState({selected: elements}, () => this._showOptions());
-										}}
-										rightItem={() =>
-											<Button label={''} backgroundColor={item[1].color}
-													style={{width: 15, height: 15, paddingVertical: 0, paddingHorizontal: 0, marginRight: 16}}
-											/>}
-										style={this.state.selected[item[0]] && {backgroundColor: colors.primaryLight}}
-							  />
-						  }
+												this.setState({selected: elements}, () => this._showOptions());
+											}}
+											onClick={() => {
+												let elements = this.state.selected;
+												if (elements[item[0]]) delete elements[item[0]];
+												else if (Object.entries(this.state.selected).length > 0)
+													elements[item[0]] = item[1];
+												this.setState({selected: elements}, () => this._showOptions());
+											}}
+											rightItem={() =>
+												Object.entries(this.state.selected).length > 0 &&
+												<Icon source={require('../../../assets/icons/icon_check.png')}
+													  size={'small'} disabled={true}
+													  iconColor={this.state.selected[item[0]] ? colors.primary : colors.white}
+													  onClick={() => this.item[item[0]].click()}
+													  style={{
+														  borderWidth: 1, borderColor: colors.primary, borderRadius: 1000,
+														  padding: 10, marginRight: 16
+													  }}/>
+											}
+											style={{borderLeftWidth: 10, borderLeftColor: item[1].color}}
+								  />
+							  );
+						  }}
 				/>
 				{/*	PLUS BUTTON	*/}
 				<Icon source={require('../../../assets/icons/icon_add.png')} iconColor={colors.white} floating={true}

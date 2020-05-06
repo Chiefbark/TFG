@@ -86,6 +86,7 @@ export default class TeachersScreen extends React.Component {
 							  </View>
 						  }
 						  ItemSeparatorComponent={() => <View style={{flex: 1, backgroundColor: colors.primaryDark, height: 1}}/>}
+						  ListFooterComponent={() => <View style={{paddingVertical: 25}}/>}
 						  renderItem={({item}) =>
 							  <ListItem key={item[0]} title={item[1].name}
 										subtitle={`${item[1].nSubjects} ${i18n.get('profile.screens.2.subtitle')}`}
@@ -102,7 +103,17 @@ export default class TeachersScreen extends React.Component {
 						
 											this.setState({selected: elements}, () => this._showOptions());
 										}}
-										style={this.state.selected[item[0]] && {backgroundColor: colors.primaryLight}}
+										rightItem={() =>
+											Object.entries(this.state.selected).length > 0 &&
+											<Icon source={require('../../../assets/icons/icon_check.png')}
+												  size={'small'} disabled={true}
+												  iconColor={this.state.selected[item[0]] ? colors.primary : colors.white}
+												  onClick={() => this.item[item[0]].click()}
+												  style={{
+													  borderWidth: 1, borderColor: colors.primary, borderRadius: 1000,
+													  padding: 10, marginRight: 16
+												  }}/>
+										}
 							  />
 						  }
 				/>
