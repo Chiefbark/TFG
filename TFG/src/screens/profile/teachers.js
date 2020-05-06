@@ -38,6 +38,7 @@ export default class TeachersScreen extends React.Component {
 		i18n.addListener(this._updateComponent.bind(this));
 		this.props.navigation.addListener('focus', () => this._onFocusComponent());
 		this.props.navigation.addListener('blur', () => {
+			this.flatList?.scrollToOffset({animated: false, y: 0});
 			this.setState({selected: {}});
 			this.props.navigation.dangerouslyGetParent().setOptions({
 				headerRight: () => undefined
@@ -75,6 +76,7 @@ export default class TeachersScreen extends React.Component {
 		return (
 			<Fragment>
 				<FlatList style={{flex: 1}}
+						  ref={(ref) => this.flatList = ref}
 						  data={this.state.teachers}
 						  keyExtractor={(item) => item[0]}
 						  ListEmptyComponent={() =>
