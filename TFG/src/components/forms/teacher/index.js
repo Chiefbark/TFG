@@ -9,6 +9,12 @@ import Dialog from '../../dialog';
 import Button from '../../button';
 import {colors} from '../../../styles';
 
+/**
+ * This component allows the user to create & update teachers
+ *
+ * @author {@link https://github.com/Chiefbark|Chiefbark}
+ * @version 0.0.1
+ */
 export default class TeacherForm extends React.Component {
 	
 	constructor(props) {
@@ -67,13 +73,31 @@ export default class TeacherForm extends React.Component {
 }
 
 TeacherForm.propTypes = {
+	/**
+	 * Callback triggered when the user submits the form
+	 *
+	 * This callback receives a param
+	 * - `key : String` -- The id of the teacher created/updated
+	 */
 	onSubmit: PropTypes.func.isRequired,
+	/**
+	 * Callback triggered when the user cancels the form
+	 */
 	onCancel: PropTypes.func.isRequired,
+	/**
+	 * Initial values of the form
+	 *
+	 * `Object : {key: String, obj: Object}`
+	 *
+	 * `key` : id of the teacher
+	 *
+	 * `obj`
+	 * - `name : String` : name of the teacher (required)
+	 */
 	teacher: PropTypes.shape({
 		key: PropTypes.string.isRequired,
 		obj: PropTypes.shape({
-			name: PropTypes.string.isRequired,
-			nSubjects: PropTypes.number
+			name: PropTypes.string.isRequired
 		}).isRequired
 	})
 }

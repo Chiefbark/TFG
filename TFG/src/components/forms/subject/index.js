@@ -12,6 +12,12 @@ import Icon from "../../icon";
 import TeacherForm from "../teacher";
 import ColorPicker from '../../colorPicker';
 
+/**
+ * This component allows the user to create & update subjects
+ *
+ * @author {@link https://github.com/Chiefbark|Chiefbark}
+ * @version 0.0.1
+ */
 export default class SubjectForm extends React.Component {
 	
 	constructor(props) {
@@ -156,8 +162,30 @@ export default class SubjectForm extends React.Component {
 }
 
 SubjectForm.propTypes = {
+	/**
+	 * Callback triggered when the user submits the dialog
+	 *
+	 * This callback receives a param
+	 * - `key : String` -- The id of the subject created/updated
+	 */
 	onSubmit: PropTypes.func.isRequired,
+	/**
+	 * Callback triggered when the user cancels the dialog
+	 */
 	onCancel: PropTypes.func.isRequired,
+	/**
+	 * Initial values of the form
+	 *
+	 * `Object : {key: String, obj: Object}`
+	 *
+	 * `key` : id of the subject
+	 *
+	 * `obj`
+	 * - `name : String` : name of the subject (required)
+	 * - `percentage : Number` : percentage of the subject (required)
+	 * - `color : String` : color of the subject (required)
+	 * - `id_teacher : String` : id of the teacher associated (optional)
+	 */
 	subject: PropTypes.shape({
 		key: PropTypes.string.isRequired,
 		obj: PropTypes.shape({
