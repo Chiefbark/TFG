@@ -99,7 +99,7 @@ export default class CalendarPicker extends React.Component {
 	}
 	
 	componentDidMount() {
-		if (this.props.startDate || this.props.endDate)
+		if ((this.props.startDate && this.props.endDate) || (this.props.startDate && !this.props.endDate))
 			this.selectAll(this.props.startDate, this.props.endDate);
 	}
 	
