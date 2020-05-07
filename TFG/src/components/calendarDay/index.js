@@ -6,6 +6,7 @@ import {colors} from '../../styles';
 
 /**
  * This component is a helper to the React Native Calendars component. Removes the restriction of just one type of mark
+ *
  * @author {@link https://github.com/Chiefbark|Chiefbark}
  * @version 0.0.1
  * @see {@link https://www.npmjs.com/package/react-native-calendars|React Native Calendars}
