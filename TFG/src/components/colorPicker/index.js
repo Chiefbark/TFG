@@ -29,8 +29,8 @@ export default class ColorPicker extends React.Component {
 						const selected = this.state.selected === e;
 						const marked = this.props.marked?.filter(value => value === e)[0];
 						return (
-							<View style={[{padding: 2}, selected && {borderRadius: 4, backgroundColor: colors.primary + '55'}]}>
-								<Icon key={e} source={require('../../../assets/icons/icon_add.png')}
+							<View key={e} style={[{padding: 2}, selected && {borderRadius: 4, backgroundColor: colors.primary + '55'}]}>
+								<Icon source={require('../../../assets/icons/icon_add.png')}
 									  iconColor={selected && marked ? colors.white : marked ? colors.white : colors.transparent}
 									  style={[styles.element, {backgroundColor: e}]}
 									  onClick={() => {
