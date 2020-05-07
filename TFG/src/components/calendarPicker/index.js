@@ -1,16 +1,17 @@
 import React, {Fragment} from 'react';
 import PropTypes from 'prop-types';
+
 import * as i18n from '../../i18n';
-import Dialog from '../dialog';
-import Button from '../button';
 import {colors} from '../../styles';
+
+import Button from '../button';
 import {Calendar} from 'react-native-calendars';
 import CalendarDay from '../calendarDay';
+import Dialog from '../dialog';
 
 const selection = {
 	color: colors.primaryLight
 }
-
 const getDateFromString = (dateString) => {
 	if (dateString) {
 		let arr = dateString.split('-');
@@ -22,6 +23,13 @@ const getDateFromString = (dateString) => {
 	return undefined;
 }
 
+/**
+ * This component uses React Native Calendars under the hood. Allows the user to select multiple dates in a modal dialog
+ *
+ * @author {@link https://github.com/Chiefbark|Chiefbark}
+ * @version 0.0.1
+ * @see {@link https://www.npmjs.com/package/react-native-calendars|React Native Calendars}
+ */
 export default class CalendarPicker extends React.Component {
 	
 	constructor(props) {
@@ -116,10 +124,9 @@ export default class CalendarPicker extends React.Component {
 									  }
 								  }}
 								  dayComponent={({date, state, marking}) => {
-									  return (
-										  <CalendarDay date={date} state={state} marking={marking || []}
-													   onClick={(day) => this._onPress(day)}/>
-									  );
+									  let newMarking = {...marking};
+									  return <CalendarDay date={date} state={state} marking={newMarking}
+														  onClick={(day) => this._onPress(day)}/>;
 								  }}
 						/>
 					}
@@ -145,9 +152,38 @@ export default class CalendarPicker extends React.Component {
 }
 
 CalendarPicker.propTypes = {
+	/**
+	 * Callback triggered when the user submits the dialog
+	 *
+	 * This callback receives two params, both formatted as `yyyy-MM-dd`
+	 * - `startDate : String` -- The start date of the selection
+	 * - `endDate : String` -- The end date of the selection. If prop `multiple = false`, then this value is `undefined`
+	 */
 	onSubmit: PropTypes.func.isRequired,
+	/**
+	 * Callback triggered when the user cancels the dialog
+	 */
 	onCancel: PropTypes.func.isRequired,
+	/**
+	 * Specifies if the component allows multiple selection or not
+	 *
+	 * `Bool` -- `default true`
+	 */
 	multiple: PropTypes.bool,
+	/**
+	 * Initial date of the selection
+	 *
+	 * `String` formatted as `yyyy-MM-dd`
+	 */
 	startDate: PropTypes.string,
+	/**
+	 * End date of the selection
+	 *
+	 * `String` formatted as `yyyy-MM-dd`
+	 */
 	endDate: PropTypes.string,
+}
+
+CalendarPicker.defaultProps = {
+	multiple: true
 }
