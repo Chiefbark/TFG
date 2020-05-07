@@ -1,16 +1,19 @@
 import React, {Fragment} from 'react';
 import PropTypes from 'prop-types';
 import {View, Text, TextInput, Slider} from 'react-native';
+
 import * as i18n from '../../../i18n';
 import * as firebase from '../../../firebase';
-import Toast from 'react-native-simple-toast';
-import Dialog from '../../dialog';
-import Button from '../../button';
-import Picker from '../../picker';
 import {colors, subjectColors} from '../../../styles';
-import Icon from "../../icon";
-import TeacherForm from "../teacher";
+
+import Toast from 'react-native-simple-toast';
+
+import Button from '../../button';
 import ColorPicker from '../../colorPicker';
+import Dialog from '../../dialog';
+import Icon from "../../icon";
+import Picker from '../../picker';
+import TeacherForm from "../teacher";
 
 /**
  * This component allows the user to create & update subjects

@@ -1,13 +1,15 @@
 import React, {Fragment} from 'react';
 import PropTypes from 'prop-types';
 import {TextInput} from 'react-native';
+
 import * as i18n from '../../../i18n';
 import * as firebase from '../../../firebase';
+import {colors} from '../../../styles';
+
 import Toast from 'react-native-simple-toast';
 
-import Dialog from '../../dialog';
 import Button from '../../button';
-import {colors} from '../../../styles';
+import Dialog from '../../dialog';
 
 /**
  * This component allows the user to create & update teachers
