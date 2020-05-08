@@ -53,11 +53,25 @@ Pulsa en las imagenes para acceder a mis zonas de trabajo
 
 ## INTRODUCCION
 
+En este documento se van a explicar todos los componentes creados para la aplicación, así como los sistemas más importantes y su funcionamiento.
+
+El lenguaje utilizado es `Javascript`, con el superconjunto de `ECMAScript 6`.
+<br>
+`ECMAScript 6` o `ES6` es un super conjunto de javascript que añade funcionalidade extra al lenguaje, como por ejemplo:
+- `let` : variables de ámbito
+- `const` : constantes
+- `Arrow functions` : funciones anónimas
+- `Classes` : orientación a componentes
+
+[Aquí](https://ecma-international.org/ecma-262/10.0/index.html) puedes encontrar toda la información referente a ES6.
+
+Para desarrollar el proyecto se utiliza `Expo`, un framework creado a partir de `React Native` que permite crear aplicaciones tanto para IOs como Android utilizando exclusivamente javascript. La documentación de este framework se encuentra [aquí](https://docs.expo.io/).
+
 <div style="page-break-after: always;"></div>
 
 ## COMPONENTES
 
-Los componentes utilizados, tanto propios como externos, para el desarrollo de la aplicación se van a exponer aquí. Los componentes externos tendrán el símbolo &#9432; en su nombre.
+Los componentes utilizados, tanto propios como externos, para el desarrollo de la aplicación se van a exponer aquí. Los componentes externos tendrán el símbolo &#9432; indicando que son dependencias y pondrán los links para ver su documentación.
 
 <div style="page-break-after: always;"></div>
 
