@@ -9,13 +9,26 @@ export default class StepPicker extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			selected: this.props.initialValue
+			selected: this.props.initialValue + (this.props.cyclic ? 1 : 0),
+			cycled: false
 		}
 	}
 	
+	shouldComponentUpdate(nextProps, nextState, nextContext) {
+		return nextState.cycled === this.state.cycled;
+	}
+	
 	render() {
+		let data;
+		if (this.props.cyclic) {
+			let start = [{label: this.props.data[this.props.data.length - 2].label}, {label: this.props.data[this.props.data.length - 1].label}];
+			let end = [{label: this.props.data[0].label}, {label: this.props.data[1].label}];
+			data = [...start, ...this.props.data, ...end];
+		} else
+			data = [{}, ...this.props.data, {}];
+		
 		return (
-			<Fragment>
+			<View style={{position: 'relative'}}>
 				<View style={styles.selected}/>
 				<FlatList
 					onLayout={() => this.flatListRef.scrollToIndex({animated: false, index: this.state.selected})}
@@ -29,13 +42,33 @@ export default class StepPicker extends React.Component {
 					style={{height: 60 * 3}}
 					decelerationRate={'fast'}
 					onScroll={(event) => {
-						const diff = event.nativeEvent.contentOffset.y / 60 - this.state.selected;
-						if (diff > 0.5)
-							this.setState({selected: this.state.selected + 1});
-						else if (diff < -0.5)
-							this.setState({selected: this.state.selected - 1});
+						if (this.props.cyclic && this.state.selected === 0) {
+							const offset = event.nativeEvent.contentOffset.y;
+							this.setState({selected: this.props.data.length, cycled: true},
+								() => this.flatListRef.scrollToOffset({
+									animated: false, offset: 60 * this.props.data.length + offset
+								})
+							);
+							if (this.props.onCycleChange) this.props.onCycleChange('backward');
+						} else if (this.props.cyclic && this.state.selected === data.length - 3) {
+							const offset = event.nativeEvent.contentSize.height - event.nativeEvent.contentOffset.y;
+							this.setState({selected: 1, cycled: true},
+								() => this.flatListRef.scrollToOffset({
+									animated: false, offset: offset - 120
+								})
+							);
+							if (this.props.onCycleChange) this.props.onCycleChange('forward');
+						} else if (this.state.cycled)
+							this.setState({cycled: false});
+						else {
+							const diff = event.nativeEvent.contentOffset.y / 60 - this.state.selected;
+							if (diff > 0.5)
+								this.setState({selected: this.state.selected + 1});
+							else if (diff < -0.5)
+								this.setState({selected: this.state.selected - 1});
+						}
 					}}
-					data={[{}, ...this.props.data, {}]}
+					data={data}
 					renderItem={({item, index}) =>
 						<View style={styles.element}>
 							<Text style={[
@@ -47,10 +80,10 @@ export default class StepPicker extends React.Component {
 					keyExtractor={(item, index) => `${index}`}
 					onMomentumScrollEnd={() => {
 						this.flatListRef.scrollToIndex({animated: true, index: this.state.selected});
-						if (this.props.onValueChange) this.props.onValueChange(this.props.data[this.state.selected]);
+						if (this.props.onValueChange) this.props.onValueChange(this.props.data[this.state.selected - 1]);
 					}}
 				/>
-			</Fragment>
+			</View>
 		)
 	}
 }
@@ -66,6 +99,7 @@ const styles = StyleSheet.create({
 		position: 'absolute',
 		width: 100,
 		height: 60,
+		top: 60,
 		borderTopWidth: 1,
 		borderBottomWidth: 1,
 		borderColor: colors.primary
@@ -90,6 +124,8 @@ StepPicker.propTypes = {
 	 * `Number` -- `default 0`
 	 */
 	initialValue: PropTypes.number,
+	cyclic: PropTypes.bool,
+	onCycleChange: PropTypes.func,
 	/**
 	 * Callback triggered when the value is changed
 	 *
@@ -100,5 +136,6 @@ StepPicker.propTypes = {
 }
 
 StepPicker.defaultProps = {
-	initialValue: 0
+	initialValue: 0,
+	cyclic: true
 }
