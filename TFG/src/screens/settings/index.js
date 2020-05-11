@@ -167,16 +167,10 @@ export default class SettingsScreen extends React.Component {
 													  config.setConfig(newConfig);
 												  }
 											  }}
-											  rightItem={() =>
-												  config.currConfig.profile === index &&
-												  <Icon source={require('../../../assets/icons/icon_check.png')}
-														size={'small'} disabled={true}
-														iconColor={colors.primary}
-														style={{
-															borderWidth: 1, borderColor: colors.primary, borderRadius: 1000,
-															padding: 10, marginRight: 16
-														}}/>}
-											  style={{paddingVertical: 4}}/>
+											  style={[
+												  {borderLeftWidth: 10, borderLeftColor: colors.transparent},
+												  config.currConfig.profile === index && {borderLeftColor: colors.primary}
+											  ]}/>
 								)}
 							</Fragment>
 						}
@@ -201,16 +195,10 @@ export default class SettingsScreen extends React.Component {
 														  i18n.setLocale(element.iso);
 													  }
 												  }}
-												  rightItem={() =>
-													  i18n.currLocale === element.iso &&
-													  <Icon source={require('../../../assets/icons/icon_check.png')}
-															size={'small'} disabled={true}
-															iconColor={colors.primary}
-															style={{
-																borderWidth: 1, borderColor: colors.primary, borderRadius: 1000,
-																padding: 10, marginRight: 16
-															}}/>}
-												  style={{paddingVertical: 8}}/>
+												  style={[
+													  {borderLeftWidth: 10, borderLeftColor: colors.transparent},
+													  i18n.currLocale === element.iso && {borderLeftColor: colors.primary}
+												  ]}/>
 									)}
 							</Fragment>
 						}
