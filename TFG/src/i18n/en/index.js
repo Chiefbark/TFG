@@ -44,6 +44,15 @@ export const settings = {
 	items: ['Exam close', 'Absences limit', 'Show absences', 'Show holidays', 'Show exams'],
 	actions: ['change...', 'change...']
 }
+export const timetable = {
+	title: 'Timetable',
+	titles: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+	confirmDialog: {
+		title: 'Are you sure?',
+		description: 'data won\'t be saved',
+		actions: ['Cancel', 'Exit']
+	}
+}
 
 export const commons = {
 	calendarLocales: {
@@ -75,7 +84,7 @@ export const commons = {
 	},
 	form: {
 		toast: 'Please fill all the fields',
-		actions: ['Cancel', 'Save']
+		actions: ['Cancel', 'Save', 'Add']
 	},
 	editInfoForm: {
 		title: 'Edit information',

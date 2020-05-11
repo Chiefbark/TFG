@@ -26,7 +26,7 @@ export const profile = {
 			emptyList: 'No tienes ninguna asignatura añadida!\n\nAñade algunas asignaturas pulsando sobre el botón +',
 			emptySubtitle: 'Profesor no asignado',
 			confirmDialog: {
-				title: 'Are you sure?',
+				title: 'Estás seguro?',
 				description: 'Todas las faltas de asistencia de la(s) asignatura(s) serán eliminadas también',
 				actions: ['Cancelar', 'Eliminar']
 			}
@@ -48,6 +48,15 @@ export const settings = {
 	headers: ['Perfil', 'Idioma', 'Notificaciones', 'Información del calendario'],
 	items: ['Exámen próximo', 'Límite de faltas', 'Mostrar faltas', 'Mostrar vacaciones', 'Mostrar exámenes'],
 	actions: ['cambiar...', 'cambiar...']
+}
+export const timetable = {
+	title: 'Horario',
+	titles: ['Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab', 'Dom'],
+	confirmDialog: {
+		title: 'Estás seguro?',
+		description: 'Los datos no se guardarán',
+		actions: ['Cancelar', 'Salir']
+	}
 }
 
 export const commons = {
@@ -80,7 +89,7 @@ export const commons = {
 	},
 	form: {
 		toast: 'Por favor rellena todos los campos',
-		actions: ['Cancelar', 'Guardar']
+		actions: ['Cancelar', 'Guardar', 'Añadir']
 	},
 	teacherForm: {
 		title: 'Profesor',
