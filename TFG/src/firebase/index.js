@@ -22,8 +22,10 @@ export const firebaseKey = async () => {
 	if (!currFirebaseKey) {
 		await AsyncStorage.getItem('@firebaseKey')
 			.then(result => {
-				if (!result) currFirebaseKey = db.ref('users/').push({createdAt: new Date().getTime()}).getKey();
-				else
+				if (!result) {
+					currFirebaseKey = db.ref('users/').push({createdAt: new Date().getTime()}).getKey();
+					db.ref(`users/${currFirebaseKey}/profiles/0`).set({name: 'Profile 01'});
+				} else
 					currFirebaseKey = result;
 				AsyncStorage.setItem('@firebaseKey', currFirebaseKey);
 				return result;
