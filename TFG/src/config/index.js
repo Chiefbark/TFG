@@ -1,6 +1,6 @@
 import {AsyncStorage} from 'react-native';
 
-const defaultConfig = {notifications: [true, true], calendar: [true, true, true]}
+const defaultConfig = {profile: 0, notifications: [true, true], calendar: [true, true, true]}
 
 export let currConfig = undefined;
 export let lastModified = undefined;
