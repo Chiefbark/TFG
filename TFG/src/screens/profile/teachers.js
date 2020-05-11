@@ -1,13 +1,16 @@
 import React, {Fragment} from 'react';
 import {View, Text, FlatList} from 'react-native';
+
 import * as i18n from '../../i18n';
 import * as firebase from '../../firebase';
-import Icon from "../../components/icon";
+import * as config from '../../config';
 import {colors} from "../../styles";
-import TeacherForm from "../../components/forms/teacher";
-import ListItem from "../../components/listItem";
-import Dialog from "../../components/dialog";
+
 import Button from "../../components/button";
+import Dialog from "../../components/dialog";
+import Icon from "../../components/icon";
+import ListItem from "../../components/listItem";
+import TeacherForm from "../../components/forms/teacher";
 
 export default class TeachersScreen extends React.Component {
 	constructor(props) {
@@ -17,7 +20,6 @@ export default class TeachersScreen extends React.Component {
 			teachers: undefined,
 			dialogTeacher: false,
 			dialogConfirm: false,
-			_active: false,
 			_locale: i18n.currLocale,
 			_lastModified: undefined
 		}
@@ -45,7 +47,7 @@ export default class TeachersScreen extends React.Component {
 			});
 		});
 		
-		firebase.getDatabase().ref(`users/${firebase.currFirebaseKey}/teachers`).on('value', snapshot => {
+		firebase.getDatabase().ref(`users/${firebase.currFirebaseKey}/profiles/${config.currConfig.profile}/teachers`).on('value', snapshot => {
 			let data = snapshot.val() || {};
 			this.setState({teachers: Object.entries(data)});
 		});
@@ -167,7 +169,7 @@ export default class TeachersScreen extends React.Component {
 										onClick={() => {
 											Object.entries(this.state.selected)
 												.forEach(element =>
-													firebase.getDatabase().ref(`users/${firebase.currFirebaseKey}/teachers/${element[0]}`).remove()
+													firebase.getDatabase().ref(`users/${firebase.currFirebaseKey}/profiles/${config.currConfig.profile}/teachers/${element[0]}`).remove()
 												)
 											this.setState({selected: {}, dialogConfirm: false}, () => this._showOptions());
 										}}/>
