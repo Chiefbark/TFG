@@ -123,7 +123,6 @@ export default class SubjectsScreen extends React.Component {
 												<Icon source={require('../../../assets/icons/icon_check.png')}
 													  size={'small'} disabled={true}
 													  iconColor={this.state.selected[item[0]] ? colors.primary : colors.white}
-													  onClick={() => this.item[item[0]].click()}
 													  style={{
 														  borderWidth: 1, borderColor: colors.primary, borderRadius: 1000,
 														  padding: 10, marginRight: 16
