@@ -51,7 +51,7 @@ export default class SettingsScreen extends React.Component {
 				<ScrollView style={{flex: 1}}>
 					{/*	CONFIG ABOUT PROFILE	*/}
 					<ListHeader label={i18n.get('settings.headers.0')}/>
-					<ListItem title={this.state.profiles ? this.state.profiles[config.currConfig.profile].name : undefined}
+					<ListItem title={this.state.profiles ? this.state.profiles[config.currConfig.profile].name : ''}
 							  titleStyles={{fontWeight: 'normal'}}
 							  rightItem={() =>
 								  <Button label={i18n.get('settings.actions.1')}
