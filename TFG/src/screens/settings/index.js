@@ -1,28 +1,32 @@
 import React, {Fragment} from 'react';
 import {ScrollView} from 'react-native';
-import * as i18n from '../../i18n';
-import * as config from '../../config';
 
-import {colors} from "../../styles";
+import * as i18n from '../../i18n';
+import * as firebase from '../../firebase';
+import * as config from '../../config';
+import {colors} from '../../styles';
+
 import Button from '../../components/button';
-import Dialog from "../../components/dialog";
-import ListHeader from "../../components/listHeader";
-import ListItem from "../../components/listItem";
+import Dialog from '../../components/dialog';
+import ListHeader from '../../components/listHeader';
+import ListItem from '../../components/listItem';
 import Switch from '../../components/switch';
+import Icon from '../../components/icon';
 
 export default class SettingsScreen extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
+			profiles: undefined,
+			dialogProfile: false,
 			dialogLanguage: false,
 			_locale: i18n.currLocale,
-			_config: config.currConfig,
-			_lastModified: undefined
+			_config: config.currConfig
 		}
 	}
 	
 	_updateComponent() {
-		this.setState({_locale: i18n.currLocale, _config: config.currConfig, _lastModified: new Date().getTime()});
+		this.setState({_locale: i18n.currLocale, _config: config.currConfig});
 		this.props.navigation.setOptions({title: i18n.get(`settings.title`)});
 		this.props.navigation.dangerouslyGetParent().setOptions({tabBarLabel: i18n.get('settings.title')});
 	}
@@ -30,6 +34,10 @@ export default class SettingsScreen extends React.Component {
 	componentDidMount() {
 		i18n.addListener(this._updateComponent.bind(this));
 		this._updateComponent();
+		firebase.getDatabase().ref(`users/${firebase.currFirebaseKey}/profiles`).on('value', snapshot => {
+			let data = snapshot.val() || {};
+			this.setState({profiles: data});
+		});
 	}
 	
 	componentWillUnmount() {
@@ -37,10 +45,22 @@ export default class SettingsScreen extends React.Component {
 	}
 	
 	render() {
+		console.log('profiles: ', this.state.profiles);
 		return (
 			<Fragment>
 				<ScrollView style={{flex: 1}}>
+					{/*	CONFIG ABOUT PROFILE	*/}
 					<ListHeader label={i18n.get('settings.headers.0')}/>
+					<ListItem title={this.state.profiles ? this.state.profiles[config.currConfig.profile].name : undefined}
+							  titleStyles={{fontWeight: 'normal'}}
+							  rightItem={() =>
+								  <Button label={i18n.get('settings.actions.1')}
+										  textColor={colors.lightGrey}
+										  onClick={() => this.setState({dialogProfile: true})}
+								  />
+							  }
+							  feedback={false}
+							  style={{paddingVertical: 4}}/>
 					{/*	CONFIG ABOUT LANGUAGE	*/}
 					<ListHeader label={i18n.get('settings.headers.1')}/>
 					<ListItem title={i18n.get(`commons.languages.${i18n.getSelectedLang()}.name`)}
@@ -133,6 +153,41 @@ export default class SettingsScreen extends React.Component {
 							  feedback={false}
 							  style={{paddingVertical: 8}}/>
 				</ScrollView>
+				{/*	PROFILE DIALOG	*/}
+				<Dialog title={i18n.get('commons.profileDialog.title')}
+						content={() =>
+							<Fragment>
+								{this.state.profiles?.map((element, index) =>
+									<ListItem key={index} title={element.name} titleStyles={{fontWeight: 'normal'}}
+											  onClick={() => {
+												  this.setState({dialogProfile: false});
+												  if (config.currConfig.profile !== index) {
+													  let newConfig = this.state._config;
+													  newConfig.profile = index;
+													  config.setConfig(newConfig);
+												  }
+											  }}
+											  rightItem={() =>
+												  config.currConfig.profile === index &&
+												  <Icon source={require('../../../assets/icons/icon_check.png')}
+														size={'small'} disabled={true}
+														iconColor={colors.primary}
+														style={{
+															borderWidth: 1, borderColor: colors.primary, borderRadius: 1000,
+															padding: 10, marginRight: 16
+														}}/>}
+											  style={{paddingVertical: 4}}/>
+								)}
+							</Fragment>
+						}
+						buttons={() =>
+							<Fragment>
+								<Button label={i18n.get('commons.profileDialog.actions.0')}
+										backgroundColor={colors.primary} textColor={colors.white}
+										onClick={() => this.setState({dialogProfile: false})}/>
+							</Fragment>
+						}
+						visible={this.state.dialogProfile}/>
 				{/*	LANGUAGE DIALOG	*/}
 				<Dialog title={i18n.get('commons.languageDialog.title')}
 						content={() =>
@@ -142,10 +197,20 @@ export default class SettingsScreen extends React.Component {
 										<ListItem key={element.iso} title={element.name} titleStyles={{fontWeight: 'normal'}}
 												  onClick={() => {
 													  this.setState({dialogLanguage: false});
-													  i18n.setLocale(element.iso);
-													  this._updateComponent();
+													  if (i18n.currLocale !== element.iso) {
+														  i18n.setLocale(element.iso);
+													  }
 												  }}
-										/>
+												  rightItem={() =>
+													  i18n.currLocale === element.iso &&
+													  <Icon source={require('../../../assets/icons/icon_check.png')}
+															size={'small'} disabled={true}
+															iconColor={colors.primary}
+															style={{
+																borderWidth: 1, borderColor: colors.primary, borderRadius: 1000,
+																padding: 10, marginRight: 16
+															}}/>}
+												  style={{paddingVertical: 8}}/>
 									)}
 							</Fragment>
 						}
