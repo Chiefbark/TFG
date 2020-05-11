@@ -1,10 +1,10 @@
 import React, {Fragment} from 'react';
 import {View, Text, ScrollView} from 'react-native';
+import {CommonActions} from '@react-navigation/native';
 
 import * as i18n from '../../i18n';
 import * as firebase from '../../firebase';
 import * as config from '../../config';
-import * as navigation from "../../config/navigation";
 import {colors} from '../../styles';
 
 import ListHeader from '../../components/listHeader';
@@ -77,7 +77,7 @@ export default class InformationScreen extends React.Component {
 							}
 				/>
 				<Button label={`${i18n.get('commons.form.actions.2')}...`} backgroundColor={colors.white} textColor={colors.lightGrey}
-						onClick={() => navigation.setNavigation('timetable')}
+						onClick={() => this.props.navigation.dispatch(CommonActions.navigate({name: 'Timetable'}))}
 						style={{paddingVertical: 15}}/>
 				{/*	CONFIG ABOUT HOLIDAYS & EVENTS	*/}
 				<ListHeader label={i18n.get('profile.screens.0.headers.2')}
