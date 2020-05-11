@@ -56,9 +56,18 @@ export const commons = {
 		title: 'Selecciona una fecha',
 		actions: ['Cancelar', 'Aplicar']
 	},
+	timePickerDialog: {
+		title: 'Selecciona una hora',
+		placeholders: ['Horas', 'Minutos'],
+		actions: ['Cancelar', 'Aplicar']
+	},
+	profileDialog: {
+		title: 'Selecciona un perfil',
+		actions: ['Cancelar']
+	},
 	languageDialog: {
 		title: 'Selecciona un idioma',
-		actions: ['Aceptar']
+		actions: ['Cancelar']
 	},
 	form: {
 		toast: 'Por favor rellena todos los campos',
