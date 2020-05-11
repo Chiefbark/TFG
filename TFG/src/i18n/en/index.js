@@ -11,7 +11,11 @@ export const absences = {
 export const profile = {
 	title: 'Profile',
 	screens: [
-		{title: 'Information'},
+		{
+			title: 'Information',
+			headers: ['Information', 'Timetables', 'Holidays & events', 'Exams'],
+			contents: ['Name', 'Start date', 'End date']
+		},
 		{
 			title: 'Subjects',
 			emptyList: 'You still don\'t have any subjects!\n\nAdd some subjects by clicking the button +',
@@ -71,6 +75,11 @@ export const commons = {
 	},
 	form: {
 		toast: 'Please fill all the fields',
+		actions: ['Cancel', 'Save']
+	},
+	editInfoForm: {
+		title: 'Edit information',
+		placeholders: ['profile\'s name...'],
 		actions: ['Cancel', 'Save']
 	},
 	teacherForm: {

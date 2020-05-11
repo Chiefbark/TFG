@@ -11,7 +11,16 @@ export const absences = {
 export const profile = {
 	title: 'Perfil',
 	screens: [
-		{title: 'Información'},
+		{
+			title: 'Información',
+			headers: ['Información', 'Horarios', 'Vacaciones y eventos', 'Exámenes'],
+			contents: ['Nombre', 'Fecha inicio', 'Fecha fin'],
+			editInfoDialog: {
+				title: 'Editar información',
+				placeholders: ['nombre del perfil...'],
+				actions: ['Cancelar', 'Save']
+			}
+		},
 		{
 			title: 'Asignaturas',
 			emptyList: 'No tienes ninguna asignatura añadida!\n\nAñade algunas asignaturas pulsando sobre el botón +',
