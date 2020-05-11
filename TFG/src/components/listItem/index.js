@@ -39,10 +39,10 @@ const styles = StyleSheet.create({
 		flex: 1, paddingHorizontal: 16
 	},
 	title: {
-		color: colors.black, fontWeight: 'bold', fontSize: 16, marginBottom: 5
+		color: colors.black, fontWeight: 'bold', fontSize: 16
 	},
 	subtitle: {
-		color: colors.grey
+		color: colors.grey, marginTop: 5
 	}
 })
 
