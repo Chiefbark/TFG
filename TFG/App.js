@@ -1,14 +1,13 @@
 import React, {Fragment} from 'react';
-import {View, ActivityIndicator} from 'react-native';
+import {View, Text, TouchableOpacity, ActivityIndicator} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
-import {createMaterialBottomTabNavigator} from '@react-navigation/material-bottom-tabs';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {createMaterialTopTabNavigator} from "@react-navigation/material-top-tabs";
 
 import * as i18n from './src/i18n';
 import * as config from './src/config';
 import * as firebase from './src/firebase';
-import * as navigation from './src/config/navigation';
 import {colors} from './src/styles';
 
 import Icon from './src/components/icon';
@@ -22,7 +21,7 @@ import Teachers from './src/screens/profile/teachers';
 import Settings from './src/screens/settings';
 import TimeTable from "./src/screens/timetable";
 
-const BottomTab = createMaterialBottomTabNavigator();
+const BottomTab = createBottomTabNavigator();
 const TopTab = createMaterialTopTabNavigator();
 const Stack = createStackNavigator();
 
@@ -67,6 +66,9 @@ function ProfileStackNavigator() {
 			headerMode: 'screen'
 		}}>
 			<Stack.Screen name={'Profile'} component={ProfileTopTabNavigators}/>
+			<Stack.Screen name={'Timetable'} component={TimetableNavigator}
+						  options={{title: i18n.get('timetable.title')}}
+			/>
 		</Stack.Navigator>
 	);
 }
@@ -129,14 +131,11 @@ function TimetableNavigator() {
 
 export default class App extends React.Component {
 	
-	_onNavigationChange() {
-		this.setState({_navigation: navigation.currNavigation});
-	}
 	
 	constructor(props) {
 		super(props);
 		this.state = {
-			_navigation: 'timetable',
+			_navigation: 'default',
 			_locale: undefined,
 			_config: undefined,
 			_firebaseKey: undefined
@@ -144,79 +143,77 @@ export default class App extends React.Component {
 		i18n.locale().then(locale => this.setState({_locale: locale}));
 		config.config().then(config => this.setState({_config: config}));
 		firebase.firebaseKey().then(firebaseKey => this.setState({_firebaseKey: firebaseKey}));
-		navigation.navigation().then();
 	}
-	
-	componentDidMount() {
-		navigation.addListener(this._onNavigationChange.bind(this));
-	}
-	
-	componentWillUnmount() {
-		navigation.removeListener(this._onNavigationChange.bind(this));
-	}
-	
+
 	render() {
 		return (<Fragment>
 				{this.state._locale && this.state._config && this.state._firebaseKey ?
-					<Fragment>
-						{this.state._navigation === 'default' &&
-						<NavigationContainer>
-							<BottomTab.Navigator barStyle={{backgroundColor: colors.primary, paddingVertical: 2.5}}>
-								<BottomTab.Screen name={'Calendar'} component={CalendarStackNavigator} options={
-									{
-										tabBarLabel: i18n.get('calendar.title'),
-										tabBarIcon: () => <Icon source={require('./assets/icons/icon_calendar.png')}
-																iconColor={colors.white}/>
-									}
-								}/>
-								<BottomTab.Screen name={'Statistics'} component={StatisticsStackNavigator} options={
-									{
-										tabBarLabel: i18n.get('statistics.title'),
-										tabBarIcon: () => <Icon source={require('./assets/icons/icon_stats.png')}
-																iconColor={colors.white}/>
-									}
-								}/>
-								<BottomTab.Screen name={'Absences'} component={AbsencesStackNavigator} options={
-									{
-										tabBarLabel: i18n.get('absences.title'),
-										tabBarIcon: () => <Icon source={require('./assets/icons/icon_list.png')}
-																iconColor={colors.white}/>
-									}
-								}/>
-								<BottomTab.Screen name={'Profile'} component={ProfileStackNavigator} options={
-									{
-										tabBarLabel: i18n.get('profile.title'),
-										tabBarIcon: () => <Icon source={require('./assets/icons/icon_profile.png')}
-																iconColor={colors.white}/>
-									}
-								}/>
-								<BottomTab.Screen name={'Settings'} component={SettingsStackNavigator} options={
-									{
-										tabBarLabel: i18n.get('settings.title'),
-										tabBarIcon: () => <Icon source={require('./assets/icons/icon_settings.png')}
-																iconColor={colors.white}/>
-									}
-								}/>
-							</BottomTab.Navigator>
-						</NavigationContainer>
-						}
-						{this.state._navigation === 'timetable' &&
-						<NavigationContainer>
-							<Stack.Navigator screenOptions={{
-								headerTintColor: colors.white,
-								headerStyle: {
-									backgroundColor: colors.primary,
-									elevation: 0, shadowOpacity: 0, shadowOffset: {height: 0}, shadowRadius: 0
-								},
-								headerMode: 'screen'
-							}}>
-								<Stack.Screen name={'Timetable'} component={TimetableNavigator}
-											  options={{title: i18n.get('timetable.title')}}
-								/>
-							</Stack.Navigator>
-						</NavigationContainer>
-						}
-					</Fragment>
+					<NavigationContainer>
+						<BottomTab.Navigator
+							initialRouteName={'Calendar'}
+							backBehavior={'initialRoute'}
+							tabBar={({state, navigation}) =>
+								<View style={{flexDirection: 'row', backgroundColor: colors.primary, paddingVertical: 5}}>
+									<TouchableOpacity onPress={() => state.index !== 0 && navigation.jumpTo('Calendar')}
+													  style={{
+														  flex: 1, flexDirection: 'column',
+														  justifyContent: 'center', alignItems: 'center', padding: 5
+													  }}>
+										<Icon source={require('./assets/icons/icon_calendar.png')} disabled={true}
+											  iconColor={colors.white}/>
+										{state.index === 0 &&
+										<Text style={{color: colors.white, fontSize: 12}}>{i18n.get('calendar.title')}</Text>}
+									</TouchableOpacity>
+									<TouchableOpacity onPress={() => state.index !== 1 && navigation.jumpTo('Statistics')}
+													  style={{
+														  flex: 1, flexDirection: 'column',
+														  justifyContent: 'center', alignItems: 'center', padding: 5
+													  }}>
+										<Icon source={require('./assets/icons/icon_stats.png')} disabled={true}
+											  iconColor={colors.white}/>
+										{state.index === 1 &&
+										<Text style={{color: colors.white, fontSize: 12}}>{i18n.get('statistics.title')}</Text>}
+									</TouchableOpacity>
+									<TouchableOpacity onPress={() => state.index !== 2 && navigation.jumpTo('Absences')}
+													  style={{
+														  flex: 1, flexDirection: 'column',
+														  justifyContent: 'center', alignItems: 'center', padding: 5
+													  }}>
+										<Icon source={require('./assets/icons/icon_list.png')} disabled={true}
+											  iconColor={colors.white}/>
+										{state.index === 2 &&
+										<Text style={{color: colors.white, fontSize: 12}}>{i18n.get('absences.title')}</Text>}
+									</TouchableOpacity>
+									<TouchableOpacity onPress={() => state.index !== 3 && navigation.jumpTo('Profile')}
+													  style={{
+														  flex: 1, flexDirection: 'column',
+														  justifyContent: 'center', alignItems: 'center', padding: 5
+													  }}>
+										<Icon source={require('./assets/icons/icon_profile.png')} disabled={true}
+											  iconColor={colors.white}/>
+										{state.index === 3 &&
+										<Text style={{color: colors.white, fontSize: 12}}>{i18n.get('profile.title')}</Text>}
+									</TouchableOpacity>
+									<TouchableOpacity onPress={() => state.index !== 4 && navigation.jumpTo('Settings')}
+													  style={{
+														  flex: 1, flexDirection: 'column',
+														  justifyContent: 'center', alignItems: 'center', padding: 5
+													  }}>
+										<Icon source={require('./assets/icons/icon_settings.png')} disabled={true}
+											  iconColor={colors.white}/>
+										{state.index === 4 &&
+										<Text style={{color: colors.white, fontSize: 12}}>{i18n.get('settings.title')}</Text>}
+									</TouchableOpacity>
+								</View>
+							}
+						>
+							<BottomTab.Screen name={'Calendar'} component={CalendarStackNavigator}/>
+							<BottomTab.Screen name={'Statistics'} component={StatisticsStackNavigator}/>
+							<BottomTab.Screen name={'Absences'} component={AbsencesStackNavigator}/>
+							<BottomTab.Screen name={'Profile'} component={ProfileStackNavigator}/>
+							<BottomTab.Screen name={'Settings'} component={SettingsStackNavigator}/>
+						</BottomTab.Navigator>
+					</NavigationContainer>
 					: <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
 						<ActivityIndicator size={'large'} color={colors.primary}/>
 					</View>
