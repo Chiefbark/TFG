@@ -4,13 +4,13 @@ import {View, Text, FlatList} from 'react-native';
 import * as i18n from '../../i18n';
 import * as firebase from '../../firebase';
 import * as config from '../../config';
-import {colors} from "../../styles";
+import {colors} from '../../styles';
 
-import Button from "../../components/button";
-import Dialog from "../../components/dialog";
-import Icon from "../../components/icon";
-import ListItem from "../../components/listItem";
-import TeacherForm from "../../components/forms/teacher";
+import Button from '../../components/button';
+import Dialog from '../../components/dialog';
+import Icon from '../../components/icon';
+import ListItem from '../../components/listItem';
+import TeacherForm from '../../components/forms/teacher';
 
 export default class TeachersScreen extends React.Component {
 	constructor(props) {
@@ -20,13 +20,12 @@ export default class TeachersScreen extends React.Component {
 			teachers: undefined,
 			dialogTeacher: false,
 			dialogConfirm: false,
-			_locale: i18n.currLocale,
-			_lastModified: undefined
+			_locale: i18n.currLocale
 		}
 	}
 	
 	_updateComponent() {
-		this.setState({_locale: i18n.currLocale, _lastModified: new Date().getTime()});
+		this.setState({_locale: i18n.currLocale});
 		this.props.navigation.dangerouslyGetParent().setOptions({title: i18n.get('profile.screens.2.title')});
 		this.props.navigation.dangerouslyGetParent().dangerouslyGetParent().setOptions({tabBarLabel: i18n.get('profile.title')});
 	}
