@@ -210,7 +210,9 @@ export default class App extends React.Component {
 								},
 								headerMode: 'screen'
 							}}>
-								<Stack.Screen name={'Timetable'} component={TimetableNavigator}/>
+								<Stack.Screen name={'Timetable'} component={TimetableNavigator}
+											  options={{title: i18n.get('timetable.title')}}
+								/>
 							</Stack.Navigator>
 						</NavigationContainer>
 						}
