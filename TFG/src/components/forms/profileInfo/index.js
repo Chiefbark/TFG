@@ -15,7 +15,7 @@ import Dialog from '../../dialog';
 /**
  * This component allows the user to update the profile info
  *
- * @author {@link https://github.com/Chiefbark|Chiefbark}
+ * @author {@link https://github.com/Chiefbark Chiefbark}
  * @version 0.0.1
  */
 export default class ProfileInfoForm extends React.Component {

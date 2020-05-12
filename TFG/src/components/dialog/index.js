@@ -7,7 +7,7 @@ import {colors} from '../../styles';
 /**
  * This component adds a customizable modal dialog
  *
- * @author {@link https://github.com/Chiefbark|Chiefbark}
+ * @author {@link https://github.com/Chiefbark Chiefbark}
  * @version 0.0.1
  */
 export default class Dialog extends React.Component {

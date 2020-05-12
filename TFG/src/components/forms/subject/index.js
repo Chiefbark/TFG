@@ -19,7 +19,7 @@ import TeacherForm from "../teacher";
 /**
  * This component allows the user to create & update subjects
  *
- * @author {@link https://github.com/Chiefbark|Chiefbark}
+ * @author {@link https://github.com/Chiefbark Chiefbark}
  * @version 0.0.1
  */
 export default class SubjectForm extends React.Component {

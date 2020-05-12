@@ -7,7 +7,7 @@ import {colors} from "../../styles";
 /**
  * This component allows the user to change the state of a button
  *
- * @author {@link https://github.com/Chiefbark|Chiefbark}
+ * @author {@link https://github.com/Chiefbark Chiefbark}
  * @version 0.0.1
  */
 export default class CustomSwitch extends React.Component {

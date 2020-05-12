@@ -15,7 +15,7 @@ import Dialog from '../../dialog';
 /**
  * This component allows the user to create & update teachers
  *
- * @author {@link https://github.com/Chiefbark|Chiefbark}
+ * @author {@link https://github.com/Chiefbark Chiefbark}
  * @version 0.0.1
  */
 export default class TeacherForm extends React.Component {

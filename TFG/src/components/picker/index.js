@@ -9,7 +9,7 @@ import {colors} from "../../styles";
 /**
  * This component adds a controller layer to the component React Native Picker Select
  *
- * @author {@link https://github.com/Chiefbark|Chiefbark}
+ * @author {@link https://github.com/Chiefbark Chiefbark}
  * @version 0.0.1
  * @see {@link https://www.npmjs.com/package/react-native-picker-select React Native Picker Select}
  */

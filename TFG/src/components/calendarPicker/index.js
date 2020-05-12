@@ -26,7 +26,7 @@ const getDateFromString = (dateString) => {
 /**
  * This component uses React Native Calendars under the hood. Allows the user to select multiple dates in a modal dialog
  *
- * @author {@link https://github.com/Chiefbark|Chiefbark}
+ * @author {@link https://github.com/Chiefbark Chiefbark}
  * @version 0.0.1
  * @see {@link https://www.npmjs.com/package/react-native-calendars React Native Calendars}
  */
