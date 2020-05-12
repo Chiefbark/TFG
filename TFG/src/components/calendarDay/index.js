@@ -9,7 +9,7 @@ import {colors} from '../../styles';
  *
  * @author {@link https://github.com/Chiefbark|Chiefbark}
  * @version 0.0.1
- * @see {@link https://www.npmjs.com/package/react-native-calendars|React Native Calendars}
+ * @see {@link https://www.npmjs.com/package/react-native-calendars React Native Calendars}
  */
 export default class CalendarDay extends React.Component {
 	

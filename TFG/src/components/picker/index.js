@@ -11,7 +11,7 @@ import {colors} from "../../styles";
  *
  * @author {@link https://github.com/Chiefbark|Chiefbark}
  * @version 0.0.1
- * @see {@link https://www.npmjs.com/package/react-native-picker-select|React Native Picker Select}
+ * @see {@link https://www.npmjs.com/package/react-native-picker-select React Native Picker Select}
  */
 export default class CustomPicker extends React.Component {
 	constructor(props) {
