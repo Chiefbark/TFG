@@ -21,6 +21,12 @@ const minutes = [
 	{label: '0'}, {label: '15'}, {label: '30'}, {label: '45'}
 ]
 
+/**
+ * This component allows the user to select a time (hours &  minutes)
+ *
+ * @author {@link https://github.com/Chiefbark Chiefbark}
+ * @version 0.0.1
+ */
 export default class TimePicker extends React.Component {
 	
 	constructor(props) {
