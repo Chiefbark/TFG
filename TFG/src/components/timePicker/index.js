@@ -26,8 +26,8 @@ export default class TimePicker extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			hours: this.props.initialHours,
-			minutes: this.props.initialMinutes
+			hours: this.props.initialHours || 0,
+			minutes: this.props.initialMinutes || 0
 		}
 	}
 	
@@ -66,7 +66,7 @@ export default class TimePicker extends React.Component {
 							<Button label={i18n.get('commons.timePickerDialog.actions.1')}
 									backgroundColor={colors.primary} textColor={colors.white}
 									onClick={() => {
-										this.props.onSubmit(this.state.hours, this.state.minutes);
+										this.props.onSubmit(this.state.hours, this.state.minutes < 10 ? `0${this.state.minutes}` : this.state.minutes);
 									}}/>
 						</Fragment>
 					} visible={true}/>
