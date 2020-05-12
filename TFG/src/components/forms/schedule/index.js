@@ -14,8 +14,14 @@ import Dialog from '../../dialog';
 import Icon from '../../icon';
 import Picker from '../../picker';
 import SubjectForm from '../subject';
-import TimePicker from "../../timePicker";
+import TimePicker from '../../timePicker';
 
+/**
+ * This component allows the user to create & update schedules
+ *
+ * @author {@link https://github.com/Chiefbark Chiefbark}
+ * @version 0.0.1
+ */
 export default class ScheduleForm extends React.Component {
 	
 	constructor(props) {
