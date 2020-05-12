@@ -36,11 +36,14 @@ export default class TimeTable extends React.Component {
 			this.flatList?.scrollToOffset({animated: false, y: 0});
 			this.setState({selected: {}});
 			this.props.navigation.dangerouslyGetParent().setOptions({
-				headerRight: () => undefined
+				headerRight: () => <Button label={i18n.get('timetable.headerRight')} textColor={colors.white}
+										   onClick={() => this.props.navigation.pop()}/>
 			});
 		});
 		this.props.navigation.dangerouslyGetParent().setOptions({
-			headerLeft: () => <HeaderBackButton tintColor={colors.white} onPress={() => this.setState({dialogExit: true})}/>
+			headerLeft: () => <HeaderBackButton tintColor={colors.white} onPress={() => this.setState({dialogExit: true})}/>,
+			headerRight: () => <Button label={i18n.get('timetable.headerRight')} textColor={colors.white}
+									   onClick={() => this.props.navigation.pop()}/>
 		});
 		this.props.navigation.dangerouslyGetParent().dangerouslyGetParent().setOptions(
 			{tabBarVisible: false});
@@ -51,7 +54,14 @@ export default class TimeTable extends React.Component {
 		});
 		firebase.getDatabase().ref(`users/${firebase.currFirebaseKey}/profiles/${config.currConfig.profile}/subjects`).on('value', snapshot => {
 			let data = snapshot.val() || {};
-			this.setState({subjects: Object.entries(data)});
+			this.setState({subjects: Object.entries(data)}, () =>
+				this.state.schedules.forEach(schedule => {
+					if (!this.state.subjects.find(subject => subject[0] === schedule[1].id_subject))
+						firebase.getDatabase()
+							.ref(`users/${firebase.currFirebaseKey}/profiles/${config.currConfig.profile}/schedules/${this.props.route.params.day}/${schedule[0]}`)
+							.child('id_subject')
+							.remove();
+				}));
 		});
 	}
 	
@@ -68,7 +78,8 @@ export default class TimeTable extends React.Component {
 				});
 		else
 			this.props.navigation.dangerouslyGetParent().setOptions({
-				headerRight: () => undefined
+				headerRight: () => <Button label={i18n.get('timetable.headerRight')} textColor={colors.white}
+										   onClick={() => this.props.navigation.pop()}/>
 			});
 	}
 	
@@ -82,30 +93,32 @@ export default class TimeTable extends React.Component {
 						  ItemSeparatorComponent={() => <View style={{flex: 1, backgroundColor: colors.primaryDark, height: 1}}/>}
 						  ListFooterComponent={() => <View style={{paddingVertical: 25}}/>}
 						  renderItem={({item}) => {
-							  return <ListItem title={this.state.subjects.filter((element) => element[0] === item[1].id_subject)[0][1].name}
-											   subtitle={`${item[1].startTime} - ${item[1].endTime}`}
-											   onLongClick={() => {
-												   let elements = this.state.selected;
-												   elements[item[0]] = item[1];
-												   this.setState({selected: elements}, () => this._showOptions());
-											   }}
-											   onClick={() => {
-												   let elements = this.state.selected;
-												   if (elements[item[0]]) delete elements[item[0]];
-												   else if (Object.entries(this.state.selected).length > 0)
-													   elements[item[0]] = item[1];
-												   this.setState({selected: elements}, () => this._showOptions());
-											   }}
-											   rightItem={() =>
-												   Object.entries(this.state.selected).length > 0 &&
-												   <Icon source={require('../../../assets/icons/icon_check.png')}
-														 size={'small'} disabled={true}
-														 iconColor={this.state.selected[item[0]] ? colors.primary : colors.white}
-														 style={{
-															 borderWidth: 1, borderColor: colors.primary, borderRadius: 1000,
-															 padding: 10, marginRight: 16
-														 }}/>
-											   }
+							  const subjects = this.state.subjects?.filter((element) => element[0] === item[1].id_subject);
+							  return <ListItem
+								  title={subjects && subjects.length > 0 ? subjects[0][1].name : i18n.get('timetable.emptySubject')}
+								  subtitle={`${item[1].startTime} - ${item[1].endTime}`}
+								  onLongClick={() => {
+									  let elements = this.state.selected;
+									  elements[item[0]] = item[1];
+									  this.setState({selected: elements}, () => this._showOptions());
+								  }}
+								  onClick={() => {
+									  let elements = this.state.selected;
+									  if (elements[item[0]]) delete elements[item[0]];
+									  else if (Object.entries(this.state.selected).length > 0)
+										  elements[item[0]] = item[1];
+									  this.setState({selected: elements}, () => this._showOptions());
+								  }}
+								  rightItem={() =>
+									  Object.entries(this.state.selected).length > 0 &&
+									  <Icon source={require('../../../assets/icons/icon_check.png')}
+											size={'small'} disabled={true}
+											iconColor={this.state.selected[item[0]] ? colors.primary : colors.white}
+											style={{
+												borderWidth: 1, borderColor: colors.primary, borderRadius: 1000,
+												padding: 10, marginRight: 16
+											}}/>
+								  }
 							  />
 						  }}
 				/>
@@ -148,7 +161,7 @@ export default class TimeTable extends React.Component {
 							<Fragment>
 								<Button label={i18n.get('timetable.confirmDialog.actions.0')}
 										onClick={() => {
-											this.setState({selected: {}, dialogConfirm: false});
+											this.setState({selected: {}, dialogConfirm: false}, () => this._showOptions());
 										}}
 								/>
 								<Button label={i18n.get('timetable.confirmDialog.actions.1')}
@@ -159,8 +172,8 @@ export default class TimeTable extends React.Component {
 													firebase.getDatabase()
 														.ref(`users/${firebase.currFirebaseKey}/profiles/${config.currConfig.profile}/schedules/${this.props.route.params.day}/${element[0]}`)
 														.remove()
-												)
-											this.setState({selected: {}, dialogConfirm: false});
+												);
+											this.setState({selected: {}, dialogConfirm: false}, () => this._showOptions());
 										}}
 								/>
 							</Fragment>
