@@ -24,7 +24,7 @@ export const profile = {
 		{
 			title: 'Asignaturas',
 			emptyList: 'No tienes ninguna asignatura añadida!\n\nAñade algunas asignaturas pulsando sobre el botón +',
-			emptySubtitle: 'Profesor no asignado',
+			emptyTeacher: 'Profesor no asignado',
 			confirmDialog: {
 				title: 'Estás seguro?',
 				description: 'Todas las faltas de asistencia de la(s) asignatura(s) serán eliminadas también',
@@ -52,6 +52,8 @@ export const settings = {
 export const timetable = {
 	title: 'Horario',
 	titles: ['Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab', 'Dom'],
+	headerRight: 'HECHO',
+	emptySubject: 'Asignatura no asignada',
 	exitDialog: {
 		title: 'Estás seguro?',
 		description: 'Los horarios creados no se guardarán, pero las asigntaruas y los profesores creados sí',
@@ -59,7 +61,7 @@ export const timetable = {
 	},
 	confirmDialog: {
 		title: 'Estás seguro?',
-		description: 'Todas las faltas de asistencia asociadas a esta hora serán eliminadas',
+		description: 'Todas las faltas de asistencia asociadas a esta hora serán eliminadas\nSi estás ceando un nuevo horario, no te preocupes por eliminarla',
 		actions: ['Cancelar', 'Eliminar']
 	}
 }

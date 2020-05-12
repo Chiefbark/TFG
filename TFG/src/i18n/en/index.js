@@ -19,7 +19,7 @@ export const profile = {
 		{
 			title: 'Subjects',
 			emptyList: 'You still don\'t have any subjects!\n\nAdd some subjects by clicking the button +',
-			emptySubtitle: 'Unassigned teacher',
+			emptyTeacher: 'Unassigned teacher',
 			confirmDialog: {
 				title: 'Are you sure?',
 				description: 'All the absences associated to the subject(s) will be removed as well',
@@ -47,6 +47,8 @@ export const settings = {
 export const timetable = {
 	title: 'Timetable',
 	titles: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+	headerRight: 'DONE',
+	emptySubject: 'Unassigned subject',
 	exitDialog: {
 		title: 'Are you sure?',
 		description: 'The schedules created won\'t be saved, but subjects and teacher will',
@@ -54,7 +56,7 @@ export const timetable = {
 	},
 	confirmDialog: {
 		title: 'Are you sure?',
-		description: 'All the absences associated to this schedule will be removed as well',
+		description: 'All the absences associated to this schedule will be removed as well\nIf you are creating a new timetable, don\'t worry about deleteing it',
 		actions: ['Cancel', 'Remove']
 	}
 }
