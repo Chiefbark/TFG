@@ -101,7 +101,7 @@ export default class SubjectsScreen extends React.Component {
 						  ListFooterComponent={() => <View style={{paddingVertical: 25}}/>}
 						  renderItem={({item}) => {
 							  let filtered = this.state.teachers?.filter(e => e[0] === item[1].id_teacher) ?? undefined;
-							  let subtitle = filtered && filtered.length > 0 ? filtered[0][1].name : i18n.get('profile.screens.1.emptySubtitle');
+							  let subtitle = filtered && filtered.length > 0 ? filtered[0][1].name : i18n.get('profile.screens.1.emptyTeacher');
 							  return (
 								  <ListItem key={item[0]} title={item[1].name}
 											subtitle={subtitle}
@@ -179,8 +179,13 @@ export default class SubjectsScreen extends React.Component {
 										backgroundColor={colors.primary} textColor={colors.white}
 										onClick={() => {
 											Object.entries(this.state.selected)
-												.forEach(element =>
-													firebase.getDatabase().ref(`users/${firebase.currFirebaseKey}/profiles/${config.currConfig.profile}/subjects/${element[0]}`).remove()
+												.forEach(element => {
+														firebase.getDatabase().ref(`users/${firebase.currFirebaseKey}/profiles/${config.currConfig.profile}/subjects/${element[0]}`).remove();
+														firebase.getDatabase().ref(`users/${firebase.currFirebaseKey}/profiles/${config.currConfig.profile}/teachers/${element[1].id_teacher}`)
+															.once('value', snapshot => {
+																snapshot.ref.update({nSubjects: snapshot.val().nSubjects - 1});
+															});
+													}
 												)
 											this.setState({selected: {}, dialogConfirm: false}, () => this._showOptions());
 										}}/>
