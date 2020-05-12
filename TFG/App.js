@@ -118,13 +118,20 @@ function TimetableNavigator() {
 				style: {backgroundColor: colors.primary}
 			}}
 		>
-			<TopTab.Screen name={'Monday'} component={TimeTable} options={{tabBarLabel: i18n.get('timetable.titles.0')}}/>
-			<TopTab.Screen name={'Tuesday'} component={TimeTable} options={{tabBarLabel: i18n.get('timetable.titles.1')}}/>
-			<TopTab.Screen name={'Wednesday'} component={TimeTable} options={{tabBarLabel: i18n.get('timetable.titles.2')}}/>
-			<TopTab.Screen name={'Thursday'} component={TimeTable} options={{tabBarLabel: i18n.get('timetable.titles.3')}}/>
-			<TopTab.Screen name={'Friday'} component={TimeTable} options={{tabBarLabel: i18n.get('timetable.titles.4')}}/>
-			<TopTab.Screen name={'Saturday'} component={TimeTable} options={{tabBarLabel: i18n.get('timetable.titles.5')}}/>
-			<TopTab.Screen name={'Sunday'} component={TimeTable} options={{tabBarLabel: i18n.get('timetable.titles.6')}}/>
+			<TopTab.Screen name={'Monday'} component={TimeTable} initialParams={{day: 0}}
+						   options={{tabBarLabel: i18n.get('timetable.titles.0')}}/>
+			<TopTab.Screen name={'Tuesday'} component={TimeTable} initialParams={{day: 1}}
+						   options={{tabBarLabel: i18n.get('timetable.titles.1')}}/>
+			<TopTab.Screen name={'Wednesday'} component={TimeTable} initialParams={{day: 2}}
+						   options={{tabBarLabel: i18n.get('timetable.titles.2')}}/>
+			<TopTab.Screen name={'Thursday'} component={TimeTable} initialParams={{day: 3}}
+						   options={{tabBarLabel: i18n.get('timetable.titles.3')}}/>
+			<TopTab.Screen name={'Friday'} component={TimeTable} initialParams={{day: 4}}
+						   options={{tabBarLabel: i18n.get('timetable.titles.4')}}/>
+			<TopTab.Screen name={'Saturday'} component={TimeTable} initialParams={{day: 5}}
+						   options={{tabBarLabel: i18n.get('timetable.titles.5')}}/>
+			<TopTab.Screen name={'Sunday'} component={TimeTable} initialParams={{day: 6}}
+						   options={{tabBarLabel: i18n.get('timetable.titles.6')}}/>
 		</TopTab.Navigator>
 	)
 }
@@ -144,7 +151,7 @@ export default class App extends React.Component {
 		config.config().then(config => this.setState({_config: config}));
 		firebase.firebaseKey().then(firebaseKey => this.setState({_firebaseKey: firebaseKey}));
 	}
-
+	
 	render() {
 		return (<Fragment>
 				{this.state._locale && this.state._config && this.state._firebaseKey ?
