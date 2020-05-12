@@ -59,7 +59,7 @@ export const timetable = {
 	},
 	confirmDialog: {
 		title: 'Estás seguro?',
-		description: 'asdasasads',
+		description: 'Todas las faltas de asistencia asociadas a esta hora serán eliminadas',
 		actions: ['Cancelar', 'Eliminar']
 	}
 }
@@ -115,7 +115,8 @@ export const commons = {
 	scheduleForm: {
 		title: 'Horario',
 		placeholders: [
-			'asignatura...'
+			'asignatura...',
+			'hasta'
 		]
 	},
 	languages: [

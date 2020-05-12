@@ -54,7 +54,7 @@ export const timetable = {
 	},
 	confirmDialog: {
 		title: 'Are you sure?',
-		description: 'asdasasads',
+		description: 'All the absences associated to this schedule will be removed as well',
 		actions: ['Cancel', 'Remove']
 	}
 }
@@ -115,7 +115,8 @@ export const commons = {
 	scheduleForm: {
 		title: 'Schedule',
 		placeholders: [
-			'subject...'
+			'subject...',
+			'to'
 		]
 	},
 	languages: [
