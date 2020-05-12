@@ -12,7 +12,6 @@ import Dialog from '../../components/dialog';
 import Icon from '../../components/icon';
 import ListItem from '../../components/listItem';
 import ScheduleForm from '../../components/forms/schedule';
-import {sub} from "react-native-reanimated";
 
 export default class TimeTable extends React.Component {
 	
