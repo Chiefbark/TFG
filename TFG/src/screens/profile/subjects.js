@@ -161,7 +161,7 @@ export default class SubjectsScreen extends React.Component {
 				{/*	DIALOG SUBJECT	*/}
 				{this.state.dialogSubject &&
 				<SubjectForm
-					subject={this.state.subject} teachers={this.state.teachers} subjectColors={this.state.subjects.map(e => e[1].color)}
+					subject={this.state.subject} subjectColors={this.state.subjects.map(e => e[1].color)}
 					onSubmit={() => this.setState({subject: undefined, dialogSubject: false})}
 					onCancel={() => this.setState({subject: undefined, dialogSubject: false})}
 				/>}
