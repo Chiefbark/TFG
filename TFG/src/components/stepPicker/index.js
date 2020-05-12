@@ -1,10 +1,16 @@
-import React, {Fragment} from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
 import {FlatList, StyleSheet, Text, View} from 'react-native';
 
 import {colors} from "../../styles";
 
+/**
+ * This component allows the user to select one between multiple values in a scroll view
+ *
+ * @author {@link https://github.com/Chiefbark|Chiefbark}
+ * @version 0.0.1
+ */
 export default class StepPicker extends React.Component {
 	constructor(props) {
 		super(props);
