@@ -27,7 +27,7 @@ export default class ScheduleForm extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			key: this.props.subject?.key ?? undefined,
+			key: this.props.schedule?.key ?? undefined,
 			startTime: this.props.schedule?.obj.startTime ?? undefined,
 			endTime: this.props.schedule?.obj.endTime ?? undefined,
 			id_subject: this.props.schedule?.obj.id_subject ?? undefined
