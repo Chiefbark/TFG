@@ -52,7 +52,7 @@ export default class CustomPicker extends React.Component {
 							color: this.props.error ?
 								colors.red : (!this.state.value || this.state.value === 0) ?
 									colors.lightGrey : colors.black,
-							marginVertical: 10,
+							marginVertical: 10, paddingRight: 24,
 							borderBottomColor: this.props.error ? colors.red : colors.lightGrey
 						},
 						inputAndroid: {
@@ -60,7 +60,7 @@ export default class CustomPicker extends React.Component {
 							color: this.props.error ?
 								colors.red : (!this.state.value || this.state.value === 0) ?
 									colors.lightGrey : colors.black,
-							marginVertical: 10,
+							marginVertical: 10, paddingRight: 24,
 							borderBottomColor: this.props.error ? colors.red : colors.lightGrey
 						}
 					}}
