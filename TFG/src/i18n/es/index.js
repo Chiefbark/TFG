@@ -52,10 +52,15 @@ export const settings = {
 export const timetable = {
 	title: 'Horario',
 	titles: ['Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab', 'Dom'],
+	exitDialog: {
+		title: 'Estás seguro?',
+		description: 'Los horarios creados no se guardarán, pero las asigntaruas y los profesores creados sí',
+		actions: ['Cancelar', 'Salir']
+	},
 	confirmDialog: {
 		title: 'Estás seguro?',
-		description: 'Los datos no se guardarán',
-		actions: ['Cancelar', 'Salir']
+		description: 'asdasasads',
+		actions: ['Cancelar', 'Eliminar']
 	}
 }
 
@@ -105,6 +110,12 @@ export const commons = {
 			' de ausencias',
 			'Este color será el que aparezca en el calendario (exámenes/ausencias)',
 			'Los colores con una x ya están en uso, aunque puedes volver a usarlos'
+		]
+	},
+	scheduleForm: {
+		title: 'Horario',
+		placeholders: [
+			'asignatura...'
 		]
 	},
 	languages: [

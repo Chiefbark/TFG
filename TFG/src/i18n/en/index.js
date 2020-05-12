@@ -47,10 +47,15 @@ export const settings = {
 export const timetable = {
 	title: 'Timetable',
 	titles: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+	exitDialog: {
+		title: 'Are you sure?',
+		description: 'The schedules created won\'t be saved, but subjects and teacher will',
+		actions: ['Cancel', 'Exit']
+	},
 	confirmDialog: {
 		title: 'Are you sure?',
-		description: 'data won\'t be saved',
-		actions: ['Cancel', 'Exit']
+		description: 'asdasasads',
+		actions: ['Cancel', 'Remove']
 	}
 }
 
@@ -105,6 +110,12 @@ export const commons = {
 			' of absences',
 			'This will be the color shown in the calendar (exams/absences)',
 			'Colors marked with x are already in use, but you can use them again'
+		]
+	},
+	scheduleForm: {
+		title: 'Schedule',
+		placeholders: [
+			'subject...'
 		]
 	},
 	languages: [
