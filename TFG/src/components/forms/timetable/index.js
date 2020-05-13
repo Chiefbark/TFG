@@ -26,8 +26,8 @@ export default class TimetableForm extends React.Component {
 		super(props);
 		this.state = {
 			key: this.props.timetable?.key ?? undefined,
-			startDate: this.props.timetable?.obj.startTime ?? undefined,
-			endDate: this.props.timetable?.obj.endTime ?? undefined
+			startDate: this.props.timetable?.obj.startDate ?? undefined,
+			endDate: this.props.timetable?.obj.endDate ?? undefined
 		}
 	}
 	
@@ -78,6 +78,7 @@ export default class TimetableForm extends React.Component {
 											firebase.getDatabase()
 												.ref(`users/${firebase.currFirebaseKey}/profiles/${config.currConfig.profile}/schedules/${this.state.key}`)
 												.remove()
+											this.props.onDelete();
 										}}/>
 								}
 								<Button label={i18n.get('commons.form.actions.0')}
@@ -104,7 +105,7 @@ export default class TimetableForm extends React.Component {
 												if (!this.state.key)
 													newKey = await firebase.getDatabase().ref(`users/${firebase.currFirebaseKey}/profiles/${config.currConfig.profile}/schedules`).push(obj).getKey();
 												else
-													firebase.getDatabase().ref(`users/${firebase.currFirebaseKey}/profiles/${config.currConfig.profile}/schedules/${this.state.key}`).set(obj).then();
+													firebase.getDatabase().ref(`users/${firebase.currFirebaseKey}/profiles/${config.currConfig.profile}/schedules/${this.state.key}`).update(obj).then();
 								
 												this.props.navigation.dispatch(CommonActions.navigate('Timetable', {params: {key: newKey}}));
 												this.props.onSubmit(newKey);
@@ -139,6 +140,10 @@ TimetableForm.propTypes = {
 	 * Callback triggered when the user cancels the form
 	 */
 	onCancel: PropTypes.func.isRequired,
+	/**
+	 * Callback triggered when the user deletes the form
+	 */
+	onDelete: PropTypes.func.isRequired,
 	/**
 	 * Initial values of the form
 	 *
