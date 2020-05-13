@@ -108,34 +108,44 @@ function SettingsStackNavigator() {
 	);
 }
 
-function TimetableNavigator() {
+const TimetableContext = React.createContext({key: undefined, day: undefined});
+
+function TimetableNavigator({route}) {
+	const parentRoute = {...route};
 	return (
-		<TopTab.Navigator
-			initialRouteName={'Monday'}
-			lazy={true}
-			tabBarOptions={{
-				showIcon: false, showLabel: true,
-				indicatorStyle: {backgroundColor: 'white'},
-				labelStyle: {color: colors.white, fontSize: 11, textTransform: 'capitalize'},
-				style: {backgroundColor: colors.primary}
-			}}
-		>
-			<TopTab.Screen name={'Monday'} component={TimeTable} initialParams={{day: 0}}
-						   options={{tabBarLabel: i18n.get('timetable.titles.0')}}/>
-			<TopTab.Screen name={'Tuesday'} component={TimeTable} initialParams={{day: 1}}
-						   options={{tabBarLabel: i18n.get('timetable.titles.1')}}/>
-			<TopTab.Screen name={'Wednesday'} component={TimeTable} initialParams={{day: 2}}
-						   options={{tabBarLabel: i18n.get('timetable.titles.2')}}/>
-			<TopTab.Screen name={'Thursday'} component={TimeTable} initialParams={{day: 3}}
-						   options={{tabBarLabel: i18n.get('timetable.titles.3')}}/>
-			<TopTab.Screen name={'Friday'} component={TimeTable} initialParams={{day: 4}}
-						   options={{tabBarLabel: i18n.get('timetable.titles.4')}}/>
-			<TopTab.Screen name={'Saturday'} component={TimeTable} initialParams={{day: 5}}
-						   options={{tabBarLabel: i18n.get('timetable.titles.5')}}/>
-			<TopTab.Screen name={'Sunday'} component={TimeTable} initialParams={{day: 6}}
-						   options={{tabBarLabel: i18n.get('timetable.titles.6')}}/>
-		</TopTab.Navigator>
+		<TimetableContext.Provider value={{key: parentRoute.params.key}}>
+			<TopTab.Navigator
+				initialRouteName={'Monday'}
+				lazy={true}
+				tabBarOptions={{
+					showIcon: false, showLabel: true,
+					indicatorStyle: {backgroundColor: 'white'},
+					labelStyle: {color: colors.white, fontSize: 11, textTransform: 'capitalize'},
+					style: {backgroundColor: colors.primary}
+				}}
+			>
+				<TopTab.Screen name={'Monday'} component={TimetableScreen.bind(parentRoute)} initialParams={{day: 0}}
+							   options={{tabBarLabel: i18n.get('timetable.titles.0')}}/>
+				<TopTab.Screen name={'Tuesday'} component={TimetableScreen.bind(parentRoute)} initialParams={{day: 1}}
+							   options={{tabBarLabel: i18n.get('timetable.titles.1')}}/>
+				<TopTab.Screen name={'Wednesday'} component={TimetableScreen.bind(parentRoute)} initialParams={{day: 2}}
+							   options={{tabBarLabel: i18n.get('timetable.titles.2')}}/>
+				<TopTab.Screen name={'Thursday'} component={TimetableScreen.bind(parentRoute)} initialParams={{day: 3}}
+							   options={{tabBarLabel: i18n.get('timetable.titles.3')}}/>
+				<TopTab.Screen name={'Friday'} component={TimetableScreen.bind(parentRoute)} initialParams={{day: 4}}
+							   options={{tabBarLabel: i18n.get('timetable.titles.4')}}/>
+				<TopTab.Screen name={'Saturday'} component={TimetableScreen.bind(parentRoute)} initialParams={{day: 5}}
+							   options={{tabBarLabel: i18n.get('timetable.titles.5')}}/>
+				<TopTab.Screen name={'Sunday'} component={TimetableScreen.bind(parentRoute)} initialParams={{day: 6}}
+							   options={{tabBarLabel: i18n.get('timetable.titles.6')}}/>
+			</TopTab.Navigator>
+		</TimetableContext.Provider>
 	)
+}
+
+function TimetableScreen({navigation, route}) {
+	route.params = {...route.params, ...this.params.params};
+	return <TimeTable navigation={navigation} route={route}/>;
 }
 
 export default class App extends React.Component {
