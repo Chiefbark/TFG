@@ -144,12 +144,14 @@ export default class TimeTable extends React.Component {
 						  let value = Object.entries(this.state.selected);
 						  let obj = {key: value[0][0], obj: value[0][1]};
 						  this.setState({schedule: obj, dialogSchedule: true, selected: {}}, () => this._showOptions());
-					  }}
-				/>
+					  }}/>
 				}
 				{/*	DIALOG SCHEDULE	*/}
 				{this.state.dialogSchedule &&
 				<ScheduleForm schedule={this.state.schedule} day={this.props.route.params.day} scheduleKey={this.props.route.params.key}
+							  takenHours={this.state.schedules?.map(e => {
+									  return {key: e[0], startTime: e[1].startTime, endTime: e[1].endTime}
+							  }) ?? undefined}
 							  onSubmit={() => this.setState({schedule: undefined, dialogSchedule: false})}
 							  onCancel={() => this.setState({schedule: undefined, dialogSchedule: false})}/>
 				}
