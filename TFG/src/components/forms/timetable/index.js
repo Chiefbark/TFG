@@ -31,9 +31,9 @@ export default class TimetableForm extends React.Component {
 		}
 	}
 	
-	_showError(props) {
+	_showError(props, msg = 0) {
 		this.setState({...props});
-		Toast.showWithGravity(i18n.get('commons.form.toast'), Toast.LONG, Toast.TOP);
+		Toast.showWithGravity(i18n.get(`commons.form.toasts.${msg}`), Toast.LONG, Toast.TOP);
 		setTimeout(() => this.setState({errorStartDate: false, errorEndDate: false}), 3500);
 	}
 	
@@ -89,9 +89,15 @@ export default class TimetableForm extends React.Component {
 										backgroundColor={colors.primary} textColor={colors.white}
 										onClick={async () => {
 											let obj = {};
+											let msg = 0;
 											if (!this.state.startDate || this.state.startDate === '') obj.errorStartDate = true;
 											if (!this.state.endDate || this.state.endDate === '') obj.errorEndDate = true;
-											if (Object.entries(obj).length > 0) this._showError(obj);
+											if (this.state.startDate >= this.state.endDate) {
+												obj.errorStartDate = true;
+												obj.errorEndDate = true;
+												msg = 1;
+											}
+											if (Object.entries(obj).length > 0) this._showError(obj, msg);
 											else {
 												let obj = {startDate: this.state.startDate, endDate: this.state.endDate};
 												let newKey = this.state.key;
