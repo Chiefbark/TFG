@@ -58,8 +58,7 @@ export default class TimeTable extends React.Component {
 					if (!this.state.subjects.find(subject => subject[0] === schedule[1].id_subject))
 						firebase.getDatabase()
 							.ref(`users/${firebase.currFirebaseKey}/profiles/${config.currConfig.profile}/schedules/${this.props.route.params.key}/${this.props.route.params.day}/${schedule[0]}`)
-							.child('id_subject')
-							.remove();
+							.child('id_subject').remove();
 				}));
 		});
 	}
@@ -150,7 +149,7 @@ export default class TimeTable extends React.Component {
 				{this.state.dialogSchedule &&
 				<ScheduleForm schedule={this.state.schedule} day={this.props.route.params.day} scheduleKey={this.props.route.params.key}
 							  takenHours={this.state.schedules?.map(e => {
-									  return {key: e[0], startTime: e[1].startTime, endTime: e[1].endTime}
+								  return {key: e[0], startTime: e[1].startTime, endTime: e[1].endTime}
 							  }) ?? undefined}
 							  onSubmit={() => this.setState({schedule: undefined, dialogSchedule: false})}
 							  onCancel={() => this.setState({schedule: undefined, dialogSchedule: false})}/>
