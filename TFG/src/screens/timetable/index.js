@@ -37,13 +37,13 @@ export default class TimeTable extends React.Component {
 			this.setState({selected: {}});
 			this.props.navigation.dangerouslyGetParent().setOptions({
 				headerRight: () => <Button label={i18n.get('timetable.headerRight')} textColor={colors.white}
-										   onClick={() => this.props.navigation.pop()}/>
+										   onClick={() => this.setState({dialogExit: true})}/>
 			});
 		});
 		this.props.navigation.dangerouslyGetParent().setOptions({
 			headerLeft: () => <HeaderBackButton tintColor={colors.white} onPress={() => this.setState({dialogExit: true})}/>,
 			headerRight: () => <Button label={i18n.get('timetable.headerRight')} textColor={colors.white}
-									   onClick={() => this.props.navigation.pop()}/>
+									   onClick={() => this.setState({dialogExit: true})}/>
 		});
 		this.props.navigation.dangerouslyGetParent().dangerouslyGetParent().setOptions({tabBarVisible: false});
 		
@@ -78,7 +78,7 @@ export default class TimeTable extends React.Component {
 		else
 			this.props.navigation.dangerouslyGetParent().setOptions({
 				headerRight: () => <Button label={i18n.get('timetable.headerRight')} textColor={colors.white}
-										   onClick={() => this.props.navigation.pop()}/>
+										   onClick={() => this.setState({dialogExit: true})}/>
 			});
 	}
 	
@@ -190,9 +190,6 @@ export default class TimeTable extends React.Component {
 								<Button label={i18n.get('timetable.exitDialog.actions.1')}
 										backgroundColor={colors.primary} textColor={colors.white}
 										onClick={() => {
-											firebase.getDatabase()
-												.ref(`users/${firebase.currFirebaseKey}/profiles/${config.currConfig.profile}/schedules/${this.props.route.params.key}`)
-												.remove()
 											this.props.navigation.dangerouslyGetParent().dangerouslyGetParent().setOptions(
 												{tabBarVisible: true});
 											this.setState({dialogExit: false}, () => this.props.navigation.pop());
