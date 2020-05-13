@@ -122,11 +122,11 @@ export default class ScheduleForm extends React.Component {
 												let newKey = this.state.key;
 												if (!this.state.key)
 													newKey = await firebase.getDatabase()
-														.ref(`users/${firebase.currFirebaseKey}/profiles/${config.currConfig.profile}/schedules/${this.props.day}`)
+														.ref(`users/${firebase.currFirebaseKey}/profiles/${config.currConfig.profile}/schedules/${this.props.scheduleKey}/${this.props.day}`)
 														.push(obj).getKey();
 												else
 													await firebase.getDatabase()
-														.ref(`users/${firebase.currFirebaseKey}/profiles/${config.currConfig.profile}/schedules/${this.props.day}/${this.state.key}`)
+														.ref(`users/${firebase.currFirebaseKey}/profiles/${config.currConfig.profile}/schedules/${this.props.scheduleKey}/${this.props.day}/${this.state.key}`)
 														.set(obj);
 								
 												this.props.onSubmit(newKey);
