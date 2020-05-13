@@ -50,8 +50,8 @@ export const timetable = {
 	headerRight: 'DONE',
 	emptySubject: 'Unassigned subject',
 	exitDialog: {
-		title: 'Are you sure?',
-		description: 'The schedules created won\'t be saved, but subjects and teacher will',
+		title: 'Are you done?',
+		description: 'Your changes are already saved. If you want to continue editing them, click on cancel',
 		actions: ['Cancel', 'Exit']
 	},
 	confirmDialog: {
@@ -91,7 +91,7 @@ export const commons = {
 	},
 	form: {
 		toast: 'Please fill all the fields',
-		actions: ['Cancel', 'Save', 'Add', 'Continue']
+		actions: ['Cancel', 'Save', 'Add', 'Continue', 'Remove']
 	},
 	editInfoForm: {
 		title: 'Edit information',

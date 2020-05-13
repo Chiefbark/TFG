@@ -55,8 +55,8 @@ export const timetable = {
 	headerRight: 'HECHO',
 	emptySubject: 'Asignatura no asignada',
 	exitDialog: {
-		title: 'Estás seguro?',
-		description: 'Los horarios creados no se guardarán, pero las asigntaruas y los profesores creados sí',
+		title: 'Ya has acabado?',
+		description: 'Tus cambios ya se han guardado. Si quieres seguir editándolos, pulsa en cancelar',
 		actions: ['Cancelar', 'Salir']
 	},
 	confirmDialog: {
@@ -96,7 +96,7 @@ export const commons = {
 	},
 	form: {
 		toast: 'Por favor rellena todos los campos',
-		actions: ['Cancelar', 'Guardar', 'Añadir', 'Continuar']
+		actions: ['Cancelar', 'Guardar', 'Añadir', 'Continuar', 'Eliminar']
 	},
 	teacherForm: {
 		title: 'Profesor',
