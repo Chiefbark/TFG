@@ -74,8 +74,22 @@ export default class InformationScreen extends React.Component {
 							}
 				/>
 				<ListItem title={i18n.get('profile.screens.0.contents.0')} subtitle={this.state.profile?.name}/>
-				<ListItem title={i18n.get('profile.screens.0.contents.1')}/>
-				<ListItem title={i18n.get('profile.screens.0.contents.2')}/>
+				<ListItem title={i18n.get('profile.screens.0.contents.1')} rightItem={() => {
+					if (this.state.timetables) {
+						const arr = this.state.timetables[0][1].startDate.split('-');
+						const month = i18n.get(`commons.calendarLocales.monthNames.${parseInt(arr[1]) - 1}`);
+						return <Text style={{color: colors.grey, marginRight: 16}}>{`${arr[2]} ${month} ${arr[0]}`}</Text>
+					}
+					return undefined;
+				}}/>
+				<ListItem title={i18n.get('profile.screens.0.contents.2')} rightItem={() => {
+					if (this.state.timetables) {
+						const arr = this.state.timetables[this.state.timetables.length - 1][1].endDate.split('-');
+						const month = i18n.get(`commons.calendarLocales.monthNames.${parseInt(arr[1]) - 1}`);
+						return <Text style={{color: colors.grey, marginRight: 16}}>{`${arr[2]} ${month} ${arr[0]}`}</Text>
+					}
+					return undefined;
+				}}/>
 				{/*	CONFIG ABOUT TIMETABLES	*/}
 				<ListHeader label={i18n.get('profile.screens.0.headers.1')}
 							rightItem={() =>
@@ -83,9 +97,9 @@ export default class InformationScreen extends React.Component {
 							}
 				/>
 				{this.state.timetables?.map(e => {
-					const startMonth = i18n.get(`commons.calendarLocales.monthNames.${parseInt(e[1].startDate.split('-')[1])}`);
+					const startMonth = i18n.get(`commons.calendarLocales.monthNames.${parseInt(e[1].startDate.split('-')[1]) - 1}`);
 					const start = `${startMonth} ${e[1].startDate.split('-')[0]}`;
-					const endMonth = i18n.get(`commons.calendarLocales.monthNames.${parseInt(e[1].endDate.split('-')[1])}`);
+					const endMonth = i18n.get(`commons.calendarLocales.monthNames.${parseInt(e[1].endDate.split('-')[1]) - 1}`);
 					const end = `${endMonth} ${e[1].endDate.split('-')[0]}`;
 					return <ListItem title={`${start} - ${end}`}
 									 onClick={() => this.setState({timetable: {key: e[0], obj: e[1]}, dialogTimetable: true})}/>
@@ -122,7 +136,8 @@ export default class InformationScreen extends React.Component {
 						   onCancel={() => this.setState({dialogTimetable: false})}
 						   onDelete={() => this.setState({dialogTimetable: false})}/>
 			}
-		</Fragment>;
+		</Fragment>
+			;
 	}
 	
 }
