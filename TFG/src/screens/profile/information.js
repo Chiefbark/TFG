@@ -53,6 +53,10 @@ export default class InformationScreen extends React.Component {
 			let data = snapshot.val() || {};
 			this.setState({profile: data})
 		});
+		firebase.getDatabase().ref(`users/${firebase.currFirebaseKey}/profiles/${config.currConfig.profile}/schedules`).on('value', snapshot => {
+			let data = snapshot.val() || {};
+			this.setState({timetables: Object.entries(data)})
+		});
 	}
 	
 	componentWillUnmount() {
@@ -78,6 +82,14 @@ export default class InformationScreen extends React.Component {
 								<Icon source={require('../../../assets/icons/icon_help.png')} iconColor={colors.white}/>
 							}
 				/>
+				{this.state.timetables?.map(e => {
+					const startMonth = i18n.get(`commons.calendarLocales.monthNames.${parseInt(e[1].startDate.split('-')[1])}`);
+					const start = `${startMonth} ${e[1].startDate.split('-')[0]}`;
+					const endMonth = i18n.get(`commons.calendarLocales.monthNames.${parseInt(e[1].endDate.split('-')[1])}`);
+					const end = `${endMonth} ${e[1].endDate.split('-')[0]}`;
+					return <ListItem title={`${start} - ${end}`}
+									 onClick={() => this.setState({timetable: {key: e[0], obj: e[1]}, dialogTimetable: true})}/>
+				})}
 				<Button label={`${i18n.get('commons.form.actions.2')}...`} backgroundColor={colors.white} textColor={colors.lightGrey}
 						onClick={() => this.setState({dialogTimetable: true})}
 						style={{paddingVertical: 15}}/>
@@ -105,9 +117,10 @@ export default class InformationScreen extends React.Component {
 							 onCancel={() => this.setState({dialogEditInfo: false})}/>
 			}
 			{this.state.dialogTimetable &&
-			<TimetableForm navigation={this.props.navigation}
+			<TimetableForm navigation={this.props.navigation} timetable={this.state.timetable}
 						   onSubmit={() => this.setState({dialogTimetable: false})}
-						   onCancel={() => this.setState({dialogTimetable: false})}/>
+						   onCancel={() => this.setState({dialogTimetable: false})}
+						   onDelete={() => this.setState({dialogTimetable: false})}/>
 			}
 		</Fragment>;
 	}
