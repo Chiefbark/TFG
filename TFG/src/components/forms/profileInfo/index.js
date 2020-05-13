@@ -36,9 +36,9 @@ export default class ProfileInfoForm extends React.Component {
 	
 	render() {
 		return (
-			<Dialog title={i18n.get('commons.editInfoForm.title')}
+			<Dialog title={i18n.get('commons.profileInfoForm.title')}
 					content={() =>
-						<TextInput placeholder={i18n.get('commons.editInfoForm.placeholders.0')}
+						<TextInput placeholder={i18n.get('commons.profileInfoForm.placeholders.0')}
 								   placeholderTextColor={this.state.errorName ? colors.red : colors.lightGrey}
 								   onChangeText={(value) => this.setState({name: value})}
 								   value={this.state.name} autoCapitalize={'words'}
