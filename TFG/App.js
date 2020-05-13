@@ -77,6 +77,7 @@ function ProfileTopTabNavigators() {
 	return (
 		<TopTab.Navigator
 			initialRouteName={'Information'}
+			lazy={true}
 			tabBarOptions={{
 				showIcon: true, showLabel: false,
 				indicatorStyle: {backgroundColor: 'white'},
@@ -111,6 +112,7 @@ function TimetableNavigator() {
 	return (
 		<TopTab.Navigator
 			initialRouteName={'Monday'}
+			lazy={true}
 			tabBarOptions={{
 				showIcon: false, showLabel: true,
 				indicatorStyle: {backgroundColor: 'white'},
