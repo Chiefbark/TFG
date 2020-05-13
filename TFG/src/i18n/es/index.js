@@ -96,7 +96,7 @@ export const commons = {
 	},
 	form: {
 		toast: 'Por favor rellena todos los campos',
-		actions: ['Cancelar', 'Guardar', 'Añadir']
+		actions: ['Cancelar', 'Guardar', 'Añadir', 'Continuar']
 	},
 	teacherForm: {
 		title: 'Profesor',
@@ -119,6 +119,12 @@ export const commons = {
 		placeholders: [
 			'asignatura...',
 			'hasta'
+		]
+	},
+	timetableForm: {
+		title: 'Horario',
+		placeholders: [
+			'Indica la fecha de inicio y fin del nuevo horario'
 		]
 	},
 	languages: [

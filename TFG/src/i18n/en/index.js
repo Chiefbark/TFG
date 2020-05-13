@@ -91,7 +91,7 @@ export const commons = {
 	},
 	form: {
 		toast: 'Please fill all the fields',
-		actions: ['Cancel', 'Save', 'Add']
+		actions: ['Cancel', 'Save', 'Add', 'Continue']
 	},
 	editInfoForm: {
 		title: 'Edit information',
@@ -119,6 +119,12 @@ export const commons = {
 		placeholders: [
 			'subject...',
 			'to'
+		]
+	},
+	timetableForm: {
+		title: 'Timetable',
+		placeholders: [
+			'Specify the start and end date of the new timetable'
 		]
 	},
 	languages: [
