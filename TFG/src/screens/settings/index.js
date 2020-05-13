@@ -45,7 +45,6 @@ export default class SettingsScreen extends React.Component {
 	}
 	
 	render() {
-		console.log('profiles: ', this.state.profiles);
 		return (
 			<Fragment>
 				<ScrollView style={{flex: 1}}>
