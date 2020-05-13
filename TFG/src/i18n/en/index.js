@@ -90,7 +90,12 @@ export const commons = {
 		actions: ['Cancel']
 	},
 	form: {
-		toasts: ['Please fill all the fields', 'The end date must be later, not earlier', 'The end time must be later, not earlier'],
+		toasts: [
+			'Please fill all the fields',
+			'The end date must be later, not earlier',
+			'The end time must be later, not earlier',
+			'That hour range is already taken by other class'
+		],
 		actions: ['Cancel', 'Save', 'Add', 'Continue', 'Remove']
 	},
 	editInfoForm: {

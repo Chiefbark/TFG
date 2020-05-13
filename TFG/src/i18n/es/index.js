@@ -95,7 +95,12 @@ export const commons = {
 		actions: ['Cancelar']
 	},
 	form: {
-		toasts: ['Por favor rellena todos los campos', 'La fecha de fin tiene que ser posterior, no anterior', 'La hora de fin tiene que ser posterior, no anterior'],
+		toasts: [
+			'Por favor rellena todos los campos',
+			'La fecha de fin tiene que ser posterior, no anterior',
+			'La hora de fin tiene que ser posterior, no anterior',
+			'Ese rango de horas ya está cogido por otra clase'
+		],
 		actions: ['Cancelar', 'Guardar', 'Añadir', 'Continuar', 'Eliminar']
 	},
 	teacherForm: {
