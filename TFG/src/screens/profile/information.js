@@ -13,6 +13,7 @@ import Icon from "../../components/icon";
 import Dialog from "../../components/dialog";
 import Button from "../../components/button";
 import ProfileInfoForm from "../../components/forms/profileInfo";
+import TimetableForm from "../../components/forms/timetable";
 
 export default class InformationScreen extends React.Component {
 	constructor(props) {
@@ -20,6 +21,7 @@ export default class InformationScreen extends React.Component {
 		this.state = {
 			selected: {},
 			profile: undefined,
+			dialogTimetable: false,
 			dialogEditInfo: false,
 			_locale: i18n.currLocale
 		}
@@ -77,7 +79,7 @@ export default class InformationScreen extends React.Component {
 							}
 				/>
 				<Button label={`${i18n.get('commons.form.actions.2')}...`} backgroundColor={colors.white} textColor={colors.lightGrey}
-						onClick={() => this.props.navigation.dispatch(CommonActions.navigate({name: 'Timetable'}))}
+						onClick={() => this.setState({dialogTimetable: true})}
 						style={{paddingVertical: 15}}/>
 				{/*	CONFIG ABOUT HOLIDAYS & EVENTS	*/}
 				<ListHeader label={i18n.get('profile.screens.0.headers.2')}
@@ -100,8 +102,12 @@ export default class InformationScreen extends React.Component {
 			{this.state.dialogEditInfo &&
 			<ProfileInfoForm profile={{key: `${config.currConfig.profile}`, obj: {name: this.state.profile.name}}}
 							 onSubmit={() => this.setState({dialogEditInfo: false})}
-							 onCancel={() => this.setState({dialogEditInfo: false})}
-			/>
+							 onCancel={() => this.setState({dialogEditInfo: false})}/>
+			}
+			{this.state.dialogTimetable &&
+			<TimetableForm navigation={this.props.navigation}
+						   onSubmit={() => this.setState({dialogTimetable: false})}
+						   onCancel={() => this.setState({dialogTimetable: false})}/>
 			}
 		</Fragment>;
 	}
