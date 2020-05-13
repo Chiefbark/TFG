@@ -12,9 +12,9 @@ import Toast from 'react-native-simple-toast';
 import Button from '../../button';
 import ColorPicker from '../../colorPicker';
 import Dialog from '../../dialog';
-import Icon from "../../icon";
+import Icon from '../../icon';
 import Picker from '../../picker';
-import TeacherForm from "../teacher";
+import TeacherForm from '../teacher';
 
 /**
  * This component allows the user to create & update subjects
@@ -35,9 +35,9 @@ export default class SubjectForm extends React.Component {
 		}
 	}
 	
-	_showError(props) {
+	_showError(props, msg = 0) {
 		this.setState({...props});
-		Toast.showWithGravity(i18n.get('commons.form.toast'), Toast.LONG, Toast.TOP);
+		Toast.showWithGravity(i18n.get(`commons.form.toasts.${msg}`), Toast.LONG, Toast.TOP);
 		setTimeout(() => this.setState({errorName: false, errorTeacher: false, errorColor: false}), 3500);
 	}
 	

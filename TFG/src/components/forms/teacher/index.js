@@ -29,9 +29,9 @@ export default class TeacherForm extends React.Component {
 		}
 	}
 	
-	_showError(props) {
+	_showError(props, msg = 0) {
 		this.setState({...props});
-		Toast.showWithGravity(i18n.get('commons.form.toast'), Toast.LONG, Toast.TOP);
+		Toast.showWithGravity(i18n.get(`commons.form.toasts.${msg}`), Toast.LONG, Toast.TOP);
 		setTimeout(() => this.setState({errorName: false, errorTeacher: false}), 3500);
 	}
 	
