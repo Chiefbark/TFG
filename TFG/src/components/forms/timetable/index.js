@@ -7,12 +7,12 @@ import * as config from '../../../config';
 import * as firebase from '../../../firebase';
 import {colors} from '../../../styles';
 
+import {CommonActions} from '@react-navigation/native';
 import Toast from 'react-native-simple-toast';
 
 import Dialog from '../../dialog';
 import Button from '../../button';
 import CalendarPicker from '../../calendarPicker';
-import {CommonActions} from '@react-navigation/native';
 
 /**
  * This component allows the user to create & update timetables
