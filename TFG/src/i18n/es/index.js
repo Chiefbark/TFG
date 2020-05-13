@@ -95,7 +95,7 @@ export const commons = {
 		actions: ['Cancelar']
 	},
 	form: {
-		toast: 'Por favor rellena todos los campos',
+		toasts: ['Por favor rellena todos los campos', 'La fecha de fin tiene que ser posterior, no anterior', 'La hora de fin tiene que ser posterior, no anterior'],
 		actions: ['Cancelar', 'Guardar', 'Añadir', 'Continuar', 'Eliminar']
 	},
 	teacherForm: {
