@@ -45,10 +45,9 @@ export default class TimeTable extends React.Component {
 			headerRight: () => <Button label={i18n.get('timetable.headerRight')} textColor={colors.white}
 									   onClick={() => this.props.navigation.pop()}/>
 		});
-		this.props.navigation.dangerouslyGetParent().dangerouslyGetParent().setOptions(
-			{tabBarVisible: false});
+		this.props.navigation.dangerouslyGetParent().dangerouslyGetParent().setOptions({tabBarVisible: false});
 		
-		firebase.getDatabase().ref(`users/${firebase.currFirebaseKey}/profiles/${config.currConfig.profile}/schedules/${this.props.route.params.day}`).on('value', snapshot => {
+		firebase.getDatabase().ref(`users/${firebase.currFirebaseKey}/profiles/${config.currConfig.profile}/schedules/${this.props.route.params.key}/${this.props.route.params.day}`).on('value', snapshot => {
 			let data = snapshot.val() || {};
 			this.setState({schedules: Object.entries(data)});
 		});
@@ -58,7 +57,7 @@ export default class TimeTable extends React.Component {
 				this.state.schedules.forEach(schedule => {
 					if (!this.state.subjects.find(subject => subject[0] === schedule[1].id_subject))
 						firebase.getDatabase()
-							.ref(`users/${firebase.currFirebaseKey}/profiles/${config.currConfig.profile}/schedules/${this.props.route.params.day}/${schedule[0]}`)
+							.ref(`users/${firebase.currFirebaseKey}/profiles/${config.currConfig.profile}/schedules/${this.props.route.params.key}/${this.props.route.params.day}/${schedule[0]}`)
 							.child('id_subject')
 							.remove();
 				}));
@@ -150,7 +149,7 @@ export default class TimeTable extends React.Component {
 				}
 				{/*	DIALOG SCHEDULE	*/}
 				{this.state.dialogSchedule &&
-				<ScheduleForm schedule={this.state.schedule} day={this.props.route.params.day}
+				<ScheduleForm schedule={this.state.schedule} day={this.props.route.params.day} scheduleKey={this.props.route.params.key}
 							  onSubmit={() => this.setState({schedule: undefined, dialogSchedule: false})}
 							  onCancel={() => this.setState({schedule: undefined, dialogSchedule: false})}/>
 				}
@@ -170,7 +169,7 @@ export default class TimeTable extends React.Component {
 											Object.entries(this.state.selected)
 												.forEach(element =>
 													firebase.getDatabase()
-														.ref(`users/${firebase.currFirebaseKey}/profiles/${config.currConfig.profile}/schedules/${this.props.route.params.day}/${element[0]}`)
+														.ref(`users/${firebase.currFirebaseKey}/profiles/${config.currConfig.profile}/schedules/${this.props.route.params.key}/${this.props.route.params.day}/${element[0]}`)
 														.remove()
 												);
 											this.setState({selected: {}, dialogConfirm: false}, () => this._showOptions());
@@ -191,6 +190,9 @@ export default class TimeTable extends React.Component {
 								<Button label={i18n.get('timetable.exitDialog.actions.1')}
 										backgroundColor={colors.primary} textColor={colors.white}
 										onClick={() => {
+											firebase.getDatabase()
+												.ref(`users/${firebase.currFirebaseKey}/profiles/${config.currConfig.profile}/schedules/${this.props.route.params.key}`)
+												.remove()
 											this.props.navigation.dangerouslyGetParent().dangerouslyGetParent().setOptions(
 												{tabBarVisible: true});
 											this.setState({dialogExit: false}, () => this.props.navigation.pop());
