@@ -17,6 +17,26 @@ import SubjectForm from '../subject';
 import TimePicker from '../../timePicker';
 
 /**
+ *
+ * @param time1 - first time to compare
+ * @param time2 - second time to compare
+ * @return {number} -1 if time1 is bigger, 0 if equals and 1 if time2 bigger
+ */
+function compareTimes(time1, time2) {
+	const start = {hours: parseInt(time1.split(':')[0]), minutes: parseInt(time1.split(':')[1])};
+	const end = {hours: parseInt(time2.split(':')[0]), minutes: parseInt(time2.split(':')[1])};
+	
+	if (start.hours > end.hours)
+		return -1;
+	if (start.hours === end.hours && start.minutes === end.minutes)
+		return 0;
+	if (start.hours === end.hours && start.minutes > end.minutes)
+		return -1;
+	else
+		return 1;
+}
+
+/**
  * This component allows the user to create & update schedules
  *
  * @author {@link https://github.com/Chiefbark Chiefbark}
@@ -108,10 +128,31 @@ export default class ScheduleForm extends React.Component {
 										backgroundColor={colors.primary} textColor={colors.white}
 										onClick={async () => {
 											let obj = {};
+											let msg = 0;
 											if (!this.state.id_subject || this.state.id_subject === 0) obj.errorSubject = true;
 											if (!this.state.startTime || this.state.startTime === '') obj.errorStartTime = true;
 											if (!this.state.endTime || this.state.endTime === '') obj.errorEndTime = true;
-											if (Object.entries(obj).length > 0) this._showError(obj);
+											if (this.state.startTime && this.state.endTime) {
+												if (this.props.takenHours?.find(e => {
+														if (e.key !== this.state.key) {
+															return compareTimes(this.state.startTime, e.startTime) <= 0 && compareTimes(this.state.startTime, e.endTime) > 0
+																|| compareTimes(this.state.endTime, e.startTime) < 0 && compareTimes(this.state.endTime, e.endTime) > 0
+																|| compareTimes(this.state.startTime, e.startTime) > 0 && compareTimes(this.state.endTime, e.endTime) <= 0
+														}
+														return undefined;
+													}
+												) ?? false) {
+													obj.errorStartTime = true;
+													obj.errorEndTime = true;
+													msg = 3;
+												}
+												if (compareTimes(this.state.startTime, this.state.endTime) <= 0) {
+													obj.errorStartTime = true;
+													obj.errorEndTime = true;
+													msg = 2;
+												}
+											}
+											if (Object.entries(obj).length > 0) this._showError(obj, msg);
 											else {
 												let obj = {
 													startTime: this.state.startTime,
@@ -143,13 +184,33 @@ export default class ScheduleForm extends React.Component {
 				{this.state.dialogStartTime &&
 				<TimePicker initialHours={parseInt(this.state.startTime?.split(':')[0])}
 							initialMinutes={parseInt(this.state.startTime?.split(':')[1])}
-							onSubmit={(hours, minutes) => this.setState({dialogStartTime: false, startTime: `${hours}:${minutes}`})}
+							onSubmit={(hours, minutes) => {
+								if (this.state.endTime && compareTimes(`${hours}:${minutes}`, this.state.endTime) < 0)
+									this.setState({
+										dialogStartTime: false, startTime: `${hours}:${minutes}`, endTime: `${hours}:${minutes}`
+									})
+								else if (!this.state.endTime)
+									this.setState({
+										dialogStartTime: false, startTime: `${hours}:${minutes}`, endTime: `${hours}:${minutes}`
+									})
+								else
+									this.setState({dialogStartTime: false, startTime: `${hours}:${minutes}`})
+							}}
 							onCancel={() => this.setState({dialogStartTime: false})}/>
 				}
 				{this.state.dialogEndTime &&
 				<TimePicker initialHours={parseInt(this.state.endTime?.split(':')[0])}
 							initialMinutes={parseInt(this.state.endTime?.split(':')[1])}
-							onSubmit={(hours, minutes) => this.setState({dialogEndTime: false, endTime: `${hours}:${minutes}`})}
+							onSubmit={(hours, minutes) => {
+								if (this.state.startTime && compareTimes(this.state.startTime, `${hours}:${minutes}`) < 0)
+									this.setState({dialogEndTime: false, startTime: `${hours}:${minutes}`, endTime: `${hours}:${minutes}`})
+								else if (!this.state.startTime)
+									this.setState({
+										dialogStartTime: false, startTime: `${hours}:${minutes}`, endTime: `${hours}:${minutes}`
+									})
+								else
+									this.setState({dialogEndTime: false, endTime: `${hours}:${minutes}`})
+							}}
 							onCancel={() => this.setState({dialogEndTime: false})}/>
 				}
 			</Fragment>
