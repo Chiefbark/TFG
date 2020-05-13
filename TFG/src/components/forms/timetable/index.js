@@ -71,6 +71,15 @@ export default class TimetableForm extends React.Component {
 							</Fragment>}
 						buttons={() =>
 							<Fragment>
+								{this.state.key &&
+								<Button label={i18n.get('commons.form.actions.4')} style={{paddingHorizontal: 0}}
+										textColor={colors.primary}
+										onClick={() => {
+											firebase.getDatabase()
+												.ref(`users/${firebase.currFirebaseKey}/profiles/${config.currConfig.profile}/schedules/${this.state.key}`)
+												.remove()
+										}}/>
+								}
 								<Button label={i18n.get('commons.form.actions.0')}
 										onClick={() => {
 											this.props.onCancel();
