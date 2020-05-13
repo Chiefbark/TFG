@@ -103,6 +103,10 @@ export const commons = {
 		],
 		actions: ['Cancelar', 'Guardar', 'Añadir', 'Continuar', 'Eliminar']
 	},
+	profileInfoForm: {
+		title: 'Editar información',
+		placeholders: ['nombre del perfil...']
+	},
 	teacherForm: {
 		title: 'Profesor',
 		placeholders: ['nombre del profesor...'],

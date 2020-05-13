@@ -98,10 +98,9 @@ export const commons = {
 		],
 		actions: ['Cancel', 'Save', 'Add', 'Continue', 'Remove']
 	},
-	editInfoForm: {
+	profileInfoForm: {
 		title: 'Edit information',
-		placeholders: ['profile\'s name...'],
-		actions: ['Cancel', 'Save']
+		placeholders: ['profile\'s name...']
 	},
 	teacherForm: {
 		title: 'Teacher',
