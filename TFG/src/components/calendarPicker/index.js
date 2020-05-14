@@ -2,6 +2,7 @@ import React, {Fragment} from 'react';
 import PropTypes from 'prop-types';
 
 import * as i18n from '../../i18n';
+import {getDateFromString} from '../../utils';
 import {colors} from '../../styles';
 
 import Button from '../button';
@@ -11,16 +12,6 @@ import Dialog from '../dialog';
 
 const selection = {
 	color: colors.primaryLight
-}
-const getDateFromString = (dateString) => {
-	if (dateString) {
-		let arr = dateString.split('-');
-		let date = new Date();
-		date.setFullYear(arr[0], arr[1] - 1, arr[2]);
-		date.setHours(0, 0, 0, 0);
-		return date;
-	}
-	return undefined;
 }
 
 /**
