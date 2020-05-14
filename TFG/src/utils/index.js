@@ -1,4 +1,7 @@
+import * as i18n from '../i18n';
+
 /**
+ * Compares two times (HH:mm)
  *
  * @param time1 - first time to compare
  * @param time2 - second time to compare
@@ -18,6 +21,33 @@ export function compareTimes(time1, time2) {
 		return 1;
 }
 
+/**
+ * Returns the day of the week as number [0: monday, 6: sunday]
+ * @param dateString - yyyy-MM-dd
+ * @return {number} The day of the week as number
+ */
+export function getDayOfWeek(dateString) {
+	let dayOfWeek = getDateFromString(dateString).getDay();
+	return dayOfWeek === 0 ? 6 : dayOfWeek - 1;
+}
+
+/**
+ * Returns the ISO date with the format dd MMMM yyyy
+ * @param dateString - yyyy-MM-dd
+ * @return {string} The ISO date
+ */
+export function getISODate(dateString) {
+	const arr = dateString.split('-');
+	const month = i18n.get(`commons.calendarLocales.monthNames.${parseInt(arr[1]) - 1}`)
+	return `${arr[2]} ${month} ${arr[0]}`;
+}
+
+/**
+ * Returns the Date object of the current date string (yyyy-MM-dd)
+ *
+ * @param dateString - yyyy-MM-dd
+ * @return {undefined|Date} undefined if dateString is undefined, Date() otherwise
+ */
 export function getDateFromString(dateString) {
 	if (dateString) {
 		let arr = dateString.split('-');
