@@ -75,7 +75,7 @@ export default class InformationScreen extends React.Component {
 				/>
 				<ListItem title={i18n.get('profile.screens.0.contents.0')} subtitle={this.state.profile?.name}/>
 				<ListItem title={i18n.get('profile.screens.0.contents.1')} rightItem={() => {
-					if (this.state.timetables) {
+					if (this.state.timetables && this.state.timetables.length > 0) {
 						const arr = this.state.timetables[0][1].startDate.split('-');
 						const month = i18n.get(`commons.calendarLocales.monthNames.${parseInt(arr[1]) - 1}`);
 						return <Text style={{color: colors.grey, marginRight: 16}}>{`${arr[2]} ${month} ${arr[0]}`}</Text>
@@ -83,7 +83,7 @@ export default class InformationScreen extends React.Component {
 					return undefined;
 				}} style={{paddingVertical: 8}}/>
 				<ListItem title={i18n.get('profile.screens.0.contents.2')} rightItem={() => {
-					if (this.state.timetables) {
+					if (this.state.timetables && this.state.timetables.length > 0) {
 						const arr = this.state.timetables[this.state.timetables.length - 1][1].endDate.split('-');
 						const month = i18n.get(`commons.calendarLocales.monthNames.${parseInt(arr[1]) - 1}`);
 						return <Text style={{color: colors.grey, marginRight: 16}}>{`${arr[2]} ${month} ${arr[0]}`}</Text>
