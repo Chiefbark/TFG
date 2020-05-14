@@ -176,52 +176,57 @@ export default class App extends React.Component {
 									<TouchableOpacity onPress={() => state.index !== 0 && navigation.jumpTo('Calendar')}
 													  style={{
 														  flex: 1, flexDirection: 'column',
-														  justifyContent: 'center', alignItems: 'center', padding: 5
+														  justifyContent: 'center', alignItems: 'center', padding: 4
 													  }}>
 										<Icon source={require('./assets/icons/icon_calendar.png')} disabled={true}
 											  iconColor={colors.white}/>
 										{state.index === 0 &&
-										<Text style={{color: colors.white, fontSize: 12}}>{i18n.get('calendar.title')}</Text>}
+										<Text numberOfLines={1}
+											  style={{color: colors.white, fontSize: 11}}>{i18n.get('calendar.title')}</Text>}
 									</TouchableOpacity>
 									<TouchableOpacity onPress={() => state.index !== 1 && navigation.jumpTo('Statistics')}
 													  style={{
 														  flex: 1, flexDirection: 'column',
-														  justifyContent: 'center', alignItems: 'center', padding: 5
+														  justifyContent: 'center', alignItems: 'center', padding: 4
 													  }}>
 										<Icon source={require('./assets/icons/icon_stats.png')} disabled={true}
 											  iconColor={colors.white}/>
 										{state.index === 1 &&
-										<Text style={{color: colors.white, fontSize: 12}}>{i18n.get('statistics.title')}</Text>}
+										<Text numberOfLines={1}
+											  style={{color: colors.white, fontSize: 11}}>{i18n.get('statistics.title')}</Text>}
 									</TouchableOpacity>
 									<TouchableOpacity onPress={() => state.index !== 2 && navigation.jumpTo('Absences')}
 													  style={{
 														  flex: 1, flexDirection: 'column',
-														  justifyContent: 'center', alignItems: 'center', padding: 5
+														  justifyContent: 'center', alignItems: 'center', padding: 4
 													  }}>
 										<Icon source={require('./assets/icons/icon_list.png')} disabled={true}
 											  iconColor={colors.white}/>
 										{state.index === 2 &&
-										<Text style={{color: colors.white, fontSize: 12}}>{i18n.get('absences.title')}</Text>}
+										<Text numberOfLines={1}
+											  style={{color: colors.white, fontSize: 11}}>{i18n.get('absences.title')}</Text>}
 									</TouchableOpacity>
 									<TouchableOpacity onPress={() => state.index !== 3 && navigation.jumpTo('Profile')}
 													  style={{
 														  flex: 1, flexDirection: 'column',
-														  justifyContent: 'center', alignItems: 'center', padding: 5
+														  justifyContent: 'center', alignItems: 'center', padding: 4
 													  }}>
 										<Icon source={require('./assets/icons/icon_profile.png')} disabled={true}
 											  iconColor={colors.white}/>
 										{state.index === 3 &&
-										<Text style={{color: colors.white, fontSize: 12}}>{i18n.get('profile.title')}</Text>}
+										<Text numberOfLines={1}
+											  style={{color: colors.white, fontSize: 11}}>{i18n.get('profile.title')}</Text>}
 									</TouchableOpacity>
 									<TouchableOpacity onPress={() => state.index !== 4 && navigation.jumpTo('Settings')}
 													  style={{
 														  flex: 1, flexDirection: 'column',
-														  justifyContent: 'center', alignItems: 'center', padding: 5
+														  justifyContent: 'center', alignItems: 'center', padding: 4
 													  }}>
 										<Icon source={require('./assets/icons/icon_settings.png')} disabled={true}
 											  iconColor={colors.white}/>
 										{state.index === 4 &&
-										<Text style={{color: colors.white, fontSize: 12}}>{i18n.get('settings.title')}</Text>}
+										<Text numberOfLines={1}
+											  style={{color: colors.white, fontSize: 11}}>{i18n.get('settings.title')}</Text>}
 									</TouchableOpacity>
 								</View>
 							}
