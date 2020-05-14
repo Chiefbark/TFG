@@ -7,6 +7,8 @@ import * as firebase from '../../firebase';
 import {compareTimes, getDayOfWeek, getISODate} from '../../utils';
 import {colors} from '../../styles';
 
+import Toast from 'react-native-simple-toast';
+
 import Button from '../../components/button';
 import {Calendar} from 'react-native-calendars';
 import CalendarDay from '../../components/calendarDay';
@@ -81,23 +83,21 @@ export default class CalendarScreen extends React.Component {
 			let data = snapshot.val() || {};
 			this.setState({absences: Object.entries(data)}, () => this._updateMarking());
 		});
-		firebase.ref('subjects').on('value', snapshot => {
-			this._updateMarking().then();
-		});
+		firebase.ref('subjects').on('value', () => this._updateMarking());
 	}
 	
 	async _updateMarking() {
 		let marking = {};
-		const absences = [...this.state.absences];
-		if (absences)
-			for (let ii = 0; ii < absences.length; ii++) {
-				if (!marking[absences[ii][0]]) marking[absences[ii][0]] = {};
-				if (!marking[absences[ii][0]].multi) marking[absences[ii][0]].multi = [];
-				const entries = Object.entries(absences[ii][1]);
+		const abs = this.state.absences;
+		if (abs)
+			for (let ii = 0; ii < abs.length; ii++) {
+				if (!marking[abs[ii][0]]) marking[abs[ii][0]] = {};
+				marking[abs[ii][0]].multi = [];
+				const entries = Object.entries(abs[ii][1]);
 				for (let jj = 0; jj < entries.length; jj++) {
 					const id_subject = await firebase.ref('schedules').child(entries[jj][1]).child(entries[jj][0]).once('value').then(result => result.val().id_subject);
 					const color = await firebase.ref('subjects').child(id_subject).once('value').then(result => result.val().color);
-					marking[absences[ii][0]].multi.push({color: color});
+					marking[abs[ii][0]].multi.push({color: color});
 				}
 			}
 		// TODO: EXAMS
@@ -198,9 +198,11 @@ export default class CalendarScreen extends React.Component {
 												  }
 												  onClick={() => {
 													  if (selected)
-														  firebase.ref('absences').child(this.state.selected.dateString).child(e.id_schedule).remove();
+														  firebase.ref('absences').child(this.state.selected.dateString).child(e.id_schedule).remove()
+															  .then(() => Toast.showWithGravity(i18n.get('calendar.absenceChanged.1'), Toast.SHORT, Toast.BOTTOM));
 													  else
-														  firebase.ref('absences').child(this.state.selected.dateString).child(e.id_schedule).set(e.path);
+														  firebase.ref('absences').child(this.state.selected.dateString).child(e.id_schedule).set(e.path)
+															  .then(() => Toast.showWithGravity(i18n.get('calendar.absenceChanged.0'), Toast.SHORT, Toast.BOTTOM));
 												  }}
 										/>
 									)
