@@ -1,6 +1,10 @@
 export const calendar = {
 	title: 'Calendar',
-	helpText: 'Click on a day in the calendar to see more details!'
+	helpText: 'Click on a day in the calendar to see more details!',
+	emptySchedule: 'You don\'t have any classes added to the timetable for this day',
+	absencesDialog: {
+		placeholders: ['Marked subjects have absences this day']
+	}
 }
 export const statistics = {
 	title: 'Statistics'

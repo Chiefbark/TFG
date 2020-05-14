@@ -1,6 +1,10 @@
 export const calendar = {
 	title: 'Calendario',
-	helpText: 'Pulsa en un día del calendario para ver más detalles!'
+	helpText: 'Pulsa en un día del calendario para ver más detalles!',
+	emptySchedule: 'No tienes ninguna clase añadida al horario para este día',
+	absencesDialog: {
+		placeholders: ['Las asignaturas marcadas tienen faltas de asistencia este día']
+	}
 }
 export const statistics = {
 	title: 'Estadísticas'
