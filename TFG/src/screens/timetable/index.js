@@ -52,12 +52,7 @@ export default class TimeTable extends React.Component {
 		});
 		firebase.ref('subjects').on('value', snapshot => {
 			let data = snapshot.val() || {};
-			this.setState({subjects: Object.entries(data)}, () =>
-				this.state.schedules.forEach(schedule => {
-					if (!this.state.subjects.find(subject => subject[0] === schedule[1].id_subject))
-						firebase.ref('schedules').child(`${this.props.route.params.key}/${this.props.route.params.day}/${schedule[0]}`)
-							.child('id_subject').remove();
-				}));
+			this.setState({subjects: Object.entries(data)});
 		});
 	}
 	
@@ -166,11 +161,7 @@ export default class TimeTable extends React.Component {
 										backgroundColor={colors.primary} textColor={colors.white}
 										onClick={() => {
 											Object.entries(this.state.selected)
-												.forEach(element =>
-													firebase.ref('schedules')
-														.child(`${this.props.route.params.key}/${this.props.route.params.day}/${element[0]}`)
-														.remove()
-												);
+												.forEach(element => firebase.removeSchedule(`${this.props.route.params.key}/${this.props.route.params.day}`, element[0]))
 											this.setState({selected: {}, dialogConfirm: false}, () => this._showOptions());
 										}}
 								/>

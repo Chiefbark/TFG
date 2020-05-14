@@ -165,7 +165,7 @@ export default class TeachersScreen extends React.Component {
 										backgroundColor={colors.primary} textColor={colors.white}
 										onClick={() => {
 											Object.entries(this.state.selected)
-												.forEach(element => firebase.ref('teachers').child(element[0]).remove())
+												.forEach(element => firebase.removeTeacher(element[0]))
 											this.setState({selected: {}, dialogConfirm: false}, () => this._showOptions());
 										}}/>
 							</Fragment>

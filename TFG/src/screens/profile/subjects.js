@@ -52,11 +52,7 @@ export default class SubjectsScreen extends React.Component {
 		});
 		firebase.ref('teachers').on('value', snapshot => {
 			let data = snapshot.val() || {};
-			this.setState({teachers: Object.entries(data)}, () =>
-				this.state.subjects.forEach(subject => {
-					if (!this.state.teachers.find(teacher => teacher[0] === subject[1].id_teacher))
-						firebase.ref('subjects').child(subject[0]).child('id_teacher').remove();
-				}));
+			this.setState({teachers: Object.entries(data)});
 		});
 	}
 	
@@ -178,13 +174,7 @@ export default class SubjectsScreen extends React.Component {
 										backgroundColor={colors.primary} textColor={colors.white}
 										onClick={() => {
 											Object.entries(this.state.selected)
-												.forEach(element => {
-														firebase.ref('subjects').child(element[0]).remove();
-														firebase.ref('teachers').child(element[1].id_teacher).once('value', snapshot => {
-															snapshot.ref.update({nSubjects: snapshot.val().nSubjects - 1});
-														});
-													}
-												)
+												.forEach(element => firebase.removeSubject(element[0], element[1].id_teacher))
 											this.setState({selected: {}, dialogConfirm: false}, () => this._showOptions());
 										}}/>
 							</Fragment>
