@@ -40,6 +40,8 @@ export function ref(node) {
 			return db.ref(`users/${currFirebaseKey}/profiles/${config.currConfig.profile}/subjects`);
 		case 'schedules':
 			return db.ref(`users/${currFirebaseKey}/profiles/${config.currConfig.profile}/schedules`);
+		case 'absences':
+			return db.ref(`users/${currFirebaseKey}/profiles/${config.currConfig.profile}/absences`);
 		case 'currProfile':
 			return db.ref(`users/${currFirebaseKey}/profiles/${config.currConfig.profile}`);
 		case 'profiles':
