@@ -4,7 +4,7 @@ import {View, Text, StyleSheet} from 'react-native';
 import * as i18n from '../../i18n';
 import * as config from '../../config';
 import * as firebase from '../../firebase';
-import {compareTimes} from '../../utils';
+import {compareTimes, getDayOfWeek, getISODate} from '../../utils';
 import {colors} from '../../styles';
 
 import Button from '../../components/button';
@@ -49,7 +49,6 @@ export default class CalendarScreen extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			month: new Date().getMonth() + 1,
 			dialogHelp: false,
 			_locale: i18n.currLocale,
 			_config: config.currConfig,
@@ -76,12 +75,34 @@ export default class CalendarScreen extends React.Component {
 		
 		firebase.ref('schedules').on('value', snapshot => {
 			let data = snapshot.val() || {};
-			this.setState({schedules: Object.entries(data)});
-		})
+			this.setState({schedules: Object.entries(data)}, () => this._updateMarking());
+		});
 		firebase.ref('absences').on('value', snapshot => {
 			let data = snapshot.val() || {};
-			this.setState({absences: Object.entries(data)});
-		})
+			this.setState({absences: Object.entries(data)}, () => this._updateMarking());
+		});
+		firebase.ref('subjects').on('value', snapshot => {
+			this._updateMarking().then();
+		});
+	}
+	
+	async _updateMarking() {
+		let marking = {};
+		const absences = [...this.state.absences];
+		if (absences)
+			for (let ii = 0; ii < absences.length; ii++) {
+				if (!marking[absences[ii][0]]) marking[absences[ii][0]] = {};
+				if (!marking[absences[ii][0]].multi) marking[absences[ii][0]].multi = [];
+				const entries = Object.entries(absences[ii][1]);
+				for (let jj = 0; jj < entries.length; jj++) {
+					const id_subject = await firebase.ref('schedules').child(entries[jj][1]).child(entries[jj][0]).once('value').then(result => result.val().id_subject);
+					const color = await firebase.ref('subjects').child(id_subject).once('value').then(result => result.val().color);
+					marking[absences[ii][0]].multi.push({color: color});
+				}
+			}
+		// TODO: EXAMS
+		// TODO: HOLIDAYS
+		this.setState({marking: marking})
 	}
 	
 	componentWillUnmount() {
@@ -89,24 +110,10 @@ export default class CalendarScreen extends React.Component {
 		config.removeListener(this._updateComponent.bind(this));
 	}
 	
-	getMarking(absences) {
-		let marking = {};
-		absences?.map(e => {
-			if (!marking[e[0]]) marking[e[0]] = {};
-			if (!marking[e[0]].multi) marking[e[0]].multi = [];
-			const entries = Object.entries(e[1]);
-			entries.forEach(entry => marking[e[0]].multi.push({id_absence: entry[1]}));
-		})
-		return marking;
-	}
-	
 	render() {
-		const currAbsences = this.state.absences?.filter(e => e[0].split('-')[1] == this.state.month);
-		const marking = this.getMarking(currAbsences);
 		return <View style={styles.container}>
 			<Calendar key={this.state._lastModified}
-					  markedDates={markedDates}
-					  current={new Date()}
+					  markedDates={this.state.marking}
 					  minDate={'2020-01-01'}
 					  maxDate={'2021-01-01'}
 					  monthFormat={'yyyy MMMM'}
@@ -132,24 +139,22 @@ export default class CalendarScreen extends React.Component {
 							  <CalendarDay date={date} state={state} marking={newMarking}
 										   onClick={async (value) => {
 											   let obj = {};
-											   obj.dateString = value.dateString;
-											   obj.strDate = value.day + ' ' + i18n.get(`commons.calendarLocales.monthNames.${parseInt(value.month) - 1}`) + ' ' + value.year;
 											   let currSchedule = this.state.schedules.find(e => value.dateString >= e[1].startDate && value.dateString <= e[1].endDate);
+											   obj.dateString = value.dateString;
 						
-											   let dayOfWeek = new Date(value.timestamp).getDay();
-											   dayOfWeek = dayOfWeek === 0 ? 6 : dayOfWeek - 1;
+											   const dayOfWeek = getDayOfWeek(value.dateString);
 											   if (currSchedule[1][dayOfWeek]) {
 												   const sorted = Object.entries(currSchedule[1][dayOfWeek])
 													   .sort((arg0, arg1) => compareTimes(arg1[1].startTime, arg0[1].startTime));
 												   obj.subjects = [];
 												   for (let ii = 0; ii < sorted.length; ii++) {
-													   obj.subjects[ii] = {};
-													   const temp = await firebase.ref('subjects').child(sorted[ii][1].id_subject)
-														   .once('value').then(result => result.val() ?? {})
-													   obj.subjects[ii].schedule = sorted[ii][0];
-													   obj.subjects[ii].name = temp.name;
-													   obj.subjects[ii].startTime = sorted[ii][1].startTime;
-													   obj.subjects[ii].endTime = sorted[ii][1].endTime;
+													   obj.subjects[ii] = {...sorted[ii][1]};
+													   obj.subjects[ii].id_schedule = sorted[ii][0];
+													   obj.subjects[ii].path = `${currSchedule[0]}/${dayOfWeek}`;
+													   obj.subjects[ii].name = await firebase.ref('subjects')
+														   .child(sorted[ii][1].id_subject)
+														   .once('value')
+														   .then(result => result.val()?.name ?? {});
 												   }
 											   }
 											   this.setState({selected: obj});
@@ -166,7 +171,7 @@ export default class CalendarScreen extends React.Component {
 					}
 					visible={this.state.dialogHelp}/>
 			{this.state.selected &&
-			<Dialog title={this.state.selected.strDate}
+			<Dialog title={getISODate(this.state.selected.dateString)}
 					content={() =>
 						<Fragment>
 							{this.state.selected.subjects &&
@@ -175,20 +180,27 @@ export default class CalendarScreen extends React.Component {
 							</Text>
 							}
 							{this.state.selected.subjects?.map(e => {
-									const selected = marking[this.state.selected.dateString]?.multi?.find(x => x.color === e.color) ?? undefined;
+									let selected = undefined;
+									if (this.state.absences) {
+										const arr = this.state.absences.find(x => x[0] === this.state.selected.dateString);
+										if (arr) selected = Object.keys(arr[1]).find(x => x === e.id_schedule)
+									}
 									return (
-										<ListItem key={e.schedule} title={e.name} subtitle={`${e.startTime} - ${e.endTime}`}
+										<ListItem key={e.id_schedule} title={e.name} subtitle={`${e.startTime} - ${e.endTime}`}
 												  containerStyle={{paddingHorizontal: 0}}
 												  rightItem={() =>
 													  <Icon source={require('../../../assets/icons/icon_check.png')}
-															size={'small'} disabled={true}
-															iconColor={selected ? colors.primary : colors.white}
+															size={'small'} disabled={true} iconColor={selected ? colors.primary : colors.white}
 															style={{
 																borderWidth: 1, borderColor: colors.primary, borderRadius: 1000,
 																padding: 10, marginLeft: 8
 															}}/>
 												  }
 												  onClick={() => {
+													  if (selected)
+														  firebase.ref('absences').child(this.state.selected.dateString).child(e.id_schedule).remove();
+													  else
+														  firebase.ref('absences').child(this.state.selected.dateString).child(e.id_schedule).set(e.path);
 												  }}
 										/>
 									)
