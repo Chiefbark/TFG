@@ -4,7 +4,8 @@ export const calendar = {
 	emptySchedule: 'No tienes ninguna clase añadida al horario para este día',
 	absencesDialog: {
 		placeholders: ['Las asignaturas marcadas tienen faltas de asistencia este día']
-	}
+	},
+	absenceChanged: ['Falta de asistencia añadida', 'Falta de asistencia eliminada']
 }
 export const statistics = {
 	title: 'Estadísticas'

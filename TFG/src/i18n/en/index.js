@@ -4,7 +4,8 @@ export const calendar = {
 	emptySchedule: 'You don\'t have any classes added to the timetable for this day',
 	absencesDialog: {
 		placeholders: ['Marked subjects have absences this day']
-	}
+	},
+	absenceChanged: ['Absence added', 'Absence removed']
 }
 export const statistics = {
 	title: 'Statistics'
