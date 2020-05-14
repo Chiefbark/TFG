@@ -101,7 +101,7 @@ export default class InformationScreen extends React.Component {
 					const start = `${startMonth} ${e[1].startDate.split('-')[0]}`;
 					const endMonth = i18n.get(`commons.calendarLocales.monthNames.${parseInt(e[1].endDate.split('-')[1]) - 1}`);
 					const end = `${endMonth} ${e[1].endDate.split('-')[0]}`;
-					return <ListItem title={`${start} - ${end}`}
+					return <ListItem key={e[0]} title={`${start} - ${end}`}
 									 onClick={() => this.setState({timetable: {key: e[0], obj: e[1]}, dialogTimetable: true})}/>
 				})}
 				<Button label={`${i18n.get('commons.form.actions.2')}...`} backgroundColor={colors.white} textColor={colors.lightGrey}
