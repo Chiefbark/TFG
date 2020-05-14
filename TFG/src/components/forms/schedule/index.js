@@ -5,6 +5,7 @@ import {View, Text} from 'react-native';
 import * as i18n from '../../../i18n';
 import * as config from '../../../config';
 import * as firebase from '../../../firebase';
+import {compareTimes} from '../../../utils';
 import {colors} from '../../../styles';
 
 import Toast from 'react-native-simple-toast';
@@ -15,26 +16,6 @@ import Icon from '../../icon';
 import Picker from '../../picker';
 import SubjectForm from '../subject';
 import TimePicker from '../../timePicker';
-
-/**
- *
- * @param time1 - first time to compare
- * @param time2 - second time to compare
- * @return {number} -1 if time1 is bigger, 0 if equals and 1 if time2 bigger
- */
-function compareTimes(time1, time2) {
-	const start = {hours: parseInt(time1.split(':')[0]), minutes: parseInt(time1.split(':')[1])};
-	const end = {hours: parseInt(time2.split(':')[0]), minutes: parseInt(time2.split(':')[1])};
-	
-	if (start.hours > end.hours)
-		return -1;
-	if (start.hours === end.hours && start.minutes === end.minutes)
-		return 0;
-	if (start.hours === end.hours && start.minutes > end.minutes)
-		return -1;
-	else
-		return 1;
-}
 
 /**
  * This component allows the user to create & update schedules
