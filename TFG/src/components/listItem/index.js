@@ -19,7 +19,7 @@ export default class ListItem extends React.Component {
 				style={[styles.container, this.props.style]}
 				onPress={() => this.props.onClick ? this.props.onClick() : undefined}
 				onLongPress={() => this.props.onLongClick ? this.props.onLongClick() : undefined}>
-				<View style={styles.content}>
+				<View style={[styles.content, this.props.containerStyle]}>
 					<Text numberOfLines={1} style={[styles.title, this.props.titleStyles]}>{this.props.title}</Text>
 					{this.props.subtitle &&
 					<Text numberOfLines={1} style={styles.subtitle}>{this.props.subtitle}</Text>}
@@ -59,6 +59,12 @@ ListItem.propTypes = {
 	 * `View.style`
 	 */
 	titleStyles: PropTypes.object,
+	/**
+	 * Styles of the container (title & subtitle) of the component
+	 *
+	 * `View.style`
+	 */
+	containerStyle: PropTypes.object,
 	/**
 	 * Subtitle of the component
 	 *
