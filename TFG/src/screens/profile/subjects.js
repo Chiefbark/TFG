@@ -3,7 +3,6 @@ import {View, Text, FlatList} from 'react-native';
 
 import * as i18n from '../../i18n';
 import * as firebase from '../../firebase';
-import * as config from '../../config';
 import {colors} from '../../styles';
 
 import Button from '../../components/button';
@@ -47,16 +46,16 @@ export default class SubjectsScreen extends React.Component {
 			});
 		});
 		
-		firebase.getDatabase().ref(`users/${firebase.currFirebaseKey}/profiles/${config.currConfig.profile}/subjects`).on('value', snapshot => {
+		firebase.ref('subjects').on('value', snapshot => {
 			let data = snapshot.val() || {};
 			this.setState({subjects: Object.entries(data)});
 		});
-		firebase.getDatabase().ref(`users/${firebase.currFirebaseKey}/profiles/${config.currConfig.profile}/teachers`).on('value', snapshot => {
+		firebase.ref('teachers').on('value', snapshot => {
 			let data = snapshot.val() || {};
 			this.setState({teachers: Object.entries(data)}, () =>
 				this.state.subjects.forEach(subject => {
 					if (!this.state.teachers.find(teacher => teacher[0] === subject[1].id_teacher))
-						firebase.getDatabase().ref(`users/${firebase.currFirebaseKey}/profiles/${config.currConfig.profile}/subjects/${subject[0]}`).child('id_teacher').remove();
+						firebase.ref('subjects').child(subject[0]).child('id_teacher').remove();
 				}));
 		});
 	}
@@ -180,11 +179,10 @@ export default class SubjectsScreen extends React.Component {
 										onClick={() => {
 											Object.entries(this.state.selected)
 												.forEach(element => {
-														firebase.getDatabase().ref(`users/${firebase.currFirebaseKey}/profiles/${config.currConfig.profile}/subjects/${element[0]}`).remove();
-														firebase.getDatabase().ref(`users/${firebase.currFirebaseKey}/profiles/${config.currConfig.profile}/teachers/${element[1].id_teacher}`)
-															.once('value', snapshot => {
-																snapshot.ref.update({nSubjects: snapshot.val().nSubjects - 1});
-															});
+														firebase.ref('subjects').child(element[0]).remove();
+														firebase.ref('teachers').child(element[1].id_teacher).once('value', snapshot => {
+															snapshot.ref.update({nSubjects: snapshot.val().nSubjects - 1});
+														});
 													}
 												)
 											this.setState({selected: {}, dialogConfirm: false}, () => this._showOptions());

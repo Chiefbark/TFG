@@ -3,7 +3,6 @@ import {BackHandler, FlatList, Text, View} from 'react-native';
 import {HeaderBackButton} from '@react-navigation/stack';
 
 import * as i18n from '../../i18n';
-import * as config from '../../config';
 import * as firebase from '../../firebase';
 import {colors} from '../../styles';
 
@@ -47,17 +46,16 @@ export default class TimeTable extends React.Component {
 		});
 		this.props.navigation.dangerouslyGetParent().dangerouslyGetParent().setOptions({tabBarVisible: false});
 		
-		firebase.getDatabase().ref(`users/${firebase.currFirebaseKey}/profiles/${config.currConfig.profile}/schedules/${this.props.route.params.key}/${this.props.route.params.day}`).on('value', snapshot => {
+		firebase.ref('schedules').child(`${this.props.route.params.key}/${this.props.route.params.day}`).on('value', snapshot => {
 			let data = snapshot.val() || {};
 			this.setState({schedules: Object.entries(data)});
 		});
-		firebase.getDatabase().ref(`users/${firebase.currFirebaseKey}/profiles/${config.currConfig.profile}/subjects`).on('value', snapshot => {
+		firebase.ref('subjects').on('value', snapshot => {
 			let data = snapshot.val() || {};
 			this.setState({subjects: Object.entries(data)}, () =>
 				this.state.schedules.forEach(schedule => {
 					if (!this.state.subjects.find(subject => subject[0] === schedule[1].id_subject))
-						firebase.getDatabase()
-							.ref(`users/${firebase.currFirebaseKey}/profiles/${config.currConfig.profile}/schedules/${this.props.route.params.key}/${this.props.route.params.day}/${schedule[0]}`)
+						firebase.ref('schedules').child(`${this.props.route.params.key}/${this.props.route.params.day}/${schedule[0]}`)
 							.child('id_subject').remove();
 				}));
 		});
@@ -169,8 +167,8 @@ export default class TimeTable extends React.Component {
 										onClick={() => {
 											Object.entries(this.state.selected)
 												.forEach(element =>
-													firebase.getDatabase()
-														.ref(`users/${firebase.currFirebaseKey}/profiles/${config.currConfig.profile}/schedules/${this.props.route.params.key}/${this.props.route.params.day}/${element[0]}`)
+													firebase.ref('schedules')
+														.child(`${this.props.route.params.key}/${this.props.route.params.day}/${element[0]}`)
 														.remove()
 												);
 											this.setState({selected: {}, dialogConfirm: false}, () => this._showOptions());

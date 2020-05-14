@@ -4,7 +4,6 @@ import {TextInput} from 'react-native';
 
 import * as i18n from '../../../i18n';
 import * as firebase from '../../../firebase';
-import * as config from '../../../config';
 import {colors} from '../../../styles';
 
 import Toast from 'react-native-simple-toast';
@@ -59,7 +58,7 @@ export default class ProfileInfoForm extends React.Component {
 										if (Object.entries(obj).length > 0) this._showError(obj);
 										else {
 											let obj = {name: this.state.name};
-											firebase.getDatabase().ref(`users/${firebase.currFirebaseKey}/profiles/${config.currConfig.profile}`).update(obj).then();
+											firebase.ref('currProfile').update(obj).then();
 											this.props.onSubmit(this.state.key);
 										}
 									}}/>

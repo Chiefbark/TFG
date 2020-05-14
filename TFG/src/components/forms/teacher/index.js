@@ -4,7 +4,6 @@ import {TextInput} from 'react-native';
 
 import * as i18n from '../../../i18n';
 import * as firebase from '../../../firebase';
-import * as config from '../../../config';
 import {colors} from '../../../styles';
 
 import Toast from 'react-native-simple-toast';
@@ -62,9 +61,9 @@ export default class TeacherForm extends React.Component {
 											let obj = {name: this.state.name, nSubjects: this.state.nSubjects};
 											let newKey = this.state.key;
 											if (!this.state.key)
-												newKey = await firebase.getDatabase().ref(`users/${firebase.currFirebaseKey}/profiles/${config.currConfig.profile}/teachers`).push(obj).getKey();
+												newKey = await firebase.ref('teachers').push(obj).getKey();
 											else
-												firebase.getDatabase().ref(`users/${firebase.currFirebaseKey}/profiles/${config.currConfig.profile}/teachers/${this.state.key}`).set(obj).then();
+												firebase.ref('teachers').child(this.state.key).set(obj).then();
 							
 											this.props.onSubmit(newKey);
 										}

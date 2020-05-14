@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import {Text, View} from 'react-native';
 
 import * as i18n from '../../../i18n';
-import * as config from '../../../config';
 import * as firebase from '../../../firebase';
 import {colors} from '../../../styles';
 
@@ -80,9 +79,7 @@ export default class TimetableForm extends React.Component {
 								<Button label={i18n.get('commons.form.actions.4')} style={{paddingHorizontal: 18}}
 										textColor={colors.primary}
 										onClick={() => {
-											firebase.getDatabase()
-												.ref(`users/${firebase.currFirebaseKey}/profiles/${config.currConfig.profile}/schedules/${this.state.key}`)
-												.remove()
+											firebase.ref('schedules').child(this.state.key).remove()
 											this.props.onDelete();
 										}}/>
 								}
@@ -103,9 +100,9 @@ export default class TimetableForm extends React.Component {
 												let obj = {startDate: this.state.startDate, endDate: this.state.endDate};
 												let newKey = this.state.key;
 												if (!this.state.key)
-													newKey = await firebase.getDatabase().ref(`users/${firebase.currFirebaseKey}/profiles/${config.currConfig.profile}/schedules`).push(obj).getKey();
+													newKey = await firebase.ref('schedules').push(obj).getKey();
 												else
-													firebase.getDatabase().ref(`users/${firebase.currFirebaseKey}/profiles/${config.currConfig.profile}/schedules/${this.state.key}`).update(obj).then();
+													firebase.ref('schedules').child(this.state.key).update(obj).then();
 								
 												this.props.navigation.dispatch(CommonActions.navigate('Timetable', {params: {key: newKey}}));
 												this.props.onSubmit(newKey);

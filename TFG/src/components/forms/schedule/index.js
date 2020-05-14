@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import {View, Text} from 'react-native';
 
 import * as i18n from '../../../i18n';
-import * as config from '../../../config';
 import * as firebase from '../../../firebase';
 import {compareTimes} from '../../../utils';
 import {colors} from '../../../styles';
@@ -42,7 +41,7 @@ export default class ScheduleForm extends React.Component {
 	}
 	
 	componentDidMount() {
-		firebase.getDatabase().ref(`users/${firebase.currFirebaseKey}/profiles/${config.currConfig.profile}/subjects`).on('value', snapshot => {
+		firebase.ref('subjects').on('value', snapshot => {
 			let data = snapshot.val() || {};
 			this.setState({subjects: Object.entries(data)});
 		});
@@ -143,13 +142,9 @@ export default class ScheduleForm extends React.Component {
 								
 												let newKey = this.state.key;
 												if (!this.state.key)
-													newKey = await firebase.getDatabase()
-														.ref(`users/${firebase.currFirebaseKey}/profiles/${config.currConfig.profile}/schedules/${this.props.scheduleKey}/${this.props.day}`)
-														.push(obj).getKey();
+													newKey = await firebase.ref('schedules').child(`${this.props.scheduleKey}/${this.props.day}`).push(obj).getKey();
 												else
-													await firebase.getDatabase()
-														.ref(`users/${firebase.currFirebaseKey}/profiles/${config.currConfig.profile}/schedules/${this.props.scheduleKey}/${this.props.day}/${this.state.key}`)
-														.set(obj);
+													await firebase.ref('schedules').child(`${this.props.scheduleKey}/${this.props.day}/${this.state.key}`).set(obj);
 								
 												this.props.onSubmit(newKey);
 											}

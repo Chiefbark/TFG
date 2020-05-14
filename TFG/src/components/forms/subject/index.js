@@ -4,7 +4,6 @@ import {View, Text, TextInput, Slider} from 'react-native';
 
 import * as i18n from '../../../i18n';
 import * as firebase from '../../../firebase';
-import * as config from '../../../config';
 import {colors, subjectColors} from '../../../styles';
 
 import Toast from 'react-native-simple-toast';
@@ -42,7 +41,7 @@ export default class SubjectForm extends React.Component {
 	}
 	
 	componentDidMount() {
-		firebase.getDatabase().ref(`users/${firebase.currFirebaseKey}/profiles/${config.currConfig.profile}/teachers`).on('value', snapshot => {
+		firebase.ref('teachers').on('value', snapshot => {
 			let data = snapshot.val() || {};
 			this.setState({teachers: Object.entries(data)});
 		});
@@ -136,19 +135,19 @@ export default class SubjectForm extends React.Component {
 								
 												let newKey = this.state.key;
 												if (!this.state.key)
-													newKey = await firebase.getDatabase().ref(`users/${firebase.currFirebaseKey}/profiles/${config.currConfig.profile}/subjects`).push(obj).getKey();
+													newKey = await firebase.ref('subjects').push(obj).getKey();
 												else
-													await firebase.getDatabase().ref(`users/${firebase.currFirebaseKey}/profiles/${config.currConfig.profile}/subjects/${this.state.key}`).set(obj);
+													await firebase.ref('subjects').child(this.state.key).set(obj);
 								
 												this.props.onSubmit(newKey);
 								
 												if (this.props.subject && this.props.subject.obj.id_teacher)
-													firebase.getDatabase().ref(`users/${firebase.currFirebaseKey}/profiles/${config.currConfig.profile}/teachers/${this.props.subject.obj.id_teacher}`)
+													firebase.ref('teachers').child(this.props.subject.obj.id_teacher)
 														.once('value', snapshot => {
 															snapshot.ref.update({nSubjects: snapshot.val().nSubjects - 1});
 														}).then();
 								
-												firebase.getDatabase().ref(`users/${firebase.currFirebaseKey}/profiles/${config.currConfig.profile}/teachers/${this.state.id_teacher}`)
+												firebase.ref('teachers').child(this.state.id_teacher)
 													.once('value', snapshot => {
 														snapshot.ref.update({nSubjects: snapshot.val().nSubjects + 1});
 													}).then();

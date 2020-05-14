@@ -1,19 +1,17 @@
 import React, {Fragment} from 'react';
 import {View, Text, ScrollView} from 'react-native';
-import {CommonActions} from '@react-navigation/native';
 
 import * as i18n from '../../i18n';
 import * as firebase from '../../firebase';
 import * as config from '../../config';
 import {colors} from '../../styles';
 
+import Button from '../../components/button';
+import Icon from '../../components/icon';
 import ListHeader from '../../components/listHeader';
 import ListItem from '../../components/listItem';
-import Icon from "../../components/icon";
-import Dialog from "../../components/dialog";
-import Button from "../../components/button";
-import ProfileInfoForm from "../../components/forms/profileInfo";
-import TimetableForm from "../../components/forms/timetable";
+import ProfileInfoForm from '../../components/forms/profileInfo';
+import TimetableForm from '../../components/forms/timetable';
 
 export default class InformationScreen extends React.Component {
 	constructor(props) {
@@ -49,11 +47,11 @@ export default class InformationScreen extends React.Component {
 			});
 		});
 		this._onFocusComponent();
-		firebase.getDatabase().ref(`users/${firebase.currFirebaseKey}/profiles/${config.currConfig.profile}`).on('value', snapshot => {
+		firebase.ref('currProfile').on('value', snapshot => {
 			let data = snapshot.val() || {};
 			this.setState({profile: data})
 		});
-		firebase.getDatabase().ref(`users/${firebase.currFirebaseKey}/profiles/${config.currConfig.profile}/schedules`).on('value', snapshot => {
+		firebase.ref('schedules').on('value', snapshot => {
 			let data = snapshot.val() || {};
 			this.setState({timetables: Object.entries(data)})
 		});

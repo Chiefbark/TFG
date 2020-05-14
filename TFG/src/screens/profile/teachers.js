@@ -3,7 +3,6 @@ import {View, Text, FlatList} from 'react-native';
 
 import * as i18n from '../../i18n';
 import * as firebase from '../../firebase';
-import * as config from '../../config';
 import {colors} from '../../styles';
 
 import Button from '../../components/button';
@@ -46,7 +45,7 @@ export default class TeachersScreen extends React.Component {
 			});
 		});
 		
-		firebase.getDatabase().ref(`users/${firebase.currFirebaseKey}/profiles/${config.currConfig.profile}/teachers`).on('value', snapshot => {
+		firebase.ref('teachers').on('value', snapshot => {
 			let data = snapshot.val() || {};
 			this.setState({teachers: Object.entries(data)});
 		});
@@ -166,9 +165,7 @@ export default class TeachersScreen extends React.Component {
 										backgroundColor={colors.primary} textColor={colors.white}
 										onClick={() => {
 											Object.entries(this.state.selected)
-												.forEach(element =>
-													firebase.getDatabase().ref(`users/${firebase.currFirebaseKey}/profiles/${config.currConfig.profile}/teachers/${element[0]}`).remove()
-												)
+												.forEach(element => firebase.ref('teachers').child(element[0]).remove())
 											this.setState({selected: {}, dialogConfirm: false}, () => this._showOptions());
 										}}/>
 							</Fragment>

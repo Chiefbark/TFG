@@ -34,7 +34,7 @@ export default class SettingsScreen extends React.Component {
 	componentDidMount() {
 		i18n.addListener(this._updateComponent.bind(this));
 		this._updateComponent();
-		firebase.getDatabase().ref(`users/${firebase.currFirebaseKey}/profiles`).on('value', snapshot => {
+		firebase.ref('profiles').on('value', snapshot => {
 			let data = snapshot.val() || {};
 			this.setState({profiles: data});
 		});
