@@ -43,10 +43,9 @@ export default class TimetableForm extends React.Component {
 				<Dialog title={i18n.get('commons.timetableForm.title')}
 						content={() =>
 							<Fragment>
-								<Text style={{
-									textAlign: 'center',
-									color: colors.grey
-								}}>{i18n.get('commons.timetableForm.placeholders.0')}</Text>
+								<Text style={{textAlign: 'center', color: colors.grey}}>
+									{i18n.get('commons.timetableForm.placeholders.0')}
+								</Text>
 								<View style={{flexDirection: 'row', alignItems: 'center'}}>
 									<Text
 										style={
@@ -71,8 +70,14 @@ export default class TimetableForm extends React.Component {
 							</Fragment>}
 						buttons={() =>
 							<Fragment>
+								<Button label={i18n.get('commons.form.actions.0')}
+										style={[{paddingHorizontal: 0}, !this.state.key && {paddingHorizontal: 18}]}
+										onClick={() => {
+											this.props.onCancel();
+										}}
+								/>
 								{this.state.key &&
-								<Button label={i18n.get('commons.form.actions.4')} style={{paddingHorizontal: 0}}
+								<Button label={i18n.get('commons.form.actions.4')} style={{paddingHorizontal: 18}}
 										textColor={colors.primary}
 										onClick={() => {
 											firebase.getDatabase()
@@ -81,11 +86,6 @@ export default class TimetableForm extends React.Component {
 											this.props.onDelete();
 										}}/>
 								}
-								<Button label={i18n.get('commons.form.actions.0')}
-										onClick={() => {
-											this.props.onCancel();
-										}}
-								/>
 								<Button label={i18n.get('commons.form.actions.3')}
 										backgroundColor={colors.primary} textColor={colors.white}
 										onClick={async () => {
