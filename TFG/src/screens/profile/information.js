@@ -81,7 +81,7 @@ export default class InformationScreen extends React.Component {
 						return <Text style={{color: colors.grey, marginRight: 16}}>{`${arr[2]} ${month} ${arr[0]}`}</Text>
 					}
 					return undefined;
-				}}/>
+				}} style={{paddingVertical: 8}}/>
 				<ListItem title={i18n.get('profile.screens.0.contents.2')} rightItem={() => {
 					if (this.state.timetables) {
 						const arr = this.state.timetables[this.state.timetables.length - 1][1].endDate.split('-');
@@ -89,7 +89,7 @@ export default class InformationScreen extends React.Component {
 						return <Text style={{color: colors.grey, marginRight: 16}}>{`${arr[2]} ${month} ${arr[0]}`}</Text>
 					}
 					return undefined;
-				}}/>
+				}} style={{paddingTop: 8}}/>
 				{/*	CONFIG ABOUT TIMETABLES	*/}
 				<ListHeader label={i18n.get('profile.screens.0.headers.1')}
 							rightItem={() =>
@@ -106,7 +106,7 @@ export default class InformationScreen extends React.Component {
 				})}
 				<Button label={`${i18n.get('commons.form.actions.2')}...`} backgroundColor={colors.white} textColor={colors.lightGrey}
 						onClick={() => this.setState({dialogTimetable: true})}
-						style={{paddingVertical: 15}}/>
+						style={{paddingVertical: 15, borderTopWidth: 0.5, borderTopColor: colors.lightGrey}}/>
 				{/*	CONFIG ABOUT HOLIDAYS & EVENTS	*/}
 				<ListHeader label={i18n.get('profile.screens.0.headers.2')}
 							rightItem={() =>
@@ -114,7 +114,7 @@ export default class InformationScreen extends React.Component {
 							}
 				/>
 				<Button label={`${i18n.get('commons.form.actions.2')}...`} backgroundColor={colors.white} textColor={colors.lightGrey}
-						style={{paddingVertical: 15}}/>
+						style={{paddingVertical: 15, borderTopWidth: 0.5, borderTopColor: colors.lightGrey}}/>
 				{/*	CONFIG ABOUT EXAMS	*/}
 				<ListHeader label={i18n.get('profile.screens.0.headers.3')}
 							rightItem={() =>
@@ -122,7 +122,7 @@ export default class InformationScreen extends React.Component {
 							}
 				/>
 				<Button label={`${i18n.get('commons.form.actions.2')}...`} backgroundColor={colors.white} textColor={colors.lightGrey}
-						style={{paddingVertical: 15}}/>
+						style={{paddingVertical: 15, borderTopWidth: 0.5, borderTopColor: colors.lightGrey}}/>
 				<View style={{paddingVertical: 25}}/>
 			</ScrollView>
 			{this.state.dialogEditInfo &&
