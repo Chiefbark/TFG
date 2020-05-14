@@ -1,22 +1,20 @@
 import firebase from 'firebase';
 import {AsyncStorage} from 'react-native';
 
+import * as config from '../config';
+
 const firebaseConfig = {
 	apiKey: "apiKey",
 	authDomain: "authDomain",
 	databaseURL: "databaseURL"
 };
 
-export let currFirebaseKey = undefined;
+let currFirebaseKey = undefined;
 
 if (!firebase.apps.length)
 	firebase.initializeApp(firebaseConfig);
 
 const db = firebase.database();
-
-export function getDatabase() {
-	return db;
-}
 
 export const firebaseKey = async () => {
 	if (!currFirebaseKey) {
@@ -32,4 +30,21 @@ export const firebaseKey = async () => {
 			});
 	}
 	return currFirebaseKey;
+}
+
+export function ref(node) {
+	switch (node) {
+		case 'teachers':
+			return db.ref(`users/${currFirebaseKey}/profiles/${config.currConfig.profile}/teachers`);
+		case 'subjects':
+			return db.ref(`users/${currFirebaseKey}/profiles/${config.currConfig.profile}/subjects`);
+		case 'schedules':
+			return db.ref(`users/${currFirebaseKey}/profiles/${config.currConfig.profile}/schedules`);
+		case 'currProfile':
+			return db.ref(`users/${currFirebaseKey}/profiles/${config.currConfig.profile}`);
+		case 'profiles':
+			return db.ref(`users/${currFirebaseKey}/profiles`);
+		default:
+			return db.ref(`users/${currFirebaseKey}`);
+	}
 }
