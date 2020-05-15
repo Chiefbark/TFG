@@ -11,7 +11,9 @@ export const statistics = {
 	title: 'Estadísticas'
 }
 export const absences = {
-	title: 'Ausencias'
+	title: 'Ausencias',
+	emptyList: 'No tienes ninguna falta de asistencia\n\nBien hecho!',
+	headers: ['Ausencias de']
 }
 export const profile = {
 	title: 'Perfil',
@@ -56,6 +58,7 @@ export const settings = {
 }
 export const timetable = {
 	title: 'Horario',
+	emptyList: 'No tienes ninguna clase añadido!\n\nAñade algunas clases pulsando sobre el botón +',
 	titles: ['Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab', 'Dom'],
 	headerRight: 'HECHO',
 	emptySubject: 'Asignatura no asignada',
@@ -66,7 +69,7 @@ export const timetable = {
 	},
 	confirmDialog: {
 		title: 'Estás seguro?',
-		description: 'Todas las faltas de asistencia asociadas a esta hora serán eliminadas\nSi estás ceando un nuevo horario, no te preocupes por eliminarla',
+		description: 'Todas las faltas de asistencia asociadas a esta hora serán eliminadas\nSi estás creando un nuevo horario, no te preocupes por eliminarla',
 		actions: ['Cancelar', 'Eliminar']
 	}
 }

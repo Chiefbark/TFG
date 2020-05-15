@@ -11,7 +11,9 @@ export const statistics = {
 	title: 'Statistics'
 }
 export const absences = {
-	title: 'Absences'
+	title: 'Absences',
+	emptyList: 'You don\'t have any absences\n\nWell done!',
+	headers: ['Absences of']
 }
 export const profile = {
 	title: 'Profile',
@@ -51,6 +53,7 @@ export const settings = {
 }
 export const timetable = {
 	title: 'Timetable',
+	emptyList: 'You still don\'t have any schedules!\n\nAdd some schedules by clicking the button +',
 	titles: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
 	headerRight: 'DONE',
 	emptySubject: 'Unassigned subject',
