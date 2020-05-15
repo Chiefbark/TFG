@@ -81,7 +81,7 @@ export function removeSubject(id_subject, id_teacher) {
 	ref('subjects').child(id_subject).remove();	// Removes the subject
 	removeAbsencesOfSubject(id_subject);	// Removes all the absences of the subject
 	if (id_teacher)
-		ref('teachers').child(id_teacher).once('value', snapshot =>
+		ref('teachers').child(id_teacher).once('value', snapshot =>	// Read specific teacher
 			snapshot.ref.update({nSubjects: snapshot.val().nSubjects - 1}));	// Rests one to the subjects count of the teachers
 	ref('schedules').once('value', snapshot => {	// Read schedules
 		let data = snapshot.val() || {};
@@ -109,5 +109,6 @@ export function removeSchedule(path, id_schedule) {
 }
 
 export function removeTimetable(id_timetable) {
+	firebase.ref('schedules').child(id_timetable).remove();	// Removes the timetable
 	// TODO: REMOVE absences associated to that absences
 }
