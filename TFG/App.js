@@ -43,6 +43,7 @@ function StatisticsStackNavigator() {
 			headerStyle: {backgroundColor: colors.primary}
 		}}>
 			<Stack.Screen name={'Statistics'} component={Statistics}/>
+			<Stack.Screen name={'AbsenceView'} component={Absences}/>
 		</Stack.Navigator>
 	);
 }
@@ -144,7 +145,7 @@ function TimetableNavigator({route}) {
 }
 
 function TimetableScreen({navigation, route}) {
-	route.params = {...route.params, ...this.params.params};
+	route.params = {...route.params, ...this.params};
 	return <TimeTable navigation={navigation} route={route}/>;
 }
 
