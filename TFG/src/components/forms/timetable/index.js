@@ -79,7 +79,7 @@ export default class TimetableForm extends React.Component {
 								<Button label={i18n.get('commons.form.actions.4')} style={{paddingHorizontal: 18}}
 										textColor={colors.primary}
 										onClick={() => {
-											firebase.ref('schedules').child(this.state.key).remove()
+											firebase.removeTimetable(this.state.key);
 											this.props.onDelete();
 										}}/>
 								}
