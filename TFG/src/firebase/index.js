@@ -59,8 +59,8 @@ function removeAbsencesOfSubject(id_subject) {
 				ref('schedules').child(`${x[1]}/${x[0]}`)    // Find the schedule associated to the absence
 					.once('value', snapshot2 => {
 						let data2 = snapshot2.val() || {};
-						if (data2.id_subject === id_subject)	// If the subject id of the absence is equal the the current deleted subject
-							ref('absences').child(`${e[0]}/${x[0]}`).remove()	// Removes the absence
+						if (data2.id_subject === id_subject)	// If the subject id of the absence is equal to the current deleted subject
+							ref('absences').child(`${e[0]}/${x[0]}`).remove()	// Removes the absence node
 					})
 			))
 	});
@@ -68,18 +68,46 @@ function removeAbsencesOfSubject(id_subject) {
 
 export function removeTeacher(id_teacher) {
 	ref('teachers').child(id_teacher).remove();	// Removes the teacher
-	// TODO: REMOVE id_teacher FROM SUBJECTS
+	ref('subjects').once('value', snapshot => {	// Read subjects
+		let data = snapshot.val() || {};
+		Object.entries(data).forEach(e => {	// Iterates over each subject
+			if (e[1].id_teacher === id_teacher)	// If the teacher id of the subject is equal to the current deleted teacher
+				snapshot.ref.child(e[0]).child('id_teacher').remove()	// Removes the id_subject node
+		})
+	});
 }
 
 export function removeSubject(id_subject, id_teacher) {
 	ref('subjects').child(id_subject).remove();	// Removes the subject
 	removeAbsencesOfSubject(id_subject);	// Removes all the absences of the subject
-	ref('teachers').child(id_teacher).once('value', snapshot =>
-		snapshot.ref.update({nSubjects: snapshot.val().nSubjects - 1}));	// Rests one to the subjects count of the teachers
-	// TODO: REMOVE id_subject FROM SCHEDULES
+	if (id_teacher)
+		ref('teachers').child(id_teacher).once('value', snapshot =>
+			snapshot.ref.update({nSubjects: snapshot.val().nSubjects - 1}));	// Rests one to the subjects count of the teachers
+	ref('schedules').once('value', snapshot => {	// Read schedules
+		let data = snapshot.val() || {};
+		Object.entries(data).forEach(e =>	// Iterates over each timetable
+			Object.entries(e[1]).forEach(x =>	// Iterates over each day
+				Object.entries(x[1]).forEach(y => {	// Iterates over each schedule
+					if (y[1].id_subject === id_subject)	// If the subject id of the schedule is equal to the current deleted subject
+						snapshot.ref.child(`${e[0]}/${x[0]}/${y[0]}`).child('id_subject').remove()	// Removes the id_subject node
+				})
+			))
+	});
 }
 
 export function removeSchedule(path, id_schedule) {
 	ref('schedules').child(`${path}/${id_schedule}`).remove(); 	// Removes the schedule
-	// TODO: REMOVE id_schedule FROM ABSENCES
+	ref('absences').once('value', snapshot => {	// Read absences
+		let data = snapshot.val() || {};
+		Object.entries(data).forEach(e =>	// Iterates over each date
+			Object.keys(e[1]).forEach(x => {	// Iterates over each absence
+				if (x === id_schedule)	// If the key of the absence is equal to the current deleted schedule
+					snapshot.ref.child(e[0]).child(x).remove()	// Removes tha absence
+			})
+		)
+	})
+}
+
+export function removeTimetable(id_timetable) {
+	// TODO: REMOVE absences associated to that absences
 }
