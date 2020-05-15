@@ -81,6 +81,14 @@ export default class TimeTable extends React.Component {
 						  ref={(ref) => this.flatList = ref}
 						  data={this.state.schedules}
 						  keyExtractor={(item) => item[0]}
+						  ListEmptyComponent={() =>
+							  <View style={{
+								  flex: 1, alignItems: 'center', justifyContent: 'center',
+								  paddingVertical: 50, paddingHorizontal: 30
+							  }}>
+								  <Text style={{textAlign: 'center'}}>{i18n.get('timetable.emptyList')}</Text>
+							  </View>
+						  }
 						  ItemSeparatorComponent={() => <View style={{flex: 1, backgroundColor: colors.primaryDark, height: 1}}/>}
 						  ListFooterComponent={() => <View style={{paddingVertical: 25}}/>}
 						  renderItem={({item}) => {
