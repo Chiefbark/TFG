@@ -13,7 +13,12 @@ export const statistics = {
 export const absences = {
 	title: 'Absences',
 	emptyList: 'You don\'t have any absences\n\nWell done!',
-	headers: ['Absences of']
+	headers: ['Absences of'],
+	filterDialog: {
+		title: 'Filter',
+		placeholders: ['month...', 'subject...'],
+		actions: ['Cancel', 'Clear', 'Apply']
+	}
 }
 export const profile = {
 	title: 'Profile',
