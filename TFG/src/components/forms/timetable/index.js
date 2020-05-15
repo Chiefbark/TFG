@@ -104,7 +104,7 @@ export default class TimetableForm extends React.Component {
 												else
 													firebase.ref('schedules').child(this.state.key).update(obj).then();
 								
-												this.props.navigation.dispatch(CommonActions.navigate('Timetable', {params: {key: newKey}}));
+												this.props.navigation.dispatch(CommonActions.navigate('Timetable', {key: newKey}));
 												this.props.onSubmit(newKey);
 											}
 										}}/>
