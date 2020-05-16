@@ -156,7 +156,7 @@ export default class TimeTable extends React.Component {
 							  onCancel={() => this.setState({schedule: undefined, dialogSchedule: false})}/>
 				}
 				{/*	DIALOG CONFIRM	*/}
-				<Dialog title={i18n.get('timetable.confirmDialog.title')}
+				<Dialog title={i18n.get('timetable.confirmDialog.title')} loading={this.state.loadingRemove}
 						content={() => <Text>{i18n.get('timetable.confirmDialog.description')}</Text>}
 						buttons={() =>
 							<Fragment>
@@ -168,9 +168,14 @@ export default class TimeTable extends React.Component {
 								<Button label={i18n.get('timetable.confirmDialog.actions.1')}
 										backgroundColor={colors.primary} textColor={colors.white}
 										onClick={() => {
-											Object.entries(this.state.selected)
-												.forEach(element => firebase.removeSchedule(`${this.props.route.params.key}/${this.props.route.params.day}`, element[0]))
-											this.setState({selected: {}, dialogConfirm: false}, () => this._showOptions());
+											this.setState({loadingRemove: true})
+											setTimeout(async () => {
+												Object.entries(this.state.selected)
+													.forEach(element => firebase.removeSchedule(`${this.props.route.params.key}/${this.props.route.params.day}`, element[0]))
+												this.setState({
+													selected: {}, dialogConfirm: false, loadingRemove: false
+												}, () => this._showOptions());
+											}, 0)
 										}}
 								/>
 							</Fragment>

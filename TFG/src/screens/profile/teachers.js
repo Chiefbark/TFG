@@ -159,7 +159,7 @@ export default class TeachersScreen extends React.Component {
 					onCancel={() => this.setState({teacher: undefined, dialogTeacher: false})}
 				/>}
 				{/*	DIALOG CONFIRM	*/}
-				<Dialog title={i18n.get('profile.screens.2.confirmDialog.title')}
+				<Dialog title={i18n.get('profile.screens.2.confirmDialog.title')} loading={this.state.loadingRemove}
 						content={() => <Text>{i18n.get('profile.screens.2.confirmDialog.description')}</Text>}
 						buttons={() =>
 							<Fragment>
@@ -171,9 +171,14 @@ export default class TeachersScreen extends React.Component {
 								<Button label={i18n.get('profile.screens.2.confirmDialog.actions.1')}
 										backgroundColor={colors.primary} textColor={colors.white}
 										onClick={() => {
-											Object.entries(this.state.selected)
-												.forEach(element => firebase.removeTeacher(element[0]))
-											this.setState({selected: {}, dialogConfirm: false}, () => this._showOptions());
+											this.setState({loadingRemove: true})
+											setTimeout(async () => {
+												Object.entries(this.state.selected)
+													.forEach(element => firebase.removeTeacher(element[0]))
+												this.setState({
+													selected: {}, dialogConfirm: false, loadingRemove: false
+												}, () => this._showOptions());
+											}, 0)
 										}}/>
 							</Fragment>
 						} visible={this.state.dialogConfirm}/>

@@ -168,7 +168,7 @@ export default class SubjectsScreen extends React.Component {
 					onCancel={() => this.setState({subject: undefined, dialogSubject: false})}
 				/>}
 				{/*	DIALOG CONFIRM	*/}
-				<Dialog title={i18n.get('profile.screens.1.confirmDialog.title')}
+				<Dialog title={i18n.get('profile.screens.1.confirmDialog.title')} loading={this.state.loadingRemove}
 						content={() => <Text>{i18n.get('profile.screens.1.confirmDialog.description')}</Text>}
 						buttons={() =>
 							<Fragment>
@@ -180,9 +180,14 @@ export default class SubjectsScreen extends React.Component {
 								<Button label={i18n.get('profile.screens.1.confirmDialog.actions.1')}
 										backgroundColor={colors.primary} textColor={colors.white}
 										onClick={() => {
-											Object.entries(this.state.selected)
-												.forEach(element => firebase.removeSubject(element[0], element[1].id_teacher))
-											this.setState({selected: {}, dialogConfirm: false}, () => this._showOptions());
+											this.setState({loadingRemove: true})
+											setTimeout(async () => {
+												Object.entries(this.state.selected)
+													.forEach(element => firebase.removeSubject(element[0], element[1].id_teacher))
+												this.setState({
+													selected: {}, dialogConfirm: false, loadingRemove: false
+												}, () => this._showOptions());
+											}, 0)
 										}}/>
 							</Fragment>
 						} visible={this.state.dialogConfirm}/>
