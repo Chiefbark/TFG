@@ -70,17 +70,17 @@ export default class TimetableForm extends React.Component {
 						buttons={() =>
 							<Fragment>
 								<Button label={i18n.get('commons.form.actions.0')}
-										style={[{paddingHorizontal: 0}, !this.state.key && {paddingHorizontal: 18}]}
+										style={[{paddingHorizontal: 0}, (!this.state.key || this.props.nTimetables === 1) && {paddingHorizontal: 18}]}
 										onClick={() => {
 											this.props.onCancel();
 										}}
 								/>
-								{this.state.key &&
+								{this.state.key && this.props.nTimetables > 1 &&
 								<Button label={i18n.get('commons.form.actions.4')} style={{paddingHorizontal: 18}}
 										textColor={colors.primary}
 										onClick={() => {
 											firebase.removeTimetable(this.state.key);
-											this.props.onDelete();
+											this.props.onDelete(this.state.endDate);
 										}}/>
 								}
 								<Button label={i18n.get('commons.form.actions.3')}
@@ -139,6 +139,9 @@ TimetableForm.propTypes = {
 	onCancel: PropTypes.func.isRequired,
 	/**
 	 * Callback triggered when the user deletes the form
+	 *
+	 * This callback receives a param
+	 * - `endDate : String` -- The end date of the timetable deleted
 	 */
 	onDelete: PropTypes.func.isRequired,
 	/**
@@ -158,5 +161,11 @@ TimetableForm.propTypes = {
 			startDate: PropTypes.string.isRequired,
 			endDate: PropTypes.string.isRequired
 		}).isRequired
-	})
+	}),
+	/**
+	 * Number of timetables of the app
+	 *
+	 * `Number`
+	 */
+	nTimetables: PropTypes.number.isRequired
 }
