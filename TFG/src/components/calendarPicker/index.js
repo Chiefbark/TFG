@@ -26,6 +26,7 @@ export default class CalendarPicker extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
+			current: this.props.startDate,
 			markedDates: undefined,
 			selecting: false,
 			startDate: this.props.startDate,
@@ -99,8 +100,8 @@ export default class CalendarPicker extends React.Component {
 			<Dialog title={i18n.get('commons.calendarPickerDialog.title')}
 					content={() =>
 						<Calendar markedDates={this.state.markedDates}
-								  minDate={'2020-01-01'}
-								  maxDate={'2021-01-01'}
+								  current={this.state.current}
+								  onMonthChange={value => this.setState({current: value.dateString})}
 								  monthFormat={'yyyy MMMM'}
 								  firstDay={1}
 								  onPressArrowLeft={substractMonth => substractMonth()}
