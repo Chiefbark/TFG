@@ -5,6 +5,9 @@ export const calendar = {
 	absencesDialog: {
 		placeholders: ['Las asignaturas marcadas tienen faltas de asistencia este día']
 	},
+	holidaysDialog: {
+		placeholders: ['Vacaciones!!\nHoy no tienes clase', 'Acaban el']
+	},
 	absenceChanged: ['Falta de asistencia añadida', 'Falta de asistencia eliminada']
 }
 export const statistics = {

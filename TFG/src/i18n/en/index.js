@@ -5,6 +5,9 @@ export const calendar = {
 	absencesDialog: {
 		placeholders: ['Marked subjects have absences this day']
 	},
+	holidaysDialog: {
+		placeholders: ['Holidays!!\nYou don\'t have class today', 'Ends on']
+	},
 	absenceChanged: ['Absence added', 'Absence removed']
 }
 export const statistics = {
