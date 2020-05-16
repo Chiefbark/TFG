@@ -1,5 +1,5 @@
 import React, {Fragment} from 'react';
-import {View, Text, FlatList} from 'react-native';
+import {View, Text, FlatList, Keyboard} from 'react-native';
 
 import * as i18n from '../../i18n';
 import * as firebase from '../../firebase';
@@ -46,6 +46,11 @@ export default class SubjectsScreen extends React.Component {
 			});
 		});
 		
+		this.keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', () => this.props.navigation.dangerouslyGetParent()
+			.dangerouslyGetParent().setOptions({tabBarVisible: false}));
+		this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', () => this.props.navigation.dangerouslyGetParent()
+			.dangerouslyGetParent().setOptions({tabBarVisible: true}));
+		
 		firebase.ref('subjects').on('value', snapshot => {
 			let data = snapshot.val() || {};
 			this.setState({subjects: Object.entries(data)});
@@ -58,6 +63,8 @@ export default class SubjectsScreen extends React.Component {
 	
 	componentWillUnmount() {
 		i18n.removeListener(this._updateComponent.bind(this));
+		this.keyboardDidShowListener.remove();
+		this.keyboardDidHideListener.remove();
 	}
 	
 	_showOptions() {
