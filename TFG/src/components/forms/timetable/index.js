@@ -155,12 +155,15 @@ TimetableForm.propTypes = {
 	 *
 	 * `key` : id of the timetable
 	 *
+	 * `index` : index of the timetable
+	 *
 	 * `obj`
 	 * - `startDate : String` : start date of the timetable (required)
 	 * - `endDate : String` : end date of the timetable (required)
 	 */
 	timetable: PropTypes.shape({
 		key: PropTypes.string.isRequired,
+		index: PropTypes.number.isRequired,
 		obj: PropTypes.shape({
 			startDate: PropTypes.string.isRequired,
 			endDate: PropTypes.string.isRequired
