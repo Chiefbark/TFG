@@ -11,7 +11,6 @@ import Dialog from '../../components/dialog';
 import ListHeader from '../../components/listHeader';
 import ListItem from '../../components/listItem';
 import Switch from '../../components/switch';
-import Icon from '../../components/icon';
 
 export default class SettingsScreen extends React.Component {
 	constructor(props) {
@@ -77,14 +76,13 @@ export default class SettingsScreen extends React.Component {
 					<ListItem title={i18n.get(`settings.items.0`)}
 							  titleStyles={{fontWeight: 'normal'}}
 							  rightItem={() =>
-								  <Switch
-									  initialValue={this.state._config.notifications[0]}
-									  onChange={(value) => {
-										  let newConfig = this.state._config;
-										  newConfig.notifications[0] = value;
-										  config.setConfig(newConfig);
-									  }}
-									  style={{marginRight: 8}}
+								  <Switch initialValue={this.state._config.notifications[0]}
+										  onChange={(value) => {
+											  let newConfig = this.state._config;
+											  newConfig.notifications[0] = value;
+											  config.setConfig(newConfig);
+										  }}
+										  style={{marginRight: 8}}
 								  />
 							  }
 							  feedback={false}
@@ -92,14 +90,13 @@ export default class SettingsScreen extends React.Component {
 					<ListItem title={i18n.get(`settings.items.1`)}
 							  titleStyles={{fontWeight: 'normal'}}
 							  rightItem={() =>
-								  <Switch
-									  initialValue={this.state._config.notifications[1]}
-									  onChange={(value) => {
-										  let newConfig = this.state._config;
-										  newConfig.notifications[1] = value;
-										  config.setConfig(newConfig);
-									  }}
-									  style={{marginRight: 8}}
+								  <Switch initialValue={this.state._config.notifications[1]}
+										  onChange={(value) => {
+											  let newConfig = this.state._config;
+											  newConfig.notifications[1] = value;
+											  config.setConfig(newConfig);
+										  }}
+										  style={{marginRight: 8}}
 								  />
 							  }
 							  feedback={false}
@@ -109,14 +106,15 @@ export default class SettingsScreen extends React.Component {
 					<ListItem title={i18n.get(`settings.items.2`)}
 							  titleStyles={{fontWeight: 'normal'}}
 							  rightItem={() =>
-								  <Switch
-									  initialValue={this.state._config.calendar[0]}
-									  onChange={(value) => {
-										  let newConfig = this.state._config;
-										  newConfig.calendar[0] = value;
-										  config.setConfig(newConfig);
-									  }}
-									  style={{marginRight: 8}}
+								  <Switch initialValue={this.state._config.calendar[0]}
+										  onChange={(value) => {
+											  setTimeout(() => {
+												  let newConfig = this.state._config;
+												  newConfig.calendar[0] = value;
+												  config.setConfig(newConfig);
+											  }, 0)
+										  }}
+										  style={{marginRight: 8}}
 								  />
 							  }
 							  feedback={false}
@@ -124,14 +122,15 @@ export default class SettingsScreen extends React.Component {
 					<ListItem title={i18n.get(`settings.items.3`)}
 							  titleStyles={{fontWeight: 'normal'}}
 							  rightItem={() =>
-								  <Switch
-									  initialValue={this.state._config.calendar[1]}
-									  onChange={(value) => {
-										  let newConfig = this.state._config;
-										  newConfig.calendar[1] = value;
-										  config.setConfig(newConfig);
-									  }}
-									  style={{marginRight: 8}}
+								  <Switch initialValue={this.state._config.calendar[1]}
+										  onChange={(value) => {
+											  setTimeout(() => {
+												  let newConfig = this.state._config;
+												  newConfig.calendar[1] = value;
+												  config.setConfig(newConfig);
+											  }, 0)
+										  }}
+										  style={{marginRight: 8}}
 								  />
 							  }
 							  feedback={false}
@@ -139,32 +138,36 @@ export default class SettingsScreen extends React.Component {
 					<ListItem title={i18n.get(`settings.items.4`)}
 							  titleStyles={{fontWeight: 'normal'}}
 							  rightItem={() =>
-								  <Switch
-									  initialValue={this.state._config.calendar[2]}
-									  onChange={(value) => {
-										  let newConfig = this.state._config;
-										  newConfig.calendar[2] = value;
-										  config.setConfig(newConfig);
-									  }}
-									  style={{marginRight: 8}}
+								  <Switch initialValue={this.state._config.calendar[2]}
+										  onChange={(value) => {
+											  setTimeout(() => {
+												  let newConfig = this.state._config;
+												  newConfig.calendar[2] = value;
+												  config.setConfig(newConfig);
+											  }, 0)
+										  }}
+										  style={{marginRight: 8}}
 								  />
 							  }
 							  feedback={false}
 							  style={{paddingVertical: 8}}/>
 				</ScrollView>
 				{/*	PROFILE DIALOG	*/}
-				<Dialog title={i18n.get('commons.profileDialog.title')}
+				<Dialog title={i18n.get('commons.profileDialog.title')} loading={this.state.loadingProfile}
 						content={() =>
 							<Fragment>
 								{this.state.profiles?.map((element, index) =>
 									<ListItem key={index} title={element.name} titleStyles={{fontWeight: 'normal'}}
 											  onClick={() => {
-												  this.setState({dialogProfile: false});
-												  if (config.currConfig.profile !== index) {
-													  let newConfig = this.state._config;
-													  newConfig.profile = index;
-													  config.setConfig(newConfig);
-												  }
+												  this.setState({loadingProfile: true})
+												  setTimeout(async () => {
+													  if (config.currConfig.profile !== index) {
+														  let newConfig = this.state._config;
+														  newConfig.profile = index;
+														  config.setConfig(newConfig);
+													  }
+													  this.setState({dialogProfile: false, loadingProfile: false});
+												  }, 0)
 											  }}
 											  style={[
 												  {borderLeftWidth: 10, borderLeftColor: colors.transparent},
@@ -182,17 +185,19 @@ export default class SettingsScreen extends React.Component {
 						}
 						visible={this.state.dialogProfile}/>
 				{/*	LANGUAGE DIALOG	*/}
-				<Dialog title={i18n.get('commons.languageDialog.title')}
+				<Dialog title={i18n.get('commons.languageDialog.title')} loading={this.state.loadingLang}
 						content={() =>
 							<Fragment>
 								{i18n.get('commons.languages')
 									.map(element =>
 										<ListItem key={element.iso} title={element.name} titleStyles={{fontWeight: 'normal'}}
 												  onClick={() => {
-													  this.setState({dialogLanguage: false});
-													  if (i18n.currLocale !== element.iso) {
-														  i18n.setLocale(element.iso);
-													  }
+													  this.setState({loadingLang: true})
+													  setTimeout(async () => {
+														  if (i18n.currLocale !== element.iso)
+															  i18n.setLocale(element.iso);
+														  this.setState({dialogLanguage: false, loadingLang: false});
+													  }, 0)
 												  }}
 												  style={[
 													  {borderLeftWidth: 10, borderLeftColor: colors.transparent},
