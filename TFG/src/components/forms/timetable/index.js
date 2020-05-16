@@ -79,13 +79,16 @@ export default class TimetableForm extends React.Component {
 								<Button label={i18n.get('commons.form.actions.4')} style={{paddingHorizontal: 18}}
 										textColor={colors.primary}
 										onClick={() => {
-											firebase.removeTimetable(this.state.key, this.props.timetable.index, this.props.timetable.index !== 0 ? this.state.endDate : this.state.startDate);
-											this.props.onDelete();
+											this.setState({loading: true})
+											setTimeout(async () => {
+												firebase.removeTimetable(this.state.key, this.props.timetable.index, this.props.timetable.index !== 0 ? this.state.endDate : this.state.startDate);
+												this.props.onDelete();
+											}, 0)
 										}}/>
 								}
 								<Button label={i18n.get('commons.form.actions.3')}
 										backgroundColor={colors.primary} textColor={colors.white}
-										onClick={async () => {
+										onClick={() => {
 											let obj = {};
 											let msg = 0;
 											if (!this.state.startDate || this.state.startDate === '') obj.errorStartDate = true;
@@ -97,23 +100,25 @@ export default class TimetableForm extends React.Component {
 											}
 											if (Object.entries(obj).length > 0) this._showError(obj, msg);
 											else {
-												await this.setState({loading: true})
-												let obj = {startDate: this.state.startDate, endDate: this.state.endDate};
-												let newKey = this.state.key;
-												if (!this.state.key)
-													newKey = await firebase.ref('schedules').push(obj).getKey();
-												else
-													firebase.ref('schedules').child(this.state.key).update(obj).then();
-								
-												firebase.updateTimetable(newKey, {
-													startDate: this.props.timetable?.obj.startDate,
-													endDate: this.props.timetable?.obj.endDate
-												}, {
-													startDate: this.state.startDate, endDate: this.state.endDate
-												}, this.props.timetable?.index ?? (this.props.nTimetables - 1))
-								
-												this.props.navigation.dispatch(CommonActions.navigate('Timetable', {key: newKey}));
-												this.props.onSubmit(newKey);
+												this.setState({loading: true})
+												setTimeout(async () => {
+													let obj = {startDate: this.state.startDate, endDate: this.state.endDate};
+													let newKey = this.state.key;
+													if (!this.state.key)
+														newKey = await firebase.ref('schedules').push(obj).getKey();
+													else
+														firebase.ref('schedules').child(this.state.key).update(obj).then();
+									
+													firebase.updateTimetable(newKey, {
+														startDate: this.props.timetable?.obj.startDate,
+														endDate: this.props.timetable?.obj.endDate
+													}, {
+														startDate: this.state.startDate, endDate: this.state.endDate
+													}, this.props.timetable?.index ?? (this.props.nTimetables - 1))
+									
+													this.props.navigation.dispatch(CommonActions.navigate('Timetable', {key: newKey}));
+													this.props.onSubmit(newKey);
+												}, 0);
 											}
 										}}/>
 							</Fragment>}

@@ -53,20 +53,23 @@ export default class TeacherForm extends React.Component {
 							/>
 							<Button label={i18n.get('commons.form.actions.1')}
 									backgroundColor={colors.primary} textColor={colors.white}
-									onClick={async () => {
+									onClick={() => {
 										let obj = {};
 										if (!this.state.name || this.state.name === '') obj.errorName = true;
 										if (Object.entries(obj).length > 0) this._showError(obj);
 										else {
-											await this.setState({loading: true})
-											let obj = {name: this.state.name, nSubjects: this.state.nSubjects};
-											let newKey = this.state.key;
-											if (!this.state.key)
-												newKey = await firebase.ref('teachers').push(obj).getKey();
-											else
-												firebase.ref('teachers').child(this.state.key).set(obj).then();
+											this.setState({loading: true})
+											setTimeout(async () => {
+												let obj = {name: this.state.name, nSubjects: this.state.nSubjects};
+												let newKey = this.state.key;
+												if (!this.state.key)
+													newKey = await firebase.ref('teachers').push(obj).getKey();
+												else
+													firebase.ref('teachers').child(this.state.key).set(obj).then();
+								
+												this.props.onSubmit(newKey);
+											}, 0)
 							
-											this.props.onSubmit(newKey);
 										}
 									}}/>
 						</Fragment>

@@ -119,39 +119,41 @@ export default class SubjectForm extends React.Component {
 								/>
 								<Button label={i18n.get('commons.form.actions.1')}
 										backgroundColor={colors.primary} textColor={colors.white}
-										onClick={async () => {
+										onClick={() => {
 											let obj = {};
 											if (!this.state.name || this.state.name === '') obj.errorName = true;
 											if (!this.state.id_teacher || this.state.id_teacher === 0) obj.errorTeacher = true;
 											if (!this.state.color || this.state.color === '') obj.errorColor = true;
 											if (Object.entries(obj).length > 0) this._showError(obj);
 											else {
-												await this.setState({loading: true})
-												let obj = {
-													name: this.state.name,
-													percentage: this.state.percentage,
-													color: this.state.color,
-													id_teacher: this.state.id_teacher
-												};
-								
-												let newKey = this.state.key;
-												if (!this.state.key)
-													newKey = await firebase.ref('subjects').push(obj).getKey();
-												else
-													await firebase.ref('subjects').child(this.state.key).set(obj);
-								
-												this.props.onSubmit(newKey);
-								
-												if (this.props.subject && this.props.subject.obj.id_teacher)
-													firebase.ref('teachers').child(this.props.subject.obj.id_teacher)
+												this.setState({loading: true})
+												setTimeout(async () => {
+													let obj = {
+														name: this.state.name,
+														percentage: this.state.percentage,
+														color: this.state.color,
+														id_teacher: this.state.id_teacher
+													};
+									
+													let newKey = this.state.key;
+													if (!this.state.key)
+														newKey = await firebase.ref('subjects').push(obj).getKey();
+													else
+														await firebase.ref('subjects').child(this.state.key).set(obj);
+									
+													this.props.onSubmit(newKey);
+									
+													if (this.props.subject && this.props.subject.obj.id_teacher)
+														firebase.ref('teachers').child(this.props.subject.obj.id_teacher)
+															.once('value', snapshot => {
+																snapshot.ref.update({nSubjects: snapshot.val().nSubjects - 1});
+															}).then();
+									
+													firebase.ref('teachers').child(this.state.id_teacher)
 														.once('value', snapshot => {
-															snapshot.ref.update({nSubjects: snapshot.val().nSubjects - 1});
+															snapshot.ref.update({nSubjects: snapshot.val().nSubjects + 1});
 														}).then();
-								
-												firebase.ref('teachers').child(this.state.id_teacher)
-													.once('value', snapshot => {
-														snapshot.ref.update({nSubjects: snapshot.val().nSubjects + 1});
-													}).then();
+												}, 0)
 											}
 										}}/>
 							</Fragment>

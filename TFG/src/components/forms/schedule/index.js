@@ -106,7 +106,7 @@ export default class ScheduleForm extends React.Component {
 								/>
 								<Button label={i18n.get('commons.form.actions.1')}
 										backgroundColor={colors.primary} textColor={colors.white}
-										onClick={async () => {
+										onClick={() => {
 											let obj = {};
 											let msg = 0;
 											if (!this.state.id_subject || this.state.id_subject === 0) obj.errorSubject = true;
@@ -134,20 +134,22 @@ export default class ScheduleForm extends React.Component {
 											}
 											if (Object.entries(obj).length > 0) this._showError(obj, msg);
 											else {
-												await this.setState({loading: true})
-												let obj = {
-													startTime: this.state.startTime,
-													endTime: this.state.endTime,
-													id_subject: this.state.id_subject
-												};
-								
-												let newKey = this.state.key;
-												if (!this.state.key)
-													newKey = await firebase.ref('schedules').child(`${this.props.scheduleKey}/${this.props.day}`).push(obj).getKey();
-												else
-													await firebase.ref('schedules').child(`${this.props.scheduleKey}/${this.props.day}/${this.state.key}`).set(obj);
-								
-												this.props.onSubmit(newKey);
+												this.setState({loading: true})
+												setTimeout(async () => {
+													let obj = {
+														startTime: this.state.startTime,
+														endTime: this.state.endTime,
+														id_subject: this.state.id_subject
+													};
+									
+													let newKey = this.state.key;
+													if (!this.state.key)
+														newKey = await firebase.ref('schedules').child(`${this.props.scheduleKey}/${this.props.day}`).push(obj).getKey();
+													else
+														await firebase.ref('schedules').child(`${this.props.scheduleKey}/${this.props.day}/${this.state.key}`).set(obj);
+									
+													this.props.onSubmit(newKey);
+												}, 0)
 											}
 										}}/>
 							</Fragment>}

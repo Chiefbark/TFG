@@ -52,15 +52,17 @@ export default class ProfileInfoForm extends React.Component {
 							/>
 							<Button label={i18n.get('commons.form.actions.1')}
 									backgroundColor={colors.primary} textColor={colors.white}
-									onClick={async () => {
+									onClick={() => {
 										let obj = {};
 										if (!this.state.name || this.state.name === '') obj.errorName = true;
 										if (Object.entries(obj).length > 0) this._showError(obj);
 										else {
-											await this.setState({loading: true})
-											let obj = {name: this.state.name};
-											firebase.ref('currProfile').update(obj).then();
-											this.props.onSubmit(this.state.key);
+											this.setState({loading: true})
+											setTimeout(async () => {
+												let obj = {name: this.state.name};
+												firebase.ref('currProfile').update(obj).then();
+												this.props.onSubmit(this.state.key);
+											}, 0)
 										}
 									}}/>
 						</Fragment>

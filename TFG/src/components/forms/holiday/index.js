@@ -97,24 +97,26 @@ export default class HolidayForm extends React.Component {
 								}
 								<Button label={i18n.get('commons.form.actions.3')}
 										backgroundColor={colors.primary} textColor={colors.white}
-										onClick={async () => {
+										onClick={() => {
 											let obj = {};
 											if (!this.state.name || this.state.name === '') obj.errorName = true;
 											if (!this.state.startDate || this.state.startDate === '') obj.errorStartDate = true;
 											// if (!this.state.endDate || this.state.endDate === '') obj.errorEndDate = true;
 											if (Object.entries(obj).length > 0) this._showError(obj);
 											else {
-												await this.setState({loading: true})
-												let obj = {
-													name: this.state.name, startDate: this.state.startDate, endDate: this.state.endDate
-												};
-												let newKey = this.state.key;
-												if (!this.state.key)
-													newKey = await firebase.ref('holidays').push(obj).getKey();
-												else
-													firebase.ref('holidays').child(this.state.key).update(obj).then();
-								
-												this.props.onSubmit(newKey);
+												this.setState({loading: true})
+												setTimeout(async () => {
+													let obj = {
+														name: this.state.name, startDate: this.state.startDate, endDate: this.state.endDate
+													};
+													let newKey = this.state.key;
+													if (!this.state.key)
+														newKey = await firebase.ref('holidays').push(obj).getKey();
+													else
+														firebase.ref('holidays').child(this.state.key).update(obj).then();
+									
+													this.props.onSubmit(newKey);
+												}, 0)
 											}
 										}}/>
 							</Fragment>}
