@@ -4,7 +4,7 @@ import {View, Text, ScrollView} from 'react-native';
 import * as i18n from '../../i18n';
 import * as firebase from '../../firebase';
 import * as config from '../../config';
-import {getISODate} from '../../utils';
+import {addDaysToDate, getISODate} from '../../utils';
 import {colors} from '../../styles';
 
 import Button from '../../components/button';
@@ -14,6 +14,7 @@ import ListHeader from '../../components/listHeader';
 import ListItem from '../../components/listItem';
 import ProfileInfoForm from '../../components/forms/profileInfo';
 import TimetableForm from '../../components/forms/timetable';
+import {ref} from "../../firebase";
 
 export default class InformationScreen extends React.Component {
 	constructor(props) {
@@ -58,6 +59,7 @@ export default class InformationScreen extends React.Component {
 			let data = snapshot.val() || {};
 			this.setState({timetables: Object.entries(data)})
 		});
+		firebase.addListenersToTimetables();
 		firebase.ref('holidays').on('value', snapshot => {
 			let data = snapshot.val() || {};
 			this.setState({holidays: Object.entries(data)})
@@ -101,13 +103,16 @@ export default class InformationScreen extends React.Component {
 								<Icon source={require('../../../assets/icons/icon_help.png')} iconColor={colors.white}/>
 							}
 				/>
-				{this.state.timetables?.map(e => {
+				{this.state.timetables?.map((e, index) => {
 					const startMonth = i18n.get(`commons.calendarLocales.monthNames.${parseInt(e[1].startDate.split('-')[1]) - 1}`);
 					const start = `${startMonth} ${e[1].startDate.split('-')[0]}`;
 					const endMonth = i18n.get(`commons.calendarLocales.monthNames.${parseInt(e[1].endDate.split('-')[1]) - 1}`);
 					const end = `${endMonth} ${e[1].endDate.split('-')[0]}`;
 					return <ListItem key={e[0]} title={`${start} - ${end}`}
-									 onClick={() => this.setState({timetable: {key: e[0], obj: e[1]}, dialogTimetable: true})}/>
+									 onClick={() => this.setState({
+										 timetable: {key: e[0], index: index, obj: e[1]},
+										 dialogTimetable: true
+									 })}/>
 				})}
 				<Button label={`${i18n.get('commons.form.actions.2')}...`} backgroundColor={colors.white} textColor={colors.lightGrey}
 						onClick={() => this.setState({dialogTimetable: true})}
