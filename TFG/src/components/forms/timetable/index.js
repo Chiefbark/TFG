@@ -79,8 +79,8 @@ export default class TimetableForm extends React.Component {
 								<Button label={i18n.get('commons.form.actions.4')} style={{paddingHorizontal: 18}}
 										textColor={colors.primary}
 										onClick={() => {
-											firebase.removeTimetable(this.state.key);
-											this.props.onDelete(this.state.endDate);
+											firebase.removeTimetable(this.state.key, this.props.timetable.index, this.props.timetable.index !== 0 ? this.state.endDate : this.state.startDate);
+											this.props.onDelete();
 										}}/>
 								}
 								<Button label={i18n.get('commons.form.actions.3')}
@@ -103,6 +103,13 @@ export default class TimetableForm extends React.Component {
 													newKey = await firebase.ref('schedules').push(obj).getKey();
 												else
 													firebase.ref('schedules').child(this.state.key).update(obj).then();
+								
+												firebase.updateTimetable(newKey, {
+													startDate: this.props.timetable?.obj.startDate,
+													endDate: this.props.timetable?.obj.endDate
+												}, {
+													startDate: this.state.startDate, endDate: this.state.endDate
+												}, this.props.timetable?.index ?? (this.props.nTimetables - 1))
 								
 												this.props.navigation.dispatch(CommonActions.navigate('Timetable', {key: newKey}));
 												this.props.onSubmit(newKey);
@@ -139,9 +146,6 @@ TimetableForm.propTypes = {
 	onCancel: PropTypes.func.isRequired,
 	/**
 	 * Callback triggered when the user deletes the form
-	 *
-	 * This callback receives a param
-	 * - `endDate : String` -- The end date of the timetable deleted
 	 */
 	onDelete: PropTypes.func.isRequired,
 	/**
