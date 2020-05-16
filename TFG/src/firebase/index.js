@@ -2,6 +2,7 @@ import firebase from 'firebase';
 import {AsyncStorage} from 'react-native';
 
 import * as config from '../config';
+import {addDaysToDate} from '../utils';
 
 const firebaseConfig = {
 	apiKey: "apiKey",
@@ -42,6 +43,10 @@ export function ref(node) {
 			return db.ref(`users/${currFirebaseKey}/profiles/${config.currConfig.profile}/schedules`);
 		case 'absences':
 			return db.ref(`users/${currFirebaseKey}/profiles/${config.currConfig.profile}/absences`);
+		case 'holidays':
+			return db.ref(`users/${currFirebaseKey}/profiles/${config.currConfig.profile}/holidays`);
+		case 'exams':
+			return db.ref(`users/${currFirebaseKey}/profiles/${config.currConfig.profile}/exams`);
 		case 'currProfile':
 			return db.ref(`users/${currFirebaseKey}/profiles/${config.currConfig.profile}`);
 		case 'profiles':
@@ -112,7 +117,88 @@ export function removeSchedule(path, id_schedule) {
 	}).then(result => ref('absences').update({...references}))
 }
 
-export function removeTimetable(id_timetable) {
-	firebase.ref('schedules').child(id_timetable).remove();	// Removes the timetable
-	// TODO: REMOVE absences associated to that absences
+export function updateTimetable(id_timetable, prevDates, newDates, index) {
+	if (prevDates.endDate !== newDates.endDate) {
+		ref('schedules').once('value', snapshot => {	// Read schedules
+			let data = snapshot.val() || {};
+			const entries = Object.entries(data);
+			if (entries[index + 1]) {	// If there is another timetable following
+				const date = addDaysToDate(newDates.endDate, 1)
+				snapshot.ref.child(entries[index + 1][0]).update({startDate: date})	// Updates its startDate
+				// TODO: REMOVE absences of that days
+			}
+		})
+	}
+	if (prevDates.startDate !== newDates.startDate) {
+		ref('schedules').once('value', snapshot => {	// Read schedules
+			let data = snapshot.val() || {};
+			const entries = Object.entries(data);
+			if (entries[index - 1]) {	// If there is another timetable previous
+				const date = addDaysToDate(newDates.startDate, -1)
+				snapshot.ref.child(entries[index - 1][0]).update({endDate: date})	// Updates its endDate
+				// TODO: REMOVE absences of that days
+			}
+		})
+	}
+}
+
+function removeAbsencesOfTimetable(id_timetable) {
+	let references = {};
+	ref('absences').once('value', snapshot => {	// Read absences
+		let data = snapshot.val() || {}
+		Object.entries(data).forEach(e =>	// Iterates over each date
+			Object.entries(e[1]).forEach(x => {	// Iterates over each absence
+				if (x[1].path.split('/')[0] === id_timetable)	// If the ref to the timetable is equal to the current deleted timetable
+					references[`${e[0]}/${x[0]}`] = null	// Add the reference to the absence node
+			})
+		)
+	}).then(result => ref('absences').update({...references}))
+}
+
+export function removeTimetable(id_timetable, index, date) {
+	ref('schedules').child(id_timetable).remove();	// Removes the timetable
+	removeAbsencesOfTimetable(id_timetable);	// Removes all the absences of the timetable
+	ref('schedules').once('value', snapshot => {	// Read schedules
+		let data = snapshot.val() || {};
+		const entries = Object.entries(data);
+		if (index > 0)
+			snapshot.ref.child(entries[index - 1][0]).update({endDate: date});	// Update endDate of last schedule with the removed endDate
+		else
+			snapshot.ref.child(entries[0][0]).update({startDate: date});	// Update startDate of first schedule with the removed startDate
+	})
+}
+
+function _removeTimetableListener(snapshot) {
+	let data = snapshot.val() || {};
+	const entries = Object.entries(data);
+	let references = {};
+	entries.forEach((e, index) => {
+		if (e[1].startDate > e[1].endDate)
+			references[e[0]] = null
+	})
+	if (Object.keys(references).length > 0)
+		ref('schedules').update({...references})
+}
+
+function _linkTimetablesListener(snapshot) {
+	let data = snapshot.val() || {};
+	const entries = Object.entries(data);
+	let links = {};
+	for (let ii = 0; ii < entries.length - 1; ii++) {
+		const date = addDaysToDate(entries[ii + 1][1].startDate, -1);
+		if (entries[ii][1].endDate !== date)
+			links[`${entries[ii][0]}/endDate`] = date
+	}
+	if (Object.keys(links).length > 0)
+		ref('schedules').update({...links})
+}
+
+export function addListenersToTimetables() {
+	ref('schedules').on('value', _removeTimetableListener);
+	ref('schedules').on('value', _linkTimetablesListener);
+}
+
+export function removeListenersToTimetables() {
+	ref('schedules').off('value', _removeTimetableListener);
+	ref('schedules').off('value', _linkTimetablesListener);
 }
