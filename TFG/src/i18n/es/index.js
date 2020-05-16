@@ -8,6 +8,14 @@ export const calendar = {
 	holidaysDialog: {
 		placeholders: ['Vacaciones!!\nHoy no tienes clase', 'Acaban el']
 	},
+	helpDialog: {
+		placeholders: [
+			'Los puntos de color representan los exámenes de las asignaturas.\nSólo se muestra uno',
+			'Los puntos o rayas rosa claro son las vacaciones',
+			'Los puntitos de colores son las faltas de asistencia.\nComo máximo se muestran cuatro',
+			'Puedes desactivar esta información desde ajustes'
+		]
+	},
 	absenceChanged: ['Falta de asistencia añadida', 'Falta de asistencia eliminada']
 }
 export const statistics = {
@@ -28,7 +36,7 @@ export const profile = {
 	screens: [
 		{
 			title: 'Información',
-			headers: ['Información', 'Horarios', 'Vacaciones y eventos', 'Exámenes'],
+			headers: ['Información', 'Horarios', 'Vacaciones', 'Exámenes'],
 			contents: ['Nombre', 'Fecha inicio', 'Fecha fin'],
 			editInfoDialog: {
 				title: 'Editar información',

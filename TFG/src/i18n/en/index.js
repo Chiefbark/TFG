@@ -8,6 +8,14 @@ export const calendar = {
 	holidaysDialog: {
 		placeholders: ['Holidays!!\nYou don\'t have class today', 'Ends on']
 	},
+	helpDialog: {
+		placeholders: [
+			'Colored big dots represents the exams of a subject.\nOnly one is shown',
+			'Light pink dots/lines are the holidays',
+			'Small dots are the absences.\nMaximum dots are four',
+			'You can disable this marking from settings'
+		]
+	},
 	absenceChanged: ['Absence added', 'Absence removed']
 }
 export const statistics = {
@@ -28,7 +36,7 @@ export const profile = {
 	screens: [
 		{
 			title: 'Information',
-			headers: ['Information', 'Timetables', 'Holidays & events', 'Exams'],
+			headers: ['Information', 'Timetables', 'Holidays', 'Exams'],
 			contents: ['Name', 'Start date', 'End date']
 		},
 		{
