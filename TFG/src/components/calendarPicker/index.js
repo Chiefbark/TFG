@@ -26,7 +26,7 @@ export default class CalendarPicker extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			current: this.props.startDate,
+			current: this.props.startDate || new Date().toISOString().slice(0, 10),
 			markedDates: undefined,
 			selecting: false,
 			startDate: this.props.startDate,
