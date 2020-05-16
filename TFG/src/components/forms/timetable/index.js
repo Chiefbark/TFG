@@ -39,7 +39,7 @@ export default class TimetableForm extends React.Component {
 	render() {
 		return (
 			<Fragment>
-				<Dialog title={i18n.get('commons.timetableForm.title')}
+				<Dialog title={i18n.get('commons.timetableForm.title')} loading={this.state.loading}
 						content={() =>
 							<Fragment>
 								<Text style={{textAlign: 'center', color: colors.grey}}>
@@ -97,6 +97,7 @@ export default class TimetableForm extends React.Component {
 											}
 											if (Object.entries(obj).length > 0) this._showError(obj, msg);
 											else {
+												await this.setState({loading: true})
 												let obj = {startDate: this.state.startDate, endDate: this.state.endDate};
 												let newKey = this.state.key;
 												if (!this.state.key)

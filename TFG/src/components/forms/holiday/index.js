@@ -39,7 +39,7 @@ export default class HolidayForm extends React.Component {
 	render() {
 		return (
 			<Fragment>
-				<Dialog title={i18n.get('commons.holidayForm.title')}
+				<Dialog title={i18n.get('commons.holidayForm.title')} loading={this.state.loading}
 						content={() =>
 							<Fragment>
 								<TextInput placeholder={i18n.get('commons.holidayForm.placeholders.0')}
@@ -104,6 +104,7 @@ export default class HolidayForm extends React.Component {
 											// if (!this.state.endDate || this.state.endDate === '') obj.errorEndDate = true;
 											if (Object.entries(obj).length > 0) this._showError(obj);
 											else {
+												await this.setState({loading: true})
 												let obj = {
 													name: this.state.name, startDate: this.state.startDate, endDate: this.state.endDate
 												};

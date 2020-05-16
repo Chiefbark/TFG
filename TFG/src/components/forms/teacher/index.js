@@ -36,7 +36,7 @@ export default class TeacherForm extends React.Component {
 	
 	render() {
 		return (
-			<Dialog title={i18n.get('commons.teacherForm.title')}
+			<Dialog title={i18n.get('commons.teacherForm.title')} loading={this.state.loading}
 					content={() =>
 						<TextInput placeholder={i18n.get('commons.teacherForm.placeholders.0')}
 								   placeholderTextColor={this.state.errorName ? colors.red : colors.lightGrey}
@@ -58,6 +58,7 @@ export default class TeacherForm extends React.Component {
 										if (!this.state.name || this.state.name === '') obj.errorName = true;
 										if (Object.entries(obj).length > 0) this._showError(obj);
 										else {
+											await this.setState({loading: true})
 											let obj = {name: this.state.name, nSubjects: this.state.nSubjects};
 											let newKey = this.state.key;
 											if (!this.state.key)

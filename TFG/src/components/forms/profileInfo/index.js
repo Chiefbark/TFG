@@ -35,7 +35,7 @@ export default class ProfileInfoForm extends React.Component {
 	
 	render() {
 		return (
-			<Dialog title={i18n.get('commons.profileInfoForm.title')}
+			<Dialog title={i18n.get('commons.profileInfoForm.title')} loading={this.state.loading}
 					content={() =>
 						<TextInput placeholder={i18n.get('commons.profileInfoForm.placeholders.0')}
 								   placeholderTextColor={this.state.errorName ? colors.red : colors.lightGrey}
@@ -57,6 +57,7 @@ export default class ProfileInfoForm extends React.Component {
 										if (!this.state.name || this.state.name === '') obj.errorName = true;
 										if (Object.entries(obj).length > 0) this._showError(obj);
 										else {
+											await this.setState({loading: true})
 											let obj = {name: this.state.name};
 											firebase.ref('currProfile').update(obj).then();
 											this.props.onSubmit(this.state.key);

@@ -50,7 +50,7 @@ export default class ScheduleForm extends React.Component {
 	render() {
 		return (
 			<Fragment>
-				<Dialog title={i18n.get('commons.scheduleForm.title')}
+				<Dialog title={i18n.get('commons.scheduleForm.title')} loading={this.state.loading}
 						content={() =>
 							<Fragment>
 								<View style={{flex: 1, flexDirection: 'row', alignItems: 'center'}}>
@@ -134,6 +134,7 @@ export default class ScheduleForm extends React.Component {
 											}
 											if (Object.entries(obj).length > 0) this._showError(obj, msg);
 											else {
+												await this.setState({loading: true})
 												let obj = {
 													startTime: this.state.startTime,
 													endTime: this.state.endTime,

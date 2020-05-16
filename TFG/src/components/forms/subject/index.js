@@ -50,7 +50,7 @@ export default class SubjectForm extends React.Component {
 	render() {
 		return (
 			<Fragment>
-				<Dialog title={i18n.get('commons.subjectForm.title')}
+				<Dialog title={i18n.get('commons.subjectForm.title')} loading={this.state.loading}
 						content={() =>
 							<Fragment>
 								<TextInput onFocus={() => this.setState({_nameFocused: true})}
@@ -126,6 +126,7 @@ export default class SubjectForm extends React.Component {
 											if (!this.state.color || this.state.color === '') obj.errorColor = true;
 											if (Object.entries(obj).length > 0) this._showError(obj);
 											else {
+												await this.setState({loading: true})
 												let obj = {
 													name: this.state.name,
 													percentage: this.state.percentage,
