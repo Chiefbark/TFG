@@ -141,10 +141,10 @@ export default class InformationScreen extends React.Component {
 							 onCancel={() => this.setState({dialogEditInfo: false})}/>
 			}
 			{this.state.dialogTimetable &&
-			<TimetableForm navigation={this.props.navigation} timetable={this.state.timetable}
+			<TimetableForm navigation={this.props.navigation} timetable={this.state.timetable} nTimetables={this.state.timetables?.length}
 						   onSubmit={() => this.setState({dialogTimetable: false, timetable: undefined})}
 						   onCancel={() => this.setState({dialogTimetable: false, timetable: undefined})}
-						   onDelete={() => this.setState({dialogTimetable: false, timetable: undefined})}/>
+						   onDelete={endDate => this.setState({dialogTimetable: false, timetable: undefined})}/>
 			}
 			{this.state.dialogHoliday &&
 			<HolidayForm holiday={this.state.holiday}
