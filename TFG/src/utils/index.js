@@ -52,8 +52,11 @@ export function getISODate(dateString) {
 export function getDatesBetween(first, second) {
 	let startDate = getDateFromString(first);
 	let endDate = getDateFromString(second);
-	if (startDate.getTime() > endDate.getTime())
-		startDate, endDate = endDate, startDate
+	if (startDate.getTime() > endDate.getTime()) {
+		let temp = startDate;
+		startDate = endDate;
+		endDate = temp;
+	}
 	let dates = [];
 	startDate.setDate(startDate.getDate() + 1);
 	dates.push(startDate.toISOString().slice(0, 10));
