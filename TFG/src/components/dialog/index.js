@@ -29,7 +29,7 @@ export default class Dialog extends React.Component {
 			>
 				<View style={styles.container}>
 					<View style={{position: 'absolute', top: 20, width: '100%', alignItems: 'center'}}>
-						<ActivityIndicator size={30} animating={this.props.loading} color={colors.primary}
+						<ActivityIndicator size={25} animating={this.props.loading} color={colors.primary}
 										   style={{
 											   backgroundColor: colors.white, borderRadius: 1000,
 											   opacity: this.props.loading ? 1 : 0, padding: 5
