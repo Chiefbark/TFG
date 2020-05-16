@@ -43,6 +43,42 @@ export function getISODate(dateString) {
 }
 
 /**
+ * Returns all the dates between the two specified (both included)
+ *
+ * @param start - The initial date
+ * @param end - The final date
+ * @return {[]} Array of the dates between the two specified
+ */
+export function getDatesBetween(start, end) {
+	let startDate = getDateFromString(start);
+	let endDate = getDateFromString(end);
+	let dates = [];
+	startDate.setDate(startDate.getDate() + 1);
+	dates.push(startDate.toISOString().slice(0, 10));
+	if (endDate) {
+		while (startDate.getTime() < endDate.getTime()) {
+			startDate.setDate(startDate.getDate() + 1);
+			dates.push(startDate.toISOString().slice(0, 10));
+		}
+		endDate.setDate(endDate.getDate() + 1);
+		dates.push(endDate.toISOString().slice(0, 10));
+	}
+	return dates;
+}
+
+/**
+ * Checks if the date is between the two specified (both included)
+ *
+ * @param date - The date to check
+ * @param start - The initial date
+ * @param end - The final date
+ * @return {bool} TRUE if the date is between, false otherwise
+ */
+export function isDateBetween(date, start, end) {
+	return getDatesBetween(start, end).find(e => e == date);
+}
+
+/**
  * Returns the Date object of the current date string (yyyy-MM-dd)
  *
  * @param dateString - yyyy-MM-dd
