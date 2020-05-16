@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {View, Text, ScrollView, Modal, StyleSheet} from 'react-native';
+import {View, Text, ScrollView, Modal, StyleSheet, ActivityIndicator} from 'react-native';
 
 import {colors} from '../../styles';
 
@@ -28,6 +28,13 @@ export default class Dialog extends React.Component {
 				visible={this.props.visible}
 			>
 				<View style={styles.container}>
+					<View style={{position: 'absolute', top: 20, width: '100%', alignItems: 'center'}}>
+						<ActivityIndicator size={30} animating={this.props.loading} color={colors.primary}
+										   style={{
+											   backgroundColor: colors.white, borderRadius: 1000,
+											   opacity: this.props.loading ? 1 : 0, padding: 5
+										   }}/>
+					</View>
 					<View style={styles.dialog}>
 						<Text style={styles.title}>{this.props.title}</Text>
 						<ScrollView style={[{width: '100%'}, this.state.height && {height: this.state.height}]}
@@ -91,9 +98,16 @@ Dialog.propTypes = {
 	 *
 	 * `Bool` -- `default false`
 	 */
-	visible: PropTypes.bool
+	visible: PropTypes.bool,
+	/**
+	 * Indicates if the component is loading or not
+	 *
+	 * `Bool` -- `default false`
+	 */
+	loading: PropTypes.bool
 }
 
 Dialog.defaultProps = {
-	visible: false
+	visible: false,
+	loading: false
 }
