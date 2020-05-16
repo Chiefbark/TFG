@@ -79,6 +79,19 @@ export function isDateBetween(date, start, end) {
 }
 
 /**
+ * Adds a specific number of days to the specific date
+ *
+ * @param dateString - The date where to add days
+ * @param days - The number of days to add
+ * @return {string} yyyy-MM-dd
+ */
+export function addDaysToDate(dateString, days) {
+	let date = getDateFromString(dateString);
+	date.setDate(date.getDate() + days + 1);
+	return date.toISOString().slice(0, 10);
+}
+
+/**
  * Returns the Date object of the current date string (yyyy-MM-dd)
  *
  * @param dateString - yyyy-MM-dd
