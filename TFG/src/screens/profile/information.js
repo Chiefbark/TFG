@@ -4,7 +4,7 @@ import {View, Text, ScrollView} from 'react-native';
 import * as i18n from '../../i18n';
 import * as firebase from '../../firebase';
 import * as config from '../../config';
-import {addDaysToDate, getISODate} from '../../utils';
+import {getISODate} from '../../utils';
 import {colors} from '../../styles';
 
 import Button from '../../components/button';
@@ -14,7 +14,6 @@ import ListHeader from '../../components/listHeader';
 import ListItem from '../../components/listItem';
 import ProfileInfoForm from '../../components/forms/profileInfo';
 import TimetableForm from '../../components/forms/timetable';
-import {ref} from "../../firebase";
 
 export default class InformationScreen extends React.Component {
 	constructor(props) {
