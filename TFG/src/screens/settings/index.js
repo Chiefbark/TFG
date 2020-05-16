@@ -34,7 +34,7 @@ export default class SettingsScreen extends React.Component {
 		i18n.addListener(this._updateComponent.bind(this));
 		this._updateComponent();
 		firebase.ref('profiles').on('value', snapshot => {
-			let data = snapshot.val() || {};
+			let data = snapshot.val() || [];
 			this.setState({profiles: data});
 		});
 	}
@@ -44,12 +44,13 @@ export default class SettingsScreen extends React.Component {
 	}
 	
 	render() {
+		const title = this.state.profiles && this.state.profiles[config.currConfig.profile] && this.state.profiles[config.currConfig.profile].name;
 		return (
 			<Fragment>
 				<ScrollView style={{flex: 1}}>
 					{/*	CONFIG ABOUT PROFILE	*/}
 					<ListHeader label={i18n.get('settings.headers.0')}/>
-					<ListItem title={this.state.profiles ? this.state.profiles[config.currConfig.profile].name : ''}
+					<ListItem title={title || ''}
 							  titleStyles={{fontWeight: 'normal'}}
 							  rightItem={() =>
 								  <Button label={i18n.get('settings.actions.1')}
