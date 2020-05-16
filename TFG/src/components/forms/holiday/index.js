@@ -95,7 +95,7 @@ export default class HolidayForm extends React.Component {
 											this.props.onDelete();
 										}}/>
 								}
-								<Button label={i18n.get('commons.form.actions.3')}
+								<Button label={i18n.get('commons.form.actions.1')}
 										backgroundColor={colors.primary} textColor={colors.white}
 										onClick={() => {
 											let obj = {};
