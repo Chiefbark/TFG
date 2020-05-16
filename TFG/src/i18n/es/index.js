@@ -149,6 +149,14 @@ export const commons = {
 			'Indica la fecha de inicio y fin del nuevo horario'
 		]
 	},
+	holidayForm: {
+		title: 'Vacaciones',
+		placeholders: [
+			'nombre de las vacaciones...',
+			'Indica la fecha de inicio y fin de las vacaciones',
+			'Ambos días están incluidos'
+		]
+	},
 	languages: [
 		{name: 'Español', iso: 'es'},
 		{name: 'Inglés', iso: 'en'}

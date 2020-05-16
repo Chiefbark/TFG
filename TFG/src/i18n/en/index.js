@@ -144,6 +144,14 @@ export const commons = {
 			'Specify the start and end date of the new timetable'
 		]
 	},
+	holidayForm: {
+		title: 'Vacaciones',
+		placeholders: [
+			'holiday\'s name...',
+			'Specify the start and end date of the new holidays',
+			'Both days are included'
+		]
+	},
 	languages: [
 		{name: 'Spanish', iso: 'es'},
 		{name: 'English', iso: 'en'}
