@@ -4,9 +4,11 @@ import {View, Text, ScrollView} from 'react-native';
 import * as i18n from '../../i18n';
 import * as firebase from '../../firebase';
 import * as config from '../../config';
+import {getISODate} from '../../utils';
 import {colors} from '../../styles';
 
 import Button from '../../components/button';
+import HolidayForm from '../../components/forms/holiday';
 import Icon from '../../components/icon';
 import ListHeader from '../../components/listHeader';
 import ListItem from '../../components/listItem';
@@ -20,6 +22,7 @@ export default class InformationScreen extends React.Component {
 			selected: {},
 			profile: undefined,
 			dialogTimetable: false,
+			dialogHoliday: false,
 			dialogEditInfo: false,
 			_locale: i18n.currLocale
 		}
@@ -54,6 +57,10 @@ export default class InformationScreen extends React.Component {
 		firebase.ref('schedules').on('value', snapshot => {
 			let data = snapshot.val() || {};
 			this.setState({timetables: Object.entries(data)})
+		});
+		firebase.ref('holidays').on('value', snapshot => {
+			let data = snapshot.val() || {};
+			this.setState({holidays: Object.entries(data)})
 		});
 	}
 	
@@ -111,7 +118,12 @@ export default class InformationScreen extends React.Component {
 								<Icon source={require('../../../assets/icons/icon_help.png')} iconColor={colors.white}/>
 							}
 				/>
+				{this.state.holidays?.map(e =>
+					<ListItem key={e[0]} title={e[1].name} subtitle={`${getISODate(e[1].startDate)} - ${getISODate(e[1].endDate)}`}
+							  onClick={() => this.setState({holiday: {key: e[0], obj: e[1]}, dialogHoliday: true})}/>
+				)}
 				<Button label={`${i18n.get('commons.form.actions.2')}...`} backgroundColor={colors.white} textColor={colors.lightGrey}
+						onClick={() => this.setState({dialogHoliday: true})}
 						style={{paddingVertical: 15, borderTopWidth: 0.5, borderTopColor: colors.lightGrey}}/>
 				{/*	CONFIG ABOUT EXAMS	*/}
 				<ListHeader label={i18n.get('profile.screens.0.headers.3')}
@@ -130,9 +142,15 @@ export default class InformationScreen extends React.Component {
 			}
 			{this.state.dialogTimetable &&
 			<TimetableForm navigation={this.props.navigation} timetable={this.state.timetable}
-						   onSubmit={() => this.setState({dialogTimetable: false})}
-						   onCancel={() => this.setState({dialogTimetable: false})}
-						   onDelete={() => this.setState({dialogTimetable: false})}/>
+						   onSubmit={() => this.setState({dialogTimetable: false, timetable: undefined})}
+						   onCancel={() => this.setState({dialogTimetable: false, timetable: undefined})}
+						   onDelete={() => this.setState({dialogTimetable: false, timetable: undefined})}/>
+			}
+			{this.state.dialogHoliday &&
+			<HolidayForm holiday={this.state.holiday}
+						 onSubmit={() => this.setState({dialogHoliday: false, holiday: undefined})}
+						 onCancel={() => this.setState({dialogHoliday: false, holiday: undefined})}
+						 onDelete={() => this.setState({dialogHoliday: false, holiday: undefined})}/>
 			}
 		</Fragment>
 			;
