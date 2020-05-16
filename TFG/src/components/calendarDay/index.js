@@ -124,19 +124,19 @@ CalendarDay.propTypes = {
 	 * - `isEnd : Bool` :  if the day is the end of the selection (optional)
 	 */
 	marking: PropTypes.shape({
-			single: PropTypes.shape({
-				color: PropTypes.string.isRequired,
-				textColor: PropTypes.string.isRequired
-			}),
-			multi: PropTypes.arrayOf(PropTypes.shape({
-				color: PropTypes.string.isRequired
-			})),
-			selection: PropTypes.shape({
-				color: PropTypes.string.isRequired,
-				isStart: PropTypes.bool,
-				isEnd: PropTypes.bool
-			})
+		single: PropTypes.shape({
+			color: PropTypes.string.isRequired,
+			textColor: PropTypes.string.isRequired
 		}),
+		multi: PropTypes.arrayOf(PropTypes.shape({
+			color: PropTypes.string.isRequired
+		})),
+		selection: PropTypes.shape({
+			color: PropTypes.string.isRequired,
+			isStart: PropTypes.bool,
+			isEnd: PropTypes.bool
+		})
+	}),
 	/**
 	 * Callback triggered when the user press the component
 	 *
