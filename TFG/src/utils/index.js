@@ -45,13 +45,15 @@ export function getISODate(dateString) {
 /**
  * Returns all the dates between the two specified (both included)
  *
- * @param start - The initial date
- * @param end - The final date
+ * @param first - The first date
+ * @param second - The second date
  * @return {[]} Array of the dates between the two specified
  */
-export function getDatesBetween(start, end) {
-	let startDate = getDateFromString(start);
-	let endDate = getDateFromString(end);
+export function getDatesBetween(first, second) {
+	let startDate = getDateFromString(first);
+	let endDate = getDateFromString(second);
+	if (startDate.getTime() > endDate.getTime())
+		startDate, endDate = endDate, startDate
 	let dates = [];
 	startDate.setDate(startDate.getDate() + 1);
 	dates.push(startDate.toISOString().slice(0, 10));
