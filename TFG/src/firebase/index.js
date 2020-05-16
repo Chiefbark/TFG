@@ -2,7 +2,7 @@ import firebase from 'firebase';
 import {AsyncStorage} from 'react-native';
 
 import * as config from '../config';
-import {addDaysToDate} from '../utils';
+import {addDaysToDate, getDatesBetween} from '../utils';
 
 const firebaseConfig = {
 	apiKey: "apiKey",
@@ -125,7 +125,6 @@ export function updateTimetable(id_timetable, prevDates, newDates, index) {
 			if (entries[index + 1]) {	// If there is another timetable following
 				const date = addDaysToDate(newDates.endDate, 1)
 				snapshot.ref.child(entries[index + 1][0]).update({startDate: date})	// Updates its startDate
-				// TODO: REMOVE absences of that days
 			}
 		})
 	}
@@ -136,7 +135,6 @@ export function updateTimetable(id_timetable, prevDates, newDates, index) {
 			if (entries[index - 1]) {	// If there is another timetable previous
 				const date = addDaysToDate(newDates.startDate, -1)
 				snapshot.ref.child(entries[index - 1][0]).update({endDate: date})	// Updates its endDate
-				// TODO: REMOVE absences of that days
 			}
 		})
 	}
@@ -184,13 +182,21 @@ function _linkTimetablesListener(snapshot) {
 	let data = snapshot.val() || {};
 	const entries = Object.entries(data);
 	let links = {};
+	let dates = {};
 	for (let ii = 0; ii < entries.length - 1; ii++) {
 		const date = addDaysToDate(entries[ii + 1][1].startDate, -1);
-		if (entries[ii][1].endDate !== date)
+		if (entries[ii][1].endDate !== date) {
 			links[`${entries[ii][0]}/endDate`] = date
+			getDatesBetween(entries[ii][1].endDate, date).forEach((e, index, arr) => {
+				if (index < arr.length - 1 && index > 0)
+					dates[e] = null
+			});
+		}
 	}
 	if (Object.keys(links).length > 0)
 		ref('schedules').update({...links})
+	if (Object.keys(dates).length > 0)
+		ref('absences').update({...dates})
 }
 
 export function addListenersToTimetables() {
