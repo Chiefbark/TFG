@@ -7,11 +7,11 @@ import * as firebase from '../../firebase';
 import {colors} from '../../styles';
 import {getISODate} from '../../utils';
 
-import ListItem from '../../components/listItem';
-import ListHeader from '../../components/listHeader';
-import Icon from '../../components/icon';
-import Dialog from '../../components/dialog';
 import Button from '../../components/button';
+import Dialog from '../../components/dialog';
+import Icon from '../../components/icon';
+import ListHeader from '../../components/listHeader';
+import ListItem from '../../components/listItem';
 import Picker from '../../components/picker';
 
 export default class AbsencesScreen extends React.Component {
