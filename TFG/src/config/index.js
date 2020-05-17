@@ -3,27 +3,34 @@ import {AsyncStorage} from 'react-native';
 const defaultConfig = {profile: 0, notifications: [true, true], calendar: [true, true, true]}
 
 export let currConfig = undefined;
+export let currNavigation = 'default';
 export let lastModified = undefined;
 
-let listeners = [];
+let configListeners = [];
+let navigationListeners = [];
 
-export function addListener(listener) {
-	listeners.push(listener);
+export function addConfigListener(listener) {
+	configListeners.push(listener);
 }
 
-export function removeListener(listener) {
-	let index = listeners.indexOf(listener);
+export function removeConfigListener(listener) {
+	let index = configListeners.indexOf(listener);
 	if (index > -1)
-		listeners.splice(index, 1);
+		configListeners.splice(index, 1);
+}
+
+export function addNavigationListener(listener) {
+	navigationListeners.push(listener);
 }
 
 export const config = async () => {
 	if (!currConfig) {
 		await AsyncStorage.getItem('@config')
 			.then(result => {
-				if (!result)
+				if (!result) {
 					setConfig(defaultConfig);
-				else
+					setNavigation('wizard');
+				} else
 					setConfig(JSON.parse(result));
 				return result;
 			});
@@ -36,5 +43,12 @@ export function setConfig(config) {
 	lastModified = new Date().getTime();
 	AsyncStorage.setItem('@config', JSON.stringify(config));
 	
-	listeners.forEach((element) => element());
+	configListeners.forEach((element) => element());
+}
+
+export function setNavigation(nav) {
+	currNavigation = nav;
+	lastModified = new Date().getTime();
+	
+	navigationListeners.forEach((element) => element(nav));
 }
