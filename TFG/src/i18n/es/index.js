@@ -6,7 +6,7 @@ export const newProfile = {
 			description: [
 				'Desde aquí podrás crear un nuevo perfil y añadir todas las clases que necesites.' +
 				'\n\nGracias a estos perfiles podrás tener diferentes cursos en la aplicación y manejarlos de manera independiente.' +
-				'\n\nPodrás llevar la cuenta de las faltas de asistencia que has tenido para que no e lleves ninguna sorpresa luego!' +
+				'\n\nPodrás llevar la cuenta de las faltas de asistencia que has tenido para que no te lleves ninguna sorpresa luego!' +
 				'\n\n\nPara empezar pulsa el botón de abajo'
 			],
 			prevButton: 'Salir',
