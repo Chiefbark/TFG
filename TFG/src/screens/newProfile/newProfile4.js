@@ -32,7 +32,7 @@ export default class NewProfile4 extends React.Component {
 	componentDidMount() {
 		setTimeout(() => this.setState({dialogHelp: true}), 250);
 		this.props.navigation.setOptions({
-			title: i18n.get('newProfile.title'),
+			title: i18n.get('profile.screens.1.title'),
 			headerRight: () => <Icon source={require('../../../assets/icons/icon_help.png')} iconColor={colors.white}
 									 style={{marginRight: 16}}
 									 onClick={() => this.setState({dialogHelp: true})}/>
@@ -147,7 +147,8 @@ export default class NewProfile4 extends React.Component {
 							  );
 						  }}
 				/>
-				<Button label={i18n.get('commons.form.actions.3') + '  ➤'} backgroundColor={colors.primary}
+				<Button label={i18n.get('newProfile.nextButton') + ' ' + i18n.get('timetable.title') + '  ➤'}
+						backgroundColor={colors.primary}
 						textColor={colors.white} disabled={!this.state.continueVisible}
 						onClick={() => this.props.navigation.dispatch(
 							StackActions.push('NewProfile5', {key: this.props.route.params.id_schedule, day: 0})

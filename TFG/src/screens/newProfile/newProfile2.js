@@ -41,7 +41,7 @@ export default class NewProfile2 extends React.Component {
 		BackHandler.addEventListener('hardwareBackPress', this._backCallback.bind(this))
 		
 		this.props.navigation.setOptions({
-			title: i18n.get('newProfile.title'),
+			title: i18n.get('profile.title'),
 			headerLeft: () => <HeaderBackButton tintColor={colors.white} onPress={() => this.setState({dialogExit: true})}/>,
 			headerRight: () => <Icon source={require('../../../assets/icons/icon_help.png')} iconColor={colors.white}
 									 style={{marginRight: 16}}
@@ -112,7 +112,8 @@ export default class NewProfile2 extends React.Component {
 					</View>
 					<Text style={{textAlign: 'center', marginTop: 24}}>{i18n.get('newProfile.screens.1.description.2')}</Text>
 					
-					<Button label={i18n.get('commons.form.actions.3') + '  ➤'} backgroundColor={colors.primary}
+					<Button label={i18n.get('newProfile.nextButton') + ' ' + i18n.get('profile.screens.2.title') + '  ➤'}
+							backgroundColor={colors.primary}
 							textColor={colors.white} disabled={!this.state.continueVisible}
 							onClick={() => {
 								let obj = {};
