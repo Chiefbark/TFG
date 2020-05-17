@@ -72,7 +72,7 @@ export default class CalendarScreen extends React.Component {
 	
 	componentDidMount() {
 		i18n.addListener(this._updateComponent.bind(this));
-		config.addListener(this._updateComponent.bind(this));
+		config.addConfigListener(this._updateComponent.bind(this));
 		this._updateComponent();
 		
 		firebase.ref('schedules').on('value', snapshot => {
@@ -134,7 +134,7 @@ export default class CalendarScreen extends React.Component {
 	
 	componentWillUnmount() {
 		i18n.removeListener(this._updateComponent.bind(this));
-		config.removeListener(this._updateComponent.bind(this));
+		config.removeConfigListener(this._updateComponent.bind(this));
 	}
 	
 	render() {

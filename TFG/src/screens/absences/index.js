@@ -62,7 +62,7 @@ export default class AbsencesScreen extends React.Component {
 	
 	componentDidMount() {
 		i18n.addListener(this._updateComponent.bind(this));
-		config.addListener(this._updateComponent.bind(this));
+		config.addConfigListener(this._updateComponent.bind(this));
 		this._updateComponent();
 		this.setState({tempMonth: this.state.currMonth, tempSubject: this.state.tempSubject});
 		
@@ -91,7 +91,7 @@ export default class AbsencesScreen extends React.Component {
 	
 	componentWillUnmount() {
 		i18n.removeListener(this._updateComponent.bind(this));
-		config.removeListener(this._updateComponent.bind(this));
+		config.removeConfigListener(this._updateComponent.bind(this));
 		this.props.navigation.dangerouslyGetParent().setOptions({tabBarVisible: true});
 	}
 	
