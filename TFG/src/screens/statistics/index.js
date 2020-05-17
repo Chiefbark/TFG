@@ -1,7 +1,7 @@
 import React from 'react';
 import {View, Text} from 'react-native';
 import * as i18n from '../../i18n';
-import * as config from "../../config";
+import * as config from '../../config';
 
 export default class StatisticsScreen extends React.Component {
 	constructor(props) {
@@ -20,13 +20,13 @@ export default class StatisticsScreen extends React.Component {
 	
 	componentDidMount() {
 		i18n.addListener(this._updateComponent.bind(this));
-		config.addListener(this._updateComponent.bind(this));
+		config.addConfigListener(this._updateComponent.bind(this));
 		this._updateComponent();
 	}
 	
 	componentWillUnmount() {
 		i18n.removeListener(this._updateComponent.bind(this));
-		config.removeListener(this._updateComponent.bind(this));
+		config.removeConfigListener(this._updateComponent.bind(this));
 	}
 	
 	render() {
