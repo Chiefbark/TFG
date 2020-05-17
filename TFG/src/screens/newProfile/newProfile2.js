@@ -1,16 +1,19 @@
 import React, {Fragment} from 'react';
 
 import {View, Text, TextInput, Image, Keyboard} from 'react-native';
+
 import * as i18n from '../../i18n';
+import * as config from '../../config';
+import * as firebase from '../../firebase';
 import {colors} from '../../styles';
+
 import Toast from 'react-native-simple-toast';
 import {StackActions} from '@react-navigation/native';
+
 import Button from '../../components/button';
-import * as firebase from '../../firebase';
-import Icon from "../../components/icon";
-import Dialog from "../../components/dialog";
-import CalendarPicker from "../../components/calendarPicker";
-import * as config from "../../config";
+import CalendarPicker from '../../components/calendarPicker';
+import Dialog from '../../components/dialog';
+import Icon from '../../components/icon';
 
 export default class NewProfile2 extends React.Component {
 	
