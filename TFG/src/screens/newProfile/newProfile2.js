@@ -130,8 +130,10 @@ export default class NewProfile2 extends React.Component {
 									this.setState({loading: true})
 									setTimeout(async () => {
 										let newConfig = config.currConfig;
+										this.setState({prevProfile: newConfig.profile});
 										newConfig.profile = this.state.nProfiles;
 										config.setConfig(newConfig);
+								
 										let obj = {name: this.state.name};
 										await firebase.ref('profiles').child(this.state.nProfiles).update(obj)
 										obj = {startDate: this.state.startDate, endDate: this.state.endDate};
@@ -191,7 +193,12 @@ export default class NewProfile2 extends React.Component {
 											setTimeout(async () => {
 												firebase.ref('currProfile').remove()
 												this.setState({dialogExit: false, loadingExit: false},
-													() => this.props.navigation.pop())
+													() => {
+														let newConfig = config.currConfig;
+														newConfig.profile = this.state.prevProfile;
+														config.setConfig(newConfig);
+														this.props.navigation.pop()
+													})
 											})
 										}}
 								/>
