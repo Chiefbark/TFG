@@ -149,6 +149,9 @@ export default class NewProfile4 extends React.Component {
 				/>
 				<Button label={i18n.get('commons.form.actions.3') + '  ➤'} backgroundColor={colors.primary}
 						textColor={colors.white} disabled={!this.state.continueVisible}
+						onClick={() => this.props.navigation.dispatch(
+							StackActions.push('NewProfile5', {key: this.props.route.params.id_schedule, day: 0})
+						)}
 						style={{
 							position: 'absolute', bottom: 50, right: 16, borderRadius: 1000, opacity: this.state.continueVisible ? 1 : 0
 						}}
