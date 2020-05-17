@@ -1,6 +1,6 @@
 import React, {Fragment} from 'react';
 
-import {View, Text, TextInput, Image, Keyboard} from 'react-native';
+import {View, Text, TextInput, Image, Keyboard, BackHandler} from 'react-native';
 
 import * as i18n from '../../i18n';
 import * as config from '../../config';
@@ -8,6 +8,7 @@ import * as firebase from '../../firebase';
 import {colors} from '../../styles';
 
 import Toast from 'react-native-simple-toast';
+import {HeaderBackButton} from '@react-navigation/stack';
 import {StackActions} from '@react-navigation/native';
 
 import Button from '../../components/button';
@@ -27,10 +28,21 @@ export default class NewProfile2 extends React.Component {
 		}
 	}
 	
+	_backCallback() {
+		if (this.props.navigation.isFocused())
+			this.setState({dialogExit: true});
+		else
+			this.props.navigation.pop();
+		return true;
+	}
+	
 	componentDidMount() {
 		setTimeout(() => this.setState({dialogHelp: true}), 250);
+		BackHandler.addEventListener('hardwareBackPress', this._backCallback.bind(this))
+		
 		this.props.navigation.setOptions({
 			title: i18n.get('newProfile.title'),
+			headerLeft: () => <HeaderBackButton tintColor={colors.white} onPress={() => this.setState({dialogExit: true})}/>,
 			headerRight: () => <Icon source={require('../../../assets/icons/icon_help.png')} iconColor={colors.white}
 									 style={{marginRight: 16}}
 									 onClick={() => this.setState({dialogHelp: true})}/>
@@ -166,6 +178,26 @@ export default class NewProfile2 extends React.Component {
 									onClick={() => this.setState({dialogHelp: false})}/>
 						}
 						visible={this.state.dialogHelp}/>
+				<Dialog title={i18n.get('newProfile.screens.1.exitDialog.title')} loading={this.state.loadingExit}
+						content={() => <Text>{i18n.get('newProfile.screens.1.exitDialog.description')}</Text>}
+						buttons={() =>
+							<Fragment>
+								<Button label={i18n.get('newProfile.screens.1.exitDialog.actions.0')}
+										onClick={() => this.setState({dialogExit: false})}/>
+								<Button label={i18n.get('newProfile.screens.1.exitDialog.actions.1')}
+										backgroundColor={colors.primary} textColor={colors.white}
+										onClick={() => {
+											this.setState({loadingExit: true})
+											setTimeout(async () => {
+												firebase.ref('currProfile').remove()
+												this.setState({dialogExit: false, loadingExit: false},
+													() => this.props.navigation.pop())
+											})
+										}}
+								/>
+							</Fragment>
+						}
+						visible={this.state.dialogExit}/>
 			</Fragment>
 		)
 	}
