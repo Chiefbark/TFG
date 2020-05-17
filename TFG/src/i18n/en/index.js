@@ -7,7 +7,7 @@ export const newProfile = {
 				'From here you can create a new profile and add all the classes you need.' +
 				'\n\nThanks to this profiles you can have different courses in the app and handle them independently.' +
 				'\n\nYou can keep track of the absences you have had so that you don\'t have any surprises later!' +
-				'\n\n\nPress the button down below to begin'
+				'\n\n\nPress "start" to begin'
 			],
 			prevButton: 'exit',
 			nextButton: 'Start'
@@ -17,7 +17,7 @@ export const newProfile = {
 			description: [
 				'Set the name of the profile you are creating.\nIt can be modified later',
 				'These dates can be changed whenever you want in the schedule config found at profile screen',
-				'When you are done, press the button down below to begin'
+				'When you are done, press the button "continue"'
 			],
 			exitDialog: {
 				title: 'Are you sure?',
@@ -38,12 +38,27 @@ export const newProfile = {
 			description: [
 				'You can add as many teachers as you want pressing the button +' +
 				'\n\nYou can also edit and delete them if you hold down them',
-				'When you are done, press the button down below to begin'
+				'When you are done, press the button "continue"'
 			],
 			helpDialog: {
 				placeholders: [
 					'Once we have our profile, we are going to add some teachers.' +
 					'\n\nDon\'t worry if you forget about someone, you can create more later',
+					'If you need to see this message again, click in the help button'
+				]
+			}
+		},
+		{
+			subtitle: 'Add subjects',
+			description: [
+				'You can add as many subjects as you want pressing the button +' +
+				'\n\nYou can also edit and delete them if you hold down them',
+				'When you are done, press the button "continue"'
+			],
+			helpDialog: {
+				placeholders: [
+					'Next we have to do is add subjects to our profile.' +
+					'\n\nDon\'t worry if you forget about any, you can create more later',
 					'If you need to see this message again, click in the help button'
 				]
 			}

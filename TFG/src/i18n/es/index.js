@@ -7,7 +7,7 @@ export const newProfile = {
 				'Desde aquí podrás crear un nuevo perfil y añadir todas las clases que necesites.' +
 				'\n\nGracias a estos perfiles podrás tener diferentes cursos en la aplicación y manejarlos de manera independiente.' +
 				'\n\nPodrás llevar la cuenta de las faltas de asistencia que has tenido para que no te lleves ninguna sorpresa luego!' +
-				'\n\n\nPara empezar pulsa el botón de abajo'
+				'\n\n\nPara empezar pulsa en "comenzar"'
 			],
 			prevButton: 'Salir',
 			nextButton: 'Comenzar'
@@ -17,7 +17,7 @@ export const newProfile = {
 			description: [
 				'Indica el nombre del perfil que vas a crear.\nLo podrás cambiar más tarde',
 				'Estas fechas las puedes cambiar cuando quieras mediante el sistema de horarios que encontrarás en la pantalla de perfil',
-				'Cuando hayas acabado pulsa el botón de abajo'
+				'Cuando hayas acabado pulsa en "continuar"'
 			],
 			exitDialog: {
 				title: 'Estás seguro?',
@@ -38,12 +38,27 @@ export const newProfile = {
 			description: [
 				'Puedes añadir tantos profesores como quieras pulsando sobre el botón +' +
 				'\n\nTambién puedes editarlos y borrarlos si los mantienes pulsados',
-				'Cuando hayas acabado pulsa el botón de abajo'
+				'Cuando hayas acabado pulsa en "continuar"'
 			],
 			helpDialog: {
 				placeholders: [
 					'Una vez tenemos el perfil creado, vamos a añadir algunos profesores.' +
 					'\n\nNo te preocupes si se te olvida alguno, podrás crear más mas adelante',
+					'Si necesitas ver este mensaje de nuevo, pulsa en el botón de ayuda'
+				]
+			}
+		},
+		{
+			subtitle: 'Añade asignaturas',
+			description: [
+				'Puedes añadir tantas asignaturas como quieras pulsando sobre el botón +' +
+				'\n\nTambién puedes editarlas y borrarlas si las mantienes pulsadas',
+				'Cuando hayas acabado pulsa en "continuar"'
+			],
+			helpDialog: {
+				placeholders: [
+					'Lo siguiente es añadir asignaturas a nuestro perfil.' +
+					'\n\nNo te preocupes si se te olvida alguna, podrás crear más mas adelante',
 					'Si necesitas ver este mensaje de nuevo, pulsa en el botón de ayuda'
 				]
 			}
