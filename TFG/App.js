@@ -3,7 +3,7 @@ import {View, Text, TouchableOpacity, ActivityIndicator} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {createMaterialTopTabNavigator} from "@react-navigation/material-top-tabs";
+import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 
 import * as i18n from './src/i18n';
 import * as config from './src/config';
@@ -19,7 +19,11 @@ import Information from './src/screens/profile/information';
 import Subjects from './src/screens/profile/subjects';
 import Teachers from './src/screens/profile/teachers';
 import Settings from './src/screens/settings';
-import TimeTable from "./src/screens/timetable";
+import TimeTable from './src/screens/timetable';
+import NewProfile1 from './src/screens/newProfile/newProfile1';
+import NewProfile2 from './src/screens/newProfile/newProfile3';
+import NewProfile3 from './src/screens/newProfile/newProfile4';
+import NewProfile4 from './src/screens/newProfile/newProfile4';
 
 const BottomTab = createBottomTabNavigator();
 const TopTab = createMaterialTopTabNavigator();
@@ -155,11 +159,12 @@ export default class App extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			_navigation: 'default',
+			_navigation: 'wizard',
 			_locale: undefined,
 			_config: undefined,
 			_firebaseKey: undefined
 		};
+		config.addNavigationListener((nav) => this.setState({_navigation: nav}))
 		i18n.locale().then(locale => this.setState({_locale: locale}));
 		config.config().then(config => this.setState({_config: config}));
 		firebase.firebaseKey().then(firebaseKey => this.setState({_firebaseKey: firebaseKey}));
@@ -167,81 +172,96 @@ export default class App extends React.Component {
 	
 	render() {
 		return (<Fragment>
-				{this.state._locale && this.state._config && this.state._firebaseKey ?
-					<NavigationContainer>
-						<BottomTab.Navigator
-							initialRouteName={'Calendar'}
-							backBehavior={'initialRoute'}
-							tabBar={({state, navigation}) =>
-								<View style={{flexDirection: 'row', backgroundColor: colors.primary, paddingVertical: 5}}>
-									<TouchableOpacity onPress={() => state.index !== 0 && navigation.jumpTo('Calendar')}
-													  style={{
-														  flex: 1, flexDirection: 'column',
-														  justifyContent: 'center', alignItems: 'center', padding: 4
-													  }}>
-										<Icon source={require('./assets/icons/icon_calendar.png')} disabled={true}
-											  iconColor={colors.white}/>
-										{state.index === 0 &&
-										<Text numberOfLines={1}
-											  style={{color: colors.white, fontSize: 11}}>{i18n.get('calendar.title')}</Text>}
-									</TouchableOpacity>
-									<TouchableOpacity onPress={() => state.index !== 1 && navigation.jumpTo('Statistics')}
-													  style={{
-														  flex: 1, flexDirection: 'column',
-														  justifyContent: 'center', alignItems: 'center', padding: 4
-													  }}>
-										<Icon source={require('./assets/icons/icon_stats.png')} disabled={true}
-											  iconColor={colors.white}/>
-										{state.index === 1 &&
-										<Text numberOfLines={1}
-											  style={{color: colors.white, fontSize: 11}}>{i18n.get('statistics.title')}</Text>}
-									</TouchableOpacity>
-									<TouchableOpacity onPress={() => state.index !== 2 && navigation.jumpTo('Absences')}
-													  style={{
-														  flex: 1, flexDirection: 'column',
-														  justifyContent: 'center', alignItems: 'center', padding: 4
-													  }}>
-										<Icon source={require('./assets/icons/icon_list.png')} disabled={true}
-											  iconColor={colors.white}/>
-										{state.index === 2 &&
-										<Text numberOfLines={1}
-											  style={{color: colors.white, fontSize: 11}}>{i18n.get('absences.title')}</Text>}
-									</TouchableOpacity>
-									<TouchableOpacity onPress={() => state.index !== 3 && navigation.jumpTo('Profile')}
-													  style={{
-														  flex: 1, flexDirection: 'column',
-														  justifyContent: 'center', alignItems: 'center', padding: 4
-													  }}>
-										<Icon source={require('./assets/icons/icon_profile.png')} disabled={true}
-											  iconColor={colors.white}/>
-										{state.index === 3 &&
-										<Text numberOfLines={1}
-											  style={{color: colors.white, fontSize: 11}}>{i18n.get('profile.title')}</Text>}
-									</TouchableOpacity>
-									<TouchableOpacity onPress={() => state.index !== 4 && navigation.jumpTo('Settings')}
-													  style={{
-														  flex: 1, flexDirection: 'column',
-														  justifyContent: 'center', alignItems: 'center', padding: 4
-													  }}>
-										<Icon source={require('./assets/icons/icon_settings.png')} disabled={true}
-											  iconColor={colors.white}/>
-										{state.index === 4 &&
-										<Text numberOfLines={1}
-											  style={{color: colors.white, fontSize: 11}}>{i18n.get('settings.title')}</Text>}
-									</TouchableOpacity>
-								</View>
-							}
-						>
-							<BottomTab.Screen name={'Calendar'} component={CalendarStackNavigator}/>
-							<BottomTab.Screen name={'Statistics'} component={StatisticsStackNavigator}/>
-							<BottomTab.Screen name={'Absences'} component={AbsencesStackNavigator}/>
-							<BottomTab.Screen name={'Profile'} component={ProfileStackNavigator}/>
-							<BottomTab.Screen name={'Settings'} component={SettingsStackNavigator}/>
-						</BottomTab.Navigator>
-					</NavigationContainer>
-					: <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-						<ActivityIndicator size={'large'} color={colors.primary}/>
-					</View>
+				{this.state._locale && this.state._config && this.state._firebaseKey && this.state._navigation === 'default' &&
+				<NavigationContainer>
+					<BottomTab.Navigator
+						initialRouteName={'Calendar'}
+						backBehavior={'initialRoute'}
+						tabBar={({state, navigation}) =>
+							<View style={{flexDirection: 'row', backgroundColor: colors.primary, paddingVertical: 5}}>
+								<TouchableOpacity onPress={() => state.index !== 0 && navigation.jumpTo('Calendar')}
+												  style={{
+													  flex: 1, flexDirection: 'column',
+													  justifyContent: 'center', alignItems: 'center', padding: 4
+												  }}>
+									<Icon source={require('./assets/icons/icon_calendar.png')} disabled={true}
+										  iconColor={colors.white}/>
+									{state.index === 0 &&
+									<Text numberOfLines={1}
+										  style={{color: colors.white, fontSize: 11}}>{i18n.get('calendar.title')}</Text>}
+								</TouchableOpacity>
+								<TouchableOpacity onPress={() => state.index !== 1 && navigation.jumpTo('Statistics')}
+												  style={{
+													  flex: 1, flexDirection: 'column',
+													  justifyContent: 'center', alignItems: 'center', padding: 4
+												  }}>
+									<Icon source={require('./assets/icons/icon_stats.png')} disabled={true}
+										  iconColor={colors.white}/>
+									{state.index === 1 &&
+									<Text numberOfLines={1}
+										  style={{color: colors.white, fontSize: 11}}>{i18n.get('statistics.title')}</Text>}
+								</TouchableOpacity>
+								<TouchableOpacity onPress={() => state.index !== 2 && navigation.jumpTo('Absences')}
+												  style={{
+													  flex: 1, flexDirection: 'column',
+													  justifyContent: 'center', alignItems: 'center', padding: 4
+												  }}>
+									<Icon source={require('./assets/icons/icon_list.png')} disabled={true}
+										  iconColor={colors.white}/>
+									{state.index === 2 &&
+									<Text numberOfLines={1}
+										  style={{color: colors.white, fontSize: 11}}>{i18n.get('absences.title')}</Text>}
+								</TouchableOpacity>
+								<TouchableOpacity onPress={() => state.index !== 3 && navigation.jumpTo('Profile')}
+												  style={{
+													  flex: 1, flexDirection: 'column',
+													  justifyContent: 'center', alignItems: 'center', padding: 4
+												  }}>
+									<Icon source={require('./assets/icons/icon_profile.png')} disabled={true}
+										  iconColor={colors.white}/>
+									{state.index === 3 &&
+									<Text numberOfLines={1}
+										  style={{color: colors.white, fontSize: 11}}>{i18n.get('profile.title')}</Text>}
+								</TouchableOpacity>
+								<TouchableOpacity onPress={() => state.index !== 4 && navigation.jumpTo('Settings')}
+												  style={{
+													  flex: 1, flexDirection: 'column',
+													  justifyContent: 'center', alignItems: 'center', padding: 4
+												  }}>
+									<Icon source={require('./assets/icons/icon_settings.png')} disabled={true}
+										  iconColor={colors.white}/>
+									{state.index === 4 &&
+									<Text numberOfLines={1}
+										  style={{color: colors.white, fontSize: 11}}>{i18n.get('settings.title')}</Text>}
+								</TouchableOpacity>
+							</View>
+						}
+					>
+						<BottomTab.Screen name={'Calendar'} component={CalendarStackNavigator}/>
+						<BottomTab.Screen name={'Statistics'} component={StatisticsStackNavigator}/>
+						<BottomTab.Screen name={'Absences'} component={AbsencesStackNavigator}/>
+						<BottomTab.Screen name={'Profile'} component={ProfileStackNavigator}/>
+						<BottomTab.Screen name={'Settings'} component={SettingsStackNavigator}/>
+					</BottomTab.Navigator>
+				</NavigationContainer>
+				}
+				{this.state._locale && this.state._config && this.state._firebaseKey && this.state._navigation === 'wizard' &&
+				<NavigationContainer>
+					<Stack.Navigator screenOptions={{
+						headerTintColor: colors.white,
+						headerStyle: {backgroundColor: colors.primary}
+					}}>
+						<Stack.Screen name={'NewProfile1'} component={NewProfile1}/>
+						<Stack.Screen name={'NewProfile2'} component={NewProfile2}/>
+						<Stack.Screen name={'NewProfile3'} component={NewProfile3}/>
+						<Stack.Screen name={'NewProfile4'} component={NewProfile4}/>
+					</Stack.Navigator>
+				</NavigationContainer>
+				}
+				{(!this.state._locale || !this.state._config || !this.state._firebaseKey) &&
+				<View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+					<ActivityIndicator size={'large'} color={colors.primary}/>
+				</View>
 				}
 			</Fragment>
 		);
