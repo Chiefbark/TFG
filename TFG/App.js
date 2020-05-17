@@ -21,8 +21,8 @@ import Teachers from './src/screens/profile/teachers';
 import Settings from './src/screens/settings';
 import TimeTable from './src/screens/timetable';
 import NewProfile1 from './src/screens/newProfile/newProfile1';
-import NewProfile2 from './src/screens/newProfile/newProfile3';
-import NewProfile3 from './src/screens/newProfile/newProfile4';
+import NewProfile2 from './src/screens/newProfile/newProfile2';
+import NewProfile3 from './src/screens/newProfile/newProfile3';
 import NewProfile4 from './src/screens/newProfile/newProfile4';
 
 const BottomTab = createBottomTabNavigator();
