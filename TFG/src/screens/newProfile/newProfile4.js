@@ -30,7 +30,6 @@ export default class NewProfile4 extends React.Component {
 	}
 	
 	componentDidMount() {
-		setTimeout(() => this.setState({dialogHelp: true}), 250);
 		this.props.navigation.setOptions({
 			title: i18n.get('profile.screens.1.title'),
 			headerRight: () => <Icon source={require('../../../assets/icons/icon_help.png')} iconColor={colors.white}

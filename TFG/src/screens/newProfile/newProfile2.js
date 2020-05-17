@@ -37,7 +37,6 @@ export default class NewProfile2 extends React.Component {
 	}
 	
 	componentDidMount() {
-		setTimeout(() => this.setState({dialogHelp: true}), 250);
 		BackHandler.addEventListener('hardwareBackPress', this._backCallback.bind(this))
 		
 		this.props.navigation.setOptions({
