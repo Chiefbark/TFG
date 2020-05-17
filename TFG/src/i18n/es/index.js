@@ -1,3 +1,55 @@
+export const newProfile = {
+	title: 'Asistente de Perfiles',
+	screens: [
+		{
+			subtitle: 'Bienvenido al Asistente de Perfiles',
+			description: [
+				'Desde aquí podrás crear un nuevo perfil y añadir todas las clases que necesites.' +
+				'\n\nGracias a estos perfiles podrás tener diferentes cursos en la aplicación y manejarlos de manera independiente.' +
+				'\n\nPodrás llevar la cuenta de las faltas de asistencia que has tenido para que no e lleves ninguna sorpresa luego!' +
+				'\n\n\nPara empezar pulsa el botón de abajo'
+			],
+			prevButton: 'Salir',
+			nextButton: 'Comenzar'
+		},
+		{
+			subtitle: 'Crea tu perfil',
+			description: [
+				'Indica el nombre del perfil que vas a crear.\nLo podrás cambiar más tarde',
+				'Estas fechas las puedes cambiar cuando quieras mediante el sistema de horarios que encontrarás en la pantalla de perfil',
+				'Cuando hayas acabado pulsa el botón de abajo'
+			],
+			exitDialog: {
+				title: 'Estás seguro?',
+				description: 'Todos los datos que has introducidos no se guardarán',
+				actions: ['Cancelar', 'Salir']
+			},
+			helpDialog: {
+				placeholders: [
+					'Primero tenemos que crear un perfil.' +
+					'\nPara ello, dale un nombre e indica las fechas de inicio y fin del curso.' +
+					'\n\nNo te preocupes si no indicas las fechas correctas ahora, podrás modificarlas después.',
+					'Si necesitas ver este mensaje de nuevo, pulsa en el botón de ayuda'
+				]
+			}
+		},
+		{
+			subtitle: 'Añade profesores',
+			description: [
+				'Puedes añadir tantos profesores como quieras pulsando sobre el botón +' +
+				'\n\nTambién puedes editarlos y borrarlos si los mantienes pulsados',
+				'Cuando hayas acabado pulsa el botón de abajo'
+			],
+			helpDialog: {
+				placeholders: [
+					'Una vez tenemos el perfil creado, vamos a añadir algunos profesores.' +
+					'\n\nNo te preocupes si se te olvida alguno, podrás crear más mas adelante',
+					'Si necesitas ver este mensaje de nuevo, pulsa en el botón de ayuda'
+				]
+			}
+		}
+	]
+}
 export const calendar = {
 	title: 'Calendario',
 	helpText: 'Pulsa en un día del calendario para ver más detalles!',

@@ -1,3 +1,55 @@
+export const newProfile = {
+	title: 'Profile wizard',
+	screens: [
+		{
+			subtitle: 'Welcome to the Profile Wizard',
+			description: [
+				'From here you can create a new profile and add all the classes you need.' +
+				'\n\nThanks to this profiles you can have different courses in the app and handle them independently.' +
+				'\n\nYou can keep track of the absences you have had so that you don\'t have any surprises later!' +
+				'\n\n\nPress the button down below to begin'
+			],
+			prevButton: 'exit',
+			nextButton: 'Start'
+		},
+		{
+			subtitle: 'Create your profile',
+			description: [
+				'Set the name of the profile you are creating.\nIt can be modified later',
+				'These dates can be changed whenever you want in the schedule config found at profile screen',
+				'When you are done, press the button down below to begin'
+			],
+			exitDialog: {
+				title: 'Are you sure?',
+				description: 'All the data you input won\'t be saved',
+				actions: ['Cancel', 'Exit']
+			},
+			helpDialog: {
+				placeholders: [
+					'First we need to create a profile.' +
+					'\nTo do so, set a name to it and set the initial and end date of the course.' +
+					'\n\nDon\'t worry if you don\'t set the dates correct right now, you can modify them later',
+					'If you need to see this message again, click in the help button'
+				]
+			}
+		},
+		{
+			subtitle: 'Add teachers',
+			description: [
+				'You can add as many teachers as you want pressing the button +' +
+				'\n\nYou can also edit and delete them if you hold down them',
+				'When you are done, press the button down below to begin'
+			],
+			helpDialog: {
+				placeholders: [
+					'Once we have our profile, we are going to add some teachers.' +
+					'\n\nDon\'t worry if you forget about someone, you can create more later',
+					'If you need to see this message again, click in the help button'
+				]
+			}
+		}
+	]
+}
 export const calendar = {
 	title: 'Calendar',
 	helpText: 'Click on a day in the calendar to see more details!',
