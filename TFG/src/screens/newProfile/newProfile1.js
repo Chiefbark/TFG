@@ -9,6 +9,7 @@ import {colors} from '../../styles';
 import {StackActions} from '@react-navigation/native';
 
 import Button from '../../components/button';
+import * as firebase from '../../firebase';
 
 export default class NewProfile1 extends React.Component {
 	
@@ -19,6 +20,8 @@ export default class NewProfile1 extends React.Component {
 	
 	componentDidMount() {
 		this.props.navigation.setOptions({title: i18n.get('newProfile.title')});
+		firebase.ref('profiles')
+			.once('value', snapshot => this.setState({nProfiles: snapshot.numChildren()}))
 	}
 	
 	render() {
@@ -40,6 +43,7 @@ export default class NewProfile1 extends React.Component {
 					<Text style={{textAlign: 'center', marginTop: 16, marginBottom: 100}}>
 						{i18n.get('newProfile.screens.0.description.0')}
 					</Text>
+					{this.state.nProfiles > 0 &&
 					<Button label={i18n.get('newProfile.screens.0.prevButton')}
 							textColor={colors.primary}
 							onClick={() => {
@@ -50,6 +54,7 @@ export default class NewProfile1 extends React.Component {
 							}}
 							style={{position: 'absolute', bottom: 50, left: 16}}
 					/>
+					}
 					<Button label={i18n.get('newProfile.screens.0.nextButton') + '  ➤'} backgroundColor={colors.primary}
 							textColor={colors.white}
 							onClick={() => this.props.navigation.dispatch(StackActions.push('NewProfile2'))}
