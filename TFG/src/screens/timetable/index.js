@@ -75,6 +75,15 @@ export default class TimeTable extends React.Component {
 	}
 	
 	render() {
+		let defaultTimes = undefined;
+		if (this.state.schedules && this.state.schedules instanceof Array && this.state.schedules.length > 0)
+			defaultTimes = {
+				obj:
+					{
+						startTime: this.state.schedules[this.state.schedules.length - 1][1]?.endTime,
+						endTime: this.state.schedules[this.state.schedules.length - 1][1]?.endTime
+					}
+			}
 		return (
 			<Fragment>
 				<FlatList style={{flex: 1}}
@@ -148,12 +157,14 @@ export default class TimeTable extends React.Component {
 				}
 				{/*	DIALOG SCHEDULE	*/}
 				{this.state.dialogSchedule &&
-				<ScheduleForm schedule={this.state.schedule} day={this.props.route.params.day} scheduleKey={this.props.route.params.key}
-							  takenHours={this.state.schedules?.map(e => {
-								  return {key: e[0], startTime: e[1].startTime, endTime: e[1].endTime}
-							  }) ?? undefined}
-							  onSubmit={() => this.setState({schedule: undefined, dialogSchedule: false})}
-							  onCancel={() => this.setState({schedule: undefined, dialogSchedule: false})}/>
+				<ScheduleForm
+					schedule={this.state.schedule ? this.state.schedule : defaultTimes}
+					day={this.props.route.params.day} scheduleKey={this.props.route.params.key}
+					takenHours={this.state.schedules?.map(e => {
+						return {key: e[0], startTime: e[1].startTime, endTime: e[1].endTime}
+					}) ?? undefined}
+					onSubmit={() => this.setState({schedule: undefined, dialogSchedule: false})}
+					onCancel={() => this.setState({schedule: undefined, dialogSchedule: false})}/>
 				}
 				{/*	DIALOG CONFIRM	*/}
 				<Dialog title={i18n.get('timetable.confirmDialog.title')} loading={this.state.loadingRemove}
