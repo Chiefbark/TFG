@@ -150,7 +150,7 @@ export default class NewProfile4 extends React.Component {
 						backgroundColor={colors.primary}
 						textColor={colors.white} disabled={!this.state.continueVisible}
 						onClick={() => this.props.navigation.dispatch(
-							StackActions.push('NewProfile5', {key: this.props.route.params.id_schedule, day: 0})
+							StackActions.push('NewProfile5', {id_schedule: this.props.route.params.id_schedule})
 						)}
 						style={{
 							position: 'absolute', bottom: 50, right: 16, borderRadius: 1000, opacity: this.state.continueVisible ? 1 : 0
