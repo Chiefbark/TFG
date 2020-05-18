@@ -166,6 +166,13 @@ export function removeTimetable(id_timetable, index, date) {
 	})
 }
 
+export function removeAbsencesBetween(startDate, endDate) {
+	let references = {};
+	getDatesBetween(startDate, endDate).forEach(e => references[e] = null)
+	if (Object.keys(references).length > 0)
+		ref('absences').update({...references})
+}
+
 function _removeTimetableListener(snapshot) {
 	let data = snapshot.val() || {};
 	const entries = Object.entries(data);
@@ -188,8 +195,7 @@ function _linkTimetablesListener(snapshot) {
 		if (entries[ii][1].endDate !== date) {
 			links[`${entries[ii][0]}/endDate`] = date
 			getDatesBetween(entries[ii][1].endDate, date).forEach((e, index, arr) => {
-				if (index < arr.length - 1 && index > 0)
-					dates[e] = null
+				if (index > 0) dates[e] = null
 			});
 		}
 	}
