@@ -1,10 +1,13 @@
-import React from 'react';
+import React, {Fragment} from 'react';
 import PropTypes from 'prop-types';
-import {Image} from "react-native";
+import {Image, View, Text, TouchableWithoutFeedback} from 'react-native';
 
-import Picker from "react-native-picker-select";
+import {colors} from '../../styles';
 
-import {colors} from "../../styles";
+import Button from '../button';
+import Dialog from '../dialog';
+import Icon from '../icon';
+import ListItem from '../listItem';
 
 /**
  * This component adds a controller layer to the component React Native Picker Select
@@ -23,49 +26,86 @@ export default class CustomPicker extends React.Component {
 	}
 	
 	render() {
+		let selected = undefined;
+		if (this.state.value && this.props.multiple)
+			selected = this.props.data.filter(e => this.state.value.find(x => x === e.value)).map(e => e.label)?.join(', ');
+		if (this.state.value && !this.props.multiple)
+			selected = this.props.data.find(e => e.value === this.state.value)?.label ?? undefined;
+		
 		return (
-			<Picker value={this.state.value}
-					onValueChange={(itemValue) => {
-						this.setState({value: itemValue});
-						if (this.props.onValueChange)
-							this.props.onValueChange(itemValue);
-					}}
-					items={[{
-						label: this.props.placeholder || 'Select an item...', value: undefined,
-						color: this.props.error ? colors.red : colors.lightGrey
-					},
-						...this.props.data.map(element => {
-							return {label: element.label, value: element.value, color: element.color || colors.black};
-						})
-					]}
-					useNativeAndroidPickerStyle={false}
-					placeholder={{}}
-					disabled={this.props.disabled}
-					Icon={() =>
+			<Fragment>
+				<TouchableWithoutFeedback
+					onPress={() => !this.props.disabled && this.setState({dialog: true})}>
+					<View style={{
+						flexDirection: 'row', flexWrap: 'nowrap', alignItems: 'center',
+						borderBottomWidth: 1, borderBottomColor: this.props.error ? colors.red : colors.lightGrey,
+						paddingVertical: 2, marginVertical: 10
+					}}>
+						<Text numberOfLines={1} style={{
+							flex: 1, color: this.props.error ?
+								colors.red : (!selected || this.state.value === 0) ?
+									colors.lightGrey : colors.black
+						}}>
+							{selected || (this.props.placeholder || this.props.multiple && 'Select items...' || 'Select an item...')}
+						</Text>
 						<Image source={require('../../../assets/icons/icon_drop_down.png')}
-							   style={{top: 12, width: 24, height: 24, tintColor: this.props.error ? colors.red : colors.black}}
+							   style={{width: 24, height: 24, tintColor: this.props.error ? colors.red : this.props.disabled ? colors.lightGrey : colors.black}}
 						/>
-					}
-					style={{
-						inputIOS: {
-							borderBottomWidth: 1,
-							color: this.props.error ?
-								colors.red : (!this.state.value || this.state.value === 0) ?
-									colors.lightGrey : colors.black,
-							marginVertical: 10, paddingRight: 24,
-							borderBottomColor: this.props.error ? colors.red : colors.lightGrey
-						},
-						inputAndroid: {
-							borderBottomWidth: 1,
-							color: this.props.error ?
-								colors.red : (!this.state.value || this.state.value === 0) ?
-									colors.lightGrey : colors.black,
-							marginVertical: 10, paddingRight: 24,
-							borderBottomColor: this.props.error ? colors.red : colors.lightGrey
+					</View>
+				</TouchableWithoutFeedback>
+				<Dialog title={this.props.placeholder || this.props.multiple && 'Select items...' || 'Select an item...'}
+						onClickExit={() => {
+							if (!this.props.multiple) this.setState({dialog: false})
+						}}
+						content={() =>
+							<Fragment>
+								{this.props.data?.map(e => {
+										let selected = undefined;
+										if (this.props.multiple)
+											selected = this.state.value?.find(x => x === e.value);
+										return <ListItem key={e.value} title={e.label} titleStyles={{fontWeight: 'normal', fontSize: 16}}
+														 containerStyle={{paddingHorizontal: 0}}
+														 onClick={() => {
+															 if (!this.props.multiple) {
+																 this.setState({value: e.value, dialog: false});
+																 this.props.onValueChange && this.props.onValueChange(e.value);
+															 } else {
+																 let values = this.state.value ? [...this.state.value] : [];
+																 if (!selected)
+																	 values.push(e.value);
+																 else
+																	 values.splice(values.indexOf(e.value), 1);
+										
+																 this.setState({value: values});
+															 }
+														 }}
+														 rightItem={() => this.props.multiple &&
+															 <Icon source={require('../../../assets/icons/icon_check.png')}
+																   size={'small'} disabled={true}
+																   iconColor={selected ? colors.primary : colors.white}
+																   style={{
+																	   borderWidth: 1, borderColor: colors.primary, borderRadius: 1000,
+																	   padding: 10, marginLeft: 8
+																   }}/>
+														 }/>
+									}
+								)}
+							</Fragment>
 						}
-					}}
-			/>
-		);
+						buttons={() => this.props.multiple &&
+							<Button label={this.props.textExit || 'Select'}
+									backgroundColor={colors.primary} textColor={colors.white}
+									onClick={() => {
+										this.setState({dialog: false});
+										this.props.onValueChange && this.props.onValueChange((this.state.value && this.state.value.length > 0) ? this.state.value : undefined);
+									}}
+									style={{flex: 1}}
+							/>
+						}
+						visible={this.state.dialog}
+				/>
+			</Fragment>
+		)
 	}
 }
 
@@ -90,11 +130,11 @@ CustomPicker.propTypes = {
 	 *
 	 * `String`
 	 */
-	initialValue: PropTypes.string,
+	initialValue: PropTypes.oneOfType([PropTypes.string, PropTypes.arrayOf(PropTypes.string)]),
 	/**
 	 * Placeholder to show in the picker
 	 *
-	 * `String` -- `default 'Select an item...'`
+	 * `String`
 	 */
 	placeholder: PropTypes.string,
 	/**
@@ -103,6 +143,18 @@ CustomPicker.propTypes = {
 	 * `Bool` -- `default false`
 	 */
 	error: PropTypes.bool,
+	/**
+	 * Specifies if the picker allows multi select or not
+	 *
+	 * `Bool` -- `default false`
+	 */
+	multiple: PropTypes.bool,
+	/**
+	 * Sets the text of the exit button
+	 *
+	 * `String`
+	 */
+	textExit: PropTypes.string,
 	/**
 	 * Specifies if the picker is enabled or not
 	 *
@@ -120,5 +172,6 @@ CustomPicker.propTypes = {
 
 CustomPicker.defaultProps = {
 	error: false,
+	multiple: false,
 	disabled: false
 }
