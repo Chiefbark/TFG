@@ -31,7 +31,6 @@ export default class CustomPicker extends React.Component {
 			selected = this.props.data.filter(e => this.state.value.find(x => x === e.value)).map(e => e.label)?.join(', ');
 		if (this.state.value && !this.props.multiple)
 			selected = this.props.data.find(e => e.value === this.state.value)?.label ?? undefined;
-		
 		return (
 			<Fragment>
 				<TouchableWithoutFeedback
@@ -49,7 +48,10 @@ export default class CustomPicker extends React.Component {
 							{selected || (this.props.placeholder || this.props.multiple && 'Select items...' || 'Select an item...')}
 						</Text>
 						<Image source={require('../../../assets/icons/icon_drop_down.png')}
-							   style={{width: 24, height: 24, tintColor: this.props.error ? colors.red : this.props.disabled ? colors.lightGrey : colors.black}}
+							   style={{
+								   width: 24, height: 24,
+								   tintColor: this.props.error ? colors.red : this.props.disabled ? colors.lightGrey : colors.black
+							   }}
 						/>
 					</View>
 				</TouchableWithoutFeedback>
