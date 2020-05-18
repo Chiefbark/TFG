@@ -160,6 +160,11 @@ export const profile = {
 					'\nQuieres continuar?'
 				],
 				actions: ['Cancelar', 'Continuar']
+			},
+			confirmDialogHolidays: {
+				title: 'Estás seguro?',
+				description: 'Por favor confirma que quieres eliminar estas vacaciones',
+				actions: ['Cancel', 'Remove']
 			}
 		},
 		{

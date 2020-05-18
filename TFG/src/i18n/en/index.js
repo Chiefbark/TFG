@@ -160,6 +160,11 @@ export const profile = {
 					'\nYou want to continue?'
 				],
 				actions: ['Cancel', 'Continue']
+			},
+			confirmDialogHolidays: {
+				title: 'Are you sure?',
+				description: 'Please confirm that you want to remove this holidays',
+				actions: ['Cancel', 'Remove']
 			}
 		},
 		{
