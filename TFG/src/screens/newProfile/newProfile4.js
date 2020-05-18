@@ -29,6 +29,16 @@ export default class NewProfile4 extends React.Component {
 		}
 	}
 	
+	_listenerSubjects(snapshot){
+		let data = snapshot.val() || {};
+		this.setState({subjects: Object.entries(data)});
+	}
+	
+	_listenerTeachers(snapshot){
+		let data = snapshot.val() || {};
+		this.setState({teachers: Object.entries(data)});
+	}
+	
 	componentDidMount() {
 		this.props.navigation.setOptions({
 			title: i18n.get('profile.screens.1.title'),
@@ -50,19 +60,16 @@ export default class NewProfile4 extends React.Component {
 		this.keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', () => this.setState({continueVisible: false}));
 		this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', () => this.setState({continueVisible: true}));
 		
-		firebase.ref('subjects').on('value', snapshot => {
-			let data = snapshot.val() || {};
-			this.setState({subjects: Object.entries(data)});
-		});
-		firebase.ref('teachers').on('value', snapshot => {
-			let data = snapshot.val() || {};
-			this.setState({teachers: Object.entries(data)});
-		});
+		firebase.ref('subjects').on('value', this._listenerSubjects.bind(this));
+		firebase.ref('teachers').on('value', this._listenerTeachers.bind(this));
 	}
 	
 	componentWillUnmount() {
 		this.keyboardDidShowListener.remove();
 		this.keyboardDidHideListener.remove();
+		
+		firebase.ref('subjects').off('value', this._listenerSubjects.bind(this));
+		firebase.ref('teachers').off('value', this._listenerTeachers.bind(this));
 	}
 	
 	_showOptions() {

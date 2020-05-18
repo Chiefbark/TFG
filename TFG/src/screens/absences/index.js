@@ -62,11 +62,11 @@ export default class AbsencesScreen extends React.Component {
 			tabBarVisible: !this.props.route.params
 		});
 		
-		firebase.ref('subjects').off('value', this._listenerSubjects.bind(this))
-		firebase.ref('absences').off('value', this._listenerAbsences.bind(this))
+		firebase.ref('subjects').off('value', this._listenerSubjects.bind(this));
+		firebase.ref('absences').off('value', this._listenerAbsences.bind(this));
 		
-		firebase.ref('subjects').on('value', this._listenerSubjects.bind(this))
-		firebase.ref('absences').on('value', this._listenerAbsences.bind(this))
+		firebase.ref('subjects').on('value', this._listenerSubjects.bind(this));
+		firebase.ref('absences').on('value', this._listenerAbsences.bind(this));
 	}
 	
 	_filterComponent() {
@@ -100,6 +100,9 @@ export default class AbsencesScreen extends React.Component {
 		i18n.removeListener(this._updateComponent.bind(this));
 		config.removeConfigListener(this._updateComponent.bind(this));
 		this.props.navigation.dangerouslyGetParent().setOptions({tabBarVisible: true});
+		
+		firebase.ref('subjects').off('value', this._listenerSubjects.bind(this));
+		firebase.ref('absences').off('value', this._listenerAbsences.bind(this));
 	}
 	
 	render() {

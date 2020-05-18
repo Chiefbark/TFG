@@ -46,6 +46,8 @@ export default class SettingsScreen extends React.Component {
 	
 	componentWillUnmount() {
 		i18n.removeListener(this._updateComponent.bind(this));
+		
+		firebase.ref('profiles').off('value', this._listenerProfiles.bind(this));
 	}
 	
 	render() {

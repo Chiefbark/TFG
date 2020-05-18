@@ -27,6 +27,11 @@ export default class NewProfile3 extends React.Component {
 		}
 	}
 	
+	_listenerTeachers(snapshot) {
+		let data = snapshot.val() || {};
+		this.setState({teachers: Object.entries(data)});
+	}
+	
 	componentDidMount() {
 		this.props.navigation.setOptions({
 			title: i18n.get('profile.screens.2.title'),
@@ -48,15 +53,14 @@ export default class NewProfile3 extends React.Component {
 		this.keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', () => this.setState({continueVisible: false}));
 		this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', () => this.setState({continueVisible: true}));
 		
-		firebase.ref('teachers').on('value', snapshot => {
-			let data = snapshot.val() || {};
-			this.setState({teachers: Object.entries(data)});
-		});
+		firebase.ref('teachers').on('value', this._listenerTeachers.bind(this));
 	}
 	
 	componentWillUnmount() {
 		this.keyboardDidShowListener.remove();
 		this.keyboardDidHideListener.remove();
+		
+		firebase.ref('teachers').off('value', this._listenerTeachers.bind(this));
 	}
 	
 	_showOptions() {

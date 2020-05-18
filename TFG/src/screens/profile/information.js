@@ -50,7 +50,7 @@ export default class InformationScreen extends React.Component {
 		
 		firebase.ref('currProfile').off('value', this._listenerCurrProfile.bind(this));
 		firebase.ref('schedules').off('value', this._listenerSchedules.bind(this));
-		firebase.removeListenersToTimetables()
+		firebase.removeListenersToTimetables();
 		firebase.ref('holidays').off('value', this._listenerHolidays.bind(this));
 		
 		firebase.ref('currProfile').on('value', this._listenerCurrProfile.bind(this));
@@ -86,6 +86,11 @@ export default class InformationScreen extends React.Component {
 		i18n.removeListener(this._updateComponent.bind(this));
 		this.keyboardDidShowListener.remove();
 		this.keyboardDidHideListener.remove();
+		
+		firebase.ref('currProfile').off('value', this._listenerCurrProfile.bind(this));
+		firebase.ref('schedules').off('value', this._listenerSchedules.bind(this));
+		firebase.removeListenersToTimetables();
+		firebase.ref('holidays').off('value', this._listenerHolidays.bind(this));
 	}
 	
 	render() {

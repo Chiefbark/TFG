@@ -74,6 +74,9 @@ export default class SubjectsScreen extends React.Component {
 		i18n.removeListener(this._updateComponent.bind(this));
 		this.keyboardDidShowListener.remove();
 		this.keyboardDidHideListener.remove();
+		
+		firebase.ref('subjects').off('value', this._listenerSubjects.bind(this));
+		firebase.ref('teachers').off('value', this._listenerTeachers.bind(this));
 	}
 	
 	_showOptions() {

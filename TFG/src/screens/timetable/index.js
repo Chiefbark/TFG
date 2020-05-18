@@ -26,6 +26,16 @@ export default class TimeTable extends React.Component {
 		}
 	}
 	
+	_listenerSchedules(snapshot){
+		let data = snapshot.val() || {};
+		this.setState({schedules: Object.entries(data)});
+	}
+	
+	_listenerSubjects(snapshot){
+		let data = snapshot.val() || {};
+		this.setState({subjects: Object.entries(data)});
+	}
+	
 	componentDidMount() {
 		BackHandler.addEventListener('hardwareBackPress', () => {
 			this.setState({dialogExit: true});
@@ -46,14 +56,13 @@ export default class TimeTable extends React.Component {
 		});
 		this.props.navigation.dangerouslyGetParent().dangerouslyGetParent().setOptions({tabBarVisible: false});
 		
-		firebase.ref('schedules').child(`${this.props.route.params.key}/${this.props.route.params.day}`).on('value', snapshot => {
-			let data = snapshot.val() || {};
-			this.setState({schedules: Object.entries(data)});
-		});
-		firebase.ref('subjects').on('value', snapshot => {
-			let data = snapshot.val() || {};
-			this.setState({subjects: Object.entries(data)});
-		});
+		firebase.ref('schedules').child(`${this.props.route.params.key}/${this.props.route.params.day}`).on('value', this._listenerSchedules.bind(this));
+		firebase.ref('subjects').on('value', this._listenerSubjects.bind(this));
+	}
+	
+	componentWillUnmount() {
+		firebase.ref('schedules').child(`${this.props.route.params.key}/${this.props.route.params.day}`).off('value', this._listenerSchedules.bind(this));
+		firebase.ref('subjects').off('value', this._listenerSubjects.bind(this));
 	}
 	
 	_showOptions() {

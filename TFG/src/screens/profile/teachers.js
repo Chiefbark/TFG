@@ -67,6 +67,8 @@ export default class TeachersScreen extends React.Component {
 		i18n.removeListener(this._updateComponent.bind(this));
 		this.keyboardDidShowListener.remove();
 		this.keyboardDidHideListener.remove();
+		
+		firebase.ref('teachers').off('value', this._listenerTeachers.bind(this));
 	}
 	
 	_showOptions() {

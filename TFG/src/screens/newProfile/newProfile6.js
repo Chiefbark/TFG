@@ -28,6 +28,16 @@ export default class newProfile6 extends React.Component {
 		}
 	}
 	
+	_listenerSchedules(snapshot) {
+		let data = snapshot.val() || {};
+		this.setState({schedules: Object.entries(data)});
+	}
+	
+	_listenerSubjects(snapshot) {
+		let data = snapshot.val() || {};
+		this.setState({subjects: Object.entries(data)});
+	}
+	
 	componentDidMount() {
 		this.props.navigation.setOptions({
 			title: i18n.get('timetable.title') + ' ' + i18n.get(`commons.calendarLocales.dayNames.${(this.props.route.params.day + 1) % 7}`),
@@ -50,14 +60,13 @@ export default class newProfile6 extends React.Component {
 									 onClick={() => this.setState({dialogHelp: true})}/>
 		});
 		
-		firebase.ref('schedules').child(`${this.props.route.params.key}/${this.props.route.params.day}`).on('value', snapshot => {
-			let data = snapshot.val() || {};
-			this.setState({schedules: Object.entries(data)});
-		});
-		firebase.ref('subjects').on('value', snapshot => {
-			let data = snapshot.val() || {};
-			this.setState({subjects: Object.entries(data)});
-		});
+		firebase.ref('schedules').child(`${this.props.route.params.key}/${this.props.route.params.day}`).on('value', this._listenerSchedules.bind(this));
+		firebase.ref('subjects').on('value', this._listenerSubjects.bind(this));
+	}
+	
+	componentWillUnmount() {
+		firebase.ref('schedules').child(`${this.props.route.params.key}/${this.props.route.params.day}`).off('value', this._listenerSchedules.bind(this));
+		firebase.ref('subjects').off('value', this._listenerSubjects.bind(this));
 	}
 	
 	_showOptions() {

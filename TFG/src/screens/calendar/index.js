@@ -105,6 +105,16 @@ export default class CalendarScreen extends React.Component {
 		this._updateComponent();
 	}
 	
+	componentWillUnmount() {
+		i18n.removeListener(this._updateComponent.bind(this));
+		config.removeConfigListener(this._updateComponent.bind(this));
+		
+		firebase.ref('schedules').off('value', this._listenerSchedules.bind(this));
+		firebase.ref('absences').off('value', this._listenerAbsences.bind(this));
+		firebase.ref('holidays').off('value', this._listenerHolidays.bind(this));
+		firebase.ref('subjects').off('value', this._listenerSubjects.bind(this));
+	}
+	
 	async _updateMarking() {
 		let marking = {};
 		const abs = this.state.absences;
@@ -145,11 +155,6 @@ export default class CalendarScreen extends React.Component {
 			}
 		// TODO: EXAMS
 		this.setState({marking: marking})
-	}
-	
-	componentWillUnmount() {
-		i18n.removeListener(this._updateComponent.bind(this));
-		config.removeConfigListener(this._updateComponent.bind(this));
 	}
 	
 	render() {
