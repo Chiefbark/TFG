@@ -1,10 +1,12 @@
 import React, {Fragment} from 'react';
-import {View, Text, Image} from 'react-native';
+import {View, Text} from 'react-native';
+
 import * as i18n from '../../i18n';
 import {colors} from '../../styles';
+
 import {StackActions} from '@react-navigation/native';
+
 import Button from '../../components/button';
-import Icon from "../../components/icon";
 
 export default class NewProfile5 extends React.Component {
 	constructor(props) {

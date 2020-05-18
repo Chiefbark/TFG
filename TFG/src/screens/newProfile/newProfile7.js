@@ -1,8 +1,10 @@
 import React from 'react';
 import {View, Text, Image} from 'react-native';
-import * as i18n from "../../i18n";
-import Button from "../../components/button";
-import {colors} from "../../styles";
+
+import * as i18n from '../../i18n';
+import {colors} from '../../styles';
+
+import Button from '../../components/button';
 
 export default class NewProfile7 extends React.Component {
 	constructor(props) {
