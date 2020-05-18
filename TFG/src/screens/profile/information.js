@@ -59,6 +59,7 @@ export default class InformationScreen extends React.Component {
 	
 	componentDidMount() {
 		i18n.addListener(this._updateComponent.bind(this));
+		config.addConfigListener(this._updateComponent.bind(this));
 		this.props.navigation.addListener('focus', () => this._onFocusComponent());
 		this.props.navigation.addListener('blur', () => {
 			this.setState({selected: {}});

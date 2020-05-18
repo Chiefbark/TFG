@@ -10,6 +10,7 @@ import Dialog from '../../components/dialog';
 import Icon from '../../components/icon';
 import ListItem from '../../components/listItem';
 import TeacherForm from '../../components/forms/teacher';
+import * as config from "../../config";
 
 export default class TeachersScreen extends React.Component {
 	constructor(props) {
@@ -42,6 +43,7 @@ export default class TeachersScreen extends React.Component {
 	
 	componentDidMount() {
 		i18n.addListener(this._updateComponent.bind(this));
+		config.addConfigListener(this._updateComponent.bind(this));
 		this.props.navigation.addListener('focus', () => this._onFocusComponent());
 		this.props.navigation.addListener('blur', () => {
 			this.flatList?.scrollToOffset({animated: false, y: 0});
@@ -50,6 +52,7 @@ export default class TeachersScreen extends React.Component {
 				headerRight: () => undefined
 			});
 		});
+		this._updateComponent();
 		
 		this.keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', () => this.props.navigation.dangerouslyGetParent()
 			.dangerouslyGetParent().setOptions({tabBarVisible: false}));
