@@ -14,6 +14,7 @@ import ListHeader from '../../components/listHeader';
 import ListItem from '../../components/listItem';
 import ProfileInfoForm from '../../components/forms/profileInfo';
 import TimetableForm from '../../components/forms/timetable';
+import Toast from "react-native-simple-toast";
 
 export default class InformationScreen extends React.Component {
 	constructor(props) {
@@ -174,13 +175,19 @@ export default class InformationScreen extends React.Component {
 							   nTimetables={this.state.timetables?.length}
 							   onSubmit={() => this.setState({dialogTimetable: false, timetable: undefined})}
 							   onCancel={() => this.setState({dialogTimetable: false, timetable: undefined})}
-							   onDelete={endDate => this.setState({dialogTimetable: false, timetable: undefined})}/>
+							   onDelete={() => {
+								   this.setState({dialogTimetable: false, timetable: undefined})
+								   Toast.showWithGravity(i18n.get('commons.timetableForm.toast'), Toast.LONG, Toast.BOTTOM);
+							   }}/>
 				}
 				{this.state.dialogHoliday &&
 				<HolidayForm holiday={this.state.holiday}
 							 onSubmit={() => this.setState({dialogHoliday: false, holiday: undefined})}
 							 onCancel={() => this.setState({dialogHoliday: false, holiday: undefined})}
-							 onDelete={() => this.setState({dialogHoliday: false, holiday: undefined})}/>
+							 onDelete={() => {
+								 this.setState({dialogHoliday: false, holiday: undefined})
+								 Toast.showWithGravity(i18n.get('commons.holidayForm.toast'), Toast.LONG, Toast.BOTTOM);
+							 }}/>
 				}
 			</Fragment>
 		);

@@ -11,6 +11,7 @@ import Icon from '../../components/icon';
 import ListItem from '../../components/listItem';
 import SubjectForm from '../../components/forms/subject';
 import * as config from "../../config";
+import Toast from "react-native-simple-toast";
 
 export default class SubjectsScreen extends React.Component {
 	constructor(props) {
@@ -198,7 +199,10 @@ export default class SubjectsScreen extends React.Component {
 													.forEach(element => firebase.removeSubject(element[0], element[1].id_teacher))
 												this.setState({
 													selected: {}, dialogConfirm: false, loadingRemove: false
-												}, () => this._showOptions());
+												}, () => {
+													this._showOptions();
+													Toast.showWithGravity(i18n.get('commons.subjectForm.toast'), Toast.LONG, Toast.BOTTOM);
+												});
 											}, 0)
 										}}/>
 							</Fragment>

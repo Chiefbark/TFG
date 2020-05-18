@@ -11,6 +11,7 @@ import Dialog from '../../components/dialog';
 import Icon from '../../components/icon';
 import ListItem from '../../components/listItem';
 import ScheduleForm from '../../components/forms/schedule';
+import Toast from "react-native-simple-toast";
 
 export default class TimeTable extends React.Component {
 	
@@ -194,7 +195,10 @@ export default class TimeTable extends React.Component {
 													.forEach(element => firebase.removeSchedule(`${this.props.route.params.key}/${this.props.route.params.day}`, element[0]))
 												this.setState({
 													selected: {}, dialogConfirm: false, loadingRemove: false
-												}, () => this._showOptions());
+												}, () => {
+													this._showOptions();
+													Toast.showWithGravity(i18n.get('commons.scheduleForm.toast'), Toast.LONG, Toast.BOTTOM);
+												});
 											}, 0)
 										}}
 								/>

@@ -11,6 +11,7 @@ import Icon from '../../components/icon';
 import ListItem from '../../components/listItem';
 import TeacherForm from '../../components/forms/teacher';
 import * as config from "../../config";
+import Toast from "react-native-simple-toast";
 
 export default class TeachersScreen extends React.Component {
 	constructor(props) {
@@ -186,7 +187,10 @@ export default class TeachersScreen extends React.Component {
 													.forEach(element => firebase.removeTeacher(element[0]))
 												this.setState({
 													selected: {}, dialogConfirm: false, loadingRemove: false
-												}, () => this._showOptions());
+												}, () => {
+													this._showOptions();
+													Toast.showWithGravity(i18n.get('commons.teacherForm.toast'), Toast.LONG, Toast.BOTTOM);
+												});
 											}, 0)
 										}}/>
 							</Fragment>
