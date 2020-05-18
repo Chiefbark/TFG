@@ -101,7 +101,6 @@ export default class HolidayForm extends React.Component {
 											let obj = {};
 											if (!this.state.name || this.state.name === '') obj.errorName = true;
 											if (!this.state.startDate || this.state.startDate === '') obj.errorStartDate = true;
-											// if (!this.state.endDate || this.state.endDate === '') obj.errorEndDate = true;
 											if (Object.entries(obj).length > 0) this._showError(obj);
 											else {
 												this.setState({loading: true})
@@ -115,6 +114,8 @@ export default class HolidayForm extends React.Component {
 													else
 														firebase.ref('holidays').child(this.state.key).update(obj).then();
 									
+													firebase.removeAbsencesBetween(this.state.startDate, this.state.endDate);
+									
 													this.props.onSubmit(newKey);
 												}, 0)
 											}
@@ -124,7 +125,7 @@ export default class HolidayForm extends React.Component {
 				{this.state.dialogDatePicker &&
 				<CalendarPicker startDate={this.state.startDate} endDate={this.state.endDate}
 								onSubmit={(startDate, endDate) => this.setState({
-									dialogDatePicker: false, startDate: startDate, endDate: endDate
+									dialogDatePicker: false, startDate: startDate, endDate: endDate ? endDate : startDate
 								})}
 								onCancel={() => this.setState({dialogDatePicker: false})}/>
 				}
