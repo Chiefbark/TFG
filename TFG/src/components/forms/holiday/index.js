@@ -75,14 +75,17 @@ export default class HolidayForm extends React.Component {
 											]}
 										onPress={() => this.setState({dialogDatePicker: true})}>{this.state.endDate || 'yyyy-MM-dd'}</Text>
 								</View>
-								<Text style={{textAlign: 'center', color: colors.grey}}>
+								<Text style={{textAlign: 'center', color: colors.primary, marginVertical: 4}}>
 									{i18n.get('commons.holidayForm.placeholders.2')}
 								</Text>
 							</Fragment>}
 						buttons={() =>
 							<Fragment>
 								<Button label={i18n.get('commons.form.actions.0')}
-										style={[this.state.key && {flex: 1, paddingHorizontal: 0}, !this.state.key && {paddingHorizontal: 18}]}
+										style={[this.state.key && {
+											flex: 1,
+											paddingHorizontal: 0
+										}, !this.state.key && {paddingHorizontal: 18}]}
 										onClick={() => {
 											this.props.onCancel();
 										}}
@@ -91,8 +94,7 @@ export default class HolidayForm extends React.Component {
 								<Button label={i18n.get('commons.form.actions.4')} style={{paddingHorizontal: 18}}
 										textColor={colors.primary}
 										onClick={() => {
-											firebase.ref('holidays').child(this.state.key).remove();
-											this.props.onDelete();
+											this.setState({dialogConfirm: true});
 										}}/>
 								}
 								<Button label={i18n.get('commons.form.actions.1')}
@@ -129,6 +131,25 @@ export default class HolidayForm extends React.Component {
 								})}
 								onCancel={() => this.setState({dialogDatePicker: false})}/>
 				}
+				{/*	REMOVE DIALOG	*/}
+				<Dialog title={i18n.get('profile.screens.0.confirmDialogHolidays.title')} loading={this.state.loadingRemove}
+						content={() => <Text>{i18n.get('profile.screens.0.confirmDialogHolidays.description')}</Text>}
+						buttons={() =>
+							<Fragment>
+								<Button label={i18n.get('profile.screens.0.confirmDialogHolidays.actions.0')}
+										onClick={() => this.setState({dialogConfirm: false})}/>
+								<Button label={i18n.get('profile.screens.0.confirmDialogHolidays.actions.1')}
+										backgroundColor={colors.primary} textColor={colors.white}
+										onClick={() => {
+											this.setState({loadingRemove: true});
+											setTimeout(() => {
+												firebase.ref('holidays').child(this.state.key).remove();
+												this.props.onDelete();
+											}, 0)
+										}}
+								/>
+							</Fragment>
+						} visible={this.state.dialogConfirm}/>
 			</Fragment>
 		)
 	}
