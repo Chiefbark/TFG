@@ -156,7 +156,7 @@ export default class TimetableForm extends React.Component {
 								onCancel={() => this.setState({dialogEndDate: false})}/>
 				}
 				{/*	REMOVE DIALOG	*/}
-				<Dialog title={i18n.get('profile.screens.0.confirmDialogTimetable.title')}
+				<Dialog title={i18n.get('profile.screens.0.confirmDialogTimetable.title')} loading={this.state.loadingRemove}
 						content={() => <Text>{i18n.get('profile.screens.0.confirmDialogTimetable.description')}</Text>}
 						buttons={() =>
 							<Fragment>
@@ -165,7 +165,7 @@ export default class TimetableForm extends React.Component {
 								<Button label={i18n.get('profile.screens.0.confirmDialogTimetable.actions.1')}
 										backgroundColor={colors.primary} textColor={colors.white}
 										onClick={() => {
-											this.setState({loading: true, dialogConfirm: false});
+											this.setState({loadingRemove: true});
 											setTimeout(async () => {
 												firebase.removeTimetable(this.state.key, this.props.timetable.index, this.props.timetable.index !== 0 ? this.state.endDate : this.state.startDate);
 												this.props.onDelete();
@@ -175,7 +175,7 @@ export default class TimetableForm extends React.Component {
 							</Fragment>
 						} visible={this.state.dialogConfirm}/>
 				{/*	SAVE DIALOG	*/}
-				<Dialog title={i18n.get('profile.screens.0.saveDialogTimetable.title')}
+				<Dialog title={i18n.get('profile.screens.0.saveDialogTimetable.title')} loading={this.state.loadingSave}
 						content={() =>
 							<Fragment>
 								{this.state.warnings.nSchedules > 0 &&
@@ -219,7 +219,7 @@ export default class TimetableForm extends React.Component {
 								<Button label={i18n.get('profile.screens.0.saveDialogTimetable.actions.1')}
 										backgroundColor={colors.primary} textColor={colors.white}
 										onClick={() => {
-											this.setState({loading: true});
+											this.setState({loadingSave: true});
 											setTimeout(async () => {
 												let obj = {startDate: this.state.startDate, endDate: this.state.endDate};
 												let newKey = this.state.key;
