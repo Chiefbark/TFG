@@ -101,7 +101,7 @@ export default class newProfile6 extends React.Component {
 									  <Image source={require('../../../assets/icons/icon_timetable_art.png')}
 											 style={{width: 32, height: 32}}/>
 									  <Text style={{fontSize: 18, fontWeight: 'bold', textAlign: 'center', paddingHorizontal: 16}}>
-										  {i18n.get('newProfile.screens.4.subtitle') + ' ' + i18n.get(`commons.calendarLocales.dayNames.${(this.props.route.params.day + 1) % 7}`)}
+										  {i18n.get('newProfile.screens.5.subtitle') + ' ' + i18n.get(`commons.calendarLocales.dayNames.${(this.props.route.params.day + 1) % 7}`)}
 									  </Text>
 									  <Image source={require('../../../assets/icons/icon_timetable_art.png')}
 											 style={{width: 32, height: 32}}/>
@@ -110,9 +110,9 @@ export default class newProfile6 extends React.Component {
 									  <Text style={{
 										  textAlign: 'center',
 										  marginBottom: 8
-									  }}>{i18n.get('newProfile.screens.4.description.0')}</Text>
+									  }}>{i18n.get('newProfile.screens.5.description.0')}</Text>
 								  </View>
-								  <Text style={{textAlign: 'center', marginTop: 24}}>{i18n.get('newProfile.screens.4.description.1')}</Text>
+								  <Text style={{textAlign: 'center', marginTop: 24}}>{i18n.get('newProfile.screens.5.description.1')}</Text>
 							  </View>
 						  }
 						  ItemSeparatorComponent={() => <View style={{flex: 1, backgroundColor: colors.primaryDark, height: 1}}/>}
@@ -148,7 +148,9 @@ export default class newProfile6 extends React.Component {
 						  }}
 				/>
 				<Button
-					label={i18n.get('newProfile.nextButton') + ' ' + i18n.get(`commons.calendarLocales.dayNames.${(this.props.route.params.day + 2) % 7}`) + '  ➤'}
+					label={this.props.route.params.day < 6 ?
+						i18n.get('newProfile.nextButton') + ' ' + i18n.get(`commons.calendarLocales.dayNames.${(this.props.route.params.day + 2) % 7}`) + '  ➤'
+						: i18n.get('newProfile.screens.5.nextButton') + '  ➤'}
 					backgroundColor={colors.primary}
 					textColor={colors.white} disabled={!this.state.continueVisible}
 					onClick={() => {
@@ -227,12 +229,7 @@ export default class newProfile6 extends React.Component {
 				<Dialog title={i18n.get('commons.helpDialog.title')}
 						content={() =>
 							<Fragment>
-								<Text style={{textAlign: 'center'}}>{i18n.get('newProfile.screens.4.helpDialog.placeholders.0')}</Text>
-								<Text style={{
-									textAlign: 'center',
-									color: colors.grey,
-									marginTop: 14
-								}}>{i18n.get('newProfile.screens.4.helpDialog.placeholders.1')}</Text>
+								<Text style={{textAlign: 'center'}}>{i18n.get('newProfile.screens.5.helpDialog.placeholders.0')}</Text>
 							</Fragment>
 						}
 						buttons={() =>
