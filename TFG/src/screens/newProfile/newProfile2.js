@@ -167,11 +167,6 @@ export default class NewProfile2 extends React.Component {
 						content={() =>
 							<Fragment>
 								<Text style={{textAlign: 'center'}}>{i18n.get('newProfile.screens.1.helpDialog.placeholders.0')}</Text>
-								<Text style={{
-									textAlign: 'center',
-									color: colors.grey,
-									marginTop: 14
-								}}>{i18n.get('newProfile.screens.1.helpDialog.placeholders.1')}</Text>
 							</Fragment>
 						}
 						buttons={() =>
