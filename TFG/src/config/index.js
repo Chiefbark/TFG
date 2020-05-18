@@ -27,11 +27,12 @@ export const config = async () => {
 	if (!currConfig) {
 		await AsyncStorage.getItem('@config')
 			.then(result => {
-				if (!result) {
+				if (!result)
 					setConfig(defaultConfig);
-					setNavigation('wizard');
-				} else
+				else {
 					setConfig(JSON.parse(result));
+					setNavigation('default');
+				}
 				return result;
 			});
 	}
