@@ -24,6 +24,7 @@ export default class TimetableForm extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
+			warnings: {nSchedules: 0, nAbsences: []},
 			key: this.props.timetable?.key ?? undefined,
 			startDate: this.props.timetable?.obj.startDate ?? undefined,
 			endDate: this.props.timetable?.obj.endDate ?? undefined
@@ -34,6 +35,13 @@ export default class TimetableForm extends React.Component {
 		this.setState({...props});
 		Toast.showWithGravity(i18n.get(`commons.form.toasts.${msg}`), Toast.LONG, Toast.TOP);
 		setTimeout(() => this.setState({errorStartDate: false, errorEndDate: false}), 3500);
+	}
+	
+	componentDidMount() {
+		firebase.ref('schedules').once('value', snapshot => {
+			let data = snapshot.val() || {};
+			this.setState({schedules: Object.entries(data)});
+		})
 	}
 	
 	render() {
@@ -81,13 +89,8 @@ export default class TimetableForm extends React.Component {
 								{this.state.key && this.props.nTimetables > 1 &&
 								<Button label={i18n.get('commons.form.actions.4')} style={{paddingHorizontal: 18}}
 										textColor={colors.primary}
-										onClick={() => {
-											this.setState({loading: true})
-											setTimeout(async () => {
-												firebase.removeTimetable(this.state.key, this.props.timetable.index, this.props.timetable.index !== 0 ? this.state.endDate : this.state.startDate);
-												this.props.onDelete();
-											}, 0)
-										}}/>
+										onClick={() => this.setState({dialogConfirm: true})
+										}/>
 								}
 								<Button label={i18n.get('commons.form.actions.3')}
 										backgroundColor={colors.primary} textColor={colors.white}
@@ -103,25 +106,41 @@ export default class TimetableForm extends React.Component {
 											}
 											if (Object.entries(obj).length > 0) this._showError(obj, msg);
 											else {
-												this.setState({loading: true})
-												setTimeout(async () => {
-													let obj = {startDate: this.state.startDate, endDate: this.state.endDate};
-													let newKey = this.state.key;
-													if (!this.state.key)
-														newKey = await firebase.ref('schedules').push(obj).getKey();
-													else
-														firebase.ref('schedules').child(this.state.key).update(obj).then();
-									
-													firebase.updateTimetable(newKey, {
-														startDate: this.props.timetable?.obj.startDate,
-														endDate: this.props.timetable?.obj.endDate
-													}, {
-														startDate: this.state.startDate, endDate: this.state.endDate
-													}, this.props.timetable?.index ?? (this.props.nTimetables - 1))
-									
-													this.props.navigation.dispatch(CommonActions.navigate('Timetable', {key: newKey}));
-													this.props.onSubmit(newKey);
-												}, 0);
+												let warnings = {nSchedules: 0, nAbsences: []};
+												this.state.schedules?.forEach((e, index) => {
+													if (this.props.timetable.index !== index) {
+														if (e[1].startDate >= this.state.startDate && index < this.props.timetable.index) warnings.nSchedules++;
+														else {
+															if (e[1].endDate >= this.state.startDate && index < this.props.timetable.index)
+																warnings.nAbsences.push({from: this.state.startDate, to: e[1].endDate});
+															if (e[1].startDate <= this.state.endDate && this.state.endDate < e[1].endDate)
+																warnings.nAbsences.push({from: e[1].startDate, to: this.state.endDate});
+														}
+													}
+												})
+												if (warnings.nSchedules > 0 || warnings.nAbsences.length > 0)
+													this.setState({dialogSave: true, warnings: warnings});
+												else {
+													this.setState({loading: true});
+													setTimeout(async () => {
+														let obj = {startDate: this.state.startDate, endDate: this.state.endDate};
+														let newKey = this.state.key;
+														if (!this.state.key)
+															newKey = await firebase.ref('schedules').push(obj).getKey();
+														else
+															firebase.ref('schedules').child(this.state.key).update(obj).then();
+										
+														firebase.updateTimetable(newKey, {
+															startDate: this.props.timetable?.obj.startDate,
+															endDate: this.props.timetable?.obj.endDate
+														}, {
+															startDate: this.state.startDate, endDate: this.state.endDate
+														}, this.props.timetable?.index ?? (this.props.nTimetables - 1))
+										
+														this.props.navigation.dispatch(CommonActions.navigate('Timetable', {key: newKey}));
+														this.props.onSubmit(newKey);
+													}, 0);
+												}
 											}
 										}}/>
 							</Fragment>}
@@ -136,6 +155,93 @@ export default class TimetableForm extends React.Component {
 								onSubmit={startDate => this.setState({dialogEndDate: false, endDate: startDate})}
 								onCancel={() => this.setState({dialogEndDate: false})}/>
 				}
+				{/*	REMOVE DIALOG	*/}
+				<Dialog title={i18n.get('profile.screens.0.confirmDialogTimetable.title')}
+						content={() => <Text>{i18n.get('profile.screens.0.confirmDialogTimetable.description')}</Text>}
+						buttons={() =>
+							<Fragment>
+								<Button label={i18n.get('profile.screens.0.confirmDialogTimetable.actions.0')}
+										onClick={() => this.setState({dialogConfirm: false})}/>
+								<Button label={i18n.get('profile.screens.0.confirmDialogTimetable.actions.1')}
+										backgroundColor={colors.primary} textColor={colors.white}
+										onClick={() => {
+											this.setState({loading: true, dialogConfirm: false});
+											setTimeout(async () => {
+												firebase.removeTimetable(this.state.key, this.props.timetable.index, this.props.timetable.index !== 0 ? this.state.endDate : this.state.startDate);
+												this.props.onDelete();
+											}, 0)
+										}}
+								/>
+							</Fragment>
+						} visible={this.state.dialogConfirm}/>
+				{/*	SAVE DIALOG	*/}
+				<Dialog title={i18n.get('profile.screens.0.saveDialogTimetable.title')}
+						content={() =>
+							<Fragment>
+								{this.state.warnings.nSchedules > 0 &&
+								<Fragment>
+									<Text style={{textAlign: 'center'}}>
+										{i18n.get('profile.screens.0.saveDialogTimetable.description.3')}
+									</Text>
+									<Text style={{color: colors.primary}}>
+										{this.state.warnings.nSchedules}{i18n.get('profile.screens.0.saveDialogTimetable.description.4')}
+									</Text>
+									<Text>{i18n.get('profile.screens.0.saveDialogTimetable.description.5')}</Text>
+								</Fragment>
+								}
+								{this.state.warnings.nAbsences.length > 0 &&
+								<Fragment>
+									<Text style={{textAlign: 'center', marginBottom: 4}}>
+										{i18n.get('profile.screens.0.saveDialogTimetable.description.0')}
+									</Text>
+									{this.state.warnings.nAbsences.map((e, index) =>
+										<View key={index} style={{
+											flexDirection: 'row', flexWrap: 'nowrap', alignItems: 'center', justifyContent: 'center'
+										}}>
+											<Text style={{color: colors.primary}}>{e.from}</Text>
+											<Text>{i18n.get('profile.screens.0.saveDialogTimetable.description.1')}</Text>
+											<Text style={{color: colors.primary}}>{e.to}</Text>
+										</View>
+									)}
+									<Text style={{
+										textAlign: 'center', fontWeight: 'bold', marginTop: 4
+									}}>{i18n.get('profile.screens.0.saveDialogTimetable.description.2')}
+									</Text>
+								</Fragment>
+								}
+								<Text style={{marginVertical: 4}}>{i18n.get('profile.screens.0.saveDialogTimetable.description.6')}</Text>
+							</Fragment>
+						}
+						buttons={() =>
+							<Fragment>
+								<Button label={i18n.get('profile.screens.0.saveDialogTimetable.actions.0')}
+										onClick={() => this.setState({dialogSave: false})}/>
+								<Button label={i18n.get('profile.screens.0.saveDialogTimetable.actions.1')}
+										backgroundColor={colors.primary} textColor={colors.white}
+										onClick={() => {
+											this.setState({loading: true});
+											setTimeout(async () => {
+												let obj = {startDate: this.state.startDate, endDate: this.state.endDate};
+												let newKey = this.state.key;
+												if (!this.state.key)
+													newKey = await firebase.ref('schedules').push(obj).getKey();
+												else
+													firebase.ref('schedules').child(this.state.key).update(obj).then();
+								
+												firebase.updateTimetable(newKey, {
+													startDate: this.props.timetable?.obj.startDate,
+													endDate: this.props.timetable?.obj.endDate
+												}, {
+													startDate: this.state.startDate, endDate: this.state.endDate
+												}, this.props.timetable?.index ?? (this.props.nTimetables - 1))
+								
+												this.props.navigation.dispatch(CommonActions.navigate('Timetable', {key: newKey}));
+												this.props.onSubmit(newKey);
+											}, 0);
+										}}
+								/>
+							</Fragment>
+						} visible={this.state.dialogSave}/>
 			</Fragment>
 		)
 	}
