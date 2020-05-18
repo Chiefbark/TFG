@@ -82,6 +82,18 @@ export const newProfile = {
 				]
 			},
 			nextButton: 'Terminar'
+		},
+		{
+			title: 'Ultimos pasos',
+			subtitle: 'Bien hecho!',
+			description: [
+				'Ya has terminado de configurar lo básico de tu perfil!' +
+				'\n\nSi necesitas modificar cualquier dato del perfil, puedes hacerlo desde la pestaña de perfil',
+				'Las vacaciones y exámenes también se pueden añadir desde ahí.' +
+				'\nRecuerda que puedes añadir y eliminar ausencias desde la petaña de calendario, pulsando cualquier día',
+				'Ya estás listo para comenzar a usar la App! Si te sientes perdido, puedes encontrar diálogos de ayuda en toda la aplicación'
+			],
+			nextButton: 'Terminar'
 		}
 	]
 }

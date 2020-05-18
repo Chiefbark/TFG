@@ -82,6 +82,18 @@ export const newProfile = {
 				]
 			},
 			nextButton: 'Finish'
+		},
+		{
+			title: 'Last steps',
+			subtitle: 'Well done!',
+			description: [
+				'You have already setup the basics of your profile!' +
+				'\n\nIf you need to modify any data of the profile, you can do it from the tab profile',
+				'Holidays and exams can also be added there.' +
+				'\nRemember that you can set your absences at the calendar tab, by pressing any day',
+				'You are ready to start using the App! If you feel lost, you can find help dialogs throughout the application'
+			],
+			nextButton: 'Finish'
 		}
 	]
 }
