@@ -4,17 +4,19 @@ import {View, Text, ScrollView, Keyboard} from 'react-native';
 import * as i18n from '../../i18n';
 import * as firebase from '../../firebase';
 import * as config from '../../config';
-import {getISODate} from '../../utils';
+import {getDayOfWeek, getISODate} from '../../utils';
 import {colors} from '../../styles';
 
+import Toast from 'react-native-simple-toast';
+
 import Button from '../../components/button';
+import ExamForm from '../../components/forms/exam';
 import HolidayForm from '../../components/forms/holiday';
 import Icon from '../../components/icon';
 import ListHeader from '../../components/listHeader';
 import ListItem from '../../components/listItem';
 import ProfileInfoForm from '../../components/forms/profileInfo';
 import TimetableForm from '../../components/forms/timetable';
-import Toast from "react-native-simple-toast";
 
 export default class InformationScreen extends React.Component {
 	constructor(props) {
@@ -44,6 +46,16 @@ export default class InformationScreen extends React.Component {
 		this.setState({holidays: Object.entries(data)});
 	}
 	
+	_listenerSubjects(snapshot) {
+		let data = snapshot.val() || {};
+		this.setState({subjects: Object.entries(data)});
+	}
+	
+	_listenerExams(snapshot) {
+		let data = snapshot.val() || {};
+		this.setState({exams: Object.entries(data)});
+	}
+	
 	_updateComponent() {
 		this.setState({_locale: i18n.currLocale});
 		this.props.navigation.dangerouslyGetParent().setOptions({title: i18n.get('profile.screens.0.title')});
@@ -53,11 +65,15 @@ export default class InformationScreen extends React.Component {
 		firebase.ref('schedules').off('value', this._listenerSchedules.bind(this));
 		firebase.removeListenersToTimetables();
 		firebase.ref('holidays').off('value', this._listenerHolidays.bind(this));
+		firebase.ref('subjects').off('value', this._listenerSubjects.bind(this));
+		firebase.ref('exams').off('value', this._listenerExams.bind(this));
 		
 		firebase.ref('currProfile').on('value', this._listenerCurrProfile.bind(this));
 		firebase.ref('schedules').on('value', this._listenerSchedules.bind(this));
 		firebase.addListenersToTimetables();
 		firebase.ref('holidays').on('value', this._listenerHolidays.bind(this));
+		firebase.ref('subjects').on('value', this._listenerSubjects.bind(this));
+		firebase.ref('exams').on('value', this._listenerExams.bind(this));
 	}
 	
 	_onFocusComponent() {
@@ -92,6 +108,8 @@ export default class InformationScreen extends React.Component {
 		firebase.ref('schedules').off('value', this._listenerSchedules.bind(this));
 		firebase.removeListenersToTimetables();
 		firebase.ref('holidays').off('value', this._listenerHolidays.bind(this));
+		firebase.ref('subjects').off('value', this._listenerSubjects.bind(this));
+		firebase.ref('exams').off('value', this._listenerExams.bind(this));
 	}
 	
 	render() {
@@ -161,7 +179,24 @@ export default class InformationScreen extends React.Component {
 									<Icon source={require('../../../assets/icons/icon_help.png')} iconColor={colors.white}/>
 								}
 					/>
+					{this.state.exams?.map(e => {
+							const subject = this.state.subjects?.find(x => x[0] === e[1].id_subject);
+							let times = [];
+							if (e[1].schedules) {
+								if (this.state.timetables) {
+									const currTimetable = this.state.timetables.find(x => x[0] === e[1].schedules[0].path.split('/')[0]);
+									times.push(currTimetable[1][e[1].schedules[0].path.split('/')[1]][e[1].schedules[0].id_schedule].startTime);
+									times.push(currTimetable[1][e[1].schedules[e[1].schedules.length - 1].path.split('/')[1]][e[1].schedules[e[1].schedules.length - 1].id_schedule].endTime);
+								}
+							}
+							const day = i18n.get(`commons.calendarLocales.dayNames.${(getDayOfWeek(e[1].date) + 1) % 7}`);
+							return <ListItem key={e[0]} title={`${getISODate(e[1].date)} (${day})`} subtitle={subject ? subject[1].name : undefined}
+											 rightItem={() => <Text style={{color: colors.grey, marginRight: 16}}>{times.join(' - ')}</Text>}
+											 onClick={() => this.setState({exam: {key: e[0], obj: e[1]}, dialogExam: true})}/>
+						}
+					)}
 					<Button label={`${i18n.get('commons.form.actions.2')}...`} backgroundColor={colors.white} textColor={colors.lightGrey}
+							onClick={() => this.setState({dialogExam: true})}
 							style={{paddingVertical: 15, borderTopWidth: 0.5, borderTopColor: colors.lightGrey}}/>
 					<View style={{paddingVertical: 25}}/>
 				</ScrollView>
@@ -188,6 +223,15 @@ export default class InformationScreen extends React.Component {
 								 this.setState({dialogHoliday: false, holiday: undefined})
 								 Toast.showWithGravity(i18n.get('commons.holidayForm.toast'), Toast.LONG, Toast.BOTTOM);
 							 }}/>
+				}
+				{this.state.dialogExam &&
+				<ExamForm exam={this.state.exam}
+						  onSubmit={() => this.setState({dialogExam: false, exam: undefined})}
+						  onCancel={() => this.setState({dialogExam: false, exam: undefined})}
+						  onDelete={() => {
+							  this.setState({dialogExam: false, holiday: undefined})
+							  Toast.showWithGravity(i18n.get('commons.examForm.toast'), Toast.LONG, Toast.BOTTOM);
+						  }}/>
 				}
 			</Fragment>
 		);
