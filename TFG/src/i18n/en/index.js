@@ -67,7 +67,8 @@ export const newProfile = {
 				'Once you have defined your subjects, you can start adding your dialy clases.' +
 				'\n\nIn the next screens you can add the classes of each day of week.' +
 				'\n\nIf someday you don\'t have class, you can go next screen',
-				'Press "start" to begin'
+				'Press "start" to begin' +
+				'\nIf you want to skip the days you have left, you can press "skip"'
 			],
 			nextButton: 'Start'
 		},
@@ -81,6 +82,7 @@ export const newProfile = {
 					'\n\nDon\'t worry if you don\'t add all your classes now, you can create more later.'
 				]
 			},
+			prevButton: 'Skip',
 			nextButton: 'Finish'
 		},
 		{
@@ -88,9 +90,9 @@ export const newProfile = {
 			subtitle: 'Well done!',
 			description: [
 				'You have already setup the basics of your profile!' +
-				'\n\nIf you need to modify any data of the profile, you can do it from the tab profile',
-				'Holidays and exams can also be added there.' +
-				'\nRemember that you can set your absences at the calendar tab, by pressing any day',
+				'\n\nIf you need to modify any data of the profile, you can do it from the tab profile' +
+				'\n\nHolidays and exams can also be added there.' +
+				'\n\nRemember that you can set your absences at the calendar tab, by pressing any day',
 				'You are ready to start using the App! If you feel lost, you can find help dialogs throughout the application'
 			],
 			nextButton: 'Finish'

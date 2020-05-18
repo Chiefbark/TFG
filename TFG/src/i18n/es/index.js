@@ -67,7 +67,8 @@ export const newProfile = {
 				'Una vez que ya tienes las asignaturas definidas, puedes empezar a añadir tus clases diarias.' +
 				'\n\nEn las siguientes pantallas podrás añadir las clases que tengas cada día de la semana.' +
 				'\n\nSi no tienes clase algún dia puedes a la siguiente pantalla',
-				'Para empezar pulsa en "comenzar"'
+				'Para empezar pulsa en "comenzar"' +
+				'\nSi quieres saltar los días que te queden, puedes darle al botón "saltar"'
 			],
 			nextButton: 'Comenzar'
 		},
@@ -81,6 +82,7 @@ export const newProfile = {
 					'\n\nNo te preocupes si no añades todas tus clases ahora, podrás modificarlas después.'
 				]
 			},
+			prevButton: 'Saltar',
 			nextButton: 'Terminar'
 		},
 		{
@@ -88,9 +90,9 @@ export const newProfile = {
 			subtitle: 'Bien hecho!',
 			description: [
 				'Ya has terminado de configurar lo básico de tu perfil!' +
-				'\n\nSi necesitas modificar cualquier dato del perfil, puedes hacerlo desde la pestaña de perfil',
-				'Las vacaciones y exámenes también se pueden añadir desde ahí.' +
-				'\nRecuerda que puedes añadir y eliminar ausencias desde la petaña de calendario, pulsando cualquier día',
+				'\n\nSi necesitas modificar cualquier dato del perfil, puedes hacerlo desde la pestaña de perfil' +
+				'\n\nLas vacaciones y exámenes también se pueden añadir desde ahí.' +
+				'\n\nRecuerda que puedes añadir y eliminar ausencias desde la petaña de calendario, pulsando cualquier día',
 				'Ya estás listo para comenzar a usar la App! Si te sientes perdido, puedes encontrar diálogos de ayuda en toda la aplicación'
 			],
 			nextButton: 'Terminar'
