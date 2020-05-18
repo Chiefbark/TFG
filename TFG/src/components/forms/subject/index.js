@@ -40,11 +40,17 @@ export default class SubjectForm extends React.Component {
 		setTimeout(() => this.setState({errorName: false, errorTeacher: false, errorColor: false}), 3500);
 	}
 	
+	_listenerTeachers(snapshot){
+		let data = snapshot.val() || {};
+		this.setState({teachers: Object.entries(data)});
+	}
+	
 	componentDidMount() {
-		firebase.ref('teachers').on('value', snapshot => {
-			let data = snapshot.val() || {};
-			this.setState({teachers: Object.entries(data)});
-		});
+		firebase.ref('teachers').on('value', this._listenerTeachers.bind(this));
+	}
+	
+	componentWillUnmount() {
+		firebase.ref('teachers').off('value', this._listenerTeachers.bind(this));
 	}
 	
 	render() {

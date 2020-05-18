@@ -40,11 +40,17 @@ export default class ScheduleForm extends React.Component {
 		setTimeout(() => this.setState({errorSubject: false, errorStartTime: false, errorEndTime: false}), 3500);
 	}
 	
+	_listenerSubjects(snapshot) {
+		let data = snapshot.val() || {};
+		this.setState({subjects: Object.entries(data)});
+	}
+	
 	componentDidMount() {
-		firebase.ref('subjects').on('value', snapshot => {
-			let data = snapshot.val() || {};
-			this.setState({subjects: Object.entries(data)});
-		});
+		firebase.ref('subjects').on('value', this._listenerSubjects.bind(this));
+	}
+	
+	componentWillUnmount() {
+		firebase.ref('subjects').off('value', this._listenerSubjects.bind(this));
 	}
 	
 	render() {
