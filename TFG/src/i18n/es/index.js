@@ -143,10 +143,23 @@ export const profile = {
 			title: 'Información',
 			headers: ['Información', 'Horarios', 'Vacaciones', 'Exámenes'],
 			contents: ['Nombre', 'Fecha inicio', 'Fecha fin'],
-			editInfoDialog: {
-				title: 'Editar información',
-				placeholders: ['nombre del perfil...'],
-				actions: ['Cancelar', 'Save']
+			confirmDialogTimetable: {
+				title: 'Estás seguro?',
+				description: 'Todas las faltas de asistencia del horario serán eliminadas también',
+				actions: ['Cancelar', 'Eliminar']
+			},
+			saveDialogTimetable: {
+				title: 'Cuidado!',
+				description: [
+					'Estás sobreescribiendo parte de un horario. Las faltas de asistencia entre ',
+					' y ',
+					' serán eliminadas',
+					'La fecha de inicio es anterior a otro horario.',
+					'horario(s)',
+					' serán eliminados, junto con todas sus faltas de asistencia',
+					'\nQuieres continuar?'
+				],
+				actions: ['Cancelar', 'Continuar']
 			}
 		},
 		{
@@ -239,6 +252,7 @@ export const commons = {
 	teacherForm: {
 		title: 'Profesor',
 		placeholders: ['nombre del profesor...'],
+		toast: 'Profesor(es) eliminado(s)'
 	},
 	subjectForm: {
 		title: 'Asignatura',
@@ -250,28 +264,33 @@ export const commons = {
 			' de ausencias',
 			'Este color será el que aparezca en el calendario (exámenes/ausencias)',
 			'Los colores con una x ya están en uso, aunque puedes volver a usarlos'
-		]
+		],
+		toast: 'Asignatura(s) eliminada(s)'
 	},
 	scheduleForm: {
 		title: 'Horario',
 		placeholders: [
 			'asignatura...',
 			'hasta'
-		]
+		],
+		toast: 'Horario(s) eliminado(s)'
 	},
 	timetableForm: {
 		title: 'Horario',
 		placeholders: [
 			'Indica la fecha de inicio y fin del nuevo horario'
-		]
+		],
+		toast: 'Horario eliminado'
 	},
 	holidayForm: {
 		title: 'Vacaciones',
 		placeholders: [
 			'nombre de las vacaciones...',
-			'Indica la fecha de inicio y fin de las vacaciones',
-			'Ambos días están incluidos'
-		]
+			'Indica la fecha de inicio y fin de las vacaciones' +
+			'\nAmbos días están incluidos',
+			'⚠ Todas las ausencias de esos días serán eliminadas!'
+		],
+		toast: 'Vacaciones eliminadas'
 	},
 	languages: [
 		{name: 'Español', iso: 'es'},

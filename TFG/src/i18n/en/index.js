@@ -76,7 +76,7 @@ export const newProfile = {
 			description: [
 				'Here you can add your classes pressing the button +' +
 				'\n\nYou can also edit and delete them if you hold down them',
-				'When you are done, press the button "continue"'+
+				'When you are done, press the button "continue"' +
 				'\nIf you press the button "skip", you will finish the profile configuration and leave the days you miss without classes'
 			],
 			helpDialog: {
@@ -142,7 +142,25 @@ export const profile = {
 		{
 			title: 'Information',
 			headers: ['Information', 'Timetables', 'Holidays', 'Exams'],
-			contents: ['Name', 'Start date', 'End date']
+			contents: ['Name', 'Start date', 'End date'],
+			confirmDialogTimetable: {
+				title: 'Are you sure?',
+				description: 'All the absences associated to the timetable will be removed as well',
+				actions: ['Cancel', 'Remove']
+			},
+			saveDialogTimetable: {
+				title: 'Warning!',
+				description: [
+					'You are overriding part of another schedule. The absences between ',
+					' and ',
+					' will be removed',
+					'The start date is previous to another timetable',
+					' timetable(s)',
+					'will be removed, along with all its absences',
+					'\nYou want to continue?'
+				],
+				actions: ['Cancel', 'Continue']
+			}
 		},
 		{
 			title: 'Subjects',
@@ -233,7 +251,8 @@ export const commons = {
 	},
 	teacherForm: {
 		title: 'Teacher',
-		placeholders: ['teacher\'s name...']
+		placeholders: ['teacher\'s name...'],
+		toast: 'Teacher(s) removed'
 	},
 	subjectForm: {
 		title: 'Subject',
@@ -245,28 +264,33 @@ export const commons = {
 			' of absences',
 			'This will be the color shown in the calendar (exams/absences)',
 			'Colors marked with x are already in use, but you can use them again'
-		]
+		],
+		toast: 'Subject(s) removed'
 	},
 	scheduleForm: {
 		title: 'Schedule',
 		placeholders: [
 			'subject...',
 			'to'
-		]
+		],
+		toast: 'Schedule(s) removed'
 	},
 	timetableForm: {
 		title: 'Timetable',
 		placeholders: [
 			'Specify the start and end date of the new timetable'
-		]
+		],
+		toast: 'Timetable removed'
 	},
 	holidayForm: {
 		title: 'Vacaciones',
 		placeholders: [
 			'holiday\'s name...',
-			'Specify the start and end date of the new holidays',
-			'Both days are included'
-		]
+			'Specify the start and end date of the new holidays' +
+			'\nBoth days are included',
+			'⚠ All the absences between those days will be removed!'
+		],
+		toast: 'Holidays removed'
 	},
 	languages: [
 		{name: 'Spanish', iso: 'es'},
