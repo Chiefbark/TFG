@@ -1,5 +1,6 @@
 export const newProfile = {
 	title: 'Profile wizard',
+	nextButton: 'Continue to',
 	screens: [
 		{
 			subtitle: 'Welcome to the Profile Wizard',
@@ -28,8 +29,7 @@ export const newProfile = {
 				placeholders: [
 					'First we need to create a profile.' +
 					'\nTo do so, set a name to it and set the initial and end date of the course.' +
-					'\n\nDon\'t worry if you don\'t set the dates correct right now, you can modify them later',
-					'If you need to see this message again, click in the help button'
+					'\n\nDon\'t worry if you don\'t set the dates correct right now, you can modify them later'
 				]
 			}
 		},
@@ -43,8 +43,7 @@ export const newProfile = {
 			helpDialog: {
 				placeholders: [
 					'Once we have our profile, we are going to add some teachers.' +
-					'\n\nDon\'t worry if you forget about someone, you can create more later',
-					'If you need to see this message again, click in the help button'
+					'\n\nDon\'t worry if you forget about someone, you can create more later'
 				]
 			}
 		},
@@ -58,10 +57,31 @@ export const newProfile = {
 			helpDialog: {
 				placeholders: [
 					'Next we have to do is add subjects to our profile.' +
-					'\n\nDon\'t worry if you forget about any, you can create more later',
-					'If you need to see this message again, click in the help button'
+					'\n\nDon\'t worry if you forget about any, you can create more later'
 				]
 			}
+		},
+		{
+			subtitle: 'Add your classes',
+			description: [
+				'Once you have defined your subjects, you can start adding your dialy clases.' +
+				'\n\nIn the next screens you can add the classes of each day of week.' +
+				'\n\nIf someday you don\'t have class, you can go next screen',
+				'Press "start" to begin'
+			],
+			nextButton: 'Start'
+		},
+		{
+			subtitle: 'Classes of ',
+			description: [],
+			helpDialog: {
+				placeholders: [
+					'It\'s time to add the daily classes.' +
+					'\nTo do so, specify which subject do you have and what time does it start and end.' +
+					'\n\nDon\'t worry if you don\'t add all your classes now, you can create more later.'
+				]
+			},
+			nextButton: 'Finish'
 		}
 	]
 }

@@ -1,5 +1,6 @@
 export const newProfile = {
 	title: 'Asistente de Perfiles',
+	nextButton: 'Continuar a',
 	screens: [
 		{
 			subtitle: 'Bienvenido al Asistente de Perfiles',
@@ -28,8 +29,7 @@ export const newProfile = {
 				placeholders: [
 					'Primero tenemos que crear un perfil.' +
 					'\nPara ello, dale un nombre e indica las fechas de inicio y fin del curso.' +
-					'\n\nNo te preocupes si no indicas las fechas correctas ahora, podrás modificarlas después.',
-					'Si necesitas ver este mensaje de nuevo, pulsa en el botón de ayuda'
+					'\n\nNo te preocupes si no indicas las fechas correctas ahora, podrás modificarlas después.'
 				]
 			}
 		},
@@ -43,8 +43,7 @@ export const newProfile = {
 			helpDialog: {
 				placeholders: [
 					'Una vez tenemos el perfil creado, vamos a añadir algunos profesores.' +
-					'\n\nNo te preocupes si se te olvida alguno, podrás crear más mas adelante',
-					'Si necesitas ver este mensaje de nuevo, pulsa en el botón de ayuda'
+					'\n\nNo te preocupes si se te olvida alguno, podrás crear más mas adelante'
 				]
 			}
 		},
@@ -58,10 +57,31 @@ export const newProfile = {
 			helpDialog: {
 				placeholders: [
 					'Lo siguiente es añadir asignaturas a nuestro perfil.' +
-					'\n\nNo te preocupes si se te olvida alguna, podrás crear más mas adelante',
-					'Si necesitas ver este mensaje de nuevo, pulsa en el botón de ayuda'
+					'\n\nNo te preocupes si se te olvida alguna, podrás crear más mas adelante'
 				]
 			}
+		},
+		{
+			subtitle: 'Añade tus clases',
+			description: [
+				'Una vez que ya tienes las asignaturas definidas, puedes empezar a añadir tus clases diarias.' +
+				'\n\nEn las siguientes pantallas podrás añadir las clases que tengas cada día de la semana.' +
+				'\n\nSi no tienes clase algún dia puedes a la siguiente pantalla',
+				'Para empezar pulsa en "comenzar"'
+			],
+			nextButton: 'Comenzar'
+		},
+		{
+			subtitle: 'clases de los',
+			description: [],
+			helpDialog: {
+				placeholders: [
+					'Toca añadir las clases diarias.' +
+					'\nPara ello, indica qué asignatura tienes y a qué hora empieza y acaba.' +
+					'\n\nNo te preocupes si no añades todas tus clases ahora, podrás modificarlas después.'
+				]
+			},
+			nextButton: 'Terminar'
 		}
 	]
 }
