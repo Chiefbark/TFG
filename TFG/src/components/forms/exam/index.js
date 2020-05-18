@@ -1,10 +1,11 @@
 import React, {Fragment} from 'react';
 import PropTypes from 'prop-types';
-import {Text, TextInput, View} from 'react-native';
+import {Text, View} from 'react-native';
 
 import * as i18n from '../../../i18n';
 import * as firebase from '../../../firebase';
 import {colors} from '../../../styles';
+import {getDayOfWeek, isDateBetween} from '../../../utils';
 
 import Toast from 'react-native-simple-toast';
 
@@ -12,7 +13,6 @@ import Button from '../../button';
 import CalendarPicker from '../../calendarPicker';
 import Picker from '../../picker';
 import Dialog from '../../dialog';
-import {getDayOfWeek, isDateBetween} from "../../../utils";
 
 /**
  * This component allows the user to create & update exams
