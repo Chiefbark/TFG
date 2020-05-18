@@ -15,6 +15,7 @@ import CalendarDay from '../../components/calendarDay';
 import Dialog from '../../components/dialog';
 import Icon from '../../components/icon';
 import ListItem from "../../components/listItem";
+import {min} from "react-native-reanimated";
 
 const markedDates = {
 	'2020-05-15': {
@@ -158,11 +159,13 @@ export default class CalendarScreen extends React.Component {
 	}
 	
 	render() {
+		const minDate = this.state.schedules ? this.state.schedules[0][1].startDate : undefined;
+		const maxDate = this.state.schedules ? this.state.schedules[this.state.schedules.length - 1][1].endDate : undefined;
 		return <View style={styles.container}>
 			<Calendar key={this.state._lastModified}
 					  markedDates={this.state.marking}
-					  minDate={'2020-01-01'}
-					  maxDate={'2021-01-01'}
+					  minDate={minDate}
+					  maxDate={maxDate}
 					  monthFormat={'yyyy MMMM'}
 					  firstDay={1}
 					  onPressArrowLeft={substractMonth => substractMonth()}
@@ -185,36 +188,38 @@ export default class CalendarScreen extends React.Component {
 						  return (
 							  <CalendarDay date={date} state={state} marking={newMarking}
 										   onClick={async (value) => {
-											   let obj = {};
-											   let currSchedule = this.state.schedules.find(e => value.dateString >= e[1].startDate && value.dateString <= e[1].endDate);
-											   obj.dateString = value.dateString;
-						
-											   let holidays = this.state.holidays?.filter(e => isDateBetween(value.dateString, e[1].startDate, e[1].endDate))
-											   if (holidays.length > 0) {
-												   obj.holidays = [];
-												   holidays.forEach(e => {
-													   obj.holidays.push({id_holiday: e[0], name: e[1].name, endDate: e[1].endDate})
-												   })
-											   } else {
-												   const dayOfWeek = getDayOfWeek(value.dateString);
-												   if (currSchedule[1][dayOfWeek]) {
-													   const sorted = Object.entries(currSchedule[1][dayOfWeek])
-														   .sort((arg0, arg1) => compareTimes(arg1[1].startTime, arg0[1].startTime));
-													   obj.subjects = [];
-													   for (let ii = 0; ii < sorted.length; ii++)
-														   if (sorted[ii][1].id_subject) {
-															   obj.subjects[ii] = {...sorted[ii][1]};
-															   obj.subjects[ii].id_schedule = sorted[ii][0];
-															   obj.subjects[ii].path = `${currSchedule[0]}/${dayOfWeek}`;
-															   obj.subjects[ii].id_subject = sorted[ii][1].id_subject;
-															   obj.subjects[ii].name = await firebase.ref('subjects')
-																   .child(sorted[ii][1].id_subject)
-																   .once('value')
-																   .then(result => result.val()?.name ?? undefined);
-														   }
+											   if (date.dateString >= minDate && date.dateString <= maxDate) {
+												   let obj = {};
+												   let currSchedule = this.state.schedules.find(e => value.dateString >= e[1].startDate && value.dateString <= e[1].endDate);
+												   obj.dateString = value.dateString;
+							
+												   let holidays = this.state.holidays?.filter(e => isDateBetween(value.dateString, e[1].startDate, e[1].endDate))
+												   if (holidays.length > 0) {
+													   obj.holidays = [];
+													   holidays.forEach(e => {
+														   obj.holidays.push({id_holiday: e[0], name: e[1].name, endDate: e[1].endDate})
+													   })
+												   } else {
+													   const dayOfWeek = getDayOfWeek(value.dateString);
+													   if (currSchedule[1][dayOfWeek]) {
+														   const sorted = Object.entries(currSchedule[1][dayOfWeek])
+															   .sort((arg0, arg1) => compareTimes(arg1[1].startTime, arg0[1].startTime));
+														   obj.subjects = [];
+														   for (let ii = 0; ii < sorted.length; ii++)
+															   if (sorted[ii][1].id_subject) {
+																   obj.subjects[ii] = {...sorted[ii][1]};
+																   obj.subjects[ii].id_schedule = sorted[ii][0];
+																   obj.subjects[ii].path = `${currSchedule[0]}/${dayOfWeek}`;
+																   obj.subjects[ii].id_subject = sorted[ii][1].id_subject;
+																   obj.subjects[ii].name = await firebase.ref('subjects')
+																	   .child(sorted[ii][1].id_subject)
+																	   .once('value')
+																	   .then(result => result.val()?.name ?? undefined);
+															   }
+													   }
 												   }
+												   this.setState({selected: obj});
 											   }
-											   this.setState({selected: obj});
 										   }}/>
 						  );
 					  }}
