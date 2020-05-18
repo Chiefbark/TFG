@@ -148,6 +148,16 @@ export default class newProfile6 extends React.Component {
 						  }}
 				/>
 				<Button
+					label={i18n.get('newProfile.screens.5.prevButton')}
+					textColor={colors.primary} disabled={!this.state.continueVisible}
+					onClick={() => {
+						this.props.navigation.dispatch(StackActions.push('NewProfile7'))
+					}}
+					style={{
+						position: 'absolute', bottom: 50, left: 16, borderRadius: 1000, opacity: this.state.continueVisible ? 1 : 0
+					}}
+				/>
+				<Button
 					label={this.props.route.params.day < 6 ?
 						i18n.get('newProfile.nextButton') + ' ' + i18n.get(`commons.calendarLocales.dayNames.${(this.props.route.params.day + 2) % 7}`) + '  ➤'
 						: i18n.get('newProfile.screens.5.nextButton') + '  ➤'}
