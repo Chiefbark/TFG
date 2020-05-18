@@ -2,6 +2,7 @@ import React from 'react';
 import {View, Text, Image} from 'react-native';
 
 import * as i18n from '../../i18n';
+import * as config from '../../config';
 import {colors} from '../../styles';
 
 import Button from '../../components/button';
@@ -37,7 +38,11 @@ export default class NewProfile7 extends React.Component {
 					}}>{i18n.get('newProfile.screens.6.description.0')}</Text>
 				</View>
 				<Text style={{textAlign: 'center', marginTop: 24}}>{i18n.get('newProfile.screens.6.description.1')}</Text>
-				<Button label={i18n.get('newProfile.screens.6.nextButton')} backgroundColor={colors.primary} textColor={colors.white}/>
+				<Button label={i18n.get('newProfile.screens.6.nextButton')}
+						backgroundColor={colors.primary}						textColor={colors.white}
+						onClick={() => config.setNavigation('default')}
+						style={{marginTop: 32}}
+				/>
 			</View>
 		)
 	}
