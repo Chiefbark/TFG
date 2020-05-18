@@ -1,6 +1,6 @@
-import React from 'react';
+import React, {Fragment} from 'react';
 import PropTypes from 'prop-types';
-import {View, Text, ScrollView, Modal, StyleSheet, ActivityIndicator} from 'react-native';
+import {View, Text, ScrollView, Modal, StyleSheet, ActivityIndicator, TouchableWithoutFeedback} from 'react-native';
 
 import {colors} from '../../styles';
 
@@ -27,29 +27,31 @@ export default class Dialog extends React.Component {
 				transparent={true}
 				visible={this.props.visible}
 			>
-				<View style={styles.container}>
-					<View style={{position: 'absolute', top: 20, width: '100%', alignItems: 'center'}}>
-						<ActivityIndicator size={25} animating={this.props.loading} color={colors.primary}
-										   style={{
-											   backgroundColor: colors.white, borderRadius: 1000,
-											   opacity: this.props.loading ? 1 : 0, padding: 5
-										   }}/>
-					</View>
-					<View style={styles.dialog}>
-						<Text style={styles.title}>{this.props.title}</Text>
-						<ScrollView style={[{width: '100%'}, this.state.height && {height: this.state.height}]}
-									keyboardDismissMode={'on-drag'}>
-							<View onLayout={(event) => {
-								this.setState({height: event.nativeEvent.layout.height});
-							}}>
-								{this.props.content && this.props.content()}
+				<TouchableWithoutFeedback style={styles.container} onPress={() => this.props.onClickExit && this.props.onClickExit()}>
+					<View style={styles.container}>
+						<View style={{position: 'absolute', top: 20, width: '100%', alignItems: 'center'}}>
+							<ActivityIndicator size={25} animating={this.props.loading} color={colors.primary}
+											   style={{
+												   backgroundColor: colors.white, borderRadius: 1000,
+												   opacity: this.props.loading ? 1 : 0, padding: 5
+											   }}/>
+						</View>
+						<View style={styles.dialog}>
+							<Text style={styles.title}>{this.props.title}</Text>
+							<ScrollView style={[{width: '100%'}, this.state.height && {height: this.state.height}]}
+										keyboardDismissMode={'on-drag'}>
+								<View onLayout={(event) => {
+									this.setState({height: event.nativeEvent.layout.height});
+								}}>
+									{this.props.content && this.props.content()}
+								</View>
+							</ScrollView>
+							<View style={styles.actions}>
+								{this.props.buttons && this.props.buttons()}
 							</View>
-						</ScrollView>
-						<View style={styles.actions}>
-							{this.props.buttons && this.props.buttons()}
 						</View>
 					</View>
-				</View>
+				</TouchableWithoutFeedback>
 			</Modal>
 		)
 	}
@@ -57,6 +59,7 @@ export default class Dialog extends React.Component {
 
 const styles = StyleSheet.create({
 	container: {
+		width: '100%', height: '100%',
 		flex: 1, justifyContent: 'center', alignItems: 'center',
 		backgroundColor: '#00000055'
 	},
@@ -100,11 +103,15 @@ Dialog.propTypes = {
 	 */
 	visible: PropTypes.bool,
 	/**
-	 * Indicates if the component is loading or not
+	 * Specifies if the component is loading or not
 	 *
 	 * `Bool` -- `default false`
 	 */
-	loading: PropTypes.bool
+	loading: PropTypes.bool,
+	/**
+	 * Callback triggered when the user presses outside of the component
+	 */
+	onClickExit: PropTypes.func
 }
 
 Dialog.defaultProps = {
