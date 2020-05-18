@@ -82,7 +82,7 @@ export default class HolidayForm extends React.Component {
 						buttons={() =>
 							<Fragment>
 								<Button label={i18n.get('commons.form.actions.0')}
-										style={[{paddingHorizontal: 0}, !this.state.key && {paddingHorizontal: 18}]}
+										style={[this.state.key && {flex: 1, paddingHorizontal: 0}, !this.state.key && {paddingHorizontal: 18}]}
 										onClick={() => {
 											this.props.onCancel();
 										}}
