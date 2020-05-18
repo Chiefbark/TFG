@@ -68,13 +68,11 @@ export default class CalendarScreen extends React.Component {
 					  onClick={() => this.setState({dialogHelp: true})}/>
 		});
 		this.props.navigation.dangerouslyGetParent().setOptions({tabBarLabel: i18n.get('calendar.title')});
-	}
-	
-	componentDidMount() {
-		i18n.addListener(this._updateComponent.bind(this));
-		config.addConfigListener(this._updateComponent.bind(this));
-		this._updateComponent();
 		
+		firebase.ref('schedules').off('value')
+		firebase.ref('absences').off('value')
+		firebase.ref('holidays').off('value')
+		firebase.ref('subjects').off('value')
 		firebase.ref('schedules').on('value', snapshot => {
 			let data = snapshot.val() || {};
 			this.setState({schedules: Object.entries(data)}, () => this._updateMarking());
@@ -88,6 +86,12 @@ export default class CalendarScreen extends React.Component {
 			this.setState({holidays: Object.entries(data)}, () => this._updateMarking());
 		});
 		firebase.ref('subjects').on('value', () => this._updateMarking());
+	}
+	
+	componentDidMount() {
+		i18n.addListener(this._updateComponent.bind(this));
+		config.addConfigListener(this._updateComponent.bind(this));
+		this._updateComponent();
 	}
 	
 	async _updateMarking() {

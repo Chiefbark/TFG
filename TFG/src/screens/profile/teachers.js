@@ -27,6 +27,12 @@ export default class TeachersScreen extends React.Component {
 		this.setState({_locale: i18n.currLocale});
 		this.props.navigation.dangerouslyGetParent().setOptions({title: i18n.get('profile.screens.2.title')});
 		this.props.navigation.dangerouslyGetParent().dangerouslyGetParent().setOptions({tabBarLabel: i18n.get('profile.title')});
+		
+		firebase.ref('teachers').off('value')
+		firebase.ref('teachers').on('value', snapshot => {
+			let data = snapshot.val() || {};
+			this.setState({teachers: Object.entries(data)});
+		});
 	}
 	
 	_onFocusComponent() {
@@ -49,11 +55,6 @@ export default class TeachersScreen extends React.Component {
 			.dangerouslyGetParent().setOptions({tabBarVisible: false}));
 		this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', () => this.props.navigation.dangerouslyGetParent()
 			.dangerouslyGetParent().setOptions({tabBarVisible: true}));
-		
-		firebase.ref('teachers').on('value', snapshot => {
-			let data = snapshot.val() || {};
-			this.setState({teachers: Object.entries(data)});
-		});
 	}
 	
 	componentWillUnmount() {

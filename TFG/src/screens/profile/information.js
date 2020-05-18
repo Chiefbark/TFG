@@ -32,30 +32,11 @@ export default class InformationScreen extends React.Component {
 		this.setState({_locale: i18n.currLocale});
 		this.props.navigation.dangerouslyGetParent().setOptions({title: i18n.get('profile.screens.0.title')});
 		this.props.navigation.dangerouslyGetParent().dangerouslyGetParent().setOptions({tabBarLabel: i18n.get('profile.title')});
-	}
-	
-	_onFocusComponent() {
-		this.setState({_active: true});
-		this.props.navigation.dangerouslyGetParent().setOptions({title: i18n.get('profile.screens.0.title')});
-		this.props.navigation.dangerouslyGetParent().dangerouslyGetParent().setOptions({tabBarLabel: i18n.get('profile.title')});
-	}
-	
-	componentDidMount() {
-		i18n.addListener(this._updateComponent.bind(this));
-		this.props.navigation.addListener('focus', () => this._onFocusComponent());
-		this.props.navigation.addListener('blur', () => {
-			this.setState({selected: {}});
-			this.props.navigation.dangerouslyGetParent().setOptions({
-				headerRight: () => undefined
-			});
-		});
-		this._onFocusComponent();
 		
-		this.keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', () => this.props.navigation.dangerouslyGetParent()
-			.dangerouslyGetParent().setOptions({tabBarVisible: false}));
-		this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', () => this.props.navigation.dangerouslyGetParent()
-			.dangerouslyGetParent().setOptions({tabBarVisible: true}));
-		
+		firebase.ref('currProfile').off('value')
+		firebase.ref('schedules').off('value')
+		firebase.removeListenersToTimetables()
+		firebase.ref('holidays').off('value')
 		firebase.ref('currProfile').on('value', snapshot => {
 			let data = snapshot.val() || {};
 			this.setState({profile: data})
@@ -69,6 +50,28 @@ export default class InformationScreen extends React.Component {
 			let data = snapshot.val() || {};
 			this.setState({holidays: Object.entries(data)})
 		});
+	}
+	
+	_onFocusComponent() {
+		this.props.navigation.dangerouslyGetParent().setOptions({title: i18n.get('profile.screens.0.title')});
+		this.props.navigation.dangerouslyGetParent().dangerouslyGetParent().setOptions({tabBarLabel: i18n.get('profile.title')});
+	}
+	
+	componentDidMount() {
+		i18n.addListener(this._updateComponent.bind(this));
+		this.props.navigation.addListener('focus', () => this._onFocusComponent());
+		this.props.navigation.addListener('blur', () => {
+			this.setState({selected: {}});
+			this.props.navigation.dangerouslyGetParent().setOptions({
+				headerRight: () => undefined
+			});
+		});
+		this._updateComponent();
+		
+		this.keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', () => this.props.navigation.dangerouslyGetParent()
+			.dangerouslyGetParent().setOptions({tabBarVisible: false}));
+		this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', () => this.props.navigation.dangerouslyGetParent()
+			.dangerouslyGetParent().setOptions({tabBarVisible: true}));
 	}
 	
 	componentWillUnmount() {

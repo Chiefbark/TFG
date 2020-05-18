@@ -38,6 +38,30 @@ export default class AbsencesScreen extends React.Component {
 			tabBarLabel: i18n.get('absences.title'),
 			tabBarVisible: !this.props.route.params
 		});
+		
+		firebase.ref('subjects').off('value')
+		firebase.ref('absences').off('value')
+		firebase.ref('subjects').on('value', snapshot => {
+			let data = snapshot.val() || {};
+			this.setState({subjects: Object.entries(data)});
+		})
+		firebase.ref('absences').on('value', snapshot => {
+			let data = snapshot.val() || {};
+			let arr = Object.entries(data);
+			if (this.state.currMonth)
+				arr = arr.filter(e => parseInt(e[0].split('-')[1]) === this.state.currMonth);
+			arr = arr.map(e => {
+				let absences = [];
+				Object.entries(e[1]).forEach(x => {
+					if (this.state.currSubject && x[1].id_subject === this.state.currSubject)
+						absences.push({date: e[0], id_schedule: x[0], id_subject: x[1].id_subject})
+					else if (!this.state.currSubject)
+						absences.push({date: e[0], id_schedule: x[0], id_subject: x[1].id_subject})
+				})
+				return absences;
+			})
+			this.setState({absences: [].concat.apply([], arr)});
+		})
 	}
 	
 	_filterComponent() {
@@ -65,28 +89,6 @@ export default class AbsencesScreen extends React.Component {
 		config.addConfigListener(this._updateComponent.bind(this));
 		this._updateComponent();
 		this.setState({tempMonth: this.state.currMonth, tempSubject: this.state.tempSubject});
-		
-		firebase.ref('subjects').on('value', snapshot => {
-			let data = snapshot.val() || {};
-			this.setState({subjects: Object.entries(data)});
-		})
-		firebase.ref('absences').on('value', snapshot => {
-			let data = snapshot.val() || {};
-			let arr = Object.entries(data);
-			if (this.state.currMonth)
-				arr = arr.filter(e => parseInt(e[0].split('-')[1]) === this.state.currMonth);
-			arr = arr.map(e => {
-				let absences = [];
-				Object.entries(e[1]).forEach(x => {
-					if (this.state.currSubject && x[1].id_subject === this.state.currSubject)
-						absences.push({date: e[0], id_schedule: x[0], id_subject: x[1].id_subject})
-					else if (!this.state.currSubject)
-						absences.push({date: e[0], id_schedule: x[0], id_subject: x[1].id_subject})
-				})
-				return absences;
-			})
-			this.setState({absences: [].concat.apply([], arr)});
-		})
 	}
 	
 	componentWillUnmount() {
