@@ -161,7 +161,7 @@ export default class App extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			_navigation: 'wizard',
+			_navigation: 'default',
 			_locale: undefined,
 			_config: undefined,
 			_firebaseKey: undefined
