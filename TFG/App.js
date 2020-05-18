@@ -24,6 +24,9 @@ import NewProfile1 from './src/screens/newProfile/newProfile1';
 import NewProfile2 from './src/screens/newProfile/newProfile2';
 import NewProfile3 from './src/screens/newProfile/newProfile3';
 import NewProfile4 from './src/screens/newProfile/newProfile4';
+import NewProfile5 from './src/screens/newProfile/newProfile5';
+import NewProfile6 from './src/screens/newProfile/newProfile6';
+import NewProfile7 from './src/screens/newProfile/newProfile7';
 
 const BottomTab = createBottomTabNavigator();
 const TopTab = createMaterialTopTabNavigator();
@@ -155,7 +158,6 @@ function TimetableScreen({navigation, route}) {
 
 export default class App extends React.Component {
 	
-	
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -255,6 +257,9 @@ export default class App extends React.Component {
 						<Stack.Screen name={'NewProfile2'} component={NewProfile2}/>
 						<Stack.Screen name={'NewProfile3'} component={NewProfile3}/>
 						<Stack.Screen name={'NewProfile4'} component={NewProfile4}/>
+						<Stack.Screen name={'NewProfile5'} component={NewProfile5}/>
+						<Stack.Screen name={'NewProfile6'} component={NewProfile6}/>
+						<Stack.Screen name={'NewProfile7'} component={NewProfile7}/>
 					</Stack.Navigator>
 				</NavigationContainer>
 				}
