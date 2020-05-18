@@ -164,7 +164,12 @@ export const profile = {
 			confirmDialogHolidays: {
 				title: 'Estás seguro?',
 				description: 'Por favor confirma que quieres eliminar estas vacaciones',
-				actions: ['Cancel', 'Remove']
+				actions: ['Cancelar', 'Eliminar']
+			},
+			confirmDialogExam: {
+				title: 'Estás seguro?',
+				description: 'Por favor confirma que quieres eliminar este examen',
+				actions: ['Cancelar', 'Eliminar']
 			}
 		},
 		{
@@ -296,6 +301,17 @@ export const commons = {
 			'⚠ Todas las ausencias de esos días serán eliminadas!'
 		],
 		toast: 'Vacaciones eliminadas'
+	},
+	examForm: {
+		title: 'Examen',
+		placeholders: [
+			'asignatura...',
+			'Elige un día',
+			'Elige las horas en las que tienes el examen',
+			'horas...',
+			'Si el día elegido no tiene ninguna clase, no podrás seleccionarlas'
+		],
+		toast: 'Examen eliminado'
 	},
 	languages: [
 		{name: 'Español', iso: 'es'},

@@ -165,6 +165,11 @@ export const profile = {
 				title: 'Are you sure?',
 				description: 'Please confirm that you want to remove this holidays',
 				actions: ['Cancel', 'Remove']
+			},
+			confirmDialogExam: {
+				title: 'Are you sure?',
+				description: 'Please confirm that you want to remove this exam',
+				actions: ['Cancel', 'Remove']
 			}
 		},
 		{
@@ -296,6 +301,17 @@ export const commons = {
 			'⚠ All the absences between those days will be removed!'
 		],
 		toast: 'Holidays removed'
+	},
+	examForm: {
+		title: 'Exam',
+		placeholders: [
+			'subject...',
+			'Select the day',
+			'Choose the hours you have the exam',
+			'hours...',
+			'If chosen day you do not have any class, you will not be able to select them'
+		],
+		toast: 'Exam removed'
 	},
 	languages: [
 		{name: 'Spanish', iso: 'es'},
