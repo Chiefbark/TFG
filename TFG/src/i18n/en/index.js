@@ -67,14 +67,18 @@ export const newProfile = {
 				'Once you have defined your subjects, you can start adding your dialy clases.' +
 				'\n\nIn the next screens you can add the classes of each day of week.' +
 				'\n\nIf someday you don\'t have class, you can go next screen',
-				'Press "start" to begin' +
-				'\nIf you want to skip the days you have left, you can press "skip"'
+				'Press "start" to begin'
 			],
 			nextButton: 'Start'
 		},
 		{
 			subtitle: 'Classes of ',
-			description: [],
+			description: [
+				'Here you can add your classes pressing the button +' +
+				'\n\nYou can also edit and delete them if you hold down them',
+				'When you are done, press the button "continue"'+
+				'\nIf you press the button "skip", you will finish the profile configuration and leave the days you miss without classes'
+			],
 			helpDialog: {
 				placeholders: [
 					'It\'s time to add the daily classes.' +

@@ -67,14 +67,18 @@ export const newProfile = {
 				'Una vez que ya tienes las asignaturas definidas, puedes empezar a añadir tus clases diarias.' +
 				'\n\nEn las siguientes pantallas podrás añadir las clases que tengas cada día de la semana.' +
 				'\n\nSi no tienes clase algún dia puedes a la siguiente pantalla',
-				'Para empezar pulsa en "comenzar"' +
-				'\nSi quieres saltar los días que te queden, puedes darle al botón "saltar"'
+				'Para empezar pulsa en "comenzar"'
 			],
 			nextButton: 'Comenzar'
 		},
 		{
 			subtitle: 'clases de los',
-			description: [],
+			description: [
+				'Aquí puedes añadir tus clases pulsando sobre el botón +' +
+				'\n\nTambién puedes editarlas y borrarlas si las mantienes pulsadas',
+				'Cuando hayas acabado pulsa en "continuar"' +
+				'\nSi pulsas en "saltar" terminarás la configuración del perfil y dejarás los días que te falten sin clases'
+			],
 			helpDialog: {
 				placeholders: [
 					'Toca añadir las clases diarias.' +
