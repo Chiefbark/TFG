@@ -180,8 +180,8 @@ HolidayForm.propTypes = {
 	 *
 	 * `obj`
 	 * - `name : String` : name of the holidays
-	 * - `startDate : String` : start date of the timetable (required)
-	 * - `endDate : String` : end date of the timetable (required)
+	 * - `startDate : String` : start date of the holidays (required)
+	 * - `endDate : String` : end date of the holidays (required)
 	 */
 	holiday: PropTypes.shape({
 		key: PropTypes.string.isRequired,
