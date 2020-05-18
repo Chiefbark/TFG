@@ -25,21 +25,25 @@ export default class SubjectsScreen extends React.Component {
 		}
 	}
 	
+	_listenerSubjects(snapshot){
+		let data = snapshot.val() || {};
+		this.setState({subjects: Object.entries(data)});
+	}
+	_listenerTeachers(snapshot){
+		let data = snapshot.val() || {};
+		this.setState({teachers: Object.entries(data)});
+	}
+	
 	_updateComponent() {
 		this.setState({_locale: i18n.currLocale});
 		this.props.navigation.dangerouslyGetParent().setOptions({title: i18n.get('profile.screens.1.title')});
 		this.props.navigation.dangerouslyGetParent().dangerouslyGetParent().setOptions({tabBarLabel: i18n.get('profile.title')});
 		
-		firebase.ref('subjects').off('value')
-		firebase.ref('teachers').off('value')
-		firebase.ref('subjects').on('value', snapshot => {
-			let data = snapshot.val() || {};
-			this.setState({subjects: Object.entries(data)});
-		});
-		firebase.ref('teachers').on('value', snapshot => {
-			let data = snapshot.val() || {};
-			this.setState({teachers: Object.entries(data)});
-		});
+		firebase.ref('subjects').off('value', this._listenerSubjects.bind(this));
+		firebase.ref('teachers').off('value', this._listenerTeachers.bind(this));
+		
+		firebase.ref('subjects').on('value', this._listenerSubjects.bind(this));
+		firebase.ref('teachers').on('value', this._listenerTeachers.bind(this));
 	}
 	
 	_onFocusComponent() {

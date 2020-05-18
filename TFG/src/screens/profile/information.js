@@ -28,28 +28,35 @@ export default class InformationScreen extends React.Component {
 		}
 	}
 	
+	_listenerCurrProfile(snapshot) {
+		let data = snapshot.val() || {};
+		this.setState({profile: data});
+	}
+	
+	_listenerSchedules(snapshot) {
+		let data = snapshot.val() || {};
+		this.setState({timetables: Object.entries(data)});
+	}
+	
+	_listenerHolidays(snapshot) {
+		let data = snapshot.val() || {};
+		this.setState({holidays: Object.entries(data)});
+	}
+	
 	_updateComponent() {
 		this.setState({_locale: i18n.currLocale});
 		this.props.navigation.dangerouslyGetParent().setOptions({title: i18n.get('profile.screens.0.title')});
 		this.props.navigation.dangerouslyGetParent().dangerouslyGetParent().setOptions({tabBarLabel: i18n.get('profile.title')});
 		
-		firebase.ref('currProfile').off('value')
-		firebase.ref('schedules').off('value')
+		firebase.ref('currProfile').off('value', this._listenerCurrProfile.bind(this));
+		firebase.ref('schedules').off('value', this._listenerSchedules.bind(this));
 		firebase.removeListenersToTimetables()
-		firebase.ref('holidays').off('value')
-		firebase.ref('currProfile').on('value', snapshot => {
-			let data = snapshot.val() || {};
-			this.setState({profile: data})
-		});
-		firebase.ref('schedules').on('value', snapshot => {
-			let data = snapshot.val() || {};
-			this.setState({timetables: Object.entries(data)})
-		});
+		firebase.ref('holidays').off('value', this._listenerHolidays.bind(this));
+		
+		firebase.ref('currProfile').on('value', this._listenerCurrProfile.bind(this));
+		firebase.ref('schedules').on('value', this._listenerSchedules.bind(this));
 		firebase.addListenersToTimetables();
-		firebase.ref('holidays').on('value', snapshot => {
-			let data = snapshot.val() || {};
-			this.setState({holidays: Object.entries(data)})
-		});
+		firebase.ref('holidays').on('value', this._listenerHolidays.bind(this));
 	}
 	
 	_onFocusComponent() {

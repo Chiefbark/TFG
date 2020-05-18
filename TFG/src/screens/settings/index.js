@@ -24,19 +24,24 @@ export default class SettingsScreen extends React.Component {
 		}
 	}
 	
+	_listenerProfiles(snapshot){
+		let data = snapshot.val() || [];
+		this.setState({profiles: data});
+	}
+	
 	_updateComponent() {
 		this.setState({_locale: i18n.currLocale, _config: config.currConfig});
 		this.props.navigation.setOptions({title: i18n.get(`settings.title`)});
 		this.props.navigation.dangerouslyGetParent().setOptions({tabBarLabel: i18n.get('settings.title')});
+		
+		firebase.ref('profiles').off('value', this._listenerProfiles.bind(this));
+		
+		firebase.ref('profiles').on('value', this._listenerProfiles.bind(this));
 	}
 	
 	componentDidMount() {
 		i18n.addListener(this._updateComponent.bind(this));
 		this._updateComponent();
-		firebase.ref('profiles').on('value', snapshot => {
-			let data = snapshot.val() || [];
-			this.setState({profiles: data});
-		});
 	}
 	
 	componentWillUnmount() {

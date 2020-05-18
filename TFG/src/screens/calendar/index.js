@@ -58,6 +58,25 @@ export default class CalendarScreen extends React.Component {
 		}
 	}
 	
+	_listenerSchedules(snapshot) {
+		let data = snapshot.val() || {};
+		this.setState({schedules: Object.entries(data)}, () => this._updateMarking());
+	}
+	
+	_listenerAbsences(snapshot) {
+		let data = snapshot.val() || {};
+		this.setState({absences: Object.entries(data)}, () => setTimeout(() => this._updateMarking(), 0));
+	}
+	
+	_listenerHolidays(snapshot) {
+		let data = snapshot.val() || {};
+		this.setState({holidays: Object.entries(data)}, () => this._updateMarking());
+	}
+	
+	_listenerSubjects(snapshot) {
+		this._updateMarking();
+	}
+	
 	_updateComponent() {
 		this.setState({_locale: i18n.currLocale, _config: config.currConfig, _lastModified: new Date().getTime()});
 		this.props.navigation.setOptions({
@@ -69,23 +88,15 @@ export default class CalendarScreen extends React.Component {
 		});
 		this.props.navigation.dangerouslyGetParent().setOptions({tabBarLabel: i18n.get('calendar.title')});
 		
-		firebase.ref('schedules').off('value')
-		firebase.ref('absences').off('value')
-		firebase.ref('holidays').off('value')
-		firebase.ref('subjects').off('value')
-		firebase.ref('schedules').on('value', snapshot => {
-			let data = snapshot.val() || {};
-			this.setState({schedules: Object.entries(data)}, () => this._updateMarking());
-		});
-		firebase.ref('absences').on('value', snapshot => {
-			let data = snapshot.val() || {};
-			this.setState({absences: Object.entries(data)}, () => this._updateMarking());
-		});
-		firebase.ref('holidays').on('value', snapshot => {
-			let data = snapshot.val() || {};
-			this.setState({holidays: Object.entries(data)}, () => this._updateMarking());
-		});
-		firebase.ref('subjects').on('value', () => this._updateMarking());
+		firebase.ref('schedules').off('value', this._listenerSchedules.bind(this));
+		firebase.ref('absences').off('value', this._listenerAbsences.bind(this));
+		firebase.ref('holidays').off('value', this._listenerHolidays.bind(this));
+		firebase.ref('subjects').off('value', this._listenerSubjects.bind(this));
+		
+		firebase.ref('schedules').on('value', this._listenerSchedules.bind(this));
+		firebase.ref('absences').on('value', this._listenerAbsences.bind(this));
+		firebase.ref('holidays').on('value', this._listenerHolidays.bind(this));
+		firebase.ref('subjects').on('value', this._listenerSubjects.bind(this));
 	}
 	
 	componentDidMount() {

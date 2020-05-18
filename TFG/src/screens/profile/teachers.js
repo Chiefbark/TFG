@@ -24,16 +24,19 @@ export default class TeachersScreen extends React.Component {
 		}
 	}
 	
+	_listenerTeachers(snapshot) {
+		let data = snapshot.val() || {};
+		this.setState({teachers: Object.entries(data)});
+	}
+	
 	_updateComponent() {
 		this.setState({_locale: i18n.currLocale});
 		this.props.navigation.dangerouslyGetParent().setOptions({title: i18n.get('profile.screens.2.title')});
 		this.props.navigation.dangerouslyGetParent().dangerouslyGetParent().setOptions({tabBarLabel: i18n.get('profile.title')});
 		
-		firebase.ref('teachers').off('value')
-		firebase.ref('teachers').on('value', snapshot => {
-			let data = snapshot.val() || {};
-			this.setState({teachers: Object.entries(data)});
-		});
+		firebase.ref('teachers').off('value', this._listenerTeachers.bind(this));
+		
+		firebase.ref('teachers').on('value', this._listenerTeachers.bind(this));
 	}
 	
 	_onFocusComponent() {
