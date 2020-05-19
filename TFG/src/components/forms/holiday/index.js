@@ -117,6 +117,7 @@ export default class HolidayForm extends React.Component {
 														firebase.ref('holidays').child(this.state.key).update(obj).then();
 									
 													firebase.removeAbsencesBetween(this.state.startDate, this.state.endDate);
+													firebase.removeExamsBetween(this.state.startDate, this.state.endDate);
 									
 													this.props.onSubmit(newKey);
 												}, 0)
