@@ -179,7 +179,11 @@ export default class InformationScreen extends React.Component {
 									<Icon source={require('../../../assets/icons/icon_help.png')} iconColor={colors.white}/>
 								}
 					/>
-					{this.state.exams?.map(e => {
+					{this.state.exams?.sort((a, b) => {
+						if (a[1].date > b[1].date) return -1;
+						if (a[1].date < b[1].date) return 1;
+						return 0;
+					}).map(e => {
 							const subject = this.state.subjects?.find(x => x[0] === e[1].id_subject);
 							let times = [];
 							if (e[1].schedules) {
@@ -190,7 +194,8 @@ export default class InformationScreen extends React.Component {
 								}
 							}
 							const day = i18n.get(`commons.calendarLocales.dayNames.${(getDayOfWeek(e[1].date) + 1) % 7}`);
-							return <ListItem key={e[0]} title={`${getISODate(e[1].date)} (${day})`} subtitle={subject ? subject[1].name : undefined}
+							return <ListItem key={e[0]} title={`${getISODate(e[1].date)} (${day})`}
+											 subtitle={subject ? subject[1].name : undefined}
 											 rightItem={() => <Text style={{color: colors.grey, marginRight: 16}}>{times.join(' - ')}</Text>}
 											 onClick={() => this.setState({exam: {key: e[0], obj: e[1]}, dialogExam: true})}/>
 						}
