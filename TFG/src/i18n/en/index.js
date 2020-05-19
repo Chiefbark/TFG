@@ -251,7 +251,8 @@ export const commons = {
 			'Please fill all the fields',
 			'The end date must be later, not earlier',
 			'The end time must be later, not earlier',
-			'That hour range is already taken by other class'
+			'That hour range is already taken by other class',
+			'The exam hours have to be consecutive'
 		],
 		actions: ['Cancel', 'Save', 'Add', 'Continue', 'Remove']
 	},

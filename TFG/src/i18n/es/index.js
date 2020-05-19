@@ -251,7 +251,8 @@ export const commons = {
 			'Por favor rellena todos los campos',
 			'La fecha de fin tiene que ser posterior, no anterior',
 			'La hora de fin tiene que ser posterior, no anterior',
-			'Ese rango de horas ya está cogido por otra clase'
+			'Ese rango de horas ya está cogido por otra clase',
+			'Las horas del examen tienen que ser consecutivas'
 		],
 		actions: ['Cancelar', 'Guardar', 'Añadir', 'Continuar', 'Eliminar']
 	},
