@@ -60,7 +60,7 @@ export default class ExamForm extends React.Component {
 					this.setState({id_schedule: undefined, disabled: true, schedules: undefined});
 				else
 					this.setState({
-						id_schedule: undefined, disabled: false,
+						id_schedule: this.state.id_schedule, disabled: false,
 						path: `${schedule[0]}/${getDayOfWeek(this.state.date)}`,
 						schedules: Object.entries(schedule[1][getDayOfWeek(this.state.date)])
 					});
@@ -114,7 +114,15 @@ export default class ExamForm extends React.Component {
 									) ?? []}
 									placeholder={i18n.get('commons.examForm.placeholders.3')}
 									error={this.state.errorSchedule} disabled={this.state.disabled}
-									onValueChange={value => this.setState({id_schedule: value})}
+									onValueChange={value =>
+										this.setState({
+											id_schedule: value?.map(e => {
+												return {
+													path: `${e.split('/')[0]}/${e.split('/')[1]}`,
+													id_schedule: e.split('/')[2]
+												}
+											})
+										})}
 								/>
 								<Text style={{textAlign: 'center', color: colors.grey}}>{i18n.get('commons.examForm.placeholders.4')}</Text>
 							</Fragment>
@@ -141,22 +149,30 @@ export default class ExamForm extends React.Component {
 										backgroundColor={colors.primary} textColor={colors.white}
 										onClick={() => {
 											let obj = {};
+											let msg = 0;
 											if (!this.state.id_subject || this.state.id_subject === '') obj.errorSubject = true;
 											if (!this.state.date || this.state.date === '') obj.errorDate = true;
 											if (!this.state.disabled && !this.state.id_schedule) obj.errorSchedule = true;
-											if (Object.entries(obj).length > 0) this._showError(obj);
+											if (this.state.id_subject && this.state.date && this.state.id_schedule && this.state.id_schedule.length > 1) {
+												let ii = 0;
+												while (ii < this.state.id_schedule.length - 1 && msg === 0) {
+													const endTime = this.state.schedules.find(e => e[0] === this.state.id_schedule[ii].id_schedule)[1].endTime;
+													const startTime = this.state.schedules.find(e => e[0] === this.state.id_schedule[ii + 1].id_schedule)[1].startTime;
+													if (endTime !== startTime) {
+														msg = 4;
+														obj.errorSchedule = true;
+													}
+													ii++;
+												}
+											}
+											if (Object.entries(obj).length > 0) this._showError(obj, msg);
 											else {
 												this.setState({loading: true})
 												setTimeout(async () => {
 													let obj = {
 														date: this.state.date,
 														id_subject: this.state.id_subject,
-														schedules: this.state.id_schedule?.map(e => {
-															return {
-																path: `${e.split('/')[0]}/${e.split('/')[1]}`,
-																id_schedule: `${e.split('/')[2]}`
-															}
-														}) ?? null
+														schedules: this.state.id_schedule || null
 													};
 													let newKey = this.state.key;
 													if (!this.state.key)
