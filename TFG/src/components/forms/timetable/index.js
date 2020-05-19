@@ -183,10 +183,10 @@ export default class TimetableForm extends React.Component {
 									<Text style={{textAlign: 'center'}}>
 										{i18n.get('profile.screens.0.saveDialogTimetable.description.3')}
 									</Text>
-									<Text style={{color: colors.primary}}>
+									<Text style={{textAlign: 'center', color: colors.primary}}>
 										{this.state.warnings.nSchedules}{i18n.get('profile.screens.0.saveDialogTimetable.description.4')}
 									</Text>
-									<Text>{i18n.get('profile.screens.0.saveDialogTimetable.description.5')}</Text>
+									<Text style={{textAlign: 'center'}}>{i18n.get('profile.screens.0.saveDialogTimetable.description.5')}</Text>
 								</Fragment>
 								}
 								{this.state.warnings.nAbsences.length > 0 &&
