@@ -59,18 +59,6 @@ export default class ExamForm extends React.Component {
 					let data = snapshot.val() || {};
 					const schedule = Object.entries(data).find(e => isDateBetween(this.state.date, e[1].startDate, e[1].endDate));
 					
-					// const available = Object.entries(schedule[1][getDayOfWeek(this.state.date)])?.filter(e => !this.state.exams?.find(x =>
-					// 	x[0] !== this.state.key && x[1].date === this.state.date && x[1].schedules?.find(y => y.id_schedule === e[0])
-					// )) ?? undefined;
-					//
-					// if (!schedule[1][getDayOfWeek(this.state.date)] || !available || available.length === 0)
-					// 	this.setState({id_schedule: undefined, disabled: true, schedules: undefined});
-					// else
-					// 	this.setState({
-					// 		id_schedule: this.state.id_schedule, disabled: false, available: available,
-					// 		path: `${schedule[0]}/${getDayOfWeek(this.state.date)}`
-					// 	});
-					
 					if (!schedule[1][getDayOfWeek(this.state.date)])
 						this.setState({id_schedule: undefined, disabled: true, schedules: undefined});
 					else
@@ -94,6 +82,7 @@ export default class ExamForm extends React.Component {
 		)) ?? undefined;
 		if (available instanceof Array && available.length === 0) available = undefined;
 		else available = true;
+		
 		return (
 			<Fragment>
 				<Dialog title={i18n.get('commons.examForm.title')} loading={this.state.loading}
@@ -125,13 +114,18 @@ export default class ExamForm extends React.Component {
 									</Text>
 									}
 								</View>
-								{available &&
+								{available && !this.state.holidays &&
 								<Text style={{textAlign: 'center', color: colors.grey}}>{i18n.get('commons.examForm.placeholders.2')}</Text>
-								||
-								<Text style={{
-									textAlign: 'center',
-									color: colors.primary
-								}}>{i18n.get('commons.examForm.placeholders.3')}</Text>
+								}
+								{!available && !this.state.holidays &&
+								<Text style={{textAlign: 'center', color: colors.primary}}>
+									{i18n.get('commons.examForm.placeholders.3')}
+								</Text>
+								}
+								{this.state.holidays &&
+								<Text style={{textAlign: 'center', color: colors.primary}}>
+									{i18n.get('commons.examForm.placeholders.4')}
+								</Text>
 								}
 								<Picker
 									initialValue={this.state.id_schedule instanceof Array ? this.state.id_schedule.map(e => `${e.path}/${e.id_schedule}`) : this.state.id_schedule}
@@ -148,7 +142,7 @@ export default class ExamForm extends React.Component {
 												}
 										}) ?? []
 									}
-									placeholder={i18n.get('commons.examForm.placeholders.4')}
+									placeholder={i18n.get('commons.examForm.placeholders.5')}
 									error={this.state.errorSchedule} disabled={this.state.disabled}
 									onValueChange={value =>
 										this.setState({
@@ -160,7 +154,7 @@ export default class ExamForm extends React.Component {
 											})
 										})}
 								/>
-								<Text style={{textAlign: 'center', color: colors.grey}}>{i18n.get('commons.examForm.placeholders.5')}</Text>
+								<Text style={{textAlign: 'center', color: colors.grey}}>{i18n.get('commons.examForm.placeholders.6')}</Text>
 							</Fragment>
 						}
 						buttons={() =>
@@ -216,6 +210,8 @@ export default class ExamForm extends React.Component {
 													else
 														firebase.ref('exams').child(this.state.key).update(obj).then();
 									
+													firebase.removeAbsenceOfSchedules(this.state.id_schedule, this.state.date)
+									
 													this.props.onSubmit(newKey);
 												}, 0)
 											}
@@ -238,6 +234,14 @@ export default class ExamForm extends React.Component {
 												path: `${schedule[0]}/${getDayOfWeek(startDate)}`,
 												schedules: Object.entries(schedule[1][getDayOfWeek(startDate)])
 											});
+									})
+									firebase.ref('holidays').once('value', snapshot => {
+										let data = snapshot.val() || {};
+										const holidays = Object.entries(data).find(e => isDateBetween(startDate, e[1].startDate, e[1].endDate));
+										if (holidays)
+											this.setState({holidays: true, disabled: true});
+										else
+											this.setState({holidays: false});
 									})
 								}}
 								onCancel={() => this.setState({dialogDatePicker: false})}/>
