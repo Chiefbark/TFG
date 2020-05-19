@@ -151,9 +151,9 @@ export const profile = {
 			saveDialogTimetable: {
 				title: 'Cuidado!',
 				description: [
-					'Estás sobreescribiendo parte de un horario. Las faltas de asistencia entre ',
+					'Estás sobreescribiendo parte de un horario. Las faltas de asistencia y exámenes entre ',
 					' y ',
-					' serán eliminadas',
+					' serán eliminados',
 					'La fecha de inicio es anterior a otro horario.',
 					'horario(s)',
 					' serán eliminados, junto con todas sus faltas de asistencia',
