@@ -239,7 +239,7 @@ ExamForm.propTypes = {
 	 * `obj`
 	 * - `date : String` : date of the exam yyyy-MM-dd (required)
 	 * - `id_subject : String` : id of the subject associated to the exam (required)
-	 * - `id_schedule : {path: String, id_schedule: String}` : array of schedules associated to the exam (required)
+	 * - `schedules : {path: String, id_schedule: String}` : array of schedules associated to the exam (required)
 	 */
 	exam: PropTypes.shape({
 		key: PropTypes.string.isRequired,
