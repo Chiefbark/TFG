@@ -5,7 +5,7 @@ import * as i18n from '../../i18n';
 import * as config from '../../config';
 import * as firebase from '../../firebase';
 import {compareTimes, getDayOfWeek, getDatesBetween, getISODate, isDateBetween} from '../../utils';
-import {colors, subjectColors} from '../../styles';
+import {colors, subjectColors, textColors} from '../../styles';
 
 import Toast from 'react-native-simple-toast';
 
@@ -14,8 +14,7 @@ import {Calendar} from 'react-native-calendars';
 import CalendarDay from '../../components/calendarDay';
 import Dialog from '../../components/dialog';
 import Icon from '../../components/icon';
-import ListItem from "../../components/listItem";
-import {min} from "react-native-reanimated";
+import ListItem from '../../components/listItem';
 
 const markedDates = {
 	'2020-05-15': {
@@ -78,6 +77,11 @@ export default class CalendarScreen extends React.Component {
 		this._updateMarking();
 	}
 	
+	_listenerExams(snapshot) {
+		let data = snapshot.val() || {};
+		this.setState({exams: Object.entries(data)}, () => setTimeout(() => this._updateMarking(), 0));
+	}
+	
 	_updateComponent() {
 		this.setState({_locale: i18n.currLocale, _config: config.currConfig, _lastModified: new Date().getTime()});
 		this.props.navigation.setOptions({
@@ -93,11 +97,13 @@ export default class CalendarScreen extends React.Component {
 		firebase.ref('absences').off('value', this._listenerAbsences.bind(this));
 		firebase.ref('holidays').off('value', this._listenerHolidays.bind(this));
 		firebase.ref('subjects').off('value', this._listenerSubjects.bind(this));
+		firebase.ref('exams').off('value', this._listenerExams.bind(this));
 		
 		firebase.ref('schedules').on('value', this._listenerSchedules.bind(this));
 		firebase.ref('absences').on('value', this._listenerAbsences.bind(this));
 		firebase.ref('holidays').on('value', this._listenerHolidays.bind(this));
 		firebase.ref('subjects').on('value', this._listenerSubjects.bind(this));
+		firebase.ref('exams').on('value', this._listenerExams.bind(this));
 	}
 	
 	componentDidMount() {
@@ -114,6 +120,7 @@ export default class CalendarScreen extends React.Component {
 		firebase.ref('absences').off('value', this._listenerAbsences.bind(this));
 		firebase.ref('holidays').off('value', this._listenerHolidays.bind(this));
 		firebase.ref('subjects').off('value', this._listenerSubjects.bind(this));
+		firebase.ref('exams').off('value', this._listenerExams.bind(this));
 	}
 	
 	async _updateMarking() {
@@ -154,7 +161,15 @@ export default class CalendarScreen extends React.Component {
 					marking[dates[jj]].selection = {...obj}
 				}
 			}
-		// TODO: EXAMS
+		const ex = this.state.exams;
+		if (ex)
+			for (let ii = 0; ii < ex.length; ii++) {
+				if (!marking[ex[ii][1].date]) marking[ex[ii][1].date] = {};
+				if (!marking[ex[ii][1].date].single) marking[ex[ii][1].date].single = {};
+				const color = await firebase.ref('subjects').child(ex[ii][1].id_subject).once('value').then(result => result.val().color);
+				if (color)
+					marking[ex[ii][1].date].single = {color: color, textColor: textColors[color]};
+			}
 		this.setState({marking: marking})
 	}
 	
@@ -193,7 +208,7 @@ export default class CalendarScreen extends React.Component {
 												   let currSchedule = this.state.schedules.find(e => value.dateString >= e[1].startDate && value.dateString <= e[1].endDate);
 												   obj.dateString = value.dateString;
 							
-												   let holidays = this.state.holidays?.filter(e => isDateBetween(value.dateString, e[1].startDate, e[1].endDate))
+												   const holidays = this.state.holidays?.filter(e => isDateBetween(value.dateString, e[1].startDate, e[1].endDate))
 												   if (holidays.length > 0) {
 													   obj.holidays = [];
 													   holidays.forEach(e => {
@@ -201,18 +216,30 @@ export default class CalendarScreen extends React.Component {
 													   })
 												   } else {
 													   const dayOfWeek = getDayOfWeek(value.dateString);
+													   const exams = this.state.exams?.filter(e => e[1].date === date.dateString);
+													   obj.exams = [];
+													   for (let ii = 0; ii < exams.length; ii++) {
+														   obj.exams[ii] = {...exams[ii][1]};
+														   obj.exams[ii].name = await firebase.ref('subjects')
+															   .child(exams[ii][1].id_subject)
+															   .once('value')
+															   .then(result => result.val()?.name ?? undefined);
+														   if (exams[ii][1].schedules) {
+															   obj.exams[ii].startTime = currSchedule[1][dayOfWeek][exams[ii][1].schedules[0].id_schedule].startTime
+															   obj.exams[ii].endTime = currSchedule[1][dayOfWeek][exams[ii][1].schedules[exams[ii][1].schedules.length - 1].id_schedule].endTime
+														   }
+													   }
 													   if (currSchedule[1][dayOfWeek]) {
-														   const sorted = Object.entries(currSchedule[1][dayOfWeek])
+														   const subjects = Object.entries(currSchedule[1][dayOfWeek])
 															   .sort((arg0, arg1) => compareTimes(arg1[1].startTime, arg0[1].startTime));
 														   obj.subjects = [];
-														   for (let ii = 0; ii < sorted.length; ii++)
-															   if (sorted[ii][1].id_subject) {
-																   obj.subjects[ii] = {...sorted[ii][1]};
-																   obj.subjects[ii].id_schedule = sorted[ii][0];
+														   for (let ii = 0; ii < subjects.length; ii++)
+															   if (subjects[ii][1].id_subject) {
+																   obj.subjects[ii] = {...subjects[ii][1]};
+																   obj.subjects[ii].id_schedule = subjects[ii][0];
 																   obj.subjects[ii].path = `${currSchedule[0]}/${dayOfWeek}`;
-																   obj.subjects[ii].id_subject = sorted[ii][1].id_subject;
 																   obj.subjects[ii].name = await firebase.ref('subjects')
-																	   .child(sorted[ii][1].id_subject)
+																	   .child(subjects[ii][1].id_subject)
 																	   .once('value')
 																	   .then(result => result.val()?.name ?? undefined);
 															   }
@@ -225,51 +252,6 @@ export default class CalendarScreen extends React.Component {
 					  }}
 			/>
 			<View style={styles.helpTextContainer}><Text style={styles.helpText}>{i18n.get('calendar.helpText')}</Text></View>
-			<Dialog title={i18n.get('commons.helpDialog.title')}
-					content={() =>
-						<Fragment>
-							<View style={{flexDirection: 'row', alignItems: 'center', marginVertical: 5}}>
-								<View style={{
-									width: 20, height: 20, borderRadius: 1000,
-									backgroundColor: subjectColors[6], marginHorizontal: 5, marginRight: 10
-								}}/>
-								<Text style={{flex: 1, flexWrap: 'wrap'}}>{i18n.get('calendar.helpDialog.placeholders.0')}</Text>
-							</View>
-							<View style={{flexDirection: 'row', alignItems: 'center', marginVertical: 5}}>
-								<View style={{
-									width: 25, height: 25, borderRadius: 1000,
-									backgroundColor: colors.primaryLight, marginHorizontal: 2.5, marginRight: 10
-								}}/>
-								<Text style={{flex: 1, flexWrap: 'wrap'}}>{i18n.get('calendar.helpDialog.placeholders.1')}</Text>
-							</View>
-							<View style={{flexDirection: 'row', alignItems: 'center', marginVertical: 5}}>
-								<View style={{width: 30, flexDirection: 'row', flexWrap: 'wrap', marginRight: 10}}>
-									<View style={{
-										width: 10, height: 10, borderRadius: 1000, backgroundColor: subjectColors[1], margin: 2.5
-									}}/>
-									<View style={{
-										width: 10, height: 10, borderRadius: 1000, backgroundColor: subjectColors[6], margin: 2.5
-									}}/>
-									<View style={{
-										width: 10, height: 10, borderRadius: 1000, backgroundColor: subjectColors[12], margin: 2.5
-									}}/>
-									<View style={{
-										width: 10, height: 10, borderRadius: 1000, backgroundColor: subjectColors[8], margin: 2.5
-									}}/>
-								</View>
-								<Text style={{flex: 1, flexWrap: 'wrap'}}>{i18n.get('calendar.helpDialog.placeholders.2')}</Text>
-							</View>
-							<Text style={{textAlign: 'center', color: colors.grey, marginTop: 10}}>
-								{i18n.get('calendar.helpDialog.placeholders.3')}
-							</Text>
-						</Fragment>
-					}
-					buttons={() =>
-						<Button label={i18n.get('commons.helpDialog.actions.0')}
-								backgroundColor={colors.primary} textColor={colors.white}
-								onClick={() => this.setState({dialogHelp: false})}/>
-					}
-					visible={this.state.dialogHelp}/>
 			{this.state.selected &&
 			<Dialog title={getISODate(this.state.selected.dateString)}
 					content={() =>
@@ -284,7 +266,8 @@ export default class CalendarScreen extends React.Component {
 								<Text style={{textAlign: 'left', color: colors.grey}}>
 									{i18n.get('calendar.holidaysDialog.placeholders.0')}
 								</Text>
-								<Image source={require('../../../assets/icons/icon_party.png')} style={{width: 24, height: 24}}/>
+								<Image source={require('../../../assets/icons/icon_party.png')}
+									   style={{width: 24, height: 24}}/>
 							</View>
 							}
 							{this.state.selected.holidays?.map(e =>
@@ -298,30 +281,46 @@ export default class CalendarScreen extends React.Component {
 									const arr = this.state.absences.find(x => x[0] === this.state.selected.dateString);
 									if (arr) selected = Object.keys(arr[1]).find(x => x === e.id_schedule)
 								}
-								return e.name &&
-									<ListItem key={e.id_schedule} title={e.name}
-											  subtitle={`${e.startTime} - ${e.endTime}`}
-											  containerStyle={{paddingHorizontal: 0}}
-											  rightItem={() =>
-												  <Icon source={require('../../../assets/icons/icon_check.png')}
-														size={'small'} disabled={true} iconColor={selected ? colors.primary : colors.white}
-														style={{
-															borderWidth: 1, borderColor: colors.primary, borderRadius: 1000,
-															padding: 10, marginLeft: 8
-														}}/>
-											  }
-											  onClick={() => {
-												  if (selected)
-													  firebase.ref('absences').child(this.state.selected.dateString).child(e.id_schedule).remove()
-														  .then(() => Toast.showWithGravity(i18n.get('calendar.absenceChanged.1'), Toast.SHORT, Toast.BOTTOM));
-												  else
-													  firebase.ref('absences').child(this.state.selected.dateString).child(e.id_schedule)
-														  .set({path: e.path, id_subject: e.id_subject})
-														  .then(() => Toast.showWithGravity(i18n.get('calendar.absenceChanged.0'), Toast.SHORT, Toast.BOTTOM));
-											  }}
-									/>
+								const exam = this.state.selected.exams?.find(x => x.schedules.map(y => y.id_schedule)?.includes(e.id_schedule))
+								if (exam)
+									return <ListItem key={exam.id_schedule} title={exam.name}
+													 subtitle={i18n.get('commons.examForm.title') + ` ${e.startTime} - ${e.endTime}`}
+													 containerStyle={{paddingHorizontal: 0}}
+													 rightItem={() => <Image source={require('../../../assets/icons/icon_exam_art.png')}
+																			 style={{width: 28, height: 28, marginLeft: 8}}/>}/>
+								else
+									return e.name &&
+										<ListItem key={e.id_schedule} title={e.name}
+												  subtitle={`${e.startTime} - ${e.endTime}`}
+												  containerStyle={{paddingHorizontal: 0}}
+												  rightItem={() =>
+													  <Icon source={require('../../../assets/icons/icon_check.png')}
+															size={'small'} disabled={true}
+															iconColor={selected ? colors.primary : colors.white}
+															style={{
+																borderWidth: 1, borderColor: colors.primary, borderRadius: 1000,
+																padding: 10, marginLeft: 8
+															}}/>
+												  }
+												  onClick={() => {
+													  if (selected)
+														  firebase.ref('absences').child(this.state.selected.dateString).child(e.id_schedule).remove()
+															  .then(() => Toast.showWithGravity(i18n.get('calendar.absenceChanged.1'), Toast.SHORT, Toast.BOTTOM));
+													  else
+														  firebase.ref('absences').child(this.state.selected.dateString).child(e.id_schedule)
+															  .set({path: e.path, id_subject: e.id_subject})
+															  .then(() => Toast.showWithGravity(i18n.get('calendar.absenceChanged.0'), Toast.SHORT, Toast.BOTTOM));
+												  }}
+										/>
 							})}
-							{!this.state.selected.holidays && !this.state.selected.subjects &&
+							{!this.state.selected.holidays && !this.state.selected.subjects && this.state.selected.exams?.map(e => {
+								return <ListItem key={e.id_schedule} title={e.name}
+												 subtitle={i18n.get('commons.examForm.title') + (e.startTime ? ` ${e.startTime} - ${e.endTime}` : '')}
+												 containerStyle={{paddingHorizontal: 0}}
+												 rightItem={() => <Image source={require('../../../assets/icons/icon_exam_art.png')}
+																		 style={{width: 28, height: 28, marginLeft: 8}}/>}/>
+							})}
+							{!this.state.selected.holidays && !this.state.selected.subjects && !this.state.selected.exams &&
 							<Text>{i18n.get('calendar.emptySchedule')}</Text>}
 						</Fragment>
 					}
@@ -334,6 +333,64 @@ export default class CalendarScreen extends React.Component {
 					}
 					visible={true}/>
 			}
+			<Dialog title={i18n.get('commons.helpDialog.title')}
+					content={() =>
+						<Fragment>
+							<View style={{flexDirection: 'row', alignItems: 'center', marginVertical: 5}}>
+								<View style={{
+									width: 20, height: 20, borderRadius: 1000,
+									backgroundColor: subjectColors[6], marginHorizontal: 5, marginRight: 10
+								}}/>
+								<Text style={{
+									flex: 1,
+									flexWrap: 'wrap'
+								}}>{i18n.get('calendar.helpDialog.placeholders.0')}</Text>
+							</View>
+							<View style={{flexDirection: 'row', alignItems: 'center', marginVertical: 5}}>
+								<View style={{
+									width: 25, height: 25, borderRadius: 1000,
+									backgroundColor: colors.primaryLight, marginHorizontal: 2.5, marginRight: 10
+								}}/>
+								<Text style={{
+									flex: 1,
+									flexWrap: 'wrap'
+								}}>{i18n.get('calendar.helpDialog.placeholders.1')}</Text>
+							</View>
+							<View style={{flexDirection: 'row', alignItems: 'center', marginVertical: 5}}>
+								<View style={{width: 30, flexDirection: 'row', flexWrap: 'wrap', marginRight: 10}}>
+									<View style={{
+										width: 10, height: 10, borderRadius: 1000,
+										backgroundColor: subjectColors[1], margin: 2.5
+									}}/>
+									<View style={{
+										width: 10, height: 10, borderRadius: 1000,
+										backgroundColor: subjectColors[6], margin: 2.5
+									}}/>
+									<View style={{
+										width: 10, height: 10, borderRadius: 1000,
+										backgroundColor: subjectColors[12], margin: 2.5
+									}}/>
+									<View style={{
+										width: 10, height: 10, borderRadius: 1000,
+										backgroundColor: subjectColors[8], margin: 2.5
+									}}/>
+								</View>
+								<Text style={{
+									flex: 1,
+									flexWrap: 'wrap'
+								}}>{i18n.get('calendar.helpDialog.placeholders.2')}</Text>
+							</View>
+							<Text style={{textAlign: 'center', color: colors.grey, marginTop: 10}}>
+								{i18n.get('calendar.helpDialog.placeholders.3')}
+							</Text>
+						</Fragment>
+					}
+					buttons={() =>
+						<Button label={i18n.get('commons.helpDialog.actions.0')}
+								backgroundColor={colors.primary} textColor={colors.white}
+								onClick={() => this.setState({dialogHelp: false})}/>
+					}
+					visible={this.state.dialogHelp}/>
 		</View>;
 	}
 }
