@@ -82,22 +82,24 @@ export default class CustomPicker extends React.Component {
 											if (this.props.multiple)
 												selected = values?.find(x => x.index === index);
 											return <ListItem key={e.value} title={e.label} titleStyles={{fontWeight: 'normal', fontSize: 16}}
-															 containerStyle={{paddingHorizontal: 0}}
+															 containerStyle={{paddingHorizontal: 0}} feedback={e.disabled}
 															 onClick={() => {
-																 if (!this.props.multiple) {
-																	 this.setState({value: e.value, dialog: false});
-																	 this.props.onValueChange && this.props.onValueChange(e.value);
-																 } else {
-																	 if (!selected)
-																		 values.push({value: e.value, index: index});
-																	 else
-																		 values.splice(values.indexOf(values.find(x => x.index === index)), 1);
-																	 values.sort((a, b) => {
-																		 if (a.index < b.index) return -1;
-																		 if (a.index > b.index) return 1;
-																		 return 0;
-																	 });
-																	 this.setState({value: values});
+																 if (!e.disabled) {
+																	 if (!this.props.multiple) {
+																		 this.setState({value: e.value, dialog: false});
+																		 this.props.onValueChange && this.props.onValueChange(e.value);
+																	 } else {
+																		 if (!selected)
+																			 values.push({value: e.value, index: index});
+																		 else
+																			 values.splice(values.indexOf(values.find(x => x.index === index)), 1);
+																		 values.sort((a, b) => {
+																			 if (a.index < b.index) return -1;
+																			 if (a.index > b.index) return 1;
+																			 return 0;
+																		 });
+																		 this.setState({value: values});
+																	 }
 																 }
 															 }}
 															 rightItem={() => this.props.multiple &&
@@ -108,7 +110,9 @@ export default class CustomPicker extends React.Component {
 																		   borderWidth: 1, borderColor: colors.primary, borderRadius: 1000,
 																		   padding: 10, marginLeft: 8
 																	   }}/>
-															 }/>
+															 }
+															 style={{opacity: e.disabled ? 0.25 : 1}}
+											/>
 										}
 									)}
 								</Fragment>
@@ -135,16 +139,18 @@ CustomPicker.propTypes = {
 	/**
 	 * Data to display in the picker
 	 *
-	 * `Array : {label => String, value => String, color => String}`
+	 * `Array : {label => String, value => String, color => String, disabled => Bool}`
 	 * - `label` : text displayed of the element (required)
 	 * - `value` : value of the element (required)
 	 * - `color` : text color of the element in the selection dialog (optional)
+	 * - `disabled` : specifies if the element is clickable or not (optional)
 	 */
 	data: PropTypes.arrayOf(PropTypes.shape(
 		{
 			label: PropTypes.string.isRequired,
 			value: PropTypes.string.isRequired,
-			color: PropTypes.string
+			color: PropTypes.string,
+			disabled: PropTypes.bool
 		}
 	)).isRequired,
 	/**
