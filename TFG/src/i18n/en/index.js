@@ -309,6 +309,7 @@ export const commons = {
 			'subject...',
 			'Select the day',
 			'Choose the hours you have the exam',
+			'⚠ You have already covered all hours of this day with exams!',
 			'hours...',
 			'If chosen day you do not have any class, you will not be able to select them'
 		],
