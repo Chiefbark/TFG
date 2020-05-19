@@ -44,35 +44,56 @@ export default class ExamForm extends React.Component {
 		this.setState({subjects: Object.entries(data)});
 	}
 	
-	// _listenerSchedules(snapshot) {
-	// 	let data = snapshot.val() || {};
-	// 	this.setState({schedules: Object.entries(data)});
-	// }
+	_listenerExams(snapshot) {
+		let data = snapshot.val() || {};
+		this.setState({exams: Object.entries(data)});
+	}
 	
 	componentDidMount() {
-		if (this.state.key)
-			this.setState({disabled: false})
-		if (this.state.date)
-			firebase.ref('schedules').once('value', snapshot => {
-				let data = snapshot.val() || {};
-				const schedule = Object.entries(data).find(e => isDateBetween(this.state.date, e[1].startDate, e[1].endDate));
-				if (!schedule[1][getDayOfWeek(this.state.date)])
-					this.setState({id_schedule: undefined, disabled: true, schedules: undefined});
-				else
-					this.setState({
-						id_schedule: this.state.id_schedule, disabled: false,
-						path: `${schedule[0]}/${getDayOfWeek(this.state.date)}`,
-						schedules: Object.entries(schedule[1][getDayOfWeek(this.state.date)])
-					});
-			})
 		firebase.ref('subjects').on('value', this._listenerSubjects.bind(this));
+		firebase.ref('exams').on('value', this._listenerExams.bind(this));
+		
+		if (this.state.key)
+			this.setState({disabled: false}, () => {
+				firebase.ref('schedules').once('value', snapshot => {
+					let data = snapshot.val() || {};
+					const schedule = Object.entries(data).find(e => isDateBetween(this.state.date, e[1].startDate, e[1].endDate));
+					
+					// const available = Object.entries(schedule[1][getDayOfWeek(this.state.date)])?.filter(e => !this.state.exams?.find(x =>
+					// 	x[0] !== this.state.key && x[1].date === this.state.date && x[1].schedules?.find(y => y.id_schedule === e[0])
+					// )) ?? undefined;
+					//
+					// if (!schedule[1][getDayOfWeek(this.state.date)] || !available || available.length === 0)
+					// 	this.setState({id_schedule: undefined, disabled: true, schedules: undefined});
+					// else
+					// 	this.setState({
+					// 		id_schedule: this.state.id_schedule, disabled: false, available: available,
+					// 		path: `${schedule[0]}/${getDayOfWeek(this.state.date)}`
+					// 	});
+					
+					if (!schedule[1][getDayOfWeek(this.state.date)])
+						this.setState({id_schedule: undefined, disabled: true, schedules: undefined});
+					else
+						this.setState({
+							id_schedule: this.state.id_schedule, disabled: false,
+							path: `${schedule[0]}/${getDayOfWeek(this.state.date)}`,
+							schedules: Object.entries(schedule[1][getDayOfWeek(this.state.date)])
+						});
+				})
+			})
 	}
 	
 	componentWillUnmount() {
 		firebase.ref('subjects').off('value', this._listenerSubjects.bind(this));
+		firebase.ref('exams').off('value', this._listenerExams.bind(this));
 	}
 	
 	render() {
+		let available = this.state.schedules?.filter(e => !this.state.exams?.find(x =>
+			x[0] !== this.state.key && x[1].date === this.state.date && x[1].schedules?.find(y => y.id_schedule === e[0])
+		)) ?? undefined;
+		if (available instanceof Array && available.length === 0) available = undefined;
+		else available = true;
 		return (
 			<Fragment>
 				<Dialog title={i18n.get('commons.examForm.title')} loading={this.state.loading}
@@ -104,15 +125,30 @@ export default class ExamForm extends React.Component {
 									</Text>
 									}
 								</View>
+								{available &&
 								<Text style={{textAlign: 'center', color: colors.grey}}>{i18n.get('commons.examForm.placeholders.2')}</Text>
+								||
+								<Text style={{
+									textAlign: 'center',
+									color: colors.primary
+								}}>{i18n.get('commons.examForm.placeholders.3')}</Text>
+								}
 								<Picker
 									initialValue={this.state.id_schedule instanceof Array ? this.state.id_schedule.map(e => `${e.path}/${e.id_schedule}`) : this.state.id_schedule}
 									multiple={true}
-									data={this.state.schedules?.map(e => {
-											return {label: `${e[1].startTime} - ${e[1].endTime}`, value: `${this.state.path}/${e[0]}`}
-										}
-									) ?? []}
-									placeholder={i18n.get('commons.examForm.placeholders.3')}
+									data={
+										this.state.schedules?.map(e => {
+											if (!this.state.exams?.find(x => x[0] !== this.state.key && x[1].date === this.state.date && x[1].schedules?.find(y => y.id_schedule === e[0])))
+												return {label: `${e[1].startTime} - ${e[1].endTime}`, value: `${this.state.path}/${e[0]}`}
+											else
+												return {
+													label: `${e[1].startTime} - ${e[1].endTime}`,
+													value: `${this.state.path}/${e[0]}`,
+													disabled: true
+												}
+										}) ?? []
+									}
+									placeholder={i18n.get('commons.examForm.placeholders.4')}
 									error={this.state.errorSchedule} disabled={this.state.disabled}
 									onValueChange={value =>
 										this.setState({
@@ -124,7 +160,7 @@ export default class ExamForm extends React.Component {
 											})
 										})}
 								/>
-								<Text style={{textAlign: 'center', color: colors.grey}}>{i18n.get('commons.examForm.placeholders.4')}</Text>
+								<Text style={{textAlign: 'center', color: colors.grey}}>{i18n.get('commons.examForm.placeholders.5')}</Text>
 							</Fragment>
 						}
 						buttons={() =>
@@ -156,8 +192,8 @@ export default class ExamForm extends React.Component {
 											if (this.state.id_subject && this.state.date && this.state.id_schedule && this.state.id_schedule.length > 1) {
 												let ii = 0;
 												while (ii < this.state.id_schedule.length - 1 && msg === 0) {
-													const endTime = this.state.schedules.find(e => e[0] === this.state.id_schedule[ii].id_schedule)[1].endTime;
-													const startTime = this.state.schedules.find(e => e[0] === this.state.id_schedule[ii + 1].id_schedule)[1].startTime;
+													const endTime = this.state.schedules?.find(e => e[0] === this.state.id_schedule[ii].id_schedule)[1].endTime;
+													const startTime = this.state.schedules?.find(e => e[0] === this.state.id_schedule[ii + 1].id_schedule)[1].startTime;
 													if (endTime !== startTime) {
 														msg = 4;
 														obj.errorSchedule = true;
@@ -193,11 +229,12 @@ export default class ExamForm extends React.Component {
 									firebase.ref('schedules').once('value', snapshot => {
 										let data = snapshot.val() || {};
 										const schedule = Object.entries(data).find(e => isDateBetween(startDate, e[1].startDate, e[1].endDate));
+						
 										if (!schedule[1][getDayOfWeek(startDate)])
 											this.setState({id_schedule: undefined, disabled: true, schedules: undefined});
 										else
 											this.setState({
-												id_schedule: undefined, disabled: false,
+												id_schedule: this.state.id_schedule, disabled: false,
 												path: `${schedule[0]}/${getDayOfWeek(startDate)}`,
 												schedules: Object.entries(schedule[1][getDayOfWeek(startDate)])
 											});
