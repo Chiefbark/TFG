@@ -65,12 +65,22 @@ export default class CustomPicker extends React.Component {
 							if (!this.props.multiple) this.setState({dialog: false})
 						}}
 						content={() => {
+							let values = undefined;
+							if (this.props.multiple) {
+								values = this.state.value ? [...this.state.value] : [];
+								values = values?.map(e => {
+									return {
+										value: e.value,
+										index: this.props.data?.findIndex(x => e.value === x.value)
+									}
+								})
+							}
 							return (
 								<Fragment>
 									{this.props.data?.map((e, index) => {
 											let selected = undefined;
 											if (this.props.multiple)
-												selected = this.state.value?.find(x => x.index === index);
+												selected = values?.find(x => x.index === index);
 											return <ListItem key={e.value} title={e.label} titleStyles={{fontWeight: 'normal', fontSize: 16}}
 															 containerStyle={{paddingHorizontal: 0}}
 															 onClick={() => {
@@ -78,13 +88,6 @@ export default class CustomPicker extends React.Component {
 																	 this.setState({value: e.value, dialog: false});
 																	 this.props.onValueChange && this.props.onValueChange(e.value);
 																 } else {
-																	 let values = this.state.value ? [...this.state.value] : [];
-																	 values = values?.map(e => {
-																		 return {
-																			 value: e.value,
-																			 index: this.props.data?.findIndex(x => e.value === x.value)
-																		 }
-																	 })
 																	 if (!selected)
 																		 values.push({value: e.value, index: index});
 																	 else
