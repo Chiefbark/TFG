@@ -20,7 +20,7 @@ export const subjectColors = [
 
 export const textColors = {
 	'#080808': colors.white,'#808080': colors.white, '#FF6F6F': colors.black, '#800000': colors.white,
-	'#FF0000': colors.black, '#808000': colors.black, '#FF8A00': colors.black, '#008000': colors.black,
-	'#00FF00': colors.black, '#008080': colors.black, '#00FFFF': colors.black, '#000080': colors.white,
-	'#0000FF': colors.white, '#800080': colors.white, '#FF00FF': colors.black, '#8844FF': colors.black
+	'#FF0000': colors.white, '#808000': colors.white, '#FF8A00': colors.black, '#008000': colors.white,
+	'#00FF00': colors.black, '#008080': colors.white, '#00FFFF': colors.black, '#000080': colors.white,
+	'#0000FF': colors.white, '#800080': colors.white, '#FF00FF': colors.white, '#8844FF': colors.white
 }
