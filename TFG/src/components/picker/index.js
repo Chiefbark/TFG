@@ -19,18 +19,23 @@ import ListItem from '../listItem';
 export default class CustomPicker extends React.Component {
 	constructor(props) {
 		super(props);
-		
-		this.state = {
-			value: this.props.initialValue
-		}
+		if (this.props.initialValue && this.props.initialValue instanceof Array)
+			this.state = {
+				value: this.props.initialValue.map(e => {
+					return {value: e}
+				})
+			}
+		else
+			this.state = {value: this.props.initialValue}
 	}
 	
 	render() {
 		let selected = undefined;
 		if (this.state.value && this.props.multiple)
-			selected = this.props.data.filter(e => this.state.value.find(x => x === e.value)).map(e => e.label)?.join(', ');
+			selected = this.props.data.filter(e => this.state.value.find(x => x.value === e.value)).map(e => e.label)?.join(', ');
 		if (this.state.value && !this.props.multiple)
 			selected = this.props.data.find(e => e.value === this.state.value)?.label ?? undefined;
+		
 		return (
 			<Fragment>
 				<TouchableWithoutFeedback
@@ -59,47 +64,59 @@ export default class CustomPicker extends React.Component {
 						onClickExit={() => {
 							if (!this.props.multiple) this.setState({dialog: false})
 						}}
-						content={() =>
-							<Fragment>
-								{this.props.data?.map(e => {
-										let selected = undefined;
-										if (this.props.multiple)
-											selected = this.state.value?.find(x => x === e.value);
-										return <ListItem key={e.value} title={e.label} titleStyles={{fontWeight: 'normal', fontSize: 16}}
-														 containerStyle={{paddingHorizontal: 0}}
-														 onClick={() => {
-															 if (!this.props.multiple) {
-																 this.setState({value: e.value, dialog: false});
-																 this.props.onValueChange && this.props.onValueChange(e.value);
-															 } else {
-																 let values = this.state.value ? [...this.state.value] : [];
-																 if (!selected)
-																	 values.push(e.value);
-																 else
-																	 values.splice(values.indexOf(e.value), 1);
-										
-																 this.setState({value: values});
-															 }
-														 }}
-														 rightItem={() => this.props.multiple &&
-															 <Icon source={require('../../../assets/icons/icon_check.png')}
-																   size={'small'} disabled={true}
-																   iconColor={selected ? colors.primary : colors.white}
-																   style={{
-																	   borderWidth: 1, borderColor: colors.primary, borderRadius: 1000,
-																	   padding: 10, marginLeft: 8
-																   }}/>
-														 }/>
-									}
-								)}
-							</Fragment>
-						}
+						content={() => {
+							return (
+								<Fragment>
+									{this.props.data?.map((e, index) => {
+											let selected = undefined;
+											if (this.props.multiple)
+												selected = this.state.value?.find(x => x.index === index);
+											return <ListItem key={e.value} title={e.label} titleStyles={{fontWeight: 'normal', fontSize: 16}}
+															 containerStyle={{paddingHorizontal: 0}}
+															 onClick={() => {
+																 if (!this.props.multiple) {
+																	 this.setState({value: e.value, dialog: false});
+																	 this.props.onValueChange && this.props.onValueChange(e.value);
+																 } else {
+																	 let values = this.state.value ? [...this.state.value] : [];
+																	 values = values?.map(e => {
+																		 return {
+																			 value: e.value,
+																			 index: this.props.data?.findIndex(x => e.value === x.value)
+																		 }
+																	 })
+																	 if (!selected)
+																		 values.push({value: e.value, index: index});
+																	 else
+																		 values.splice(values.indexOf(values.find(x => x.index === index)), 1);
+																	 values.sort((a, b) => {
+																		 if (a.index < b.index) return -1;
+																		 if (a.index > b.index) return 1;
+																		 return 0;
+																	 });
+																	 this.setState({value: values});
+																 }
+															 }}
+															 rightItem={() => this.props.multiple &&
+																 <Icon source={require('../../../assets/icons/icon_check.png')}
+																	   size={'small'} disabled={true}
+																	   iconColor={selected ? colors.primary : colors.white}
+																	   style={{
+																		   borderWidth: 1, borderColor: colors.primary, borderRadius: 1000,
+																		   padding: 10, marginLeft: 8
+																	   }}/>
+															 }/>
+										}
+									)}
+								</Fragment>
+							)
+						}}
 						buttons={() => this.props.multiple &&
 							<Button label={this.props.textExit || 'Select'}
 									backgroundColor={colors.primary} textColor={colors.white}
 									onClick={() => {
 										this.setState({dialog: false});
-										this.props.onValueChange && this.props.onValueChange((this.state.value && this.state.value.length > 0) ? this.state.value : undefined);
+										this.props.onValueChange && this.props.onValueChange((this.state.value && this.state.value.length > 0) ? this.state.value.map(e => e.value) : undefined);
 									}}
 									style={{flex: 1}}
 							/>
