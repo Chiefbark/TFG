@@ -178,7 +178,7 @@ export const profile = {
 			emptyTeacher: 'Profesor no asignado',
 			confirmDialog: {
 				title: 'Estás seguro?',
-				description: 'Todas las faltas de asistencia de la(s) asignatura(s) serán eliminadas también',
+				description: 'Todas las faltas de asistencia de la(s) asignatura(s) y los exámenes serán eliminadas también',
 				actions: ['Cancelar', 'Eliminar']
 			}
 		},
@@ -299,7 +299,7 @@ export const commons = {
 			'nombre de las vacaciones...',
 			'Indica la fecha de inicio y fin de las vacaciones' +
 			'\nAmbos días están incluidos',
-			'⚠ Todas las ausencias de esos días serán eliminadas!'
+			'⚠ Todas las ausencias y exámenes de esos días serán eliminados!'
 		],
 		toast: 'Vacaciones eliminadas'
 	},
@@ -310,6 +310,7 @@ export const commons = {
 			'Elige un día',
 			'Elige las horas en las que tienes el examen',
 			'⚠ Ya has cubierto todas las horas de este día con exámenes!',
+			'⚠ Tienes vacaciones ese día!',
 			'horas...',
 			'Si el día elegido no tiene ninguna clase, no podrás seleccionarlas'
 		],

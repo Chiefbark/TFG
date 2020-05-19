@@ -178,7 +178,7 @@ export const profile = {
 			emptyTeacher: 'Unassigned teacher',
 			confirmDialog: {
 				title: 'Are you sure?',
-				description: 'All the absences associated to the subject(s) will be removed as well',
+				description: 'All the absences associated to the subject(s) and the exams will be removed as well',
 				actions: ['Cancel', 'Remove']
 			}
 		},
@@ -299,7 +299,7 @@ export const commons = {
 			'holiday\'s name...',
 			'Specify the start and end date of the new holidays' +
 			'\nBoth days are included',
-			'⚠ All the absences between those days will be removed!'
+			'⚠ All the absences and exams between those days will be removed!'
 		],
 		toast: 'Holidays removed'
 	},
@@ -310,6 +310,7 @@ export const commons = {
 			'Select the day',
 			'Choose the hours you have the exam',
 			'⚠ You have already covered all hours of this day with exams!',
+			'⚠ You have holidays that day!',
 			'hours...',
 			'If chosen day you do not have any class, you will not be able to select them'
 		],
