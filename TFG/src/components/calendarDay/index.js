@@ -70,8 +70,7 @@ const styles = StyleSheet.create({
 		borderTopRightRadius: 1000, borderBottomRightRadius: 1000
 	},
 	single: {
-		position: 'absolute', top: 5, right: 5, bottom: 5, left: 5,
-		borderWidth: 6, borderRadius: 1000
+		position: 'absolute', top: 5, right: 5, bottom: 5, left: 5, borderRadius: 1000
 	},
 	multiContainer: {
 		position: 'absolute', right: 4, bottom: 8, left: 4, flexDirection: 'row', justifyContent: 'center'
