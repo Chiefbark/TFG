@@ -151,12 +151,12 @@ export default class ExamForm extends React.Component {
 													let obj = {
 														date: this.state.date,
 														id_subject: this.state.id_subject,
-														schedules: this.state.id_schedule.map(e => {
+														schedules: this.state.id_schedule?.map(e => {
 															return {
 																path: `${e.split('/')[0]}/${e.split('/')[1]}`,
 																id_schedule: `${e.split('/')[2]}`
 															}
-														})
+														}) ?? null
 													};
 													let newKey = this.state.key;
 													if (!this.state.key)
@@ -248,7 +248,7 @@ ExamForm.propTypes = {
 			id_subject: PropTypes.string.isRequired,
 			schedules: PropTypes.arrayOf(PropTypes.shape(
 				{path: PropTypes.string.isRequired, id_schedule: PropTypes.string.isRequired}
-			)).isRequired
+			))
 		}).isRequired
 	})
 }
