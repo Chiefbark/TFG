@@ -17,6 +17,7 @@ import ListHeader from '../../components/listHeader';
 import ListItem from '../../components/listItem';
 import ProfileInfoForm from '../../components/forms/profileInfo';
 import TimetableForm from '../../components/forms/timetable';
+import Dialog from "../../components/dialog";
 
 export default class InformationScreen extends React.Component {
 	constructor(props) {
@@ -143,7 +144,8 @@ export default class InformationScreen extends React.Component {
 					{/*	CONFIG ABOUT TIMETABLES	*/}
 					<ListHeader label={i18n.get('profile.screens.0.headers.1')}
 								rightItem={() =>
-									<Icon source={require('../../../assets/icons/icon_help.png')} iconColor={colors.white}/>
+									<Icon source={require('../../../assets/icons/icon_help.png')} iconColor={colors.white}
+										  onClick={() => this.setState({helpTimetables: true})}/>
 								}
 					/>
 					{this.state.timetables?.map((e, index) => {
@@ -161,11 +163,7 @@ export default class InformationScreen extends React.Component {
 							onClick={() => this.setState({dialogTimetable: true})}
 							style={{paddingVertical: 15, borderTopWidth: 0.5, borderTopColor: colors.lightGrey}}/>
 					{/*	CONFIG ABOUT HOLIDAYS & EVENTS	*/}
-					<ListHeader label={i18n.get('profile.screens.0.headers.2')}
-								rightItem={() =>
-									<Icon source={require('../../../assets/icons/icon_help.png')} iconColor={colors.white}/>
-								}
-					/>
+					<ListHeader label={i18n.get('profile.screens.0.headers.2')}/>
 					{this.state.holidays?.map(e =>
 						<ListItem key={e[0]} title={e[1].name} subtitle={`${getISODate(e[1].startDate)} - ${getISODate(e[1].endDate)}`}
 								  onClick={() => this.setState({holiday: {key: e[0], obj: e[1]}, dialogHoliday: true})}/>
@@ -174,11 +172,7 @@ export default class InformationScreen extends React.Component {
 							onClick={() => this.setState({dialogHoliday: true})}
 							style={{paddingVertical: 15, borderTopWidth: 0.5, borderTopColor: colors.lightGrey}}/>
 					{/*	CONFIG ABOUT EXAMS	*/}
-					<ListHeader label={i18n.get('profile.screens.0.headers.3')}
-								rightItem={() =>
-									<Icon source={require('../../../assets/icons/icon_help.png')} iconColor={colors.white}/>
-								}
-					/>
+					<ListHeader label={i18n.get('profile.screens.0.headers.3')}/>
 					{this.state.exams?.sort((a, b) => {
 						if (a[1].date > b[1].date) return -1;
 						if (a[1].date < b[1].date) return 1;
@@ -238,6 +232,20 @@ export default class InformationScreen extends React.Component {
 							  Toast.showWithGravity(i18n.get('commons.examForm.toast'), Toast.LONG, Toast.BOTTOM);
 						  }}/>
 				}
+				<Dialog title={i18n.get('commons.helpDialog.title')}
+						content={() =>
+							<Fragment>
+								<Text style={{textAlign: 'center'}}>
+									{i18n.get('profile.screens.0.helpDialogTimetables.description')}
+								</Text>
+							</Fragment>
+						}
+						buttons={() =>
+							<Button label={i18n.get('commons.helpDialog.actions.0')}
+									backgroundColor={colors.primary} textColor={colors.white}
+									onClick={() => this.setState({helpTimetables: false})}/>
+						}
+						visible={this.state.helpTimetables}/>
 			</Fragment>
 		);
 	}
