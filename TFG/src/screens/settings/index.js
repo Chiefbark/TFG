@@ -24,7 +24,7 @@ export default class SettingsScreen extends React.Component {
 		}
 	}
 	
-	_listenerProfiles(snapshot){
+	_listenerProfiles(snapshot) {
 		let data = snapshot.val() || [];
 		this.setState({profiles: data});
 	}
@@ -67,6 +67,9 @@ export default class SettingsScreen extends React.Component {
 							  }
 							  feedback={false}
 							  style={{paddingVertical: 4}}/>
+					<Button label={`${i18n.get('commons.form.actions.2')}...`} backgroundColor={colors.white} textColor={colors.lightGrey}
+							onClick={() => config.setNavigation('wizard')}
+							style={{paddingVertical: 15, borderTopWidth: 0.5, borderTopColor: colors.lightGrey}}/>
 					{/*	CONFIG ABOUT LANGUAGE	*/}
 					<ListHeader label={i18n.get('settings.headers.1')}/>
 					<ListItem title={i18n.get(`commons.languages.${i18n.getSelectedLang()}.name`)}
