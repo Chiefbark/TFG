@@ -221,6 +221,11 @@ export const timetable = {
 	}
 }
 
+export const offline = {
+	description: 'No tienes conexión a internet!',
+	action: 'Volver a intentar'
+}
+
 export const commons = {
 	calendarLocales: {
 		monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
