@@ -2,7 +2,7 @@ import firebase from 'firebase';
 import {AsyncStorage} from 'react-native';
 
 import * as config from '../config';
-import {addDaysToDate, getDatesBetween} from '../utils';
+import {addDaysToDate, getDatesBetween, isDateBetween} from '../utils';
 
 const firebaseConfig = {
 	apiKey: "apiKey",
@@ -101,6 +101,15 @@ export function removeSubject(id_subject, id_teacher) {
 				})
 			))
 	}).then(result => ref('schedules').update({...references}));
+	let references2 = {};
+	ref('exams').once('value', snapshot => {	// Read exams
+		let data = snapshot.val() || {};
+		Object.entries(data).forEach(e => {	// Iterates over each exam
+				if (e[1].id_subject === id_subject)	// If the subject id of the exam is equal to the current deleted subject
+					references2[e[0]] = null
+			}
+		)
+	}).then(result => ref('exams').update({...references2}));
 }
 
 export function removeSchedule(path, id_schedule) {
@@ -115,6 +124,19 @@ export function removeSchedule(path, id_schedule) {
 			})
 		)
 	}).then(result => ref('absences').update({...references}))
+}
+
+export function removeExamsOfSchedule(id_schedule) {
+	let references = {};
+	ref('exams').once('value', snapshot => {	// Read exams
+		let data = snapshot.val() || {};
+		Object.entries(data).forEach(e => {	// Iterates over each exam
+			if (e[1].schedules)	// If the exam has schedules associated
+				for (let ii = 0; ii < e[1].schedules.length; ii++)	// Iterates over each schedule
+					if (e[1].schedules[ii].id_schedule === id_schedule)	// If the schedule id is equal to the current deleted schedule
+						references[e[0]] = null	// Add a reference to the exam node
+		})
+	}).then(result => ref('exams').update({...references}))
 }
 
 export function updateTimetable(id_timetable, prevDates, newDates, index) {
@@ -166,11 +188,33 @@ export function removeTimetable(id_timetable, index, date) {
 	})
 }
 
+export function removeAbsenceOfSchedules(schedules, date) {
+	let references = {};
+	ref('absences').once('value', snapshot => {	// Read absences
+		let data = snapshot.val() || {};
+		Object.entries(data[date]).forEach(e => {// Iterates over each absence
+			if (schedules.find(x => x.id_schedule === e[0]))	// If the key of the absence is equal to the any of the schedules
+				references[`${date}/${e[0]}`] = null	// Add the reference to the absence node
+		})
+	}).then(result => ref('absences').update({...references}))
+}
+
 export function removeAbsencesBetween(startDate, endDate) {
 	let references = {};
 	getDatesBetween(startDate, endDate).forEach(e => references[e] = null)
 	if (Object.keys(references).length > 0)
 		ref('absences').update({...references})
+}
+
+export function removeExamsBetween(startDate, endDate) {
+	let references = {};
+	ref('exams').once('value', snapshot => {	// Read exams
+		let data = snapshot.val() || {};
+		Object.entries(data).forEach(e => {	// Iterates over each exam
+			if (isDateBetween(e[1].date, startDate, endDate))	// If the exam date is between the startDate and endDate
+				references[e[0]] = null	// Add a reference to the exam node
+		})
+	}).then(result => ref('exams').update({...references}))
 }
 
 function _removeTimetableListener(snapshot) {
@@ -201,8 +245,11 @@ function _linkTimetablesListener(snapshot) {
 	}
 	if (Object.keys(links).length > 0)
 		ref('schedules').update({...links})
-	if (Object.keys(dates).length > 0)
+	if (Object.keys(dates).length > 0) {
+		const keys = Object.keys(dates);
 		ref('absences').update({...dates})
+		removeExamsBetween(keys[0], keys[keys.length - 1])
+	}
 }
 
 export function addListenersToTimetables() {
