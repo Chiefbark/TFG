@@ -167,6 +167,7 @@ export default class TimetableForm extends React.Component {
 										onClick={() => {
 											this.setState({loadingRemove: true});
 											setTimeout(async () => {
+												await firebase.removeExamsBetween(this.state.startDate, this.state.endDate);
 												firebase.removeTimetable(this.state.key, this.props.timetable.index, this.props.timetable.index !== 0 ? this.state.endDate : this.state.startDate);
 												this.props.onDelete();
 											}, 0)
@@ -186,7 +187,8 @@ export default class TimetableForm extends React.Component {
 									<Text style={{textAlign: 'center', color: colors.primary}}>
 										{this.state.warnings.nSchedules}{i18n.get('profile.screens.0.saveDialogTimetable.description.4')}
 									</Text>
-									<Text style={{textAlign: 'center'}}>{i18n.get('profile.screens.0.saveDialogTimetable.description.5')}</Text>
+									<Text
+										style={{textAlign: 'center'}}>{i18n.get('profile.screens.0.saveDialogTimetable.description.5')}</Text>
 								</Fragment>
 								}
 								{this.state.warnings.nAbsences.length > 0 &&
