@@ -1,15 +1,17 @@
 import React, {Fragment} from 'react';
-import {View, Text, TouchableOpacity, ActivityIndicator} from 'react-native';
+import {View, Text, Image, TouchableOpacity, ActivityIndicator} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
+import NetInfo from '@react-native-community/netinfo';
 
 import * as i18n from './src/i18n';
 import * as config from './src/config';
 import * as firebase from './src/firebase';
 import {colors} from './src/styles';
 
+import Button from './src/components/button';
 import Icon from './src/components/icon';
 
 import Calendar from './src/screens/calendar';
@@ -161,7 +163,8 @@ export default class App extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			_navigation: 'default',
+			_online: undefined,
+			_navigation: 'wizard',
 			_locale: undefined,
 			_config: undefined,
 			_firebaseKey: undefined
@@ -172,9 +175,21 @@ export default class App extends React.Component {
 		firebase.firebaseKey().then(firebaseKey => this.setState({_firebaseKey: firebaseKey}));
 	}
 	
+	componentDidMount() {
+		NetInfo.addEventListener(state => {
+			if (!state.isConnected) {
+				this.setState({_online: false})
+				config.setNavigation('network')
+			} else {
+				this.setState({_online: true})
+				config.setNavigation(this.state._navigation)
+			}
+		});
+	}
+	
 	render() {
 		return (<Fragment>
-				{this.state._locale && this.state._config && this.state._firebaseKey && this.state._navigation === 'default' &&
+				{this.state._locale && this.state._config && this.state._firebaseKey && this.state._navigation === 'default' && this.state._online &&
 				<NavigationContainer>
 					<BottomTab.Navigator
 						initialRouteName={'Calendar'}
@@ -247,7 +262,7 @@ export default class App extends React.Component {
 					</BottomTab.Navigator>
 				</NavigationContainer>
 				}
-				{this.state._locale && this.state._config && this.state._firebaseKey && this.state._navigation === 'wizard' &&
+				{this.state._locale && this.state._config && this.state._firebaseKey && this.state._navigation === 'wizard' && this.state._online &&
 				<NavigationContainer>
 					<Stack.Navigator screenOptions={{
 						headerTintColor: colors.white,
@@ -263,9 +278,30 @@ export default class App extends React.Component {
 					</Stack.Navigator>
 				</NavigationContainer>
 				}
-				{(!this.state._locale || !this.state._config || !this.state._firebaseKey) &&
+				{(!this.state._locale || !this.state._config || !this.state._firebaseKey || this.state._online === undefined) &&
 				<View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
 					<ActivityIndicator size={'large'} color={colors.primary}/>
+				</View>
+				}
+				{this.state._online === false &&
+				<View style={{flex: 1, justifyContent: 'center', alignItems: 'center', padding: 32}}>
+					<Image source={require('./assets/icons/icon_network_art.png')} style={{width: 128, height: 128}}/>
+					<Text style={{fontWeight: 'bold', marginVertical: 32}}>{i18n.get('offline.description')}</Text>
+					<Button label={i18n.get('offline.action')} backgroundColor={colors.primary} textColor={colors.white}
+							onClick={() => {
+								this.setState({_online: undefined});
+								setTimeout(() => {
+									NetInfo.fetch().then(state => {
+										if (!state.isConnected) {
+											this.setState({_online: false})
+											config.setNavigation('network')
+										} else {
+											this.setState({_online: true})
+											config.setNavigation(this.state._navigation)
+										}
+									});
+								}, 0);
+							}}/>
 				</View>
 				}
 			</Fragment>
