@@ -177,13 +177,7 @@ export default class App extends React.Component {
 	
 	componentDidMount() {
 		NetInfo.addEventListener(state => {
-			if (!state.isConnected) {
-				this.setState({_online: false})
-				config.setNavigation('network')
-			} else {
-				this.setState({_online: true})
-				config.setNavigation(this.state._navigation)
-			}
+			this.setState({_online: state.isConnected})
 		});
 	}
 	
@@ -292,15 +286,9 @@ export default class App extends React.Component {
 								this.setState({_online: undefined});
 								setTimeout(() => {
 									NetInfo.fetch().then(state => {
-										if (!state.isConnected) {
-											this.setState({_online: false})
-											config.setNavigation('network')
-										} else {
-											this.setState({_online: true})
-											config.setNavigation(this.state._navigation)
-										}
+										this.setState({_online: state.isConnected})
 									});
-								}, 0);
+								}, 10);
 							}}/>
 				</View>
 				}
