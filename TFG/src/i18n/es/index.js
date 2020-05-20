@@ -145,7 +145,7 @@ export const profile = {
 			contents: ['Nombre', 'Fecha inicio', 'Fecha fin'],
 			confirmDialogTimetable: {
 				title: 'Estás seguro?',
-				description: 'Todas las faltas de asistencia del horario serán eliminadas también',
+				description: 'Todas las faltas de asistencia y exámenes del horario serán eliminados también',
 				actions: ['Cancelar', 'Eliminar']
 			},
 			saveDialogTimetable: {
@@ -160,6 +160,9 @@ export const profile = {
 					'\nQuieres continuar?'
 				],
 				actions: ['Cancelar', 'Continuar']
+			},
+			helpDialogTimetables: {
+				description: 'Es posible que tu horario cambie a lo largo del curso.\nDesde aquí puedes editar, añadir o eliminar tus horarios'
 			},
 			confirmDialogHolidays: {
 				title: 'Estás seguro?',
@@ -213,7 +216,7 @@ export const timetable = {
 	},
 	confirmDialog: {
 		title: 'Estás seguro?',
-		description: 'Todas las faltas de asistencia asociadas a esta hora serán eliminadas\nSi estás creando un nuevo horario, no te preocupes por eliminarla',
+		description: 'Todas las faltas de asistencia y exámenes asociados a esta hora serán eliminados\nSi estás creando un nuevo horario, no te preocupes por eliminarla',
 		actions: ['Cancelar', 'Eliminar']
 	}
 }

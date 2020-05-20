@@ -145,7 +145,7 @@ export const profile = {
 			contents: ['Name', 'Start date', 'End date'],
 			confirmDialogTimetable: {
 				title: 'Are you sure?',
-				description: 'All the absences associated to the timetable will be removed as well',
+				description: 'All the absences and exams associated to the timetable will be removed as well',
 				actions: ['Cancel', 'Remove']
 			},
 			saveDialogTimetable: {
@@ -160,6 +160,9 @@ export const profile = {
 					'\nYou want to continue?'
 				],
 				actions: ['Cancel', 'Continue']
+			},
+			helpDialogTimetables: {
+				description: 'Es posible que tu horario cambie a lo largo del curso.\nDesde aquí puedes editar, añadir o eliminar tus horarios'
 			},
 			confirmDialogHolidays: {
 				title: 'Are you sure?',
@@ -213,7 +216,7 @@ export const timetable = {
 	},
 	confirmDialog: {
 		title: 'Are you sure?',
-		description: 'All the absences associated to this schedule will be removed as well\nIf you are creating a new timetable, don\'t worry about deleteing it',
+		description: 'All the absences and exams associated to this schedule will be removed as well\nIf you are creating a new timetable, don\'t worry about deleting it',
 		actions: ['Cancel', 'Remove']
 	}
 }
