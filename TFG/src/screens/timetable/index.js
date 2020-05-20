@@ -27,12 +27,12 @@ export default class TimeTable extends React.Component {
 		}
 	}
 	
-	_listenerSchedules(snapshot){
+	_listenerSchedules(snapshot) {
 		let data = snapshot.val() || {};
 		this.setState({schedules: Object.entries(data)});
 	}
 	
-	_listenerSubjects(snapshot){
+	_listenerSubjects(snapshot) {
 		let data = snapshot.val() || {};
 		this.setState({subjects: Object.entries(data)});
 	}
@@ -191,11 +191,12 @@ export default class TimeTable extends React.Component {
 										onClick={() => {
 											this.setState({loadingRemove: true})
 											setTimeout(async () => {
-												Object.entries(this.state.selected)
-													.forEach(element => firebase.removeSchedule(`${this.props.route.params.key}/${this.props.route.params.day}`, element[0]))
-												this.setState({
-													selected: {}, dialogConfirm: false, loadingRemove: false
-												}, () => {
+												const entries = Object.entries(this.state.selected);
+												for (let ii = 0; ii < entries.length; ii++) {
+													await firebase.removeExamsOfSchedule(entries[ii][0]);
+													firebase.removeSchedule(`${this.props.route.params.key}/${this.props.route.params.day}`, entries[ii][0])
+												}
+												this.setState({selected: {}, dialogConfirm: false, loadingRemove: false}, () => {
 													this._showOptions();
 													Toast.showWithGravity(i18n.get('commons.scheduleForm.toast'), Toast.LONG, Toast.BOTTOM);
 												});
