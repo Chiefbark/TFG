@@ -1,6 +1,6 @@
 import {AsyncStorage} from 'react-native';
 
-const defaultConfig = {profile: 0, notifications: [true, true], calendar: [true, true, true]}
+const defaultConfig = {profile: undefined, notifications: [true, true], calendar: [true, true, true]}
 
 export let currConfig = undefined;
 export let currNavigation = 'default';
@@ -31,7 +31,8 @@ export const config = async () => {
 					setConfig(defaultConfig);
 				else {
 					setConfig(JSON.parse(result));
-					setNavigation('default');
+					if (currConfig.profile !== undefined)
+						setNavigation('default');
 				}
 				return result;
 			});
