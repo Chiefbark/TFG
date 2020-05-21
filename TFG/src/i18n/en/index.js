@@ -124,7 +124,11 @@ export const calendar = {
 	absenceChanged: ['Absence added', 'Absence removed']
 }
 export const statistics = {
-	title: 'Statistics'
+	title: 'Statistics',
+	emptyList: '',
+	missed: 'missed',
+	hours: 'hours',
+	action: 'see absences...'
 }
 export const absences = {
 	title: 'Absences',
