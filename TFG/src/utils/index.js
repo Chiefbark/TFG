@@ -23,6 +23,7 @@ export function compareTimes(time1, time2) {
 
 /**
  * Returns the day of the week as number [0: monday, 6: sunday]
+ *
  * @param dateString - yyyy-MM-dd
  * @return {number} The day of the week as number
  */
@@ -33,6 +34,7 @@ export function getDayOfWeek(dateString) {
 
 /**
  * Returns the ISO date with the format dd MMMM yyyy
+ *
  * @param dateString - yyyy-MM-dd
  * @return {string} The ISO date
  */
@@ -137,7 +139,7 @@ export function getMinutesFromTime(time) {
 
 /**
  * Returns the hours of the current minutes
- * 
+ *
  * @param minutes - The minutes
  * @return {number} The hours of the minutes
  */
