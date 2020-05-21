@@ -162,10 +162,8 @@ export default class AbsencesScreen extends React.Component {
 								<Button label={i18n.get('absences.filterDialog.actions.1')}
 										textColor={colors.primary}
 										onClick={() => {
-											this.setState({
-												dialogFilter: false,
-												currMonth: new Date().getMonth() + 1, currSubject: undefined
-											}, () => this._filterComponent())
+											this.setState({dialogFilter: false, currMonth: undefined, currSubject: undefined},
+												() => this._filterComponent())
 										}}
 								/>
 								<Button label={i18n.get('absences.filterDialog.actions.2')}
