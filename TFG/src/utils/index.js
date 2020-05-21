@@ -112,3 +112,35 @@ export function getDateFromString(dateString) {
 	}
 	return undefined;
 }
+
+/**
+ * Returns the number of weeks between the two dates
+ *
+ * @param first - The first date
+ * @param second - The second date
+ * @return {number} The number of weeks between th two dates
+ */
+export function getWeeksDiff(first, second) {
+	return Math.floor((getDateFromString(second) - getDateFromString(first)) / (7 * 24 * 60 * 60 * 1000));
+}
+
+/**
+ * Returns the minutes of the current time (HH:mm)
+ *
+ * @param time - HH:mm
+ * @return {number} The minutes of the time
+ */
+export function getMinutesFromTime(time) {
+	const arr = time.split(':');
+	return arr[0] * 60 + parseInt(arr[1])
+}
+
+/**
+ * Returns the hours of the current minutes
+ * 
+ * @param minutes - The minutes
+ * @return {number} The hours of the minutes
+ */
+export function getHoursFromMinutes(minutes) {
+	return Math.floor((minutes / 60));
+}
