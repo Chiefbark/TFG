@@ -123,7 +123,15 @@ export function getDateFromString(dateString) {
  * @return {number} The number of weeks between th two dates
  */
 export function getWeeksDiff(first, second) {
-	return Math.floor((getDateFromString(second) - getDateFromString(first)) / (7 * 24 * 60 * 60 * 1000));
+	let _first = first;
+	let _second = second;
+	while(getDayOfWeek(_first) !== 0)
+		_first = addDaysToDate(_first, 1);
+	while(getDayOfWeek(_second) !== 6)
+		_second = addDaysToDate(_second, -1);
+	_second = addDaysToDate(_second, 1);
+	
+	return Math.floor((getDateFromString(_second) - getDateFromString(_first)) / (7 * 24 * 60 * 60 * 1000));
 }
 
 /**
