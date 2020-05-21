@@ -140,6 +140,10 @@ export function removeExamsOfSchedule(id_schedule) {
 
 export function updateTimetable(id_timetable, prevDates, newDates, index) {
 	if (prevDates.endDate !== newDates.endDate) {
+		if (prevDates.endDate < newDates.endDate)
+			removeAbsencesBetween(addDaysToDate(prevDates.endDate, 1), newDates.endDate);
+		else
+			removeAbsencesBetween(prevDates.endDate, addDaysToDate(newDates.endDate, 1));
 		ref('schedules').once('value', snapshot => {	// Read schedules
 			let data = snapshot.val() || {};
 			const entries = Object.entries(data);
@@ -150,6 +154,10 @@ export function updateTimetable(id_timetable, prevDates, newDates, index) {
 		})
 	}
 	if (prevDates.startDate !== newDates.startDate) {
+		if (prevDates.startDate < newDates.startDate)
+			removeAbsencesBetween(prevDates.startDate, addDaysToDate(newDates.startDate, -1));
+		else
+			removeAbsencesBetween(addDaysToDate(prevDates.startDate, -1), newDates.startDate);
 		ref('schedules').once('value', snapshot => {	// Read schedules
 			let data = snapshot.val() || {};
 			const entries = Object.entries(data);
@@ -245,8 +253,8 @@ function _linkTimetablesListener(snapshot) {
 	if (Object.keys(links).length > 0)
 		ref('schedules').update({...links})
 	if (Object.keys(dates).length > 0) {
-		const keys = Object.keys(dates);
 		ref('absences').update({...dates})
+		const keys = Object.keys(dates)
 		removeExamsBetween(keys[0], keys[keys.length - 1])
 	}
 }
