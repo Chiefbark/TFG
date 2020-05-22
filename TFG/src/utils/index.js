@@ -82,7 +82,7 @@ export function getDatesBetween(first, second) {
  * @return {boolean} TRUE if the date is between, FALSE otherwise
  */
 export function isDateBetween(date, start, end) {
-	return !!getDatesBetween(start, end).find(e => e == date);
+	return start <= date && date <= end;
 }
 
 /**
