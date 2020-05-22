@@ -199,7 +199,7 @@ export function removeAbsenceOfSchedules(schedules, date) {
 	let references = {};
 	ref('absences').once('value', snapshot => {	// Read absences
 		let data = snapshot.val() || {};
-		Object.entries(data[date]).forEach(e => {// Iterates over each absence
+		Object.entries(data[date] || {}).forEach(e => {// Iterates over each absence
 			if (schedules.find(x => x.id_schedule === e[0]))	// If the key of the absence is equal to the any of the schedules
 				references[`${date}/${e[0]}`] = null	// Add the reference to the absence node
 		})
