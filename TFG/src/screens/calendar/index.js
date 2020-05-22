@@ -1,5 +1,5 @@
 import React, {Fragment} from 'react';
-import {View, Text, Image, StyleSheet} from 'react-native';
+import {View, Text, Image, StyleSheet, Dimensions} from 'react-native';
 
 import * as i18n from '../../i18n';
 import * as config from '../../config';
@@ -10,42 +10,11 @@ import {colors, subjectColors, textColors} from '../../styles';
 import Toast from 'react-native-simple-toast';
 
 import Button from '../../components/button';
-import {Calendar} from 'react-native-calendars';
+import {CalendarList} from 'react-native-calendars';
 import CalendarDay from '../../components/calendarDay';
 import Dialog from '../../components/dialog';
 import Icon from '../../components/icon';
 import ListItem from '../../components/listItem';
-
-const markedDates = {
-	'2020-05-15': {
-		single: {color: 'black', textColor: 'white'},
-	},
-	'2020-05-22': {
-		selection: {
-			color: 'pink',
-			isStart: true,
-			textColor: 'white'
-		},
-		multi: [
-			{color: 'green'},
-			{color: 'blue'},
-			{color: 'yellow'},
-			{color: 'red'},
-			{color: 'purple'},
-		]
-	}, '2020-05-23': {
-		selection: {
-			color: 'pink',
-			textColor: 'white'
-		},
-	}, '2020-05-24': {
-		selection: {
-			color: 'pink',
-			isEnd: true,
-			textColor: 'white'
-		},
-	}
-};
 
 export default class CalendarScreen extends React.Component {
 	constructor(props) {
@@ -177,79 +146,90 @@ export default class CalendarScreen extends React.Component {
 		const minDate = this.state.schedules ? this.state.schedules[0][1].startDate : undefined;
 		const maxDate = this.state.schedules ? this.state.schedules[this.state.schedules.length - 1][1].endDate : undefined;
 		return <View style={styles.container}>
-			<Calendar key={this.state._lastModified}
-					  markedDates={this.state.marking}
-					  minDate={minDate}
-					  maxDate={maxDate}
-					  monthFormat={'yyyy MMMM'}
-					  firstDay={1}
-					  onPressArrowLeft={substractMonth => substractMonth()}
-					  onPressArrowRight={addMonth => addMonth()}
-					  theme={{
-						  arrowColor: colors.black,
-						  'stylesheet.calendar.main': {
-							  week: {
-								  marginTop: 1, marginBottom: 1,
-								  flexDirection: 'row', justifyContent: 'space-around'
+			<CalendarList key={this.state._lastModified}
+						  markedDates={this.state.marking}
+						  hideExtraDays={false}
+						  calendarHeight={Dimensions.get('window').height}
+						  horizontal={true}
+						  pagingEnabled={true}
+						  minDate={minDate}
+						  maxDate={maxDate}
+						  monthFormat={'yyyy MMMM'}
+						  firstDay={1}
+						  onPressArrowLeft={substractMonth => substractMonth()}
+						  onPressArrowRight={addMonth => addMonth()}
+						  theme={{
+							  'stylesheet.calendar.main': {
+								  week: {
+									  marginTop: 1, marginBottom: 1,
+									  flexDirection: 'row', justifyContent: 'space-around'
+								  }
+							  },
+							  'stylesheet.calendar-list.main': {
+								  calendar: {
+									  paddingLeft: 5,
+									  paddingRight: 5
+								  }
 							  }
-						  }
-					  }}
-					  dayComponent={({date, state, marking}) => {
-						  let newMarking = {...marking};
-						  if (!this.state._config.calendar[0]) newMarking.multi = undefined;
-						  if (!this.state._config.calendar[1]) newMarking.selection = undefined;
-						  if (!this.state._config.calendar[2]) newMarking.single = undefined;
+						  }}
+						  dayComponent={({date, state, marking}) => {
+							  let newMarking = {...marking};
+							  if (!this.state._config.calendar[0]) newMarking.multi = undefined;
+							  if (!this.state._config.calendar[1]) newMarking.selection = undefined;
+							  if (!this.state._config.calendar[2]) newMarking.single = undefined;
 				
-						  return (
-							  <CalendarDay date={date} state={state} marking={newMarking}
-										   onClick={async (value) => {
-											   if (date.dateString >= minDate && date.dateString <= maxDate) {
-												   let obj = {};
-												   let currSchedule = this.state.schedules.find(e => value.dateString >= e[1].startDate && value.dateString <= e[1].endDate);
-												   obj.dateString = value.dateString;
+							  return (
+								  <CalendarDay date={date} state={state} marking={newMarking}
+											   onClick={async (value) => {
+												   if (date.dateString >= minDate && date.dateString <= maxDate) {
+													   let obj = {};
+													   let currSchedule = this.state.schedules.find(e => value.dateString >= e[1].startDate && value.dateString <= e[1].endDate);
+													   obj.dateString = value.dateString;
 							
-												   const holidays = this.state.holidays?.filter(e => isDateBetween(value.dateString, e[1].startDate, e[1].endDate))
-												   if (holidays.length > 0) {
-													   obj.holidays = [];
-													   holidays.forEach(e => {
-														   obj.holidays.push({id_holiday: e[0], name: e[1].name, endDate: e[1].endDate})
-													   })
-												   } else {
-													   const dayOfWeek = getDayOfWeek(value.dateString);
-													   const exams = this.state.exams?.filter(e => e[1].date === date.dateString);
-													   obj.exams = [];
-													   for (let ii = 0; ii < exams.length; ii++) {
-														   obj.exams[ii] = {...exams[ii][1]};
-														   obj.exams[ii].name = await firebase.ref('subjects')
-															   .child(exams[ii][1].id_subject)
-															   .once('value')
-															   .then(result => result.val()?.name ?? undefined);
-														   if (exams[ii][1].schedules) {
-															   obj.exams[ii].startTime = currSchedule[1][dayOfWeek][exams[ii][1].schedules[0].id_schedule].startTime
-															   obj.exams[ii].endTime = currSchedule[1][dayOfWeek][exams[ii][1].schedules[exams[ii][1].schedules.length - 1].id_schedule].endTime
-														   }
-													   }
-													   if (currSchedule[1][dayOfWeek]) {
-														   const subjects = Object.entries(currSchedule[1][dayOfWeek])
-															   .sort((arg0, arg1) => compareTimes(arg1[1].startTime, arg0[1].startTime));
-														   obj.subjects = [];
-														   for (let ii = 0; ii < subjects.length; ii++)
-															   if (subjects[ii][1].id_subject) {
-																   obj.subjects[ii] = {...subjects[ii][1]};
-																   obj.subjects[ii].id_schedule = subjects[ii][0];
-																   obj.subjects[ii].path = `${currSchedule[0]}/${dayOfWeek}`;
-																   obj.subjects[ii].name = await firebase.ref('subjects')
-																	   .child(subjects[ii][1].id_subject)
+													   const holidays = this.state.holidays?.filter(e => isDateBetween(value.dateString, e[1].startDate, e[1].endDate))
+													   if (holidays.length > 0) {
+														   obj.holidays = [];
+														   holidays.forEach(e => {
+															   obj.holidays.push({id_holiday: e[0], name: e[1].name, endDate: e[1].endDate})
+														   })
+													   } else {
+														   const dayOfWeek = getDayOfWeek(value.dateString);
+														   const exams = this.state.exams?.filter(e => e[1].date === date.dateString);
+														   if (exams.length > 0) {
+															   obj.exams = [];
+															   for (let ii = 0; ii < exams.length; ii++) {
+																   obj.exams[ii] = {...exams[ii][1]};
+																   obj.exams[ii].name = await firebase.ref('subjects')
+																	   .child(exams[ii][1].id_subject)
 																	   .once('value')
 																	   .then(result => result.val()?.name ?? undefined);
+																   if (exams[ii][1].schedules) {
+																	   obj.exams[ii].startTime = currSchedule[1][dayOfWeek][exams[ii][1].schedules[0].id_schedule].startTime
+																	   obj.exams[ii].endTime = currSchedule[1][dayOfWeek][exams[ii][1].schedules[exams[ii][1].schedules.length - 1].id_schedule].endTime
+																   }
 															   }
+														   }
+														   if (currSchedule[1][dayOfWeek]) {
+															   const subjects = Object.entries(currSchedule[1][dayOfWeek])
+																   .sort((arg0, arg1) => compareTimes(arg1[1].startTime, arg0[1].startTime));
+															   obj.subjects = [];
+															   for (let ii = 0; ii < subjects.length; ii++)
+																   if (subjects[ii][1].id_subject) {
+																	   obj.subjects[ii] = {...subjects[ii][1]};
+																	   obj.subjects[ii].id_schedule = subjects[ii][0];
+																	   obj.subjects[ii].path = `${currSchedule[0]}/${dayOfWeek}`;
+																	   obj.subjects[ii].name = await firebase.ref('subjects')
+																		   .child(subjects[ii][1].id_subject)
+																		   .once('value')
+																		   .then(result => result.val()?.name ?? undefined);
+																   }
+														   }
 													   }
+													   this.setState({selected: obj});
 												   }
-												   this.setState({selected: obj});
-											   }
-										   }}/>
-						  );
-					  }}
+											   }}/>
+							  );
+						  }}
 			/>
 			<View style={styles.helpTextContainer}><Text style={styles.helpText}>{i18n.get('calendar.helpText')}</Text></View>
 			{this.state.selected &&
@@ -400,6 +380,7 @@ const styles = StyleSheet.create({
 		flex: 1, flexDirection: 'column'
 	},
 	helpTextContainer: {
+		position: 'absolute', bottom: 25,
 		flex: 1, alignItems: 'center', justifyContent: 'center',
 		marginHorizontal: 50
 	},
