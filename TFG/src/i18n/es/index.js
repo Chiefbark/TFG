@@ -105,6 +105,7 @@ export const newProfile = {
 }
 export const calendar = {
 	title: 'Calendario',
+	loading: 'Cargando datos del calendario...',
 	helpText: 'Pulsa en un día del calendario para ver más detalles!',
 	emptySchedule: 'No tienes ninguna clase añadida al horario para este día',
 	absencesDialog: {

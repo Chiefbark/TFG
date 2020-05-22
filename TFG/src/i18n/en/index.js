@@ -105,6 +105,7 @@ export const newProfile = {
 }
 export const calendar = {
 	title: 'Calendar',
+	loading: 'Loading calendar data...',
 	helpText: 'Click on a day in the calendar to see more details!',
 	emptySchedule: 'You don\'t have any classes added to the timetable for this day',
 	absencesDialog: {
