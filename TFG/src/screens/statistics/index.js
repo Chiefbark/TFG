@@ -43,12 +43,13 @@ export default class StatisticsScreen extends React.Component {
 	
 	_calculateStats() {
 		let stats = {};
-		this.state.subjects?.forEach(e => {
+		this.state.subjects?.forEach(e => {	// Sets the basic values of each subject
 			stats[e[0]] = {name: e[1].name, percentage: e[1].percentage, total: 0, missed: 0};
 		})
-		this.state.schedules?.forEach(e => {
-			let weeks = getWeeksDiff(e[1].startDate, e[1].endDate);
+		this.state.schedules?.forEach(e => {	// Iterates over each schedule
+			let weeks = getWeeksDiff(e[1].startDate, e[1].endDate);	// Calculates the number of weeks of the schedule
 			const remains = {};
+			// Adds one to every border day
 			let tempDateStart = e[1].startDate;
 			while (getDayOfWeek(tempDateStart) !== 0) {
 				if (!remains[getDayOfWeek(tempDateStart)]) remains[getDayOfWeek(tempDateStart)] = 1;
@@ -65,15 +66,16 @@ export default class StatisticsScreen extends React.Component {
 			}
 			
 			let checked = [];
-			this.state.holidays?.sort((a, b) => {
+			this.state.holidays?.sort((a, b) => {	// Sorts the holidays starting from startDate
 				if (a[1].startDate < b[1].startDate)
 					return -1;
 				if (a[1].startDate > b[1].startDate)
 					return 1;
 				return 0;
-			}).forEach(x => {
+			}).forEach(x => {	// Iterates over each holiday
 				tempDateStart = undefined;
 				tempDateEnd = undefined;
+				// Sets the start & end date of the current holiday between the bounds of the schedule
 				if (isDateBetween(x[1].startDate, e[1].startDate, e[1].endDate) && isDateBetween(x[1].endDate, e[1].startDate, e[1].endDate)) {
 					tempDateStart = x[1].startDate;
 					tempDateEnd = x[1].endDate;
@@ -86,20 +88,24 @@ export default class StatisticsScreen extends React.Component {
 					tempDateStart = e[1].startDate;
 					tempDateEnd = x[1].endDate;
 				}
-				if (tempDateStart && tempDateEnd) {
+				if (tempDateStart && tempDateEnd) {	// If start & end date exists (holiday is inside the bounds of the schedule)
+					// If the holiday is inside another holiday
 					if (checked.find(y => y.startDate <= tempDateStart && y.endDate >= tempDateEnd))
 						return;
 					let index, found;
+					// If the holiday is at the left side of another holiday
 					found = checked.find(y => !isDateBetween(tempDateStart, y.startDate, y.endDate) && isDateBetween(tempDateEnd, y.startDate, y.endDate));
 					if (found) {
 						tempDateEnd = found.endDate;
 						index = checked.indexOf(found);
 					}
+					// If the holiday is at the right side of another holiday
 					found = checked.find(y => isDateBetween(tempDateStart, y.startDate, y.endDate) && !isDateBetween(tempDateEnd, y.startDate, y.endDate));
 					if (found) {
 						tempDateStart = found.startDate;
 						index = checked.indexOf(found);
 					}
+					// Add the holiday or overrides the found
 					if (index !== undefined)
 						checked[index] = {startDate: tempDateStart, endDate: tempDateEnd};
 					else
