@@ -1,5 +1,5 @@
 import React, {Fragment} from 'react';
-import {View, Text, Image, StyleSheet, Dimensions} from 'react-native';
+import {View, Text, Image, StyleSheet, Dimensions, ActivityIndicator} from 'react-native';
 
 import * as i18n from '../../i18n';
 import * as config from '../../config';
@@ -29,26 +29,30 @@ export default class CalendarScreen extends React.Component {
 	
 	_listenerSchedules(snapshot) {
 		let data = snapshot.val() || {};
-		this.setState({schedules: Object.entries(data)}, () => this._updateMarking());
+		this.setState({schedules: Object.entries(data)}, () =>
+			this._updateMarking().then(() => this.setState({schedulesLoad: true})));
 	}
 	
 	_listenerAbsences(snapshot) {
 		let data = snapshot.val() || {};
-		this.setState({absences: Object.entries(data)}, () => setTimeout(() => this._updateMarking(), 0));
+		this.setState({absences: Object.entries(data)}, () => setTimeout(() =>
+			this._updateMarking().then(() => this.setState({absencesLoad: true})), 0));
 	}
 	
 	_listenerHolidays(snapshot) {
 		let data = snapshot.val() || {};
-		this.setState({holidays: Object.entries(data)}, () => this._updateMarking());
+		this.setState({holidays: Object.entries(data)}, () =>
+			this._updateMarking().then(() => this.setState({holidaysLoad: true})));
 	}
 	
 	_listenerSubjects(snapshot) {
-		this._updateMarking();
+		this._updateMarking().then(() => this.setState({subjectsLoad: true}));
 	}
 	
 	_listenerExams(snapshot) {
 		let data = snapshot.val() || {};
-		this.setState({exams: Object.entries(data)}, () => setTimeout(() => this._updateMarking(), 0));
+		this.setState({exams: Object.entries(data)}, () => setTimeout(() =>
+			this._updateMarking().then(() => this.setState({examsLoad: true})), 0));
 	}
 	
 	_updateComponent() {
@@ -146,12 +150,22 @@ export default class CalendarScreen extends React.Component {
 		const minDate = this.state.schedules ? this.state.schedules[0][1].startDate : undefined;
 		const maxDate = this.state.schedules ? this.state.schedules[this.state.schedules.length - 1][1].endDate : undefined;
 		return <View style={styles.container}>
+			{(!this.state.schedulesLoad || !this.state.absencesLoad || !this.state.holidaysLoad || !this.state.subjectsLoad || !this.state.examsLoad) &&
+			<View style={styles.loading}>
+				<View style={{backgroundColor: colors.white, borderRadius: 10, padding: 32, marginBottom: 100}}>
+					<ActivityIndicator size={40} animating={true} color={colors.primary}/>
+					<Text style={{marginTop: 16}}>{i18n.get('calendar.loading')}</Text>
+				</View>
+			</View>
+			}
 			<CalendarList key={this.state._lastModified}
 						  markedDates={this.state.marking}
 						  hideExtraDays={false}
 						  calendarHeight={Dimensions.get('window').height}
 						  horizontal={true}
 						  pagingEnabled={true}
+						  futureScrollRange={24}
+						  pastScrollRange={24}
 						  minDate={minDate}
 						  maxDate={maxDate}
 						  monthFormat={'yyyy MMMM'}
@@ -378,6 +392,11 @@ export default class CalendarScreen extends React.Component {
 const styles = StyleSheet.create({
 	container: {
 		flex: 1, flexDirection: 'column'
+	},
+	loading: {
+		position: 'absolute', zIndex: 10, top: 0, left: 0, right: 0, bottom: 0,
+		justifyContent: 'center', alignItems: 'center',
+		backgroundColor: colors.grey + '66'
 	},
 	helpTextContainer: {
 		position: 'absolute', bottom: 25,
