@@ -7,11 +7,12 @@ import {colors} from '../../styles';
 
 import Button from '../button';
 import {Calendar} from 'react-native-calendars';
-import CalendarDay from '../calendarDay';
 import Dialog from '../dialog';
 
 const selection = {
-	color: colors.primaryLight
+	selected: true,
+	color: colors.primaryLight,
+	textColor: colors.black
 }
 
 /**
@@ -27,7 +28,7 @@ export default class CalendarPicker extends React.Component {
 		super(props);
 		this.state = {
 			current: this.props.startDate || new Date().toISOString().slice(0, 10),
-			markedDates: undefined,
+			markedDates: {},
 			selecting: false,
 			startDate: this.props.startDate,
 			endDate: this.props.endDate
@@ -44,16 +45,16 @@ export default class CalendarPicker extends React.Component {
 	startSelection(start) {
 		let marked = {};
 		if (!this.props.multiple)
-			marked[start] = {selection: {...selection, isStart: true, isEnd: true}};
+			marked[start] = {...selection, startingDay: true, endingDay: true};
 		else
-			marked[start] = {selection: {...selection, isStart: true}};
+			marked[start] = {...selection, startingDay: true};
 		this.setState({selecting: true, startDate: start, markedDates: {...marked}});
 	}
 	
 	endSelection(end) {
 		this.fillSelection(this.state.startDate, end);
 		let marked = this.state.markedDates;
-		marked[end] = {selection: {...selection, isEnd: true}};
+		marked[end] = {...selection, endingDay: true};
 		this.setState({selecting: false, endDate: end, markedDates: {...marked}});
 	}
 	
@@ -64,7 +65,7 @@ export default class CalendarPicker extends React.Component {
 		startDate.setDate(startDate.getDate() + 1);
 		while (startDate.getTime() < endDate.getTime()) {
 			startDate.setDate(startDate.getDate() + 1);
-			marked[startDate.toISOString().slice(0, 10)] = {selection: {...selection}};
+			marked[startDate.toISOString().slice(0, 10)] = {...selection};
 		}
 		this.setState({markedDates: {...marked}});
 	}
@@ -75,16 +76,16 @@ export default class CalendarPicker extends React.Component {
 		let marked = {};
 		startDate.setDate(startDate.getDate() + 1);
 		if (!this.props.multiple)
-			marked[startDate.toISOString().slice(0, 10)] = {selection: {...selection, isStart: true, isEnd: true}}
+			marked[startDate.toISOString().slice(0, 10)] = {...selection, startingDay: true, endingDay: true}
 		else {
-			marked[startDate.toISOString().slice(0, 10)] = {selection: {...selection, isStart: true}}
+			marked[startDate.toISOString().slice(0, 10)] = {...selection, startingDay: true}
 			if (endDate) {
 				while (startDate.getTime() < endDate.getTime()) {
 					startDate.setDate(startDate.getDate() + 1);
-					marked[startDate.toISOString().slice(0, 10)] = {selection: {...selection}};
+					marked[startDate.toISOString().slice(0, 10)] = {...selection};
 				}
 				endDate.setDate(endDate.getDate() + 1);
-				marked[endDate.toISOString().slice(0, 10)] = {selection: {...selection, isEnd: true}}
+				marked[endDate.toISOString().slice(0, 10)] = {...selection, endingDay: true}
 			}
 		}
 		this.setState({markedDates: {...marked}, startDate: start, endDate: end});
@@ -100,12 +101,15 @@ export default class CalendarPicker extends React.Component {
 			<Dialog title={i18n.get('commons.calendarPickerDialog.title')}
 					content={() =>
 						<Calendar markedDates={this.state.markedDates}
+								  hideExtraDays={false}
+								  markingType={'period'}
 								  current={this.state.current}
 								  onMonthChange={value => this.setState({current: value.dateString})}
 								  monthFormat={'yyyy MMMM'}
 								  firstDay={1}
 								  onPressArrowLeft={substractMonth => substractMonth()}
 								  onPressArrowRight={addMonth => addMonth()}
+								  onDayPress={(value) => this._onPress(value)}
 								  theme={{
 									  arrowColor: colors.black,
 									  'stylesheet.calendar.main': {
@@ -114,11 +118,6 @@ export default class CalendarPicker extends React.Component {
 											  flexDirection: 'row', justifyContent: 'space-around'
 										  }
 									  }
-								  }}
-								  dayComponent={({date, state, marking}) => {
-									  let newMarking = {...marking};
-									  return <CalendarDay date={date} state={state} marking={newMarking}
-														  onClick={(day) => this._onPress(day)}/>;
 								  }}
 						/>
 					}
