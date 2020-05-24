@@ -19,7 +19,6 @@ if (!firebase.apps.length)
 const db = firebase.database();
 
 export const firebaseKey = async () => {
-	await AsyncStorage.clear();
 	if (!currFirebaseKey) {
 		await AsyncStorage.getItem('@firebaseKey')
 			.then(async result => {
