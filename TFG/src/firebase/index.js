@@ -3,6 +3,7 @@ import {AsyncStorage} from 'react-native';
 
 import * as config from '../config';
 import {addDaysToDate, getDatesBetween, isDateBetween} from '../utils';
+import {Notifications} from 'expo';
 
 const firebaseConfig = {
 	apiKey: "apiKey",
@@ -18,12 +19,14 @@ if (!firebase.apps.length)
 const db = firebase.database();
 
 export const firebaseKey = async () => {
+	await AsyncStorage.clear();
 	if (!currFirebaseKey) {
 		await AsyncStorage.getItem('@firebaseKey')
-			.then(result => {
-				if (!result)
-					currFirebaseKey = db.ref('users/').push({createdAt: new Date().getTime()}).getKey();
-				else
+			.then(async result => {
+				if (!result) {
+					const token = await Notifications.getExpoPushTokenAsync();
+					currFirebaseKey = await db.ref('users/').push({createdAt: new Date().getTime(), token: token}).getKey();
+				} else
 					currFirebaseKey = result;
 				AsyncStorage.setItem('@firebaseKey', currFirebaseKey);
 				return result;
