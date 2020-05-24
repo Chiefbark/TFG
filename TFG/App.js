@@ -169,10 +169,12 @@ export default class App extends React.Component {
 			_config: undefined,
 			_firebaseKey: undefined
 		};
-		config.addNavigationListener((nav) => this.setState({_navigation: nav}))
-		i18n.locale().then(locale => this.setState({_locale: locale}));
-		config.config().then(config => this.setState({_config: config}));
-		firebase.firebaseKey().then(firebaseKey => this.setState({_firebaseKey: firebaseKey}));
+		config.addNavigationListener(nav => this.setState({_navigation: nav}))
+		
+		firebase.firebaseKey()
+			.then(firebaseKey => this.setState({_firebaseKey: firebaseKey}))
+			.then(() => i18n.locale().then(locale => this.setState({_locale: locale})))
+			.then(() => config.config().then(config => this.setState({_config: config})));
 	}
 	
 	componentDidMount() {
