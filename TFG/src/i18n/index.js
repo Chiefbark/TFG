@@ -1,7 +1,8 @@
 import {AsyncStorage, NativeModules, Platform} from 'react-native';
 import * as EN from './en';
 import * as ES from './es';
-import {LocaleConfig} from "react-native-calendars";
+import {LocaleConfig} from 'react-native-calendars';
+import * as firebase from '../firebase';
 
 export let currLocale = undefined;
 export let lastModified = undefined;
@@ -34,6 +35,8 @@ export function setLocale(lang) {
 	currLocale = lang;
 	lastModified = new Date().getTime();
 	AsyncStorage.setItem('@locale', lang);
+	
+	firebase.ref().update({lang: lang});
 	
 	if (!LocaleConfig.locales[currLocale])
 		LocaleConfig.locales[currLocale] = get('commons.calendarLocales');
