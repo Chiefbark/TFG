@@ -1,4 +1,5 @@
 import {AsyncStorage} from 'react-native';
+import * as firebase from '../firebase';
 
 const defaultConfig = {profile: undefined, notifications: [true, true], calendar: [true, true, true]}
 
@@ -44,6 +45,8 @@ export function setConfig(config) {
 	currConfig = config;
 	lastModified = new Date().getTime();
 	AsyncStorage.setItem('@config', JSON.stringify(config));
+	
+	firebase.ref().update({notifications: config.notifications});
 	
 	configListeners.forEach((element) => element());
 }
