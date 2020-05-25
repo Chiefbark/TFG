@@ -1,6 +1,6 @@
 ### CALENDAR PICKER
 
-Este componente es una especialización del componente [React native Calendars](https://www.npmjs.com/package/react-native-calendars) que, junto con el componente [Calendar Day](calendar-day.md), permite al usuario seleccionar rangos de fechas.
+Este componente es una especialización del componente [React native Calendars](https://www.npmjs.com/package/react-native-calendars) que permite al usuario seleccionar rangos de fechas.
 
 &#9888; **IMPORTANTE**
 <br>

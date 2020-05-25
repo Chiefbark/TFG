@@ -37,6 +37,16 @@ Recibe un `View.style`
 
 <div style="page-break-after: always;"></div>
 
+**`containerStyle ( optional )`**
+
+Define los estilos del contenedor del título y los subtítulos.
+<br>
+Recibe un `View.style`
+```jsx
+<ListItem title={'título'} containerStyle={{paddingHorizontal: 0}}/>
+```
+![comp_listItem_containerStyle](../assets/2_PROTOTYPE/comp_listItem/comp_listItem_containerStyle.png)
+
 **`subtitle ( optional )`**
 
 Define el subtítulo que va a tener el componente. Puede ser una pequeña descripción.

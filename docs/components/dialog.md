@@ -65,4 +65,23 @@ Especifica si el componente es visible o no.
 <br>
 Recibe un `bool`. Por defecto el valor es `false`
 
+**`loading ( optional )`**
+
+Indica si el diálogo está cargando o no.
+<br>
+Recibe un `bool`. Por defecto el valor es `false`
+
+<div style="page-break-after: always;"></div>
+
+**`onClickExit ( optional )`**
+
+Función llamada cuando el usuario pulsa fuera del diálogo.
+```jsx
+<Dialog title={'Diálogo'} visible={true}
+		buttons={() => <Button label={'Aceptar'} backgroundColor={'#FF0000'} textColor={'#FFFFFF'}/>}
+		content={() => <Text>Contenido</Text>}
+		onClickExit={() => alert('Diálogo pulsado')}/>
+```
+
+
 <div style="page-break-after: always;"></div>
