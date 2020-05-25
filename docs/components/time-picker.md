@@ -4,7 +4,7 @@ Este componente permite al usuario seleccionar una hora y minutos.
 
 ```jsx
 <TimePicker onCancel={() => console.log('cancelado')}
-			onSubmit={(hours, minutes) => alert(hours, minutes)}
+			onSubmit={(hours, minutes) => alert(`${hours}:${minutes}`)}
 			initialHours={12} initialMinutes={30}/>
 ```
 ![comp_timePicker_example](../assets/2_PROTOTYPE/comp_timePicker/comp_timePicker_example.png)
