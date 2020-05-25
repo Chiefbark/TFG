@@ -55,7 +55,7 @@ Recibe un `object` compuesto de dos claves
 - `key` : id del profesor (required)
 - `obj`
 <br>
-Recibe un `object` => `{name : String}`
+Recibe un `object` => `{name : String, percentage: Number. color: String, id_teacher: String}`
 
   - `name` : nombre de la asignatura (required)
   - `percentage` : porcentage de la asignatura (required)
