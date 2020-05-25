@@ -2,10 +2,19 @@
 
 Este componente permite al usuario seleccionar una hora y minutos.
 
+&#9888; **IMPORTANTE**
+<br>
+Si se quiere modificar las propiedades `initialHours` y `initialMinutes` de este componente en tiempo de ejecución, será necesario desmontar el componente y volver a montarlo.
+<br>
+Así sería una posible implementación
 ```jsx
+<Button label={'Mostrar diálogo'} onClick={() => this.setState({visible: true})}/>
+
+{this.state.visible && 
 <TimePicker onCancel={() => console.log('cancelado')}
 			onSubmit={(hours, minutes) => alert(`${hours}:${minutes}`)}
 			initialHours={12} initialMinutes={30}/>
+}
 ```
 ![comp_timePicker_example](../assets/2_PROTOTYPE/comp_timePicker/comp_timePicker_example.png)
 

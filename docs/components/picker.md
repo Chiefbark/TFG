@@ -2,7 +2,15 @@
 
 Este componente permite al usuario seleccionar uno o más elementos de entre varios.
 
+&#9888; **IMPORTANTE**
+<br>
+Si se quiere modificar la propiedad `initialValue` de este componente en tiempo de ejecución, será necesario desmontar el componente y volver a montarlo.
+<br>
+Así sería una posible implementación
 ```jsx
+<Button label={'Mostrar diálogo'} onClick={() => this.setState({visible: true})}/>
+
+{this.state.visible && 
 <Picker initialValue={'2'} placeholder={'Selecciona un elemento...'}
 		data={[
 			{label: 'elemento 1', value: '1', color: 'red'},
@@ -10,6 +18,7 @@ Este componente permite al usuario seleccionar uno o más elementos de entre var
 			{label: 'elemento 3', value: '3', disabled: true}
 		]}
 		onValueChange={(value) => alert('valor: ' + value)}/>
+}
 ```
 ![comp_picker_example](../assets/2_PROTOTYPE/comp_picker/comp_picker_example.png)
 ![comp_picker_example_open](../assets/2_PROTOTYPE/comp_picker/comp_picker_example_open.png)

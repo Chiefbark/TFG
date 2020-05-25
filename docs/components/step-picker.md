@@ -2,11 +2,20 @@
 
 Este componente permite al usuario interactuar con un elemento en la pantalla.
 
+&#9888; **IMPORTANTE**
+<br>
+Si se quiere modificar la propiedad `initialValue` de este componente en tiempo de ejecución, será necesario desmontar el componente y volver a montarlo.
+<br>
+Así sería una posible implementación
 ```jsx
+<Button label={'Mostrar diálogo'} onClick={() => this.setState({visible: true})}/>
+
+{this.state.visible && 
 <StepPicker data={[{label: '1'}, {label: '2'}, {label: '3'}]}
 			initialValue={1}
 			cyclic={true} onCycleChange={() => alert('Ciclo cambiado')}
 			onValueChange={(value) => alert('valor: ' + value)}/>
+}
 ```
 ![comp_stepPicker_example](../assets/2_PROTOTYPE/comp_stepPicker/comp_stepPicker_example.png)
 
