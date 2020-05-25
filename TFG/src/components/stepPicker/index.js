@@ -130,7 +130,15 @@ StepPicker.propTypes = {
 	 * `Number` -- `default 0`
 	 */
 	initialValue: PropTypes.number,
+	/**
+	 * Specifies if the component allows infinite scrolling
+	 *
+	 * `Bool` -- `default true`
+	 */
 	cyclic: PropTypes.bool,
+	/**
+	 * Callback triggered when a cycle is completed
+	 */
 	onCycleChange: PropTypes.func,
 	/**
 	 * Callback triggered when the value is changed
