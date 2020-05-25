@@ -49,7 +49,7 @@ Recibe un `string`
 
 **`disabled ( optional )`**
 
-Indica si el butón está deshabilitado o no.
+Indica si el botón está deshabilitado o no.
 <br>
 Recibe un `bool`. Por defecto es valor es `false`
 
