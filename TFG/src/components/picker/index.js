@@ -81,7 +81,7 @@ export default class CustomPicker extends React.Component {
 											let selected = undefined;
 											if (this.props.multiple)
 												selected = values?.find(x => x.index === index);
-											return <ListItem key={e.value} title={e.label} titleStyles={{fontWeight: 'normal', fontSize: 16}}
+											return <ListItem key={e.value} title={e.label} titleStyles={{fontWeight: 'normal', fontSize: 16, color: e.color}}
 															 containerStyle={{paddingHorizontal: 0}} feedback={e.disabled}
 															 onClick={() => {
 																 if (!e.disabled) {
