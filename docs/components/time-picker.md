@@ -21,7 +21,7 @@ Así sería una posible implementación
 **Propiedades**
 -
 
-**`onSubmit & onCancel ( required )`**
+**`onSubmit, onCancel ( required )`**
 
 - **onSubmit**<br>
 Función llamada cuando el usuario acepta el diálogo.
