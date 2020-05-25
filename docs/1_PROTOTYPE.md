@@ -30,16 +30,12 @@ Pulsa en las imagenes para acceder a mis zonas de trabajo
 	- [INTRODUCCION](#introduccion)
 	- [DIAGRAMA ENTIDAD-RELACION](#diagrama-entidad-relacion)
 	- [DIAGRAMA CLASES](#diagrama-clases)
-		- [EJEMPLO](#ejemplo)
 	- [DIAGRAMA DESPLIEGUE](#diagrama-despliegue)
 	- [VISTAS](#vistas)
 		- [CALENDARIO](#calendario)
 		- [ESTADISTICAS](#estadisticas)
 		- [AUSENCIAS](#ausencias)
 		- [PERFIL](#perfil)
-			- [INFORMACION DEL PERFIL](#informacion-del-perfil)
-			- [ASIGNATURAS](#asignaturas)
-			- [PROFESORES](#profesores)
 		- [AJUSTES](#ajustes)
 	- [CONTRIBUIDORES](#contribuidores)
 
@@ -132,16 +128,16 @@ Este diagrama indica tanto las referencias entre las entidades que vimos en el [
 
 **Timetable**
 
-- *start* : la fecha de inicio del horario (*`yyyy-MM-dd`*)
-- *end* : la fecha de finalización del horario (*`yyyy-MM-dd`*)
-- *week* : lista de 7 posiciones (una por cada día de la semana) que tendrán a su vez una lista de *Schedule*. Por simplicidad, *week* siempre tendrá un tamaño de 7, aunque algunos valores esten vacios
+- *startDate* : la fecha de inicio del horario (*`yyyy-MM-dd`*)
+- *endDate* : la fecha de finalización del horario (*`yyyy-MM-dd`*)
+- *0,1,2,3,4,5,6* : indican los días de la semana, donde se guardarán listas de clases (schedule)
 
 <div style="page-break-after: always;"></div>
 
 **Schedule**
 
-- *start* : la hora a la que empieza el horario  (*`HH:mm`*)
-- *duration* : la duración de la clase
+- *startTime* : la hora a la que empieza la clase (*`HH:mm`*)
+- *endTime* : la hora a la que acaba la clase (*`HH:mm`*)
 - *id_subject* : id que referencia a la asignatura que se imparte en esa hora
 
 **Absence**
@@ -170,178 +166,15 @@ Los colores serán 16 y serán fijos:
 
 **Exam**
 
-- *day* : fecha en la que es el examen (*`yyyy-MM-dd`*)
-- *start* : hora a la que empieza el examen (*`HH:mm`*)
-- *duration* : duración del examen
-- *hasClass* : valor boolean que indica si ese día hay clase o sólo es el examen. Este campo sirve para ajustar el cálculo de horas de clase
+- *date* : fecha en la que es el examen (*`yyyy-MM-dd`*)
+- *schedules* : lista de todos las clases que ocupa el examen
 - *id_subject* : id que referencia a la asignatura del examen
 
 **Holiday**
 
-- *start* : fecha de inicio de las vacaciones (*`yyyy-MM-dd`*)
-- *end* : fecha de fin de las vacaciones (*`yyyy-MM-dd`*). Si el campo está vacío, significa que las vacaciones solo duran un día
+- *startDate* : fecha de inicio de las vacaciones (*`yyyy-MM-dd`*)
+- *endDate* : fecha de fin de las vacaciones (*`yyyy-MM-dd`*). Si el campo está vacío, significa que las vacaciones solo duran un día
 - *name* : nombre de las vacaciones
-
-<div style="page-break-after: always;"></div>
-
-### EJEMPLO
-
-```
-{
-	"name": "IMF",
-	"timetables": [
-		{
-			"start": "2019-09-07",
-			"end": "2020-05-17",
-			"week": [
-				{
-					"1": {"start": "08:30", "duration": 4, "id_subject": 5},
-					"2": {"start": "12:30", "duration": 2, "id_subject": 4}
-				},
-				 {
-				 	"3": {"start": "08:30", "duration": 2, "id_subject": 1},
-					"4": {"start": "10:30", "duration": 2, "id_subject": 6},
-					"5": {"start": "12:30", "duration": 2, "id_subject": 2}
-				 }
-				{
-					"6": {"start": "08:30", "duration": 2, "id_subject": 4},
-					"7": {"start": "10:30", "duration": 2, "id_subject": 6},
-					"8": {"start": "12:30", "duration": 2, "id_subject": 1}
-				},
-				 {
-				 	"9": {"start": "08:30", "duration": 2, "id_subject": 1},
-					"10": {"start": "10:30", "duration": 2, "id_subject": 7},
-					"11": {"start": "12:30", "duration": 2, "id_subject": 3}
-				 },
-				 {
-				 	"12": {"start": "08:30", "duration": 1, "id_subject": 2},
-					"13": {"start": "09:30", "duration": 3, "id_subject": 6},
-					"14": {"start": "12:30", "duration": 2, "id_subject": 5}
-				 },
-				{},
-				{}
-			]
-		}
-	],
-	"Absences": [
-		{
-			"day": "2020-02-06",
-			"id_schedule": 9
-		},
-		{
-			"day": "2020-02-12",
-			"id_schedule": 8
-		},
-		{
-			"day": "2020-02-13",
-			"id_schedule": 9
-		},
-		{
-			"day": "2020-03-03",
-			"id_schedule": 3
-		},
-		{
-			"day": "2020-03-03",
-			"id_schedule": 4
-		},
-		{
-			"day": "2020-03-13",
-			"id_schedule": 12
-		}
-	],
-	"subjects": {
-		"1": {
-			"name": "Acceso a datos",
-			"percentage": 15,
-			"color": "#080808",
-			"id_teacher": 1
-		},
-		"2": {
-			"name": "Empresa e iniciativa emprendedora",
-			"percentage": 15,
-			"color": "#808080",
-			"id_teacher": 2
-		},
-		"3": {
-			"name": "Inglés técnico",
-			"percentage": 15,
-			"color": "#FF6F6F",
-			"id_teacher": 3
-		},
-		"4": {
-			"name": "Programación multimedia y dispositivos móviles",
-			"percentage": 15,
-			"color": "#800000",
-			"id_teacher": 4
-		},
-		"5": {
-			"name": "Desarrollo de interfaces",
-			"percentage": 15,
-			"color": "#808000",
-			"id_teacher": 5
-		},
-		"6": {
-			"name": "Programación de servicios y procesos",
-			"percentage": 15,
-			"color": "#FF8A00",
-			"id_teacher": 4
-		},
-		"7": {
-			"name": "Sistemas de gestión empresarial",
-			"percentage": 15,
-			"color": "#008000",
-			"id_teacher": 6
-		},
-	"teachers": {
-		"1": {
-			"name": "Antonio Otero"
-		},
-		"2": {
-			"name": "Miguel Salmerón"
-		},
-		"3": {
-			"name": "Jose Angel Martín"
-		},
-		"4": {
-			"name": "Francisco Javier Cárceles"
-		},
-		"5": {
-			"name": "Manuel Vázquez"
-		},
-		"6": {
-			"name": "Antonio Luis Cardador"
-		}
-	},
-	"Exams": [
-		{
-			"day": "2020-03-11",
-			"start": "12:30",
-			"duration": 2,
-			"hasClass": false,
-			"id_subject": 1
-		},
-		{
-			"day": "2020-03-22",
-			"start": "12:30",
-			"duration": 2,
-			"hasClass": false,
-			"id_subject": 6
-		}
-	],
-	"holidays": [
-		{
-			"start": "2019-12-20",
-			"end": "2020-01-08",
-			"name": "Navidad"
-		},
-		{
-			"start": "2020-04-05",
-			"end": "2020-04-12",
-			"name": "Semana Santa"
-		}
-	]
-}
-```
 
 <div style="page-break-after: always;"></div>
 
@@ -356,9 +189,12 @@ En el diagrama de despligue se representan todos los servicios que se van a util
 Es la aplicación en sí. Esta formada por cuatro capas que permiten ver cómo funciona e interactúa con los demás servicios.
 
 - *User interface* : es la interfaz con la que interactúa el usuario ([ver más en vistas](#vistas))
-- *Notification pusher* : es la capa que se encarga de lanzar las notificaciones conectándose con la api de Expo. Se conecta con la capa de lógica para recibir información acerca de la aplicación, como por ejemplo qué poner en el texto de la notificación o cúando enviarla
 - *Logic layer* : es la capa que permite que la aplicación funcione. Sirve para dar sentido a las interacciones del usuario con la interfaz y proveerle de datos
 - *Database interface* : se encarga de conectar la aplicación con la base de datos, permitiendo establecer una comunicación entre ambas
+
+**DB**
+
+La aplicación necesita una base de datos remota. La base de datos elegida ha sido [Firebase](https://firebase.google.com/?hl=es). Firebase es un servicio de Google que nos permite tener diferentes productos dependiendo de nuestras necesidades. Una de ellas es una base de datos documental, basada en documentos `JSON`. La aplicación sólo utilizará este servicio de firebase, aunque hay más a nuestra disposición.
 
 <div style="page-break-after: always;"></div>
 
@@ -388,9 +224,11 @@ fetch('https://exp.host/--/api/v2/push/send', {
 });
 ```
 
-**DB**
+**Firebase CLOUD FUNCTIONS**
 
-La aplicación necesita una base de datos remota. La base de datos elegida ha sido [Firebase](https://firebase.google.com/?hl=es). Firebase es un servicio de Google que nos permite tener diferentes productos dependiendo de nuestras necesidades. Una de ellas es una base de datos documental, basada en documentos `JSON`. La aplicación sólo utilizará este servicio de firebase, aunque hay más a nuestra disposición.
+Firebase facilita un sistema para ejecutar funciones como código back-end para tus aplicaciones. He utilizado este sistema para crear dos funciones programadas para ejecutarse cada día a las 19:00 hora española:
+- `ExamFunction` : comprueba por cada usuario si al día siguiente tiene algún examen, en cuyo caso llama a la API de Expo para mandar una notificación avisándoles de los exámenes.
+- `AbsenceFunction` : comprueba por cada usuario el porcentaje de faltas de cada asignatura para ver si al día siguiente es posible que supere el porcentaje estabecido. Si se da el caso, llama a la API de Expo para mandar una notificación avisándoles sobre la asignatura.
 
 <div style="page-break-after: always;"></div>
 
