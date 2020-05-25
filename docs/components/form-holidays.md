@@ -1,4 +1,4 @@
-### TIMETABLE FORM
+### HOLIDAYS FORM
 
 Este componente permite crear y editar vacaciones dentro de la aplicación.
 <br>
