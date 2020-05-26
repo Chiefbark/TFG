@@ -236,49 +236,41 @@ Firebase facilita un sistema para ejecutar funciones como código back-end para 
 
 Los diseños de las vistas fueron creados con Figma. [Aquí](https://www.figma.com/file/QYLYZSbAeCGLE2cEa1kam3/designs?node-id=0%3A1&viewport=347%2C247%2C0.09946409612894058) está el link para ver el proyecto. Si le dan al botón de *play* (arriba a la derecha), accederán a una vista navegable de la aplicación.
 
-La información de los diseños es la misma que la expuesta en el [ejemplo anterior](#ejemplo).
-
-La aplicación consta de 5 pantallas principales, cada una representada con un icono diferente
-
-![view_navigation](assets/1_PROTOTYPE/view_navigation.png)
+La aplicación consta de 5 pantallas principales, cada una representada con un icono diferente.
 
 ### CALENDARIO
 
-|	![Screen_Calendar](assets/1_PROTOTYPE/view_calendar/Screen_Calendar.png)	|	![Screen_Calendar_Selected](assets/1_PROTOTYPE/view_calendar/Screen_Calendar_Selected.png)	|	![Screen_Calendar_Help](assets/1_PROTOTYPE/view_calendar/Screen_Calendar_Help.png)	|
-|:-:|:-:|:-:|
-|	1	|	2	|	3	|
+|	![screen_calendar](assets/1_PROTOTYPE/view_calendar/screen_calendar.png)	|	![screen_calendar_selected_0](assets/1_PROTOTYPE/view_calendar/screen_calendar_selected_0.png)	|	![screen_calendar_selected_1](assets/1_PROTOTYPE/view_calendar/screen_calendar_selected_1.png)	|	![screen_calendar_help](assets/1_PROTOTYPE/view_calendar/screen_calendar_help.png)	|
+|:-:|:-:|:-:|:-:|
+|	1	|	2	|	3	|	4	|
 
 En la **imagen 1** podemos encontrar un calendario por el que podremos desplazarnos libremente. Pulsando sobre un día conceto del calendario podremos ver que nos salta un diálogo (**imagen 2**) donde nos muestra las asignaturas que hay ese día, con su profesor y un botón a su derecha que indica si hemos faltado o no a la clase. En el caso de que haya un examen, también aparecería.
 
-Si nos fijamos, en la **imagen 1** hay diferentes circulos con distintos colores. Si pulsamos sobre el botón de `ayuda` nos mostrará otro diálogo donde podremos ver qué significa cada uno (**imagen 3**).
+También podemos encontrarnos con información de exámenes (**imagen 3**) junto con las demás asignaturas que hay ese día.
 
-Como podemos ver, los puntitos pequeños son las faltas de asistencia que tenemos ese día (las especificadas en la **imagen 2**). Cada color representa una asignatura utilizando el campo *color* que habíamos especificado en  [*subject* - diagrama de clases](#diagrama-clases).
+Si nos fijamos, en la **imagen 1** hay diferentes circulos con distintos colores. Si pulsamos sobre el botón de `ayuda` nos mostrará otro diálogo donde podremos ver qué significa cada uno (**imagen 4**).
+
+Como podemos ver, los puntitos pequeños son las faltas de asistencia que tenemos ese día (las especificadas en la **imagen 2**). Cada color representa una asignatura utilizando el campo *`color`* que habíamos especificado en  [*subject* - diagrama de clases](#diagrama-clases).
 <br>
-Los exámenes se muestran con un círculo del color de la asignatura y el color rosa representa los días de vacaciones que se han establecido. Esta información se puede ocultar desde la pantalla de [ajustes (imagen 1)](#ajustes).
+Los exámenes se muestran con un círculo del color de la asignatura y el color rosa representa los días de vacaciones que se han establecido. Esta información se puede ocultar desde la pantalla de [ajustes (**imagen 1**)](#ajustes).
 
 <div style="page-break-after: always;"></div>
 
 ### ESTADISTICAS
 
-|	![Screen_Statistics](assets/1_PROTOTYPE/view_statistics/Screen_Statistics.png)	|	![Screen_Statistics_Filter](assets/1_PROTOTYPE/view_statistics/Screen_Statistics_Filter.png)	|	![](assets/1_PROTOTYPE/Screen_Empty.png)	|
+|	![screen_statistics](assets/1_PROTOTYPE/view_statistics/screen_statistics.png)	|	![screen_statistics_absences](assets/1_PROTOTYPE/view_statistics/screen_statistics_absences.png)	|	![](assets/1_PROTOTYPE/Screen_Empty.png)	|
 |:-:|:-:|:-:|
 |	1	|	2	|	|
 
 En la **imagen 1** de estadísticas podemos ver un listado de todas las asignaturas junto con el porcentaje de faltas de asistencia. El color del mensaje de faltas de asistencia será amarillo si el usuario está cerca de llegar al porcentaje establecido en  [*subject* - diagrama de clases](#diagrama-clases), o rojo si está muy cerca o se ha pasado.
 
-Si pulsamos sobre el botón de `filtrar` nos mostrará un diálogo para aplicar un filtro. Los valores posibles son:
-- *Asignaturas* : se mostrarán las faltas de asistencia agrupadas por asignaturas (como la **imagen 1**)
-- *Profesores* :se mostrarán las faltas de asistencia agrupadas por profesores
-
-Por defecto aparecerá el filtro por asignaturas cuando se habra esta pantalla.
-
-A la derecha de cada elemento podremos ver cuáles son las faltas de asistencia (botón `ver faltas...`). Nos llevará a la pantalla de [Ausencias (imagen 3)](#ausencias).
+A la derecha de cada elemento podremos ver cuáles son las faltas de asistencia (botón `ver faltas...`). Nos llevará a la pantalla de [Ausencias (**imagen 3**)](#ausencias)(**imagen 2**).
 
 <div style="page-break-after: always;"></div>
 
 ### AUSENCIAS
 
-|	![Screen_Absences](assets/1_PROTOTYPE/view_absences/Screen_Absences.png)	|	![Screen_Absences_Filter](assets/1_PROTOTYPE/view_absences/Screen_Absences_Filter.png)	|	![Screen_Absences_Filtered](assets/1_PROTOTYPE/view_absences/Screen_Absences_Filtered.png) |
+|	![screen_absences](assets/1_PROTOTYPE/view_absences/Screen_Absences.png)	|	![screen_absences_filter](assets/1_PROTOTYPE/view_absences/Screen_Absences_Filter.png)	|	![screen_absences_filtered](assets/1_PROTOTYPE/view_absences/Screen_Absences_Filtered.png) |
 |:-:|:-:|:-:|
 |	1	|	2	|	3	|
 
@@ -289,17 +281,19 @@ Si le damos al botón `filtrar` nos mostrará un formulario (**imagen 2**) donde
 - Si dejamos la asignatura vacía, se cargarán todas las faltas de asistencia de el mes seleccionado
 - Si dejamos ambos campos vacío, se cargará por defecto las faltas de asistencia de todas las asignaturas de el mes actual
 
+Para dejar todo vacío hay que pulsar sobre el botón `limpiar`.
+
 Por ejemplo, aplicando el filtro de
 - *Mes*: vacío
-- *Asignatura*: Acceso a datos
+- *Asignatura*: Inglés Técnico
 
-nos mostrará todas las faltas de asistencia de acceso a datos (**imagen 3**). Este filtro es el resultado de pulsar el botón `ver faltas...` en la pantalla [Estadísticas (imagen 1)](#estadisticas).
+nos mostrará todas las faltas de asistencia de Inglés Técnico (**imagen 3**). Este filtro es el resultado de pulsar el botón `ver faltas...` en la pantalla [Estadísticas (**imagen 1**)](#estadisticas).
 
 <div style="page-break-after: always;"></div>
 
 ### PERFIL
 
-Esta pantalla tiene todas las configuraciones del perfil: información, vacaciones, exámenes y horarios.
+Esta pantalla tiene todas las configuraciones del perfil seleccionado.
 
 Arriba podemos encontrar una barra de navegación para cambiar entre
 - Configuración del perfil
@@ -317,7 +311,7 @@ Arriba podemos encontrar una barra de navegación para cambiar entre
 Por defecto la **imagen 1** es la principal. Aquí podemos ver distintas secciones:
 - Información
 - Horarios
-- Vacaciones y eventos
+- Vacaciones
 - Exámenes
 
 **Información**
@@ -330,16 +324,15 @@ Si pulsas sobre el icono de editar te saldrá un diálogo para cambiar el nombre
 
 **Horarios**
 
-|	![Dialog_Help_0](assets/1_PROTOTYPE/view_profile/Dialog_Help_0.png)	|	![Screen_Profile_New_Timetable](assets/1_PROTOTYPE/view_profile/Screen_Profile_New_Timetable.png)	|	![Screen_Profile_New_Timetable_New](assets/1_PROTOTYPE/view_profile/Screen_Profile_New_Timetable_New.png)	|
+|	![screen_profile_timetable](assets/1_PROTOTYPE/view_profile/screen_profile_timetable.png)	|	![screen_profile_timetable_edit](assets/1_PROTOTYPE/view_profile/screen_profile_timetable_edit.png)	|	![screen_profile_timetable_edit_new](assets/1_PROTOTYPE/view_profile/screen_profile_timetable_edit_new.png)	|
 |:-:|:-:|:-:|
 |	2	|	3	|	4	|
 
+Aquí se muestran los horarios creados del perfil. Por lo general sólo se tendrá creado uno, pero siempre se pueden crear más si se requiriera pulsando sobre `Añadir...`.
 
-Aquí se muestran los horarios creados del perfil. Pulsando sobre el botón `ayuda` se mostrará un diálogo (**imagen 2**) donde vendrá una breve explicación de qué significa esta sección.
-
-Por lo general sólo se tendrá creado uno, pero siempre se pueden crear más si se requiriera pulsando sobre `Añadir...`.
-
-Cuando se quiere añadir un nuevo horario al perfil, aparece la **imagen 3** en la pantalla. Aquí se muestra una barra de navegación que corresponde con los días de la semana. En cada uno de ellos encontrarás todas las clases que hay ese día.
+Cuando se quiere añadir un nuevo horario al perfil, aparece la **imagen 2** en la pantalla., donde habrá que especificar la fecha de inicio y de fin del nuevo horario. En el caso de que haya datos que se puedan borrar al crear un nuevo horario, aparecerá una ventana de confirmación.
+<br>
+Una vez establecidas las fechas, se procederá a la **imagen 3**, donde podremos crear diferentes clases para cada día de la semana.
 
 Para añadir una nueva clase, pulsamos sobre el botón flotante `añadir`. Esto nos lelva a la **imagen 4**, un formulario donde podremos crear la nueva clase para nuestro horario.
 <br>
@@ -349,15 +342,13 @@ Los campos del formulario están especificados en [*schedule* - diagrama de clas
 
 <div style="page-break-after: always;"></div>
 
-**Vacaciones/eventos y exámenes**
+**Vacaciones y exámenes**
 
-|	![Dialog_Help_1](assets/1_PROTOTYPE/view_profile/Dialog_Help_1.png)	|	![Dialog_Help_2](assets/1_PROTOTYPE/view_profile/Dialog_Help_2.png)	|	![Screen_Profile_New_Holiday](assets/1_PROTOTYPE/view_profile/Screen_Profile_New_Holiday.png)	|	![Screen_Profile_New_Exam](assets/1_PROTOTYPE/view_profile/Screen_Profile_New_Exam.png)	|
-|:-:|:-:|:-:|:-:|
-|	5	|	6	|	7	|	8	|
+|	![screen_profile_holidays](assets/1_PROTOTYPE/view_profile/screen_profile_holidays.png)	|	![screen_profile_exam](assets/1_PROTOTYPE/view_profile/screen_profile_exam.png)	|	![](assets/1_PROTOTYPE/Screen_Empty.png)	|
+|:-:|:-:|:-:|
+|	5	|	6	|	|
 
-Pulsando sobre el botón `ayuda` se mostrará un diálogo (**imagen 5 y 6**) donde vendrá una breve explicación de qué significa cada sección.
-
-Para añadir un dato nuevo a alguno de estas secciones, pulsaremos sobre el botón `Añadir...` de la sección específica. Esto nos mostrará el formulario (**imagen 7 y 8**) de la sección donde podremos rellenar los datos para crear un nuevo elemento.
+Para añadir un dato nuevo a alguno de estas secciones, pulsaremos sobre el botón `Añadir...` de la sección específica. Esto nos mostrará el formulario (**imagen 5 y 6**) de la sección donde podremos rellenar los datos para crear un nuevo elemento.
 
 Los campos de los formularios están especificados en [Holiday/Exam - diagrama de clases ](#diagrama-clases).
 
@@ -365,9 +356,9 @@ Los campos de los formularios están especificados en [Holiday/Exam - diagrama d
 
 #### ASIGNATURAS
 
-|	![Screen_Subjects_0](assets/1_PROTOTYPE/view_profile/Screen_Subjects_0.png)	|	![Screen_Subjects_1](assets/1_PROTOTYPE/view_profile/Screen_Subjects_1.png)	|	![Screen_Subjects_New](assets/1_PROTOTYPE/view_profile/Screen_Subjects_New.png)	|
+|	![screen_profile_subjects](assets/1_PROTOTYPE/view_profile/screen_profile_subjects.png)	|	![screen_profile_subjects_new](assets/1_PROTOTYPE/view_profile/screen_profile_subjects_new.png)	|	![](assets/1_PROTOTYPE/Screen_Empty.png)	|
 |:-:|:-:|:-:|
-|	1a	|	1b	|	2	|
+|	1	|	2	|	|
 
 Cuando accedamos a la pestaña de asignaturas, aparecerán todas las asignaturas del perfil (**imagen 1**).
 
@@ -381,9 +372,9 @@ Los campos del formulario están espeficados en [*subject - diagrama de clases*]
 
 #### PROFESORES
 
-|	![Screen_Teachers_0](assets/1_PROTOTYPE/view_profile/Screen_Teachers_0.png)	|	![Screen_Teachers_1](assets/1_PROTOTYPE/view_profile/Screen_Teachers_1.png)	|	![Screen_Teachers_New](assets/1_PROTOTYPE/view_profile/Screen_Teachers_New.png)	|
+|	![screen_profile_teachers](assets/1_PROTOTYPE/view_profile/screen_profile_teachers.png)	|	![screen_profile_teachers_new](assets/1_PROTOTYPE/view_profile/screen_profile_teachers_new.png)	|	![](assets/1_PROTOTYPE/Screen_Empty.png)	|
 |:-:|:-:|:-:|
-|	1a	|	1b	|	2	|
+|	1	|	2	|	|
 
 Cuando accedamos a la pestaña de profesores, aparecerán todos los profesores del perfil (**imagen 1**).
 
@@ -397,15 +388,15 @@ Los campos del formulario están espeficados en [*teacher - diagrama de clases*]
 
 ### AJUSTES
 
-|	![Screen_Settings](assets/1_PROTOTYPE/view_settings/Screen_Settings.png)	|	![](assets/1_PROTOTYPE/Screen_Empty.png)	|	![](assets/1_PROTOTYPE/Screen_Empty.png)	|
+|	![screen_settings_0](assets/1_PROTOTYPE/view_settings/screen_settings_0.png)	|	![screen_settings_1](assets/1_PROTOTYPE/view_settings/screen_settings_1.png)	|	![](assets/1_PROTOTYPE/Screen_Empty.png)	|
 |:-:|:-:|:-:|
-|	1	|	|	|
+|	1a	|	1b	|	|
 
 En esta pantalla se encuentra toda la configuración de la aplicación
-- *Perfil* : aquí se puede ver el perfil que está seleccionado. También se puede cambiar de perfil o añadir otro desde el botón `Cambiar...`
+- *Perfil* : aquí se puede ver el perfil que está seleccionado. También se puede cambiar de perfil o añadir otro desde el botón `Cambiar... / Añadir...`
 - *Idioma* : se muestra el idioma de la aplicación seleccionado. Se puede cambiar desde el botón `Cambiar...`. La aplicación dispondrá de los idiomas Español e Inglés
 - *Notificaciones* : configuración de las notificaciones. El usuario puede marcar o desmarcar qué notificaciones quiere que le llegen
-- *Información del calendario* : la información mostrada en la pantalla de [Calendario (imagen 1)](#calendario) se puede configurar desde aquí, marcando o desmarcando la información que se quiera mostrar
+- *Información del calendario* : la información mostrada en la pantalla de [Calendario (**imagen 1**)](#calendario) se puede configurar desde aquí, marcando o desmarcando la información que se quiera mostrar
 
 <div style="page-break-after: always;"></div>
 
