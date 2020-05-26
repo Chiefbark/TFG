@@ -167,7 +167,7 @@ export const profile = {
 				actions: ['Cancel', 'Continue']
 			},
 			helpDialogTimetables: {
-				description: 'Es posible que tu horario cambie a lo largo del curso.\nDesde aquí puedes editar, añadir o eliminar tus horarios'
+				description: 'Your schedule may change throughout the course.\nFrom here you can edit, add or delete your schedules'
 			},
 			confirmDialogHolidays: {
 				title: 'Are you sure?',
