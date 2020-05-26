@@ -275,7 +275,7 @@ export default class CalendarScreen extends React.Component {
 									const arr = this.state.absences.find(x => x[0] === this.state.selected.dateString);
 									if (arr) selected = Object.keys(arr[1]).find(x => x === e.id_schedule)
 								}
-								const exam = this.state.selected.exams?.find(x => x.schedules.map(y => y.id_schedule)?.includes(e.id_schedule))
+								const exam = this.state.selected.exams?.find(x => x.schedules?.map(y => y.id_schedule)?.includes(e.id_schedule))
 								if (exam)
 									return <ListItem key={index} title={exam.name}
 													 subtitle={i18n.get('commons.examForm.title') + ` ${e.startTime} - ${e.endTime}`}
