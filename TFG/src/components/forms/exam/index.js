@@ -182,7 +182,6 @@ export default class ExamForm extends React.Component {
 											let msg = 0;
 											if (!this.state.id_subject || this.state.id_subject === '') obj.errorSubject = true;
 											if (!this.state.date || this.state.date === '') obj.errorDate = true;
-											if (!this.state.disabled && !this.state.id_schedule) obj.errorSchedule = true;
 											if (this.state.id_subject && this.state.date && this.state.id_schedule && this.state.id_schedule.length > 1) {
 												let ii = 0;
 												while (ii < this.state.id_schedule.length - 1 && msg === 0) {
