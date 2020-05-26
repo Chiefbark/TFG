@@ -77,12 +77,6 @@ export default class ExamForm extends React.Component {
 	}
 	
 	render() {
-		let available = this.state.schedules?.filter(e => !this.state.exams?.find(x =>
-			x[0] !== this.state.key && x[1].date === this.state.date && x[1].schedules?.find(y => y.id_schedule === e[0])
-		)) ?? undefined;
-		if (available instanceof Array && available.length === 0) available = undefined;
-		else available = true;
-		
 		return (
 			<Fragment>
 				<Dialog title={i18n.get('commons.examForm.title')} loading={this.state.loading}
@@ -114,17 +108,12 @@ export default class ExamForm extends React.Component {
 									</Text>
 									}
 								</View>
-								{available && !this.state.holidays &&
+								{!this.state.holidays &&
 								<Text style={{textAlign: 'center', color: colors.grey}}>{i18n.get('commons.examForm.placeholders.2')}</Text>
-								}
-								{!available && !this.state.holidays &&
-								<Text style={{textAlign: 'center', color: colors.primary}}>
-									{i18n.get('commons.examForm.placeholders.3')}
-								</Text>
 								}
 								{this.state.holidays &&
 								<Text style={{textAlign: 'center', color: colors.primary}}>
-									{i18n.get('commons.examForm.placeholders.4')}
+									{i18n.get('commons.examForm.placeholders.3')}
 								</Text>
 								}
 								<Picker
@@ -142,7 +131,7 @@ export default class ExamForm extends React.Component {
 												}
 										}) ?? []
 									}
-									placeholder={i18n.get('commons.examForm.placeholders.5')}
+									placeholder={i18n.get('commons.examForm.placeholders.4')}
 									error={this.state.errorSchedule} disabled={this.state.disabled}
 									onValueChange={value =>
 										this.setState({
@@ -154,7 +143,7 @@ export default class ExamForm extends React.Component {
 											})
 										})}
 								/>
-								<Text style={{textAlign: 'center', color: colors.grey}}>{i18n.get('commons.examForm.placeholders.6')}</Text>
+								<Text style={{textAlign: 'center', color: colors.grey}}>{i18n.get('commons.examForm.placeholders.5')}</Text>
 							</Fragment>
 						}
 						buttons={() =>
