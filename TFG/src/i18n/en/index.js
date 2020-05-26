@@ -307,7 +307,7 @@ export const commons = {
 		toast: 'Timetable removed'
 	},
 	holidayForm: {
-		title: 'Vacaciones',
+		title: 'Holidays',
 		placeholders: [
 			'holiday\'s name...',
 			'Specify the start and end date of the new holidays' +
