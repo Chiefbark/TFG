@@ -3,8 +3,16 @@
 | Documento 	|   |
 |-----------	|-  |
 | Fecha     	| 18/04/2020  |
-| Versión   	| 0.0.1 |
+| Versión   	| 0.0.2	|
 | Autor     	| Jorge Chércoles Moreno  |
+
+<br>
+
+**Changelog**
+
+*V 0.0.2 - 26-05-2020*
+1. Modificadas imagenes de pantallas
+2. Diagramas de clases y de desplegue actualizados
 
 <br>
 

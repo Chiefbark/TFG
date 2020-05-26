@@ -10,6 +10,7 @@
 
 **Changelog**
 
+*V 0.0.3 - 05-05-2020*
 1. Modificada la plataforma de desarrollo
      - **Anterior**: Visual Studio Code
      - **Nueva**: Webstorm
