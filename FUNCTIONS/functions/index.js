@@ -188,7 +188,7 @@ exports.absenceFuntion = functions.pubsub.schedule('every day 10:00').onRun((con
 								absences.push(currStats.name);
 						}
 					}
-					if (absences.length > 0 && !Object.entries(x.holidays).find(y => isDateBetween(date.toISOString().slice(0, 10), y[1].startDate, y[1].endDate)))
+					if (absences.length > 0 && (!x.holidays || !Object.entries(x.holidays).find(y => isDateBetween(date.toISOString().slice(0, 10), y[1].startDate, y[1].endDate))))
 						fetch('https://exp.host/--/api/v2/push/send', {
 							method: 'POST',
 							headers: {
