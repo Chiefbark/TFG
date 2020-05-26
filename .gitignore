@@ -1,3 +1,4 @@
+FUNCTIONS/functions/node_modules/**/*
 TFG/node_modules/**/*
 TFG/.expo/*
 TFG/npm-debug.*
