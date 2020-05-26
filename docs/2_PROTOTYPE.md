@@ -11,8 +11,9 @@
 **Changelog**
 
 *V 0.0.2 - 26-05-2020*
-1. Añadidos nuevos componentes
-2. Añadidos nuevos formularios
+1. Añadida explicación de componente
+2. Añadidos nuevos componentes
+3. Añadidos nuevos formularios
 
 <br>
 
@@ -36,6 +37,10 @@ Pulsa en las imagenes para acceder a mis zonas de trabajo
 **Tabla de contenidos**
 - [ANALISIS Y PROTOTIPO 2](#analisis-y-prototipo-2)
 	- [INTRODUCCION](#introduccion)
+		- [Imports](#imports)
+		- [Constructor](#constructor)
+		- [Funciones](#funciones)
+		- [Estilos](#estilos)
 	- [COMPONENTES](#componentes)
 		- [BUTTON](#button)
 		- [ICON](#icon)
@@ -79,6 +84,85 @@ El lenguaje utilizado es `Javascript`, con el superconjunto de `ECMAScript 6`.
 [Aquí](https://ecma-international.org/ecma-262/10.0/index.html) puedes encontrar toda la información referente a ES6.
 
 Para desarrollar el proyecto se utiliza `Expo`, un framework creado a partir de `React Native` que permite crear aplicaciones tanto para IOs como Android utilizando exclusivamente javascript. La documentación de este framework se encuentra [aquí](https://docs.expo.io/).
+
+
+Esta imagen representa la estructura básica de un componente de React Native.
+
+![component_template](./assets/2_PROTOTYPE/component_template.png)
+
+Es importante saber que para utilizar alguna función o componente en otro archivo, será necesario exportarlo, ya sea con `export default`si sólo es uno o `export` si quieres exportar muchos elementos.
+
+<div style="page-break-after: always;"></div>
+
+Podemos encontrar diferentes secciones en él:
+
+### Imports
+
+Aquí se importan todos los archivos necesarios para que el componente funcione.
+<br>
+`import React from 'react'` es obligatorio siempre que se quiera crear un componente en el archivo.
+<br>
+Podemos ver más imports dentro de un archivo. El más común es `import {...} from 'react-native'`.
+<br>
+Con este import podemos seleccionar los componentes nativos que vamos a utilizar en el archivo. [Aquí](https://reactnative.dev/docs/components-and-apis.html) puedes encontrar la documentación de todos los componentes disponibles.
+
+También se pueden añadir imports a librerías externas que hayan sido incluidas en el archivo `package.json`, o importar archivos `.js` que contengan cierta lógica, funciones, variables, o todo junto.
+
+### Constructor
+
+Cuando se "monta" el componente, la primera función en ejecutarse es el constructor.
+<br>
+Aquí se crean las variables mínimas para el correcto funcionamiento del componente. La mas importante es `this.state`.
+<br>
+Esta función recibe un parámetro `props`. Este parámetro representa todos los atributos que tiene el componente cuando es creado.
+```jsx
+<Component key={...} onPress={...} onLongPress={...} style={...}/>
+```
+`key, onPress, onLongPress, style` son ejemplos de atributos del componente. Cada componente puede tener distintos atributos e incluso si fuera necesario, puedes crear los que tu consideres. Podrás verlo en la documentación de cada componente.
+
+<div style="page-break-after: always;"></div>
+
+### Funciones
+
+Un componente puede tener tantas funciones como quieras, pero hay algunas funciones que son heredadas de `React.Component`. Las más importantes son:
+
+- **`ShouldComponentUpdate`**
+<br>
+Esta función determina si, habiendo un cambio en las `props` o en el `state`, es necesario renderizar el componente. Se ejecuta antes de llamar a la función `render` y devuelve `true` si se tiene que volver a renderizar o `false` si no. No es necesario implementar esta función pero permite prevenir renders innecesarios del componente.
+<br>
+Recibe tres parámetros:
+  - `nextProps` : las siguientes propiedades que va a recibir el componente (`props`)
+  - `nextState` : el siguiente estado del componente (`state`)
+  - `nextContext` : el siguiente contexto del componente
+
+  Cada componente requerirá una lógica diferente en esta función, ajustandose a los requerimientos.
+- **`ComponentDidMount`**
+<br>
+Esta función es llamada justo después del primer `render`. Es ideal para operar con el componente o añadir listeners.
+- **`ComponentWillUnmount`**
+<br>
+Esta función es llamada justo antes de que el componente se "desmonte". Elimina todos los listeners que tengas en esta función, para evitar warnings.
+- **`Render`**
+<br>
+Esta función se encarga de devolver un elemento para mostrar en la pantalla del dispositivo. Puedes añadir cierta lógica gracias a la sintaxis de `{variable}` y utilizar todos los componentes que quieras, ya sean nativos o externos. También puedes añadirle estilos.
+
+<div style="page-break-after: always;"></div>
+
+### Estilos
+
+Por lo general, los estilos del componente se añaden al final del archivo y fuera del ámbito del componente, aunque también podrían estar en un archivo externo y se podría importar utilizando `import styles from './path/to/styles'`.
+
+Para crear una hoja de estilos es necesario importar el módulo ``StyleSheet` de `react-native`.
+<br>
+Su sintaxis es un objeto tipo `JSON`, donde la clave es el nombre del estilo y el contenido son los propios estilos.
+
+El abanico de propiedades que se pueden usar es muy extenso y bastante similar a las propiedades `css`, salvo que la sintaxis utiliza un sistema *camelCase* en vez de separarla con *-*. Por ejemplo:
+<br>
+En vez de `font-size`, se utiliza `fontSize`.
+<br>
+También hay que destacar que React Native no utiliza pixeles si no su propia unidad, aunque siempre podrás utilizar porcentajes.
+
+React Native utiliza `flex` para organizar los componentes en la pantalla, por lo que es importante conocerlo bastante bien. React native facilita un ejemplo [aquí](https://reactnative.dev/docs/style).
 
 <div style="page-break-after: always;"></div>
 
