@@ -307,7 +307,13 @@ export default class CalendarScreen extends React.Component {
 												  }}
 										/>
 							})}
-							{!this.state.selected.holidays && !this.state.selected.subjects && this.state.selected.exams?.map(e => {
+							{!this.state.selected.holidays && this.state.selected.exams?.map(e => {
+								if (this.state.selected.subjects && e.schedules) {
+									for (let ii = 0; ii < e.schedules.length; ii++) {
+										if (this.state.selected.subjects.find(x => x.id_schedule === e.schedules[ii].id_schedule))
+											return;
+									}
+								}
 								return <ListItem key={e.id_schedule} title={e.name}
 												 subtitle={i18n.get('commons.examForm.title') + (e.startTime ? ` ${e.startTime} - ${e.endTime}` : '')}
 												 containerStyle={{paddingHorizontal: 0}}
