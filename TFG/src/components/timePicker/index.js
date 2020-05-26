@@ -1,6 +1,6 @@
 import React, {Fragment} from 'react';
 
-import {View, Text, StyleSheet} from 'react-native';
+import {View, Text, StyleSheet, TouchableWithoutFeedback, ActivityIndicator, ScrollView, Modal} from 'react-native';
 
 import * as i18n from '../../i18n';
 import {colors} from '../../styles';
@@ -43,14 +43,22 @@ export default class TimePicker extends React.Component {
 		let minuteIndex = [0, 15, 30, 45].indexOf(this.props.initialMinutes);
 		if (minuteIndex < 0) minuteIndex = 0;
 		return (
-			<Dialog title={i18n.get('commons.timePickerDialog.title')}
-					content={() =>
-						<Fragment>
-							<View style={styles.container}>
+			<Modal
+				animationType={'fade'}
+				transparent={true}
+				visible={true}
+			>
+				<View style={styles.container}>
+					<View style={styles.dialog}>
+						<Text style={styles.title}>{i18n.get('commons.timePickerDialog.title')}</Text>
+						<View style={[{width: '100%'}, this.state.height && {height: this.state.height}]} onLayout={(event) => {
+							this.setState({height: event.nativeEvent.layout.height});
+						}}>
+							<View style={styles.timeTitleContainer}>
 								<Text style={styles.header}>{i18n.get('commons.timePickerDialog.placeholders.0')}</Text>
 								<Text style={styles.header}>{i18n.get('commons.timePickerDialog.placeholders.1')}</Text>
 							</View>
-							<View style={styles.container}>
+							<View style={styles.timeContainer}>
 								<StepPicker initialValue={hourIndex}
 											data={hours}
 											onValueChange={value => this.setState({hours: value?.label ?? 0})}
@@ -60,10 +68,8 @@ export default class TimePicker extends React.Component {
 											onValueChange={value => this.setState({minutes: value?.label ?? 0})}
 								/>
 							</View>
-						</Fragment>
-					}
-					buttons={() =>
-						<Fragment>
+						</View>
+						<View style={styles.actions}>
 							<Button label={i18n.get('commons.timePickerDialog.actions.0')}
 									onClick={() => {
 										this.props.onCancel();
@@ -74,15 +80,28 @@ export default class TimePicker extends React.Component {
 									onClick={() => {
 										this.props.onSubmit(this.state.hours, this.state.minutes < 10 ? `0${this.state.minutes}` : this.state.minutes);
 									}}/>
-						</Fragment>
-					} visible={true}/>
+						</View>
+					</View>
+				</View>
+			</Modal>
 		)
 	}
 }
 
 const styles = StyleSheet.create({
 	container: {
+		width: '100%', height: '100%',
+		flex: 1, justifyContent: 'center', alignItems: 'center',
+		backgroundColor: '#00000055'
+	},
+	timeTitleContainer: {
 		flex: 1,
+		flexDirection: 'row',
+		justifyContent: 'space-around',
+		alignItems: 'center',
+		marginTop: 10
+	},
+	timeContainer: {
 		flexDirection: 'row',
 		justifyContent: 'space-around',
 		alignItems: 'center',
@@ -92,6 +111,22 @@ const styles = StyleSheet.create({
 		width: 100,
 		textAlign: 'center',
 		fontWeight: 'bold'
+	},
+	title: {
+		alignSelf: 'flex-start',
+		fontWeight: 'bold', fontSize: 18, paddingBottom: 15
+	},
+	dialog: {
+		alignItems: 'center', width: '85%',
+		backgroundColor: colors.white,
+		borderRadius: 4,
+		shadowColor: colors.black, shadowOffset: {width: 0, height: 2}, shadowOpacity: 0.25, shadowRadius: 3.84,
+		elevation: 10,
+		paddingVertical: 15, paddingHorizontal: 30, marginHorizontal: 20, marginVertical: 100
+	},
+	actions: {
+		alignSelf: 'flex-end', flexDirection: 'row', alignItems: 'center',
+		paddingTop: 15
 	}
 })
 
