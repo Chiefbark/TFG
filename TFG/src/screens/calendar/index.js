@@ -269,7 +269,7 @@ export default class CalendarScreen extends React.Component {
 										  subtitle={`${i18n.get('calendar.holidaysDialog.placeholders.1')} ${getISODate(e.endDate)}`}
 										  containerStyle={{paddingHorizontal: 0}}/>
 							)}
-							{!this.state.selected.holidays && this.state.selected.subjects?.map(e => {
+							{!this.state.selected.holidays && this.state.selected.subjects?.map((e, index) => {
 								let selected = undefined;
 								if (this.state.absences) {
 									const arr = this.state.absences.find(x => x[0] === this.state.selected.dateString);
@@ -277,14 +277,14 @@ export default class CalendarScreen extends React.Component {
 								}
 								const exam = this.state.selected.exams?.find(x => x.schedules.map(y => y.id_schedule)?.includes(e.id_schedule))
 								if (exam)
-									return <ListItem key={exam.id_schedule} title={exam.name}
+									return <ListItem key={index} title={exam.name}
 													 subtitle={i18n.get('commons.examForm.title') + ` ${e.startTime} - ${e.endTime}`}
 													 containerStyle={{paddingHorizontal: 0}}
 													 rightItem={() => <Image source={require('../../../assets/icons/icon_exam_art.png')}
 																			 style={{width: 28, height: 28, marginLeft: 8}}/>}/>
 								else
 									return e.name &&
-										<ListItem key={e.id_schedule} title={e.name}
+										<ListItem key={index} title={e.name}
 												  subtitle={`${e.startTime} - ${e.endTime}`}
 												  containerStyle={{paddingHorizontal: 0}}
 												  rightItem={() =>
@@ -307,14 +307,14 @@ export default class CalendarScreen extends React.Component {
 												  }}
 										/>
 							})}
-							{!this.state.selected.holidays && this.state.selected.exams?.map(e => {
+							{!this.state.selected.holidays && this.state.selected.exams?.map((e, index) => {
 								if (this.state.selected.subjects && e.schedules) {
 									for (let ii = 0; ii < e.schedules.length; ii++) {
 										if (this.state.selected.subjects.find(x => x.id_schedule === e.schedules[ii].id_schedule))
 											return;
 									}
 								}
-								return <ListItem key={e.id_schedule} title={e.name}
+								return <ListItem key={index} title={e.name}
 												 subtitle={i18n.get('commons.examForm.title') + (e.startTime ? ` ${e.startTime} - ${e.endTime}` : '')}
 												 containerStyle={{paddingHorizontal: 0}}
 												 rightItem={() => <Image source={require('../../../assets/icons/icon_exam_art.png')}
