@@ -156,7 +156,7 @@ export const profile = {
 			saveDialogTimetable: {
 				title: 'Warning!',
 				description: [
-					'You are overriding part of another schedule. The absences and exams between ',
+					'The absences and exams between ',
 					' and ',
 					' will be removed',
 					'The start date is previous to another timetable',
