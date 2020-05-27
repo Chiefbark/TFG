@@ -1,5 +1,5 @@
 import React, {Fragment} from 'react';
-import {View, Text, Image, TouchableOpacity, ActivityIndicator} from 'react-native';
+import {View, Text, Image, TouchableOpacity} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
@@ -158,6 +158,10 @@ function TimetableScreen({navigation, route}) {
 	return <TimeTable navigation={navigation} route={route}/>;
 }
 
+let customFont = {
+	'MyKidsHandwritten': require('./assets/fonts/MyKidsHandwritten.otf'),
+};
+
 export default class App extends React.Component {
 	
 	constructor(props) {
@@ -276,7 +280,7 @@ export default class App extends React.Component {
 				}
 				{(!this.state._locale || !this.state._config || !this.state._firebaseKey || this.state._online === undefined) &&
 				<View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-					<ActivityIndicator size={'large'} color={colors.primary}/>
+					<Image source={require('./assets/loading.gif')} style={{width: 200, height: 200, tintColor: colors.primary}}/>
 				</View>
 				}
 				{this.state._online === false &&
