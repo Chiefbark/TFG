@@ -8,14 +8,14 @@
 			"ios",
 			"android"
 		],
-		"primaryColor": "#F8BBD0",
+		"primaryColor": "#E91E63",
 		"version": "0.0.1",
 		"orientation": "portrait",
 		"icon": "./assets/icon.png",
 		"splash": {
 			"image": "./assets/splash.png",
 			"resizeMode": "contain",
-			"backgroundColor": "#E91E63"
+			"backgroundColor": "#FFFFFF"
 		},
 		"updates": {
 			"fallbackToCacheTimeout": 0
