@@ -9,7 +9,7 @@
 			"android"
 		],
 		"primaryColor": "#E91E63",
-		"version": "1.0.2",
+		"version": "1.0.5",
 		"orientation": "portrait",
 		"icon": "./assets/icon.png",
 		"splash": {
@@ -25,13 +25,13 @@
 		],
 		"android": {
 			"package": "com.chiefbark.ControlMyClass",
-			"versionCode": 3
+			"versionCode": 5
 		},
 		"ios": {
 			"supportsTablet": false
 		},
 		"notification": {
-			"icon": "./assets/icon_background.png",
+			"icon": "./assets/icon_notification.png",
 			"color": "#E91E63"
 		}
 	}
