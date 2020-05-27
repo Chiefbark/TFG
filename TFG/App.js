@@ -158,10 +158,6 @@ function TimetableScreen({navigation, route}) {
 	return <TimeTable navigation={navigation} route={route}/>;
 }
 
-let customFont = {
-	'MyKidsHandwritten': require('./assets/fonts/MyKidsHandwritten.otf'),
-};
-
 export default class App extends React.Component {
 	
 	constructor(props) {
