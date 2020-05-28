@@ -1,5 +1,21 @@
 ## TEST HOLIDAYS
 
+Input test
+-
+
+<table>
+<tr>
+<td style="vertical-align: top">
+<img src="../assets/TESTING/holidays/input_holidays.jpeg" alt="input_holidays" width="200px"/>
+</td>
+<td style="vertical-align: top">
+Si se intenta guardar unas vacaciones que no tiene todos los campos rellenos, se mostrará un error en pantalla
+</td>
+</tr>
+</table>
+
+<div style="page-break-after: always;"></div>
+
 Añadir vacaciones
 -
 
