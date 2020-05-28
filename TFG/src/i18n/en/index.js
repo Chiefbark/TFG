@@ -243,7 +243,7 @@ export const commons = {
 		actions: ['Ok']
 	},
 	calendarPickerDialog: {
-		title: 'Pick a date',
+		title: ['Pick a date', 'Pick a range of dates'],
 		actions: ['Cancel', 'Select']
 	},
 	timePickerDialog: {
