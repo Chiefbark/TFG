@@ -80,7 +80,7 @@ name: 'Jose Angel Martín'
 Se eliminará el campo <code>id_teacher</code> de la asignatura con datos:
 <pre>
 color: '#8844FF'
-id_teacher: '-M8Mh8NtMPi1XC79tHOh'
+id_teacher: -M8Mh8NtMPi1XC79tHOh
 name: 'Inglés Técnico'
 percentage: 15
 </pre>
