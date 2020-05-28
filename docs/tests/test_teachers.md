@@ -90,6 +90,7 @@ percentage: 15
 
 |	Datos iniciales	|	Datos tras actualización	|	Test	|
 |:-:|:-:|:-:|
-|	![delete_teachers_original](../assets/TESTING/teachers/delete_teachers_original.png)![delete_subjects_original](../assets/TESTING/teachers/delete_subjects_original.png)	|	![delete_teachers](../assets/TESTING/teachers/delete_teachers.png)![delete_subjects](../assets/TESTING/teachers/delete_subjects.png)	|	✔️	|
+|	![delete_teachers_original](../assets/TESTING/teachers/delete_teachers_original.png)	|	![delete_teachers](../assets/TESTING/teachers/delete_teachers.png)	|	✔️	|
+|	![delete_subjects_original](../assets/TESTING/teachers/delete_subjects_original.png)	|	![delete_subjects](../assets/TESTING/teachers/delete_subjects.png)	|	✔️	|
 
 <div style="page-break-after: always;"></div>
