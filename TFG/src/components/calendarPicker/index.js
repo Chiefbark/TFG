@@ -98,46 +98,47 @@ export default class CalendarPicker extends React.Component {
 	
 	render() {
 		return (
-			<Dialog title={i18n.get('commons.calendarPickerDialog.title')}
-					content={() =>
-						<Calendar markedDates={this.state.markedDates}
-								  hideExtraDays={false}
-								  markingType={'period'}
-								  current={this.state.current}
-								  onMonthChange={value => this.setState({current: value.dateString})}
-								  monthFormat={'yyyy MMMM'}
-								  firstDay={1}
-								  onPressArrowLeft={substractMonth => substractMonth()}
-								  onPressArrowRight={addMonth => addMonth()}
-								  onDayPress={(value) => this._onPress(value)}
-								  theme={{
-									  arrowColor: colors.black,
-									  'stylesheet.calendar.main': {
-										  week: {
-											  marginTop: 1, marginBottom: 1,
-											  flexDirection: 'row', justifyContent: 'space-around'
-										  }
+			<Dialog
+				title={!this.props.multiple ? i18n.get('commons.calendarPickerDialog.title.0') : i18n.get('commons.calendarPickerDialog.title.1')}
+				content={() =>
+					<Calendar markedDates={this.state.markedDates}
+							  hideExtraDays={false}
+							  markingType={'period'}
+							  current={this.state.current}
+							  onMonthChange={value => this.setState({current: value.dateString})}
+							  monthFormat={'yyyy MMMM'}
+							  firstDay={1}
+							  onPressArrowLeft={substractMonth => substractMonth()}
+							  onPressArrowRight={addMonth => addMonth()}
+							  onDayPress={(value) => this._onPress(value)}
+							  theme={{
+								  arrowColor: colors.black,
+								  'stylesheet.calendar.main': {
+									  week: {
+										  marginTop: 1, marginBottom: 1,
+										  flexDirection: 'row', justifyContent: 'space-around'
 									  }
-								  }}
+								  }
+							  }}
+					/>
+				}
+				buttons={() =>
+					<Fragment>
+						<Button label={i18n.get('commons.calendarPickerDialog.actions.0')}
+								onClick={() => {
+									this.props.onCancel();
+								}}
 						/>
-					}
-					buttons={() =>
-						<Fragment>
-							<Button label={i18n.get('commons.calendarPickerDialog.actions.0')}
-									onClick={() => {
-										this.props.onCancel();
-									}}
-							/>
-							<Button label={i18n.get('commons.calendarPickerDialog.actions.1')}
-									backgroundColor={colors.primary} textColor={colors.white}
-									onClick={() => {
-										if (!this.props.multiple && this.state.selecting)
-											this.props.onSubmit(this.state.startDate, undefined);
-										else
-											this.props.onSubmit(this.state.startDate, this.state.endDate);
-									}}/>
-						</Fragment>
-					} visible={true}/>
+						<Button label={i18n.get('commons.calendarPickerDialog.actions.1')}
+								backgroundColor={colors.primary} textColor={colors.white}
+								onClick={() => {
+									if (!this.props.multiple && this.state.selecting)
+										this.props.onSubmit(this.state.startDate, undefined);
+									else
+										this.props.onSubmit(this.state.startDate, this.state.endDate);
+								}}/>
+					</Fragment>
+				} visible={true}/>
 		);
 	}
 }
