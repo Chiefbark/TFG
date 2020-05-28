@@ -228,7 +228,7 @@ export default class InformationScreen extends React.Component {
 						  onSubmit={() => this.setState({dialogExam: false, exam: undefined})}
 						  onCancel={() => this.setState({dialogExam: false, exam: undefined})}
 						  onDelete={() => {
-							  this.setState({dialogExam: false, holiday: undefined})
+							  this.setState({dialogExam: false, exam: undefined})
 							  Toast.showWithGravity(i18n.get('commons.examForm.toast'), Toast.LONG, Toast.BOTTOM);
 						  }}/>
 				}
