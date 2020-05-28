@@ -1,4 +1,19 @@
 ## TEST TEACHERS
+Input test
+-
+
+<table>
+<tr>
+<td style="vertical-align: top">
+<img src="../assets/TESTING/teachers/input_teachers.jpeg" alt="input_teachers" width="200px"/>
+</td>
+<td style="vertical-align: top">
+Si se intenta guardar un profesor que no tiene todos los campos rellenos, se mostrará un error en pantalla
+</td>
+</tr>
+</table>
+
+<div style="page-break-after: always;"></div>
 
 Añadir profesor
 -
