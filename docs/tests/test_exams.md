@@ -1,5 +1,31 @@
 ## TEST EXAMS
 
+Input test
+-
+
+<table>
+<tr>
+<td style="vertical-align: top">
+<img src="../assets/TESTING/exams/input_exams.jpeg" alt="input_exams" width="200px"/>
+</td>
+<td style="vertical-align: top">
+Si se intenta guardar unas vacaciones que no tiene todos los campos rellenos, se mostrará un error en pantalla
+
+No es obligatorio especificar las clases que ocupa el examen
+</td>
+</tr>
+<tr>
+<td style="vertical-align: top">
+<img src="../assets/TESTING/exams/input_exams_schedules.jpeg" alt="input_exams_schedules" width="200px"/>
+</td>
+<td style="vertical-align: top">
+Si ya existe otro examen ese día y tiene alguna clase seleccionada, no permitirá seleccionar las horas ocupadas
+</td>
+</tr>
+</table>
+
+<div style="page-break-after: always;"></div>
+
 Añadir examen
 -
 
