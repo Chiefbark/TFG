@@ -85,8 +85,6 @@ Se eliminarán todos los exámenes entre esos días
 </tr>
 </table>
 
-<div style="page-break-after: always;"></div>
-
 |	Datos iniciales	|	Datos esperados	|	Test	|
 |:-:|:-:|:-:|
 |	![update_holidays_original](../assets/TESTING/holidays/update_holidays_original.png)	|	![update_holidays](../assets/TESTING/holidays/update_holidays.png)	|	✔️	|
@@ -118,8 +116,6 @@ startDate: '2020-05-03'
 </td>
 </tr>
 </table>
-
-<div style="page-break-after: always;"></div>
 
 |	Datos iniciales	|	Datos esperados	|	Test	|
 |:-:|:-:|:-:|
