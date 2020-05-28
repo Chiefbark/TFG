@@ -1,5 +1,21 @@
 ## TEST SUBJECTS
 
+Input test
+-
+
+<table>
+<tr>
+<td style="vertical-align: top">
+<img src="../assets/TESTING/subjects/input_subjects.jpeg" alt="input_subjects" width="200px"/>
+</td>
+<td style="vertical-align: top">
+Si se intenta guardar una asignatura que no tiene todos los campos rellenos, se mostrará un error en pantalla
+</td>
+</tr>
+</table>
+
+<div style="page-break-after: always;"></div>
+
 Añadir asignatura
 -
 
