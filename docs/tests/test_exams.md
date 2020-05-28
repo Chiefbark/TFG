@@ -22,24 +22,10 @@ schedules: {
 </pre>
 Los valores <code>0, 1</code> representan las clases que ocupa el examen
 <pre>
--M8M3pHfydazr0SRWghW: {
-endTime: '10:30'
-id_subject: -M8M3T1OsNuUKwu-eIWy
-startTime: '8:30'
-}
--M8M3rLvPTbNZnuxwl-I: {
-endTime: '12:30'
-id_subject: -M8M3T1OsNuUKwu-eIWy
-startTime: '10:30'
-}
-</pre>
-<code>id_subject</code> corresponde con las asignaturas:
-<pre>
-'Desarrollo De Interfaces'
-</pre>
-<code>id_teacher</code> corresponde con el profesor:
-<pre>
-'Manuel Vázquez'
+Lunes 8:30 - 10:30
+Desarrollo De Interfaces<br>
+Lunes 10:30 - 12:30
+Desarrollo De Interfaces
 </pre>
 </td>
 <td style="vertical-align: top; width: 50%">
@@ -99,15 +85,8 @@ schedules: {
 </pre>
 El valor <code>0</code> representa la clase que ocupa el examen
 <pre>
--M8M48GIDflDh4Uf5e5l: {
-endTime: '14:30'
-id_subject: -M8M35u5sszS3YsSSpf4
-startTime: '12:30'
-}
-</pre>
-<code>id_subject</code> corresponde con la asignatura:
-<pre>
-'Acceso A Datos'
+Miércoles 12:30 - 14:30
+Acceso A Datos
 </pre>
 </td>
 <td style="vertical-align: top; width: 50%">
@@ -151,6 +130,17 @@ schedules: {
 	0
 	1
 }
+</pre>
+<code>id_subject</code> corresponde con la asignatura:
+<pre>
+'Programación Multimedia Y Dispositivos Móviles'
+</pre>
+Los valores <code>0, 1</code> representan las clases que ocupa el examen
+<pre>
+Jueves 8:30 - 10:30
+Acceso A Datos<br>
+Jueves 10:30 - 12:30
+Sistemas De Gestión Empresarial
 </pre>
 </td>
 <td style="vertical-align: top; width: 50%">
