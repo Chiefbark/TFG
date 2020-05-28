@@ -11,13 +11,13 @@ Añadir profesor
 <table style="width: 100%">
 <tr><th>Premisa</th><th>Esperado</th></tr>
 <tr>
-<td style="vertical-align: top">
+<td style="vertical-align: top; width: 50%">
 Añadir un profesor con los datos:
 <pre>
 name: 'Teacher Added'
 </pre>
 </td>
-<td style="vertical-align: top">
+<td style="vertical-align: top; width: 50%">
 Aparecerá un nuevo nodo con los datos:
 <pre>
 nSubjects: 0
@@ -39,7 +39,7 @@ Actualizar profesor
 <table style="width: 100%">
 <tr><th>Premisa</th><th>Esperado</th></tr>
 <tr>
-<td style="vertical-align: top">
+<td style="vertical-align: top; width: 50%">
 Modificar el profesor con los datos:
 <pre>
 name: 'Jose Angel Martín'
@@ -49,7 +49,7 @@ cambiándolos a:
 name: 'Teacher Updated'
 </pre>
 </td>
-<td style="vertical-align: top">
+<td style="vertical-align: top; width: 50%">
 Se modificará el nodo con los nuevos datos:
 <pre>
 name: 'Teacher Updated'
@@ -70,13 +70,13 @@ Eliminar profesor
 <table style="width: 100%">
 <tr><th>Premisa</th><th>Esperado</th></tr>
 <tr>
-<td style="vertical-align: top">
+<td style="vertical-align: top; width: 50%">
 Eliminar el profesor con los datos:
 <pre>
 name: 'Jose Angel Martín'
 </pre>
 </td>
-<td style="vertical-align: top">
+<td style="vertical-align: top; width: 50%">
 Se eliminará el nodo con los datos:
 <pre>
 nSubjects: 1
