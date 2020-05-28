@@ -10,7 +10,7 @@ Input test
 </td>
 <td style="vertical-align: top">
 Si se intenta guardar unas vacaciones que no tiene todos los campos rellenos, se mostrará un error en pantalla
-
+<br><br>
 No es obligatorio especificar las clases que ocupa el examen
 </td>
 </tr>
