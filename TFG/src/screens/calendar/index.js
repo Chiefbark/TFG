@@ -247,7 +247,7 @@ export default class CalendarScreen extends React.Component {
 			/>
 			<View style={styles.helpTextContainer}><Text style={styles.helpText}>{i18n.get('calendar.helpText')}</Text></View>
 			{this.state.selected &&
-			<Dialog title={getISODate(this.state.selected.dateString)}
+			<Dialog title={getISODate(this.state.selected.dateString)} onClickExit={() => this.setState({selected: undefined})}
 					content={() =>
 						<Fragment>
 							{!this.state.selected.holidays && this.state.selected.subjects &&
