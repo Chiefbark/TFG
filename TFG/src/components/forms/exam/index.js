@@ -198,7 +198,7 @@ export default class ExamForm extends React.Component {
 													else
 														firebase.ref('exams').child(this.state.key).update(obj).then();
 									
-													if (this.state.id_schedule)
+													if (this.state.id_schedule && this.state.id_schedule.length > 0)
 														firebase.removeAbsenceOfSchedules(this.state.id_schedule, this.state.date)
 									
 													this.props.onSubmit(newKey);
