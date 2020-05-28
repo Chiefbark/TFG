@@ -1,10 +1,5 @@
 ## TEST TEACHERS
 
-Los casos de prueba que se realizan sobre esta funcionalidad son los siguientes:
-- Añadir profesor
-- Actualizar profesor
-- Eliminar profesor
-
 Añadir profesor
 -
 
@@ -82,7 +77,7 @@ Se eliminará el nodo con los datos:
 nSubjects: 1
 name: 'Jose Angel Martín'
 </pre>
-y se eliminará el valor `id_teacher` de la asignatura con datos:
+Se eliminará el campo <code>id_teacher</code> de la asignatura con datos:
 <pre>
 color: '#8844FF'
 id_teacher: '-M8Mh8NtMPi1XC79tHOh'
