@@ -9,7 +9,7 @@ Input test
 <img src="../assets/TESTING/exams/input_exams.jpeg" alt="input_exams" width="200px"/>
 </td>
 <td style="vertical-align: top">
-Si se intenta guardar unas vacaciones que no tiene todos los campos rellenos, se mostrará un error en pantalla
+Si se intenta guardar un examen que no tiene todos los campos rellenos, se mostrará un error en pantalla
 <br><br>
 No es obligatorio especificar las clases que ocupa el examen
 </td>
