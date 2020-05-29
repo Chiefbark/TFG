@@ -183,8 +183,10 @@ export default class InformationScreen extends React.Component {
 							if (e[1].schedules) {
 								if (this.state.timetables) {
 									const currTimetable = this.state.timetables.find(x => x[0] === e[1].schedules[0].path.split('/')[0]);
-									times.push(currTimetable[1][e[1].schedules[0].path.split('/')[1]][e[1].schedules[0].id_schedule].startTime);
-									times.push(currTimetable[1][e[1].schedules[e[1].schedules.length - 1].path.split('/')[1]][e[1].schedules[e[1].schedules.length - 1].id_schedule].endTime);
+									if (currTimetable) {
+										times.push(currTimetable[1][e[1].schedules[0].path.split('/')[1]][e[1].schedules[0].id_schedule].startTime);
+										times.push(currTimetable[1][e[1].schedules[e[1].schedules.length - 1].path.split('/')[1]][e[1].schedules[e[1].schedules.length - 1].id_schedule].endTime);
+									}
 								}
 							}
 							const day = i18n.get(`commons.calendarLocales.dayNames.${(getDayOfWeek(e[1].date) + 1) % 7}`);
