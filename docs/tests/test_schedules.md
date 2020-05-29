@@ -137,7 +137,10 @@ Se eliminarán las referencias a ese horario de los exámenes:
 <pre>
 -M8Ns2NazixKQ6UXhWJh
 </pre>
-Se eliminarán las ausencias en ese horario
+Se eliminarán las ausencias en ese horario:
+<pre>
+-M8M46OgKvj2GfGbUMNy
+</pre>
 </td>
 <td style="vertical-align: top; width: 50%">
 Se eliminará el nodo del miércoles con los datos:
@@ -162,3 +165,6 @@ Programación Multimedia Y Dispositivos Móviles
 |:-:|:-:|:-:|
 |	![delete_schedules_original](../assets/TESTING/schedules/delete_schedules_original.png)	|	![delete_schedules](../assets/TESTING/schedules/delete_schedules.png)	|	✔️	|
 |	![delete_exams_original](../assets/TESTING/schedules/delete_exams_original.png)	|	![delete_exams](../assets/TESTING/schedules/delete_exams.png)	|	✔️	|
+|	![delete_absences_original](../assets/TESTING/schedules/delete_absences_original.png)	|	![delete_absences](../assets/TESTING/schedules/delete_absences.png)	|	✔️	|
+
+<div style="page-break-after: always;"></div>
