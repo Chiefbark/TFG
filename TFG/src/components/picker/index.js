@@ -10,11 +10,10 @@ import Icon from '../icon';
 import ListItem from '../listItem';
 
 /**
- * This component adds a controller layer to the component React Native Picker Select
+ * This component allows the user to pick one or more elements
  *
  * @author {@link https://github.com/Chiefbark Chiefbark}
  * @version 0.0.1
- * @see {@link https://www.npmjs.com/package/react-native-picker-select React Native Picker Select}
  */
 export default class CustomPicker extends React.Component {
 	constructor(props) {
@@ -27,6 +26,10 @@ export default class CustomPicker extends React.Component {
 			}
 		else
 			this.state = {value: this.props.initialValue}
+	}
+	
+	resetValues() {
+		this.setState({value: undefined});
 	}
 	
 	render() {
