@@ -168,7 +168,9 @@ Se eliminarán las ausencias asociadas a la asignatura
 Se eliminará el campo <code>id_subject</code> de las clases asociadas a la asignatura
 <pre>
 -M8M3tXZP7QIDjLZiVqj
--M8M43hlRy0MLITYZRh3
+-M8M43hlRy0MLITYZRh3<br>
+-M8VxyyyPoG5SvDwqVd0
+-M8VyOJo2SryyzcvT-L8
 </pre>
 </td>
 </tr>
@@ -182,6 +184,7 @@ Se eliminará el campo <code>id_subject</code> de las clases asociadas a la asig
 |	![delete_teachers_original](../assets/TESTING/subjects/delete_teachers_original.png)	|	![delete_teachers](../assets/TESTING/subjects/delete_teachers.png)	|	✔️	|
 |	![delete_exams_original](../assets/TESTING/subjects/delete_exams_original.png)	|	![delete_exams](../assets/TESTING/subjects/delete_exams.png)	|	✔️	|
 |	![delete_absences_original](../assets/TESTING/subjects/delete_absences_original.png)	|	![delete_absences](../assets/TESTING/subjects/delete_absences.png)	|	✔️	|
-|	![delete_schedules_original](../assets/TESTING/subjects/delete_schedules_original.png)	|	![delete_schedules](../assets/TESTING/subjects/delete_schedules.png)	|	✔️	|
+|	![delete_schedules_0_original](../assets/TESTING/subjects/delete_schedules_0_original.png)	|	![delete_0_schedules](../assets/TESTING/subjects/delete_schedules_0.png)	|	✔️	|
+|	![delete_schedules_1_original](../assets/TESTING/subjects/delete_schedules_1_original.png)	|	![delete_1_schedules](../assets/TESTING/subjects/delete_schedules_1.png)	|	✔️	|
 
 <div style="page-break-after: always;"></div>
