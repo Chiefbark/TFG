@@ -117,12 +117,15 @@ export default class ExamForm extends React.Component {
 								</Text>
 								}
 								<Picker
-									initialValue={this.state.id_schedule instanceof Array ? this.state.id_schedule.map(e => `${e.path}/${e.id_schedule}`) : this.state.id_schedule}
-									multiple={true}
+									initialValue={this.state.id_schedule?.map(e => `${e.path}/${e.id_schedule}`)}
+									multiple={true} ref={ref => this.refPicker = ref}
 									data={
 										this.state.schedules?.map(e => {
 											if (!this.state.exams?.find(x => x[0] !== this.state.key && x[1].date === this.state.date && x[1].schedules?.find(y => y.id_schedule === e[0])))
-												return {label: `${e[1].startTime} - ${e[1].endTime}`, value: `${this.state.path}/${e[0]}`}
+												return {
+													label: `${e[1].startTime} - ${e[1].endTime}`,
+													value: `${this.state.path}/${e[0]}`
+												}
 											else
 												return {
 													label: `${e[1].startTime} - ${e[1].endTime}`,
@@ -171,6 +174,7 @@ export default class ExamForm extends React.Component {
 											let msg = 0;
 											if (!this.state.id_subject || this.state.id_subject === '') obj.errorSubject = true;
 											if (!this.state.date || this.state.date === '') obj.errorDate = true;
+							
 											if (this.state.id_subject && this.state.date && this.state.id_schedule && this.state.id_schedule.length > 1) {
 												let ii = 0;
 												while (ii < this.state.id_schedule.length - 1 && msg === 0) {
@@ -215,11 +219,13 @@ export default class ExamForm extends React.Component {
 										let data = snapshot.val() || {};
 										const schedule = Object.entries(data).find(e => isDateBetween(startDate, e[1].startDate, e[1].endDate));
 						
+										this.refPicker.resetValues();
+						
 										if (!schedule[1][getDayOfWeek(startDate)])
 											this.setState({id_schedule: undefined, disabled: true, schedules: undefined});
 										else
 											this.setState({
-												id_schedule: this.state.id_schedule, disabled: false,
+												id_schedule: undefined, disabled: false,
 												path: `${schedule[0]}/${getDayOfWeek(startDate)}`,
 												schedules: Object.entries(schedule[1][getDayOfWeek(startDate)])
 											});
