@@ -124,7 +124,7 @@ export default class TimetableForm extends React.Component {
 														if (this.state.startDate <= e[1].startDate && index < this.props.timetable.index) warnings.nSchedules++;
 														if (this.state.endDate >= e[1].endDate && index > this.props.timetable.index) warnings.nSchedules++;
 													} else {
-														if (this.state.startDate > e[1].startDate && this.state.endDate <= e[1].endDate)
+														if (this.state.startDate > e[1].startDate && this.state.startDate <= e[1].endDate)
 															warnings.nAbsences.push({from: this.state.startDate, to: this.state.endDate});
 														if (this.state.startDate <= e[1].startDate) warnings.nSchedules++;
 													}
