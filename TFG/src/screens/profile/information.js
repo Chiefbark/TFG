@@ -64,14 +64,12 @@ export default class InformationScreen extends React.Component {
 		
 		firebase.ref('currProfile').off('value', this._listenerCurrProfile.bind(this));
 		firebase.ref('schedules').off('value', this._listenerSchedules.bind(this));
-		firebase.removeListenersToTimetables();
 		firebase.ref('holidays').off('value', this._listenerHolidays.bind(this));
 		firebase.ref('subjects').off('value', this._listenerSubjects.bind(this));
 		firebase.ref('exams').off('value', this._listenerExams.bind(this));
 		
 		firebase.ref('currProfile').on('value', this._listenerCurrProfile.bind(this));
 		firebase.ref('schedules').on('value', this._listenerSchedules.bind(this));
-		firebase.addListenersToTimetables();
 		firebase.ref('holidays').on('value', this._listenerHolidays.bind(this));
 		firebase.ref('subjects').on('value', this._listenerSubjects.bind(this));
 		firebase.ref('exams').on('value', this._listenerExams.bind(this));
@@ -107,7 +105,6 @@ export default class InformationScreen extends React.Component {
 		
 		firebase.ref('currProfile').off('value', this._listenerCurrProfile.bind(this));
 		firebase.ref('schedules').off('value', this._listenerSchedules.bind(this));
-		firebase.removeListenersToTimetables();
 		firebase.ref('holidays').off('value', this._listenerHolidays.bind(this));
 		firebase.ref('subjects').off('value', this._listenerSubjects.bind(this));
 		firebase.ref('exams').off('value', this._listenerExams.bind(this));
