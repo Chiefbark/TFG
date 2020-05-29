@@ -26,7 +26,7 @@ Añadir vacaciones
 Añadir unas vacaciones con los datos:
 <pre>
 endDate: '2020-05-28'
-name: 'Vacaciones'
+name: 'Holidays Added'
 startDate: '2020-05-19'
 </pre>
 </td>
@@ -34,7 +34,7 @@ startDate: '2020-05-19'
 Aparecerá un nuevo nodo con los datos:
 <pre>
 endDate: '2020-05-28'
-name: 'Vacaciones'
+name: 'Holidays Added'
 startDate: '2020-05-19'
 </pre>
 Se eliminarán todas las faltas de asistencia entre esos días
@@ -96,15 +96,21 @@ Se eliminarán todas las faltas de asistencia entre esos días
 -M8M3rLvPTbNZnuxwl-I
 -M8M3tXZP7QIDjLZiVqj
 </pre>
-Se eliminarán todos los exámenes entre esos días
+Se eliminarán todos los exámenes entre esos días:
+<pre>
+-M8Vzy64yfgHUMIUDYTC
+</pre>
 </td>
 </tr>
 </table>
+
+<div style="page-break-after: always;"></div>
 
 |	Datos iniciales	|	Datos esperados	|	Test	|
 |:-:|:-:|:-:|
 |	![update_holidays_original](../assets/TESTING/holidays/update_holidays_original.png)	|	![update_holidays](../assets/TESTING/holidays/update_holidays.png)	|	✔️	|
 |	![update_absences_original](../assets/TESTING/holidays/update_absences_original.png)	|	![update_absences](../assets/TESTING/holidays/update_absences.png)	|	✔️	|
+|	![update_exams_original](../assets/TESTING/holidays/update_exams_original.png)	|	![update_exams](../assets/TESTING/holidays/update_exams.png)	|	✔️	|
 
 <div style="page-break-after: always;"></div>
 
