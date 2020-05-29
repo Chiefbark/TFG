@@ -135,7 +135,7 @@ export function removeExamsOfSchedule(id_schedule) {
 			if (e[1].schedules)	// If the exam has schedules associated
 				for (let ii = 0; ii < e[1].schedules.length; ii++)	// Iterates over each schedule
 					if (e[1].schedules[ii].id_schedule === id_schedule)	// If the schedule id is equal to the current deleted schedule
-						references[e[0]] = null	// Add a reference to the exam node
+						references[`${e[0]}/schedules/${ii}`] = null	// Add a reference to the schedule of the exam node
 		})
 	}).then(result => ref('exams').update({...references}))
 }
