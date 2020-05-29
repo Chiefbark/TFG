@@ -142,10 +142,17 @@ export function removeExamsOfSchedule(id_schedule) {
 
 export function updateTimetable(id_timetable, prevDates, newDates, index) {
 	if (prevDates.endDate !== newDates.endDate) {
-		if (prevDates.endDate < newDates.endDate)
+		if (prevDates.endDate < newDates.endDate) {
 			removeAbsencesBetween(addDaysToDate(prevDates.endDate, 1), newDates.endDate);
-		else
+			removeExamsBetween(newDates.endDate, addDaysToDate(prevDates.endDate, 1));
+			removeExamsBetween(addDaysToDate(prevDates.endDate, 1), newDates.endDate);
+		}
+		else {
 			removeAbsencesBetween(prevDates.endDate, addDaysToDate(newDates.endDate, 1));
+			removeExamsBetween(addDaysToDate(newDates.endDate, 1), prevDates.endDate);
+			removeExamsBetween(prevDates.endDate, addDaysToDate(newDates.endDate, 1));
+		}
+		
 		ref('schedules').once('value', snapshot => {	// Read schedules
 			let data = snapshot.val() || {};
 			const entries = Object.entries(data);
@@ -156,10 +163,17 @@ export function updateTimetable(id_timetable, prevDates, newDates, index) {
 		})
 	}
 	if (prevDates.startDate !== newDates.startDate) {
-		if (prevDates.startDate < newDates.startDate)
+		if (prevDates.startDate < newDates.startDate) {
 			removeAbsencesBetween(prevDates.startDate, addDaysToDate(newDates.startDate, -1));
-		else
+			removeExamsBetween(addDaysToDate(newDates.startDate, -1), prevDates.startDate);
+			removeExamsBetween(prevDates.startDate, addDaysToDate(newDates.startDate, -1));
+		}
+		else {
 			removeAbsencesBetween(addDaysToDate(prevDates.startDate, -1), newDates.startDate);
+			removeExamsBetween(newDates.startDate, addDaysToDate(prevDates.startDate, -1));
+			removeExamsBetween(addDaysToDate(prevDates.startDate, -1), newDates.startDate);
+		}
+		
 		ref('schedules').once('value', snapshot => {	// Read schedules
 			let data = snapshot.val() || {};
 			const entries = Object.entries(data);
