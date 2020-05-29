@@ -76,7 +76,7 @@ Se eliminarán las faltas de asistencia de las clases ocupadas:
 
 |	Datos iniciales	|	Datos esperados	|	Test	|
 |:-:|:-:|:-:|
-|	![add_exam_original](../assets/TESTING/exams/add_exams_original.png)	|	![add_exam](../assets/TESTING/exams/add_exams.png)	|	✔️	|
+|	![add_exams_original](../assets/TESTING/exams/add_exams_original.png)	|	![add_exams](../assets/TESTING/exams/add_exams.png)	|	✔️	|
 |	![add_absences_original](../assets/TESTING/exams/add_absences_original.png)	|	![add_absences](../assets/TESTING/exams/add_absences.png)	|	✔️	|
 
 <div style="page-break-after: always;"></div>
