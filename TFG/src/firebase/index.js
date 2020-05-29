@@ -226,7 +226,7 @@ export function removeExamsBetween(startDate, endDate) {
 	}).then(result => ref('exams').update({...references}))
 }
 
-function _removeTimetableListener(snapshot) {
+export function onTimetablesChanged(snapshot) {
 	let data = snapshot.val() || {};
 	const entries = Object.entries(data);
 	let references = {};
@@ -235,10 +235,12 @@ function _removeTimetableListener(snapshot) {
 			references[e[0]] = null
 	})
 	if (Object.keys(references).length > 0)
-		ref('schedules').update({...references})
+		ref('schedules').update({...references}).then(() => ref('schedules').once('value', linkTimetables))
+	else
+		ref('schedules').once('value', linkTimetables)
 }
 
-function _linkTimetablesListener(snapshot) {
+function linkTimetables(snapshot) {
 	let data = snapshot.val() || {};
 	const entries = Object.entries(data);
 	let links = {};
@@ -253,20 +255,10 @@ function _linkTimetablesListener(snapshot) {
 		}
 	}
 	if (Object.keys(links).length > 0)
-		ref('schedules').update({...links})
+		ref('schedules').update({...links}).then(() => ref('schedules').once('value', onTimetablesChanged))
 	if (Object.keys(dates).length > 0) {
 		ref('absences').update({...dates})
 		const keys = Object.keys(dates)
 		removeExamsBetween(keys[0], keys[keys.length - 1])
 	}
-}
-
-export function addListenersToTimetables() {
-	ref('schedules').on('value', _removeTimetableListener);
-	ref('schedules').on('value', _linkTimetablesListener);
-}
-
-export function removeListenersToTimetables() {
-	ref('schedules').off('value', _removeTimetableListener);
-	ref('schedules').off('value', _linkTimetablesListener);
 }
