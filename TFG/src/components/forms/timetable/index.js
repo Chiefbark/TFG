@@ -141,12 +141,15 @@ export default class TimetableForm extends React.Component {
 														else
 															firebase.ref('schedules').child(this.state.key).update(obj).then();
 										
-														firebase.updateTimetable(newKey, {
+														await firebase.updateTimetable(newKey, {
 															startDate: this.props.timetable?.obj.startDate ?? this.state.startDate,
 															endDate: this.props.timetable?.obj.endDate ?? this.state.endDate
 														}, {
 															startDate: this.state.startDate, endDate: this.state.endDate
 														}, this.props.timetable?.index ?? (this.props.nTimetables - 1))
+														
+														await firebase.ref('schedules').once('value', firebase.onTimetablesChanged);
+										
 														this.props.navigation.dispatch(CommonActions.navigate('Timetable', {key: newKey}));
 														this.props.onSubmit(newKey);
 													}, 0);
@@ -240,12 +243,14 @@ export default class TimetableForm extends React.Component {
 												else
 													firebase.ref('schedules').child(this.state.key).update(obj).then();
 								
-												firebase.updateTimetable(newKey, {
+												await firebase.updateTimetable(newKey, {
 													startDate: this.props.timetable?.obj.startDate ?? this.state.startDate,
 													endDate: this.props.timetable?.obj.endDate ?? this.state.endDate
 												}, {
 													startDate: this.state.startDate, endDate: this.state.endDate
 												}, this.props.timetable?.index ?? (this.props.nTimetables - 1))
+												
+												await firebase.ref('schedules').once('value', firebase.onTimetablesChanged);
 								
 												this.props.navigation.dispatch(CommonActions.navigate('Timetable', {key: newKey}));
 												this.props.onSubmit(newKey);
